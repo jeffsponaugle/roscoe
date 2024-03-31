@@ -15,9 +15,12 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 
 /* NOTE:  Active low values are designated with a starting n. */
 
-/* Inputs */
+/* 
+                                                Inputs
+    ##########################################################################################
+*/ */
 Pin = [CPU_FC0..2];
-Pin = [CPU_A31..24];
+Pin = [CPU_A31..20];
 Pin = [CPU_SIZ0..1];
 Pin = [CPU_AA1..0];
 Pin = nCPU_ECS;
@@ -26,7 +29,12 @@ Pin = nCPU_AS;
 Pin = nSYS_RESET_IN;
 Pin = CLK_IN;
 
-/* Outputs */
+/* 
+                                                Outputs 
+   ##########################################################################################
+*/
+
+// To CPU
 Pin = [CPU_DSACK0..1];
 Pin = CPU_CIIN;
 Pin = nSYS_RESET;
@@ -35,8 +43,23 @@ Pin = nCPU_BERR;
 Pin = nCPU_STERM;
 Pin = CPU_CLK;
 
+// To SRAM
 
-/* Clock Generation:
+Pin = nSRAM_BANK1_CE;
+Pin = nSRAM_BANK2_CE;
+Pin = nSRAM_BANK3_CE;
+Pin = nSRAM_BANK4_CE;
+Pin = nSRAM_LL_SEL;
+Pin = nSRAM_LH_SEL;
+Pin = nSRAM_UL_SEL;
+Pin = nSRAM_UH_SEL;
+Pin = nSRAM_OE;
+Pin = nSRAM_WE;
+
+
+
+/* 
+    Clock Generation:
     We assume an input clock in CLK_IN that is 2 times the target CPU speed.
     CPU_CLK is the CPU Clock, which is a flip-flop toggeled by the CLK_IN rising edge.
     CPU_CLK is is not held in reset during a SYS_RESET event, so the CPU will have a clock running 
@@ -59,7 +82,8 @@ CPU_CLK_div8.ck = CPU_CLK_div4;
 
 
 
-/* System Reset Control:
+/* 
+   System Reset Control:
 
    SYS_RESET_IN is an input signal that comes from a reset button or reset controller (DS1288).  It is an active low signal
    that indicated a system reset.  When this line goes low the SYS_RESET output will instantly go low.  SYS_RESET will only 
@@ -74,7 +98,9 @@ nSYS_RESET.d = 'b'1;
 nSYS_RESET.ar = nSYS_RESET_IN;
 nSYS_RESET.ck = !CPU_CLK;
 
-/* Memory Bank Selection Logic:
+/* 
+    Memory Bank Selection Logic:
+
     During a write operation the CPU will indicate via the SIZE0-1 and A0-1 pins the number of bytes being written
     and the location of the writes on theh 32 bit databus.  It is possible for the CPU to write to a single byte location 
     inside of a 32 bit wide memory.  As such we need to have individual control over which part of the data bus is 
@@ -115,7 +141,64 @@ BA16_LL = !CPU_AA0;
 BA16_LH = !(!CPU_AA0 & CPU_SIZ0 & !CPU_SIZ1);
 
 BA8 = 'b'1;
-    
+
+/* 
+    Region selection logic:
+
+    These variables are active high indicators of access to a particular area of memory.
+
+    DRAM_REGION_ACCESS - Any access to the upper 2GB of address space
+    FLASH_REGION_ACCESS - Any access to 0x0000 0000 to 0x0FFF FFFF
+    SRAM_REGION_ACCESS - Any access to 0x1000 0000 to 0x1FFF FFFF
+    DEV8BIT_REGION_ACCESS - Any access to 0x3000 0000 to 0x3FFF FFFF
+    DEV16BIT_REGION_ACCESS - Any access to 0x4000 0000 to 0x4FFF FFFF
+    DEV32BIT_REGION_ACCESS - Any access to 0x5000 0000 to 0x5FFF FFFF
+    VIDEO_REGION_ACCESS - Any access to 0x6000 0000 to 0x7FFF FFFF
+
+*/
+
+DRAM_REGION_ACCESS = !CPU_AS & CPU_A31;                                     // 0x8000 0000 - 0xFFFF FFFF
+FLASH_REGION_ACCESS = !CPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28;  // 0x0000 0000 - 0x0FFF FFFF
+SRAM_REGION_ACCESS = !CPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & CPU_A28;    // 0x1000 0000 - 0x1FFF FFFF
+DEV8BIT_REGION_ACCESS = !CPU_AS & !CPU_A31 & !CPU_A30 
+                        & CPU_A29 & CPU_A28;                                // 0x3000 0000 - 0x3FFF FFFF
+DEV16BIT_REGION_ACCESS = !CPU_AS & !CPU_A31 & CPU_A30 
+                        & !CPU_A29 & !CPU_A28;                              // 0x4000 0000 - 0x4FFF FFFF
+DEV32BIT_REGION_ACCESS = !CPU_AS & !CPU_A31 & CPU_A30 
+                        & !CPU_A29 & CPU_A28;                               // 0x5000 0000 - 0x5FFF FFFF
+VIDEO_REGION_ACCESS = !CPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;               // 0x6000 0000 - 0x7FFF FFFF
+
+/*
+    SRAM signaling
+
+    Control signals for SRAM - 
+
+        There are 4 banks of SRAM, and each bank is 2 IC that are 16 bits wide.  Each IC has a CE, WE, OE, 
+        UB, LB.  Since this SRAM region is cacheable all reads are 32 bits regardless of the internal 
+        operation in the CPU.  Writes however must be controlled by the 8 bit section using the 
+        "Memory Bank Selection Logic" from above.
+
+        Each bank is 1MB of address space.
+
+        nSRAM_BANK1_CE -> 0x1000 0000 - 0x100F FFFF  [1MB]
+        nSRAM_BANK2_CE -> 0x1010 0000 - 0x101F FFFF  [1MB]
+        nSRAM_BANK3_CE -> 0x1020 0000 - 0x102F FFFF  [1MB]
+        nSRAM_BANK4_CE -> 0x1030 0000 - 0x103F FFFF  [1MB]
+
+        nSRAM_LL_SEL
+        nSRAM_LH_SEL
+        nSRAM_UL_SEL
+        nSRAM_UH_SEL
+        nSRAM_OE
+        nSRAM_WE
+*/
+
+nSRAM_BANK1_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # CPU_A21 # CPU_A20;
+nSRAM_BANK2_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # CPU_A21 # !CPU_A20;
+nSRAM_BANK3_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # CPU_A20;
+nSRAM_BANK4_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # !CPU_A20;
+
+
 
 
 
