@@ -1,0 +1,75 @@
+Name	 BUSCTRL;
+PartNo   BUSCTRL;
+Date     03/30/2024;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1508ispplcc84;
+
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+
+/* Inputs */
+Pin = [CPU_FC0..2];
+Pin = [CPU_A31..24];
+Pin = [CPU_SIZ0..1];
+Pin = [CPU_AA1..0];
+Pin = CPU_ECS;
+Pin = CPU_RW;
+Pin = CPU_AS;
+Pin = SYS_RESET_IN;
+Pin = CLK_IN;
+
+/* Outputs */
+Pin = [CPU_DSACK0..1];
+Pin = CPU_CIIN;
+Pin = SYS_RESET;
+Pin = CPU_HALT;
+Pin = CPU_BERR;
+Pin = CPU_STERM;
+Pin = CPU_CLK;
+
+
+/* Clock Generation:
+    We assume an input clock in CLK_IN that is 2 times the target CPU speed.
+    CPU_CLK is the CPU Clock, which is a flip-flop toggeled by the CLK_IN rising edge.
+    CPU_CLK is is not held in reset during a SYS_RESET event, so the CPU will have a clock running 
+    all of the time.
+
+    We will also generate some subdivisor clocks to use in the DRAM system.
+*/
+
+CPU_CLK.d = !CPU_CLK;               /* [16],20,25,33,40 Mhz */
+CPU_CLK.ck = CLK_IN;
+
+CPU_CLK_div2.d = !CPU_CLK_div2;     /* [8],10,12.5,16.5,20 Mhz */
+CPU_CLK_div2.ck = CPU_CLK;
+
+CPU_CLK_div4.d = !CPU_CLK_div4;     /* [4],5,6.25,8.25,10 Mhz */
+CPU_CLK_div4.ck = CPU_CLK_div2;
+
+CPU_CLK_div8.d = !CPU_CLK_div8;     /* [2],2.5,3.125,4.125,5 Mhz */
+CPU_CLK_div8.ck = CPU_CLK_div4;
+
+
+
+/* System Reset Control:
+
+   SYS_RESET_IN is an input signal that comes from a reset button or reset controller (DS1288).  It is an active low signal
+   that indicated a system reset.  When this line goes low the SYS_RESET output will instantly go low.  SYS_RESET will only 
+   come out of reset on the falling edge of the CPU_CLK.
+
+   This logic will guarentee the first CPU_CLK edge after reset is a rising edge 
+   This makes it possible to have deterministic behaviour on reset startup.
+
+*/
+
+SYS_RESET.d = 'b'1;
+SYS_RESET.ar = SYS_RESET_IN;
+SYS_RESET.ck = !CPU_CLK;
+
+
+
