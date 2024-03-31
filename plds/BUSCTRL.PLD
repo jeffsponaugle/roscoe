@@ -6,7 +6,7 @@ Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
 Location None;
-Device   f1508ispplcc84;
+Device   f1508ispqfp100;
 
 PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
@@ -75,7 +75,10 @@ Pin = nDRAM_CAS0;
 Pin = nDRAM_CAS1;
 Pin = nDRAM_CAS2;
 Pin = nDRAM_CAS3;
-Pin = DRAM_MUX;
+Pin = DRAM_MUX;              // MUX for addess lines going to DRAM (0=ROW, 1=COL)
+Pin = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the CPU.
+Pin = nDRAM_WE;
+
 
 
 
@@ -90,6 +93,11 @@ NODE REFRESH_COMPLETE;
 NODE REFRESH_REQUESTED;
 NODE DRAM_ACCESS_RAS_RESET1;
 NODE DRAM_ACCESS_RAS_RESET2;
+NODE nREFRESH_RAS;
+NODE nREFRESH_CAS;
+NODE DRAM_ACCESS_MUX;
+NODE nDRAM_ACCESS_CAS;
+
 
 
 
@@ -563,21 +571,29 @@ nDRAM_CAS2 = (nDRAM_ACCESS_CAS # (!CPU_RW & !BA32_LH )) & nREFRESH_CAS;
 nDRAM_CAS3 = (nDRAM_ACCESS_CAS # (!CPU_RW & !BA32_LL )) & nREFRESH_CAS;
 
 DRAM_MUX = DRAM_ACCESS_MUX;
+/* 
+   nDRAM_DATA_EN is connected to the 74HC245 buffers that go between the DRAM and the CPU.  They are enabled as soon as we start
+   a DRAM transaction.  The direction of these buffers it set by CPU_RW, which is connected to the DIR pin on the 245.
+*/
+nDRAM_DATA_EN = !DRAM_REGION_ACCESS;
 
 /*
+   nDRAM_WE is the DRAM write signal, which is pulled low at the start of a DRAM transaction that also has CPU_RW == 0.   This signal goes to
+   all of the SIMM slots, and the RAS/CAS signals select which DRAMs will actually do write operations.
+*/
+nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
-
+/*
 Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		39/64 	(60%)
-Total Logic cells used 		39/128 	(30%)
-Total Flip-Flop used 		21/128 	(16%)
-Total Foldback logic used 	6/128 	(4%)
-Total Nodes+FB/MCells 		43/128 	(33%)
-Total cascade used 		2
+Total I/O pins used		54/80 	(67%)
+Total Logic cells used 		59/128 	(46%)
+Total Flip-Flop used 		25/128 	(19%)
+Total Foldback logic used 	10/128 	(7%)
+Total Nodes+FB/MCells 		69/128 	(53%)
+Total cascade used 		0
 Total input pins 		24
-Total output pins 		17
-Total Pts 			99
-
+Total output pins 		32
+Total Pts 			156
 */
 
 
