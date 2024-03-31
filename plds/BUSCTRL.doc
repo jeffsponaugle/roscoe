@@ -1,0 +1,607 @@
+
+*******************************************************************************
+                                    BUSCTRL
+*******************************************************************************
+
+CUPL(WM)        5.0a Serial# 60008009
+Device          f1508ispplcc84  Library DLIB-h-40-2
+Created         Sun Mar 31 15:27:24 2024
+Name            BUSCTRL
+Partno          BUSCTRL
+Revision        01
+Date            03/30/2024
+Designer        Sponaugle
+Company         Ratiometric
+Assembly        None
+Location        None
+
+===============================================================================
+                            Expanded Product Terms
+===============================================================================
+
+BA16_LH =>
+    CPU_AA0
+  # !CPU_SIZ0
+  # CPU_SIZ1
+
+BA16_LL =>
+    !CPU_AA0
+
+BA32_LH =>
+    CPU_AA0 & !CPU_AA1
+  # !CPU_AA1 & !CPU_SIZ0
+  # !CPU_AA1 & CPU_SIZ1
+
+BA32_LL =>
+    !CPU_AA0 & !CPU_AA1
+
+BA32_UH =>
+    CPU_AA1 & CPU_SIZ1
+  # !CPU_SIZ0 & !CPU_SIZ1
+  # CPU_AA0 & CPU_SIZ0 & CPU_SIZ1
+  # CPU_AA0 & CPU_AA1
+
+BA32_UL =>
+    CPU_AA0 & !CPU_AA1 & !CPU_SIZ0
+  # CPU_AA0 & !CPU_AA1 & CPU_SIZ1
+  # !CPU_AA0 & CPU_AA1
+  # !CPU_AA1 & CPU_SIZ0 & CPU_SIZ1
+  # !CPU_AA0 & CPU_SIZ0 & CPU_SIZ1
+  # !CPU_AA0 & !CPU_SIZ0 & !CPU_SIZ1
+  # !CPU_AA1 & !CPU_SIZ0 & !CPU_SIZ1
+
+BA8 =>
+    1 
+
+CPU_CLK.d  =>
+    !CPU_CLK
+
+CPU_CLK.ck  =>
+    CLK_IN
+
+CPU_CLK_div2.d  =>
+    !CPU_CLK_div2
+
+CPU_CLK_div2.ck  =>
+    CPU_CLK
+
+CPU_CLK_div4.d  =>
+    !CPU_CLK_div4
+
+CPU_CLK_div4.ck  =>
+    CPU_CLK_div2
+
+CPU_CLK_div8.d  =>
+    !CPU_CLK_div8
+
+CPU_CLK_div8.ck  =>
+    CPU_CLK_div4
+
+CPU_CLK_div16.d  =>
+    !CPU_CLK_div16
+
+CPU_CLK_div16.ck  =>
+    CPU_CLK_div8
+
+DEV16BIT_REGION_ACCESS =>
+    !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !nCPU_AS
+
+DEV32BIT_REGION_ACCESS =>
+    CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !nCPU_AS
+
+DEV8BIT_REGION_ACCESS =>
+    CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS
+
+DRAM_ACCESS_MUX =>
+    1 
+
+DRAM_ACCESS_MUX =>
+    REFRESH_ACTIVE & nCPU_AS
+  # !CPU_A31 & REFRESH_ACTIVE
+  # !nSYS_RESET
+
+DRAM_ACCESS_MUX =>
+    !nDRAM_ACCESS_RAS
+
+DRAM_ACCESS_RAS_RESET1.d  =>
+    1 
+
+DRAM_ACCESS_RAS_RESET1.ar  =>
+    nDRAM_ACCESS_RAS
+  # !nSYS_RESET
+
+DRAM_ACCESS_RAS_RESET1.ck  =>
+    !CPU_CLK
+
+DRAM_ACCESS_RAS_RESET2.d  =>
+    DRAM_ACCESS_RAS_RESET1
+
+DRAM_ACCESS_RAS_RESET2.ar  =>
+    nDRAM_ACCESS_RAS
+  # !nSYS_RESET
+
+DRAM_ACCESS_RAS_RESET2.ck  =>
+    !CPU_CLK
+
+DRAM_REGION_ACCESS =>
+    CPU_A31 & !nCPU_AS
+  # !REFRESH_ACTIVE
+
+FLASH_REGION_ACCESS =>
+    !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS
+
+REFRESH_ACTIVE.d  =>
+    REFRESH_ACTIVE
+  # REFRESH_REQUESTED
+  # nCPU_AS
+
+REFRESH_ACTIVE.ar  =>
+    !nSYS_RESET
+  # REFRESH_COMPLETE
+
+REFRESH_ACTIVE.ck  =>
+    CPU_CLK
+
+REFRESH_COMPLETE.d  =>
+    REFRESH_STATE_MACHINE0 & !REFRESH_STATE_MACHINE1 & REFRESH_STATE_MACHINE2
+
+REFRESH_COMPLETE.ar  =>
+    !nSYS_RESET
+
+REFRESH_COMPLETE.ck  =>
+    CPU_CLK
+
+REFRESH_REQUESTED.d  =>
+    1 
+
+REFRESH_REQUESTED.ar  =>
+    !nSYS_RESET
+  # REFRESH_COMPLETE
+
+REFRESH_REQUESTED.ck  =>
+    REFRESH_TIMER_RESET
+
+REFRESH_STATE_MACHINE0.d  =>
+    !REFRESH_STATE_MACHINE0
+
+REFRESH_STATE_MACHINE0.ar  =>
+    !REFRESH_ACTIVE
+  # REFRESH_COMPLETE
+  # nSYS_RESET
+
+REFRESH_STATE_MACHINE0.ck  =>
+    !CPU_CLK
+
+REFRESH_STATE_MACHINE1.d  =>
+    !REFRESH_STATE_MACHINE0 & REFRESH_STATE_MACHINE1
+  # REFRESH_STATE_MACHINE0 & !REFRESH_STATE_MACHINE1
+
+REFRESH_STATE_MACHINE1.ar  =>
+    !REFRESH_ACTIVE
+  # REFRESH_COMPLETE
+  # nSYS_RESET
+
+REFRESH_STATE_MACHINE1.ck  =>
+    !CPU_CLK
+
+REFRESH_STATE_MACHINE2.d  =>
+    !REFRESH_STATE_MACHINE0 & REFRESH_STATE_MACHINE2
+  # !REFRESH_STATE_MACHINE1 & REFRESH_STATE_MACHINE2
+  # REFRESH_STATE_MACHINE0 & REFRESH_STATE_MACHINE1 & !REFRESH_STATE_MACHINE2
+
+REFRESH_STATE_MACHINE2.ar  =>
+    !REFRESH_ACTIVE
+  # REFRESH_COMPLETE
+  # nSYS_RESET
+
+REFRESH_STATE_MACHINE2.ck  =>
+    !CPU_CLK
+
+REFRESH_TIMER0.d  =>
+    !REFRESH_TIMER0
+
+REFRESH_TIMER0.ar  =>
+    REFRESH_TIMER_RESET
+  # !nSYS_RESET
+
+REFRESH_TIMER0.ck  =>
+    CPU_CLK_div16
+
+REFRESH_TIMER1.d  =>
+    REFRESH_TIMER0
+  $ REFRESH_TIMER1
+
+REFRESH_TIMER1.ar  =>
+    REFRESH_TIMER_RESET
+  # !nSYS_RESET
+
+REFRESH_TIMER1.ck  =>
+    CPU_CLK_div16
+
+REFRESH_TIMER2.d  =>
+    !REFRESH_TIMER0 & REFRESH_TIMER2
+  # !REFRESH_TIMER1 & REFRESH_TIMER2
+  # REFRESH_TIMER0 & REFRESH_TIMER1 & !REFRESH_TIMER2
+
+REFRESH_TIMER2.ar  =>
+    REFRESH_TIMER_RESET
+  # !nSYS_RESET
+
+REFRESH_TIMER2.ck  =>
+    CPU_CLK_div16
+
+REFRESH_TIMER3.d  =>
+    !REFRESH_TIMER0 & REFRESH_TIMER3
+  # !REFRESH_TIMER1 & REFRESH_TIMER3
+  # !REFRESH_TIMER2 & REFRESH_TIMER3
+  # REFRESH_TIMER0 & REFRESH_TIMER1 & REFRESH_TIMER2 & !REFRESH_TIMER3
+
+REFRESH_TIMER3.ar  =>
+    REFRESH_TIMER_RESET
+  # !nSYS_RESET
+
+REFRESH_TIMER3.ck  =>
+    CPU_CLK_div16
+
+REFRESH_TIMER4.d  =>
+    !REFRESH_TIMER0 & REFRESH_TIMER4
+  # !REFRESH_TIMER1 & REFRESH_TIMER4
+  # !REFRESH_TIMER2 & REFRESH_TIMER4
+  # !REFRESH_TIMER3 & REFRESH_TIMER4
+  # REFRESH_TIMER0 & REFRESH_TIMER1 & REFRESH_TIMER2 & REFRESH_TIMER3 & 
+      !REFRESH_TIMER4
+
+REFRESH_TIMER4.ar  =>
+    REFRESH_TIMER_RESET
+  # !nSYS_RESET
+
+REFRESH_TIMER4.ck  =>
+    CPU_CLK_div16
+
+REFRESH_TIMER_RESET.d  =>
+    REFRESH_TIMER0 & REFRESH_TIMER1 & REFRESH_TIMER2 & REFRESH_TIMER3 & 
+      !REFRESH_TIMER4
+
+REFRESH_TIMER_RESET.ar  =>
+    !nSYS_RESET
+
+REFRESH_TIMER_RESET.ck  =>
+    !CPU_CLK_div8
+
+SRAM_REGION_ACCESS =>
+    CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS
+
+VIDEO_REGION_ACCESS =>
+    CPU_A29 & CPU_A30 & !CPU_A31 & !nCPU_AS
+
+field_REFRESH_STATE_MACHINE =>
+    REFRESH_STATE_MACHINE0 , REFRESH_STATE_MACHINE1 , REFRESH_STATE_MACHINE2
+
+nCPU_DSACK0 =>
+    REFRESH_ACTIVE & nCPU_AS
+  # !CPU_A28 & !CPU_A31 & REFRESH_ACTIVE
+  # CPU_A29 & CPU_A30 & !CPU_A31 & REFRESH_ACTIVE
+
+nCPU_DSACK1 =>
+    REFRESH_ACTIVE & nCPU_AS
+  # CPU_A29 & !CPU_A31 & REFRESH_ACTIVE
+  # !CPU_A28 & !CPU_A30 & !CPU_A31 & REFRESH_ACTIVE
+
+nDEV16BITCS =>
+    !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !nCPU_AS
+
+nDEV32BITCS =>
+    CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !nCPU_AS
+
+nDEV8BITCS =>
+    CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS
+
+nDRAM_ACCESS_CAS =>
+    0 
+
+nDRAM_ACCESS_CAS =>
+    REFRESH_ACTIVE & nCPU_AS
+  # !CPU_A31 & REFRESH_ACTIVE
+  # !nSYS_RESET
+
+nDRAM_ACCESS_CAS =>
+    DRAM_ACCESS_RAS_RESET1
+
+nDRAM_ACCESS_RAS.d  =>
+    0 
+
+nDRAM_ACCESS_RAS.ap  =>
+    DRAM_ACCESS_RAS_RESET2
+  # !nSYS_RESET
+
+nDRAM_ACCESS_RAS.ck  =>
+    CPU_A31 & !nCPU_AS
+  # !REFRESH_ACTIVE
+
+nREFRESH_CAS =>
+    !REFRESH_STATE_MACHINE0 & !REFRESH_STATE_MACHINE1
+  # REFRESH_STATE_MACHINE0 & REFRESH_STATE_MACHINE1
+  # REFRESH_STATE_MACHINE2
+
+nREFRESH_CAS =>
+    !nSYS_RESET
+  # !REFRESH_ACTIVE
+
+nREFRESH_CAS =>
+    CPU_CLK
+
+nREFRESH_RAS =>
+    !REFRESH_STATE_MACHINE0 & REFRESH_STATE_MACHINE1
+  # !REFRESH_STATE_MACHINE0 & !REFRESH_STATE_MACHINE2
+  # REFRESH_STATE_MACHINE0 & !REFRESH_STATE_MACHINE1
+  # !REFRESH_STATE_MACHINE1 & !REFRESH_STATE_MACHINE2
+  # REFRESH_STATE_MACHINE0 & REFRESH_STATE_MACHINE2
+  # REFRESH_STATE_MACHINE1 & REFRESH_STATE_MACHINE2
+
+nREFRESH_RAS =>
+    !nSYS_RESET
+  # !REFRESH_ACTIVE
+
+nREFRESH_RAS =>
+    CPU_CLK
+
+nSRAM_BANK1_CE =>
+    CPU_A20
+  # CPU_A21
+  # CPU_A22
+  # CPU_A23
+  # CPU_A24
+  # CPU_A25
+  # CPU_A26
+  # CPU_A27
+  # !CPU_A28
+  # CPU_A29
+  # CPU_A30
+  # CPU_A31
+  # nCPU_AS
+
+nSRAM_BANK2_CE =>
+    !CPU_A20
+  # CPU_A21
+  # CPU_A22
+  # CPU_A23
+  # CPU_A24
+  # CPU_A25
+  # CPU_A26
+  # CPU_A27
+  # !CPU_A28
+  # CPU_A29
+  # CPU_A30
+  # CPU_A31
+  # nCPU_AS
+
+nSRAM_BANK3_CE =>
+    CPU_A20
+  # !CPU_A21
+  # CPU_A22
+  # CPU_A23
+  # CPU_A24
+  # CPU_A25
+  # CPU_A26
+  # CPU_A27
+  # !CPU_A28
+  # CPU_A29
+  # CPU_A30
+  # CPU_A31
+  # nCPU_AS
+
+nSRAM_BANK4_CE =>
+    !CPU_A20
+  # !CPU_A21
+  # CPU_A22
+  # CPU_A23
+  # CPU_A24
+  # CPU_A25
+  # CPU_A26
+  # CPU_A27
+  # !CPU_A28
+  # CPU_A29
+  # CPU_A30
+  # CPU_A31
+  # nCPU_AS
+
+nSRAM_LH_SEL =>
+    CPU_AA1 & !CPU_RW
+  # !CPU_AA0 & !CPU_RW & CPU_SIZ0 & !CPU_SIZ1
+
+nSRAM_LL_SEL =>
+    CPU_AA0 & !CPU_RW
+  # CPU_AA1 & !CPU_RW
+
+nSRAM_OE =>
+    !CPU_RW
+
+nSRAM_UH_SEL =>
+    !CPU_AA0 & !CPU_AA1 & !CPU_RW & CPU_SIZ0
+  # !CPU_AA1 & !CPU_RW & !CPU_SIZ0 & CPU_SIZ1
+  # !CPU_AA0 & !CPU_RW & CPU_SIZ0 & !CPU_SIZ1
+  # !CPU_AA1 & !CPU_RW & CPU_SIZ0 & !CPU_SIZ1
+
+nSRAM_UL_SEL =>
+    CPU_AA0 & CPU_AA1 & !CPU_RW
+  # !CPU_AA1 & !CPU_RW & CPU_SIZ0 & !CPU_SIZ1
+  # !CPU_AA0 & !CPU_AA1 & !CPU_RW & !CPU_SIZ0 & CPU_SIZ1
+
+nSRAM_WE =>
+    CPU_RW
+
+nSYS_RESET.d  =>
+    1 
+
+nSYS_RESET.ar  =>
+    nSYS_RESET_IN
+
+nSYS_RESET.ck  =>
+    !CPU_CLK
+
+
+===============================================================================
+                                 Symbol Table
+===============================================================================
+
+Pin Variable                                    Pterms   Max     Min    
+Pol   Name              Ext     Pin     Type     Used   Pterms  Level   
+--- --------            ---     ---     ----    ------  ------  -----   
+
+    BA16_LH                     0        I        3       -       -     
+    BA16_LL                     0        I        1       -       -     
+    BA32_LH                     0        I        3       -       -     
+    BA32_LL                     0        I        1       -       -     
+    BA32_UH                     0        I        4       -       -     
+    BA32_UL                     0        I        7       -       -     
+    BA8                         0        I        1       -       -     
+    CLK_IN                      0        V        -       -       -     
+    CPU_A20                     0        V        -       -       -     
+    CPU_A21                     0        V        -       -       -     
+    CPU_A22                     0        V        -       -       -     
+    CPU_A23                     0        V        -       -       -     
+    CPU_A24                     0        V        -       -       -     
+    CPU_A25                     0        V        -       -       -     
+    CPU_A26                     0        V        -       -       -     
+    CPU_A27                     0        V        -       -       -     
+    CPU_A28                     0        V        -       -       -     
+    CPU_A29                     0        V        -       -       -     
+    CPU_A30                     0        V        -       -       -     
+    CPU_A31                     0        V        -       -       -     
+    CPU_AA0                     0        V        -       -       -     
+    CPU_AA1                     0        V        -       -       -     
+    CPU_CIIN                    0        V        -       -       -     
+    CPU_CLK                     0        V        -       -       -     
+    CPU_CLK             d       0        X        1       0       2     
+    CPU_CLK             ck      0        X        1       0       1     
+    CPU_CLK_div2                86       N        -       -       -     
+    CPU_CLK_div2        d       86       M        1       0       2     
+    CPU_CLK_div2        ck      86       M        1       0       1     
+    CPU_CLK_div4                87       N        -       -       -     
+    CPU_CLK_div4        d       87       M        1       0       2     
+    CPU_CLK_div4        ck      87       M        1       0       1     
+    CPU_CLK_div8                88       N        -       -       -     
+    CPU_CLK_div8        d       88       M        1       0       2     
+    CPU_CLK_div8        ck      88       M        1       0       1     
+    CPU_CLK_div16               89       N        -       -       -     
+    CPU_CLK_div16       d       89       M        1       0       2     
+    CPU_CLK_div16       ck      89       M        1       0       1     
+    CPU_FC0                     0        V        -       -       -     
+    CPU_FC1                     0        V        -       -       -     
+    CPU_FC2                     0        V        -       -       -     
+    CPU_RW                      0        V        -       -       -     
+    CPU_SIZ0                    0        V        -       -       -     
+    CPU_SIZ1                    0        V        -       -       -     
+    DEV16BIT_REGION_ACCESS        0        I        1       -       -     
+    DEV32BIT_REGION_ACCESS        0        I        1       -       -     
+    DEV8BIT_REGION_ACCESS        0        I        1       -       -     
+    DRAM_ACCESS_MUX     d       0        I        1       -       -     
+    DRAM_ACCESS_MUX     ar      0        I        3       -       -     
+    DRAM_ACCESS_MUX     ck      0        I        1       -       -     
+    DRAM_ACCESS_RAS_RESET1        93       N        -       -       -     
+    DRAM_ACCESS_RAS_RESET1d       93       M        1       0       2     
+    DRAM_ACCESS_RAS_RESET1ar      93       M        2       0       1     
+    DRAM_ACCESS_RAS_RESET1ck      93       M        1       0       1     
+    DRAM_ACCESS_RAS_RESET2        94       N        -       -       -     
+    DRAM_ACCESS_RAS_RESET2d       94       M        1       0       2     
+    DRAM_ACCESS_RAS_RESET2ar      94       M        2       0       1     
+    DRAM_ACCESS_RAS_RESET2ck      94       M        1       0       1     
+    DRAM_REGION_ACCESS          0        I        2       -       -     
+    FLASH_REGION_ACCESS         0        I        1       -       -     
+    REFRESH_ACTIVE              85       N        -       -       -     
+    REFRESH_ACTIVE      d       85       M        3       0       2     
+    REFRESH_ACTIVE      ar      85       M        2       0       1     
+    REFRESH_ACTIVE      ck      85       M        1       0       1     
+    REFRESH_COMPLETE            91       N        -       -       -     
+    REFRESH_COMPLETE    d       91       M        1       0       2     
+    REFRESH_COMPLETE    ar      91       M        1       0       1     
+    REFRESH_COMPLETE    ck      91       M        1       0       1     
+    REFRESH_REQUESTED           92       N        -       -       -     
+    REFRESH_REQUESTED   d       92       M        1       0       2     
+    REFRESH_REQUESTED   ar      92       M        2       0       1     
+    REFRESH_REQUESTED   ck      92       M        1       0       1     
+    REFRESH_STATE_MACHINE0        102      N        -       -       -     
+    REFRESH_STATE_MACHINE0d       102      M        1       0       2     
+    REFRESH_STATE_MACHINE0ar      102      M        3       0       1     
+    REFRESH_STATE_MACHINE0ck      102      M        1       0       1     
+    REFRESH_STATE_MACHINE1        103      N        -       -       -     
+    REFRESH_STATE_MACHINE1d       103      M        2       0       2     
+    REFRESH_STATE_MACHINE1ar      103      M        3       0       1     
+    REFRESH_STATE_MACHINE1ck      103      M        1       0       1     
+    REFRESH_STATE_MACHINE2        104      N        -       -       -     
+    REFRESH_STATE_MACHINE2d       104      M        3       0       2     
+    REFRESH_STATE_MACHINE2ar      104      M        3       0       1     
+    REFRESH_STATE_MACHINE2ck      104      M        1       0       1     
+    REFRESH_TIMER0              95       N        -       -       -     
+    REFRESH_TIMER0      d       95       M        1       0       2     
+    REFRESH_TIMER0      ar      95       M        2       0       1     
+    REFRESH_TIMER0      ck      95       M        1       0       1     
+    REFRESH_TIMER1              96       N        -       -       -     
+    REFRESH_TIMER1      d       96       M        2       0       2     
+    REFRESH_TIMER1      ar      96       M        2       0       1     
+    REFRESH_TIMER1      ck      96       M        1       0       1     
+    REFRESH_TIMER2              97       N        -       -       -     
+    REFRESH_TIMER2      d       97       M        3       0       2     
+    REFRESH_TIMER2      ar      97       M        2       0       1     
+    REFRESH_TIMER2      ck      97       M        1       0       1     
+    REFRESH_TIMER3              98       N        -       -       -     
+    REFRESH_TIMER3      d       98       M        4       0       2     
+    REFRESH_TIMER3      ar      98       M        2       0       1     
+    REFRESH_TIMER3      ck      98       M        1       0       1     
+    REFRESH_TIMER4              99       N        -       -       -     
+    REFRESH_TIMER4      d       99       M        5       0       2     
+    REFRESH_TIMER4      ar      99       M        2       0       1     
+    REFRESH_TIMER4      ck      99       M        1       0       1     
+    REFRESH_TIMER5              100      N        -       -       -     
+    REFRESH_TIMER_RESET         101      N        -       -       -     
+    REFRESH_TIMER_RESET d       101      M        1       0       2     
+    REFRESH_TIMER_RESET ar      101      M        1       0       1     
+    REFRESH_TIMER_RESET ck      101      M        1       0       1     
+    SRAM_REGION_ACCESS          0        I        1       -       -     
+    VIDEO_REGION_ACCESS         0        I        1       -       -     
+    field_REFRESH_STATE_MACHINE        0        F        -       -       -     
+    nCPU_AS                     0        V        -       -       -     
+    nCPU_BERR                   0        V        -       -       -     
+    nCPU_DSACK0                 0        V        3       0       2     
+    nCPU_DSACK1                 0        V        3       0       2     
+    nCPU_ECS                    0        V        -       -       -     
+    nCPU_HALT                   0        V        -       -       -     
+    nCPU_STERM                  0        V        -       -       -     
+    nDEV16BITCS                 0        V        1       0       2     
+    nDEV32BITCS                 0        V        1       0       2     
+    nDEV8BITCS                  0        V        1       0       2     
+    nDRAM_ACCESS_CAS    d       0        I        1       -       -     
+    nDRAM_ACCESS_CAS    ap      0        I        3       -       -     
+    nDRAM_ACCESS_CAS    ck      0        I        1       -       -     
+    nDRAM_ACCESS_RAS            90       N        -       -       -     
+    nDRAM_ACCESS_RAS    d       90       M        1       0       2     
+    nDRAM_ACCESS_RAS    ap      90       M        2       0       1     
+    nDRAM_ACCESS_RAS    ck      90       M        2       0       1     
+    nREFRESH_CAS        d       0        I        3       -       -     
+    nREFRESH_CAS        ap      0        I        2       -       -     
+    nREFRESH_CAS        ck      0        I        1       -       -     
+    nREFRESH_RAS        d       0        I        6       -       -     
+    nREFRESH_RAS        ap      0        I        2       -       -     
+    nREFRESH_RAS        ck      0        I        1       -       -     
+    nSRAM_BANK1_CE              0        V        13      0       2     
+    nSRAM_BANK2_CE              0        V        13      0       2     
+    nSRAM_BANK3_CE              0        V        13      0       2     
+    nSRAM_BANK4_CE              0        V        13      0       2     
+    nSRAM_LH_SEL                0        V        2       0       2     
+    nSRAM_LL_SEL                0        V        2       0       2     
+    nSRAM_OE                    0        V        1       0       2     
+    nSRAM_UH_SEL                0        V        4       0       2     
+    nSRAM_UL_SEL                0        V        3       0       2     
+    nSRAM_WE                    0        V        1       0       2     
+    nSYS_RESET                  0        V        -       -       -     
+    nSYS_RESET          d       0        X        1       0       2     
+    nSYS_RESET          ar      0        X        1       0       1     
+    nSYS_RESET          ck      0        X        1       0       1     
+    nSYS_RESET_IN               0        V        -       -       -     
+
+
+LEGEND    D : default variable         F : field      G : group
+          I : intermediate variable    N : node       M : extended node
+          U : undefined                V : variable   X : extended variable
+          T : function
+
