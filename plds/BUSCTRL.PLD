@@ -12,24 +12,27 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
+
+/* NOTE:  Active low values are designated with a starting n. */
+
 /* Inputs */
 Pin = [CPU_FC0..2];
 Pin = [CPU_A31..24];
 Pin = [CPU_SIZ0..1];
 Pin = [CPU_AA1..0];
-Pin = CPU_ECS;
+Pin = nCPU_ECS;
 Pin = CPU_RW;
-Pin = CPU_AS;
-Pin = SYS_RESET_IN;
+Pin = nCPU_AS;
+Pin = nSYS_RESET_IN;
 Pin = CLK_IN;
 
 /* Outputs */
 Pin = [CPU_DSACK0..1];
 Pin = CPU_CIIN;
-Pin = SYS_RESET;
-Pin = CPU_HALT;
-Pin = CPU_BERR;
-Pin = CPU_STERM;
+Pin = nSYS_RESET;
+Pin = nCPU_HALT;
+Pin = nCPU_BERR;
+Pin = nCPU_STERM;
 Pin = CPU_CLK;
 
 
@@ -67,9 +70,52 @@ CPU_CLK_div8.ck = CPU_CLK_div4;
 
 */
 
-SYS_RESET.d = 'b'1;
-SYS_RESET.ar = SYS_RESET_IN;
-SYS_RESET.ck = !CPU_CLK;
+nSYS_RESET.d = 'b'1;
+nSYS_RESET.ar = nSYS_RESET_IN;
+nSYS_RESET.ck = !CPU_CLK;
+
+/* Memory Bank Selection Logic:
+    During a write operation the CPU will indicate via the SIZE0-1 and A0-1 pins the number of bytes being written
+    and the location of the writes on theh 32 bit databus.  It is possible for the CPU to write to a single byte location 
+    inside of a 32 bit wide memory.  As such we need to have individual control over which part of the data bus is 
+    participating in a write. 
+
+    It is important to note that for cacheable areas of memory (which in our design is all of the SRAM and 
+    DRAM areas) - All read operations are 32 Bus Access, and all read operations must return all 4 bytes based 
+    on the address bus.  This is to guarentee the cache always has the correct full 32 value for an addresss.
+
+    For 32bit Bus Write Access:
+            BA32_LL = Active high flag for the LSB 8 bits, located on D31:D24
+            BA32_LH = Active high flag for the second LSB 8 bits, located on D23:D16
+            BA32_UL = Active high flag for the lower MSB 8 bits, located on D15:D8
+            BA32_UH = Active high flag for the upper MSB 8 bits, located on D7:D0
+
+    For 16bit Bus  Write Access:
+            BA16_LL = Active high flag for the LSB 8 bits, located on D31:D24
+            BA16_LH = Active high flag for the MSB 8 bits, located on D23:D16
+
+    For 8bit Bus  Write Access:
+            BA8 = Active high for all accesses, so hard coded to 1, located on D31:24
+
+*/
+
+BA32_LL = (!CPU_AA0 & !CPU_AA1);
+BA32_LH = !((CPU_AA1 # (!CPU_AA0 & CPU_SIZ0 & !CPU_SIZ1)));
+BA32_UL = !(( (!CPU_AA1 & CPU_SIZ0 & !CPU_SIZ1) 
+            # (CPU_AA2 & CPU_AA1) 
+            # (!CPU_AA0 & !CPU_AA1 & !CPU_SIZ0 & CPU_SIZ1)
+           ));
+BA32_UH = (   (CPU_AA1 & CPU_SIZ1) 
+            # (!CPU_SIZ1 & !CPU_SIZ0) 
+            # (CPU_AA0 & CPU_SIZ1 & CPU_SIZ0) 
+            # (CPU_AA0 & CPU_AA1)
+          );
+
+BA16_LL = !CPU_AA0;
+BA16_LH = !(!CPU_AA0 & CPU_SIZ0 & !CPU_SIZ1);
+
+BA8 = 'b'1;
+    
 
 
 
