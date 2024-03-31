@@ -35,7 +35,7 @@ Pin = CLK_IN;
 */
 
 // To CPU
-Pin = [CPU_DSACK0..1];
+Pin = [nCPU_DSACK0..1];
 Pin = CPU_CIIN;
 Pin = nSYS_RESET;
 Pin = nCPU_HALT;
@@ -55,6 +55,12 @@ Pin = nSRAM_UL_SEL;
 Pin = nSRAM_UH_SEL;
 Pin = nSRAM_OE;
 Pin = nSRAM_WE;
+
+// To Devices
+Pin = nDEV8BITCS;
+Pin = nDEV16BITCS;
+Pin = nDEV32BITCS;
+
 
 
 
@@ -109,6 +115,8 @@ nSYS_RESET.ck = !CPU_CLK;
     It is important to note that for cacheable areas of memory (which in our design is all of the SRAM and 
     DRAM areas) - All read operations are 32 Bus Access, and all read operations must return all 4 bytes based 
     on the address bus.  This is to guarentee the cache always has the correct full 32 value for an addresss.
+
+    SEE DATASHEET for TABLE
 
     For 32bit Bus Write Access:
             BA32_LL = Active high flag for the LSB 8 bits, located on D31:D24
@@ -168,6 +176,35 @@ DEV32BIT_REGION_ACCESS = !CPU_AS & !CPU_A31 & CPU_A30
                         & !CPU_A29 & CPU_A28;                               // 0x5000 0000 - 0x5FFF FFFF
 VIDEO_REGION_ACCESS = !CPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;               // 0x6000 0000 - 0x7FFF FFFF
 
+
+/*
+    DSACK Generation 
+
+    This logic generates the two DSACK signals back to the CPU.  These 2 signals are used to both indicated the need for 
+    an additional wait state as well as to signal if the bus transfer is going to a device that supports 32 bits, 16 bits,
+    or 8 bits.
+
+    This logic relies on the xxxx_REGION_ACCESS variables above to know which combination of DSACK signals to apply.
+    Since in this initial system both the DRAM and SRAM are 0 WS, the logic will always assert the correct DSACK
+    combination as soon as the above xxxx_REGION_ACCESS variables are active.  That should happen directly after the 
+    CPU_AS signal goes low.
+
+    Transfer Size      DSACK1   DSACK0
+    8 bit               1          0            DEV8BIT,FLASH
+    16 bit              0          1            DEV16BIT
+    32 bit              0          0            DEV32BIT,DRAM,SRAM
+
+    Since the xxxx_REGION_ACCESS variables contain CPU_AS, these DSACK signals will go low shortly after AS, but then 
+    go high when AS returns to high at the end of the cycle.   The address bits are guarenteed to be stable before AS 
+    goes low and held stable until AS goes high.
+
+*/
+
+nCPU_DSACK0 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # DEV32BIT_REGION_ACCESS # DEV8BIT_REGION_ACCESS);
+nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # DEV32BIT_REGION_ACCESS # DEV16BIT_REGION_ACCESS);
+
+
+
 /*
     SRAM signaling
 
@@ -198,7 +235,33 @@ nSRAM_BANK2_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # C
 nSRAM_BANK3_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # CPU_A20;
 nSRAM_BANK4_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # !CPU_A20;
 
+nSRAM_OE = !CPU_RW;         // Can be enabled even when not doing SRAM access because above CE is also required.
+nSRAM_WE = CPU_RW;          // WE can also be enabled for all writes since both CE and one of the UB or LB must also 
+                            // be low. 
+
+// For each of the 4 bank selects, if we are doing a read it will be selected(low), and if we are doing a write
+// it will depend on the value of the BA32_xx functions.  This will enable the correct byte section during a write
+// based on the CPU indicating a BYTE, WORD, and DWORD write as well as the misalignment of that write.
 
 
+nSRAM_LL_SEL = ! (CPU_RW # BA32_LL);
+nSRAM_LH_SEL = ! (CPU_RW # BA32_LH);
+nSRAM_UL_SEL = ! (CPU_RW # BA32_UL);
+nSRAM_UH_SEL = ! (CPU_RW # BA32_UH);
 
+/* 
+    Device Chip Select Logic:
+
+        These chip selects indicate the 8,16, or 32 device region.  All devices in those regions must do transfers
+        of the particular region size.  This chip select can be used in decode logic combined with the lower address 
+        lines to create the actual device chip selects.
+
+        In this first iteration there is no feedback mechinism for the devices to ask for waitstates, but that 
+        will be added later.
+
+*/
+
+nDEV8BITCS = DEV8BIT_REGION_ACCESS;
+nDEV16BITCS = DEV16BIT_REGION_ACCESS;
+nDEV32BITCS = DEV32BIT_REGION_ACCESS;
 
