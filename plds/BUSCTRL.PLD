@@ -61,6 +61,9 @@ Pin = nDEV8BITCS;
 Pin = nDEV16BITCS;
 Pin = nDEV32BITCS;
 
+NODE REFRESH_ACTIVE;
+
+
 
 
 
@@ -86,6 +89,8 @@ CPU_CLK_div4.ck = CPU_CLK_div2;
 CPU_CLK_div8.d = !CPU_CLK_div8;     /* [2],2.5,3.125,4.125,5 Mhz */
 CPU_CLK_div8.ck = CPU_CLK_div4;
 
+CPU_CLK_div16.d = !CPU_CLK_div16;
+CPU_CLK_div16.ck = CPU_CLK_div8;
 
 
 /* 
@@ -165,7 +170,7 @@ BA8 = 'b'1;
 
 */
 
-DRAM_REGION_ACCESS = !CPU_AS & CPU_A31;                                     // 0x8000 0000 - 0xFFFF FFFF
+DRAM_REGION_ACCESS = !CPU_AS & CPU_A31 # !REFRESH_ACTIVE;                    // 0x8000 0000 - 0xFFFF FFFF
 FLASH_REGION_ACCESS = !CPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28;  // 0x0000 0000 - 0x0FFF FFFF
 SRAM_REGION_ACCESS = !CPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & CPU_A28;    // 0x1000 0000 - 0x1FFF FFFF
 DEV8BIT_REGION_ACCESS = !CPU_AS & !CPU_A31 & !CPU_A30 
@@ -289,11 +294,11 @@ nDRAM_ACCESS_RAS.ck = DRAM_REGION_ACCESS;
     successive CPU_CLK negative edges the DRAM_ACCESS_RAS will be set back to 1 by RESET2.
 */
 DRAM_ACCESS_RAS_RESET1.d = 'b'1;
-DRAM_ACCESS_RAS_RESET1.ar = nDRAM_ACCESS_RAS # !SYS_RESET;
+DRAM_ACCESS_RAS_RESET1.ar = nDRAM_ACCESS_RAS # !nSYS_RESET;
 DRAM_ACCESS_RAS_RESET1.ck = !CPU_CLK;
 
 DRAM_ACCESS_RAS_RESET2.d = 'DRAM_ACCESS_RAS_RESET1;
-DRAM_ACCESS_RAS_RESET2.ar = nDRAM_ACCESS_RAS # !SYS_RESET;
+DRAM_ACCESS_RAS_RESET2.ar = nDRAM_ACCESS_RAS # !nSYS_RESET;
 DRAM_ACCESS_RAS_RESET2.ck = !CPU_CLK;
 
 /*
@@ -304,7 +309,7 @@ DRAM_ACCESS_RAS_RESET2.ck = !CPU_CLK;
 */
 
 nDRAM_ACCESS_CAS.d = 'b'0;
-nDRAM_ACCESS_CAS.ap = !DRAM_REGION_ACCESS # !SYS_RESET;
+nDRAM_ACCESS_CAS.ap = !DRAM_REGION_ACCESS # !nSYS_RESET;
 nDRAM_ACCESS_CAS.ck = DRAM_ACCESS_RAS_RESET1
 
 /*
@@ -321,7 +326,129 @@ nDRAM_ACCESS_CAS.ck = DRAM_ACCESS_RAS_RESET1
 */
 
 DRAM_ACCESS_MUX.d = 'b'1;
-DRAM_ACCESS_MUX.ar = !DRAM_REGION_ACCESS # !SYS_RESET;
+DRAM_ACCESS_MUX.ar = !DRAM_REGION_ACCESS # !nSYS_RESET;
 DRAM_ACCESS_MUX.ck = !DRAM_ACCESS_RAS;
 
+/* 
+    DRAM Refresh Logic:
 
+    DRAM requires a refresh cycle to keep data stored in the DRAM uncorrupted.  The 72 pin SIMM DRAMS used in this project
+    support a refresh method call CAS_BEFORE_RAS (CBR).  This refresh method only requires that a CBR refresh cycle occur 
+    and does not require the host machine to maintain and increment a row address.  That address counting is done inside the
+    DRAM unit.  Most of the 72 pin DRAMs need a refresh either every 32 or 64ms depending on the number of rows.  This usually
+    translates to a refresh cycled needed every 15.6us.
+
+*/
+
+
+NODE  [REFRESH_TIMER0..5];
+NODE REFRESH_TIMER_RESET;
+
+
+/* 
+   5 bit counter for refresh time. In order to get a 15us cycle, this counter uses the following table:
+
+   CPU          CPU/16          Timer_Reset_Value for 15us
+   16 MHz       1 MHz           15 = 15us
+   20 MHz       1.25 Mhz        19 = 15.2us
+   25 MHz       1.56 MHz        24 = 15.26us
+   33 MHz       2.06 MHz        31 = 15 us
+   40 MHz       2.5 MHz         38 = 15.2 us
+
+
+   If the clock rate is not 32MHz for the core input, this will need to be adjusted.
+
+   The REFESH_TIMER_RESET flip flop is used to produce a 1 clock cycle long reset signal once the 
+   counter reaches 128 (highest bit set).  The output of that flipflop resets the counter value to 
+   0x08.
+*/
+
+
+/* Create a 5 bit timer */
+REFRESH_TIMER0.d = !REFRESH_TIMER0;
+REFRESH_TIMER1.d = REFRESH_TIMER0 $ REFRESH_TIMER1;
+
+REFRESH_TIMER2.d = ( REFRESH_TIMER2 & !(REFRESH_TIMER1 & REFRESH_TIMER0))
+                 # ( !REFRESH_TIMER2 & (REFRESH_TIMER1 & REFRESH_TIMER0) );
+
+REFRESH_TIMER3.d = ( REFRESH_TIMER3 & !(REFRESH_TIMER2 & REFRESH_TIMER1 & REFRESH_TIMER0))
+                 # ( !REFRESH_TIMER3 & (REFRESH_TIMER2 & REFRESH_TIMER1 & REFRESH_TIMER0) );
+
+REFRESH_TIMER4.d = ( REFRESH_TIMER4 & !(REFRESH_TIMER3 & REFRESH_TIMER2 & REFRESH_TIMER1 & REFRESH_TIMER0))
+                 # ( !REFRESH_TIMER4 & (REFRESH_TIMER3 & REFRESH_TIMER2 & REFRESH_TIMER1 & REFRESH_TIMER0) );
+
+[REFRESH_TIMER0..4].ck = CPU_CLK_div16;
+[REFRESH_TIMER0..4].ar = REFRESH_TIMER_RESET # !nSYS_RESET;
+
+/* REFRESH_TIMER_RESET will pulse for 1 clock cycle when the timer reaches 15 */
+
+REFRESH_TIMER_RESET.d = (REFRESH_TIMER0 & REFRESH_TIMER1 & REFRESH_TIMER2 & REFRESH_TIMER3 & !REFRESH_TIMER4);  // 15
+REFRESH_TIMER_RESET.ck = !CPU_CLK_div8;
+REFRESH_TIMER_RESET.ar = !nSYS_RESET;
+
+/* 
+   When the REFRESH_TIMER_RESET flip flop goes high, we need to do a REFRESH cycle.  We will toggle on a REFRESH_REQUESTED 
+   flag to indicate the need to do a refresh. 
+*/
+
+REFRESH_REQUESTED.d = 'b'1;
+REFRESH_REQUESTED.ck = REFRESH_TIMER_RESET;
+REFRESH_REQUESTED.ar = !nSYS_RESET # REFRESH_COMPLETE;    
+
+/*  
+    Once the refresh requested signal is high, we will wait for an opportunity to start the refresh cycle.  We need to wait 
+    for the bus to be free.  We will accomplsish this by waiting the AS to be high during a rising CPU clocked combined
+    with the REFRESH_REQUESTED also being high.  This will set the REFRESH_ACTIVE flip flip on in the condition that we are 
+    at least 1/2 cycle away from another AS low, which is enough time for the DRAM_REGION_ACTIVE flag to be disabled (to
+    prevent DRAM access during a refresh).
+
+    REFRESH_ACTIVE.d also has REFRESH_ACTIVE as in input, when means once the flip flop goes to 1, it will stay 
+    there until the reset activity happens.
+    
+    This flag is used in the DRAM_REGION_ACTIVE to prevent DRAM access as soon as this flag is active.  That will force the insertion of waitstates
+    by the CPU until the REFRESH is complete and a DRAM transaction can start.
+
+*/
+
+REFRESH_ACTIVE.d = REFRESH_REQUESTED # CPU_AS # REFRESH_ACTIVE;
+REFRESH_ACTIVE.ck = CPU_CLK;
+REFRESH_ACTIVE.ar = !nSYS_RESET # REFRESH_COMPLETE;         
+
+/*  When REFRESH_ACTIVE goes high, it is time to do a refresh cycle.  We will use a 3 bit counter to count CPU cycles.
+    This state machine will be held in reset until the REFRESH_ACTIVE flag goes active.  At that point it will start counting 
+    CPU cycles.  Since this state machine is clocked on the falling clock edge, and the ACTIVE signal is clocked on the rising clock edge
+    this machine will go to state 1 exactly 1/2 a CPU cycle after the ACTIVE flag is set.
+*/
+
+NODE [REFRESH_STATE_MACHINE0..2];
+FIELD field_REFRESH_STATE_MACHINE = [REFRESH_STATE_MACHINE0..2];         // a field is used to make it simplier to refer to state machine values
+
+[REFRESH_STATE_MACHINE0..2].ck = !CPU_CLK;
+[REFRESH_STATE_MACHINE0..2].ar = !REFRESH_ACTIVE # REFRESH_COMPLETE # nSYS_RESET;
+
+REFRESH_STATE_MACHINE0.d = !REFRESH_STATE_MACHINE0;
+REFRESH_STATE_MACHINE1.d = (REFRESH_STATE_MACHINE1 & !REFRESH_STATE_MACHINE0)
+                        #  (!REFRESH_STATE_MACHINE1 & REFRESH_STATE_MACHINE0);
+REFRESH_STATE_MACHINE2.d = (REFRESH_STATE_MACHINE2 & !(REFRESH_STATE_MACHINE0 & REFRESH_STATEMACHINE1))
+                        #  (!REFRESH_STATE_MACHINE2 & (REFRESH_STATE_MACHINE0 & REFRESH_STATEMACHINE1));
+
+
+/* From the above state machine we can create the REFRESH CAS and RAS signals.  This state machine will only start running when the
+   REFRESH_ACTIVE flag is set.   State 1 and State 2 are used for the CAS signal being low, and State 3 and State 4 for the RAS signal.
+   Finially, State 5 is used to set a REFRESH_COMPLETE flag, which will be active for one full clock cycle.
+
+   The REFRESH_COMPLETE flag will reset the state machine to zero, as well as reset the 
+
+*/
+
+nREFRESH_CAS.d = !(field_REFRESH_STATE_MACHINE:['d'1,'d'2]);
+nREFRESH_CAS.ck = CPU_CLK;
+nREFRESH_CAS.ap = !nSYS_RESET # !REFRESH_ACTIVE;
+
+nREFRESH_RAS.d = !(field_REFRESH_STATE_MACHINE:['d'3,'d'4]);
+nREFRESH_RAS.ck = CPU_CLK;
+nREFRESH_RAS.ap = !nSYS_RESET # !REFRESH_ACTIVE; 
+
+REFRESH_COMPLETE.d = (field_REFRESH_STATE_MACHINE:['d'5]);
+REFRESH_COMPLETE.ck = CPU_CLK;
+REFRESH_COMPLETE.ar = !nSYS_RESET;
