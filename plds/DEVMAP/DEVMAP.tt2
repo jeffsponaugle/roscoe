@@ -1,0 +1,57 @@
+#$ TOOL CUPL
+# Berkeley PLA format generated using CUPL(WM) 5.0a
+# Serial#  60008009
+# Created  Sun Mar 31 19:50:26 2024
+#
+#    Name        DEVMAP
+#    Partno      DEVMAP
+#    Revision    01
+#    Date        03/30/2024
+#    Designer    Sponaugle
+#    Company     Ratiometric
+#    Assembly    None
+#    Location    None
+#
+#$ TITLE  DEVMAP
+#$ PROPERTY ATMEL TDI_PULLUP = ON
+#$ PROPERTY ATMEL TMS_PULLUP = ON
+#$ PROPERTY ATMEL PREASSIGN = KEEP
+#$ MODULE  DEVMAP
+#$ JEDECFILE  DEVMAP
+#$ DEVICE  f1508isptqfp100
+#$ PINS  44 CPU_A8+ CPU_A9+ CPU_A10+ CPU_A11+ CPU_A12+ CPU_A13+ CPU_A14+ CPU_A15+ CPU_A16+ CPU_A17+ CPU_A18+ CPU_A19+ CPU_A20+ CPU_A21+ CPU_A22+ CPU_A23+ CPU_A24+ CPU_A25+ CPU_A26+ CPU_A27+ CPU_CLK+ CPU_RW+ SYS_RESET+ nBOARDLEDS_CS+ nDEV16BITCS+ nDEV32BITCS+ nDEV8BITCS+ nDEV_OE+ nDEV_WE+ nIDE1_CSA+ nIDE1_CSB+ nIDE2_CSA+ nIDE2_CSB+ nINTCTRL_CS+ nNIC_CS+ nPOWERCTRL_CS+ nPTC_CS+ nRTC_CS+ nSTATUS7SEG_CS+ nSYS_RESET+ nUART_CSA+ nUART_CSB+ nUSB_CS+ nVGA_CTRL_CS+ 
+.i 22
+.o 15
+.type f
+.ilb  CPU_A8 CPU_A9 CPU_A10 CPU_A11 CPU_A12 CPU_A13 CPU_A14 CPU_A15 CPU_A16 CPU_A17 CPU_A18 CPU_A19 CPU_A20 CPU_A21 CPU_A22 CPU_A23 CPU_A24 CPU_A25 CPU_A26 CPU_A27 nDEV16BITCS nDEV8BITCS 
+.ob   nBOARDLEDS_CS nIDE1_CSA nIDE1_CSB nIDE2_CSA nIDE2_CSB nINTCTRL_CS nNIC_CS nPOWERCTRL_CS nPTC_CS nRTC_CS nSTATUS7SEG_CS nUART_CSA nUART_CSB nUSB_CS nVGA_CTRL_CS 
+.phase 111111111111111
+.p 27
+0--------------------- 101010010100100
+-1-------------------- 111000011011101
+--1------------------- 100001100111111
+---1------------------ 111111111111100
+----1----------------- 111111011111111
+-----1---------------- 111111111111111
+------1--------------- 111111111111111
+-------1-------------- 111111111111111
+--------1------------- 111111111111111
+---------1------------ 111111111111111
+----------1----------- 111111111111111
+-----------1---------- 111111111111111
+------------1--------- 111111111111111
+-------------1-------- 111111111111111
+--------------1------- 111111111111111
+---------------1------ 111111111111111
+----------------1----- 111111111111111
+-----------------1---- 111111111111111
+------------------1--- 111111111111111
+-------------------1-- 111111111111111
+--------------------1- 111110100010011
+1--------------------- 010101001011000
+--0------------------- 011110011000000
+-0-------------------- 000111000100010
+---------------------1 000001011101100
+----0----------------- 000000100000000
+---0------------------ 000000000000011
+.e

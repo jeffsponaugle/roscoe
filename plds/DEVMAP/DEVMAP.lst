@@ -1,0 +1,101 @@
+LISTING FOR LOGIC DESCRIPTION FILE: DEVMAP.pld                       Page 1
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Sun Mar 31 19:50:25 2024
+
+  1:Name     DEVMAP;
+  2:PartNo   DEVMAP;
+  3:Date     03/30/2024;
+  4:Revision 01;
+  5:Designer Sponaugle;
+  6:Company  Ratiometric;
+  7:Assembly None;
+  8:Location None;
+  9:Device   f1508isptqfp100;
+ 10:
+ 11:PROPERTY ATMEL {TDI_PULLUP = ON};
+ 12:PROPERTY ATMEL {TMS_PULLUP = ON};
+ 13:PROPERTY ATMEL {PREASSIGN = KEEP};
+ 14:
+ 15:
+ 16:/* 
+ 17:                                                Inputs
+ 18:    ##########################################################################################
+ 19:*/
+ 20:
+ 21:// From CPU
+
+ 22:Pin [0..0] = [CPU_A27..8];
+ 23:Pin  0  = CPU_RW;
+ 24:
+ 25:// From Bus Controller CPLD
+
+ 26:Pin  0  = nDEV8BITCS;
+ 27:Pin  0  = nDEV16BITCS;
+ 28:Pin  0  = nDEV32BITCS;
+ 29:Pin  0  = CPU_CLK;
+ 30:Pin  0  = nSYS_RESET;
+ 31:
+ 32:/* 
+ 33:                                                Outputs 
+ 34:   ##########################################################################################
+ 35:*/
+ 36:
+ 37:Pin  0  = SYS_RESET;  // Inverted version of reset, needed for the UART IC.
+
+ 38:Pin  0  = nUART_CSA;
+ 39:Pin  0  = nUART_CSB;
+ 40:Pin  0  = nDEV_OE;
+ 41:Pin  0  = nDEV_WE;
+ 42:Pin  0  = nPTC_CS;
+ 43:Pin  0  = nIDE1_CSA;
+ 44:Pin  0  = nIDE1_CSB;
+ 45:Pin  0  = nIDE2_CSA;
+ 46:Pin  0  = nIDE2_CSB;
+ 47:Pin  0  = nINTCTRL_CS;
+ 48:Pin  0  = nRTC_CS;
+ 49:Pin  0  = nPOWERCTRL_CS;
+ 50:Pin  0  = nSTATUS7SEG_CS;
+ 51:Pin  0  = nBOARDLEDS_CS;
+ 52:Pin  0  = nVGA_CTRL_CS;
+ 53:Pin  0  = nUSB_CS;
+
+LISTING FOR LOGIC DESCRIPTION FILE: DEVMAP.pld                       Page 2
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Sun Mar 31 19:50:25 2024
+
+ 54:Pin  0  = nNIC_CS;
+ 55:
+ 56:FIELD field_CPU_ADDRESS = [CPU_A27..8];
+ 57:
+ 58:/* 8 bit devices */
+ 59:
+ 60:nUART_CSA = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
+ 61:nUART_CSB = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
+ 62:nINTCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00002XX]);
+ 63:nRTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00003XX]);
+ 64:nPTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
+ 65:nPOWERCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
+ 66:
+ 67:/* 16 bit devices */
+ 68:
+ 69:nSTATUS7SEG_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
+ 70:nBOARDLEDS_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
+ 71:nIDE1_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
+ 72:nIDE1_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
+ 73:nIDE2_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00006XX]);
+ 74:nIDE2_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00007XX]);
+ 75:nVGA_CTRL_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00008XX] # field_CPU_ADDRESS:['h'00009XX]);
+ 76:nUSB_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'0000AXX] # field_CPU_ADDRESS:['h'0000BXX]);
+ 77:nNIC_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00010XX] # field_CPU_ADDRESS:['h'00011XX]
+ 78:                        # field_CPU_ADDRESS:['h'00012XX] # field_CPU_ADDRESS:['h'00013XX]);
+ 79:
+ 80:
+
+
+
