@@ -1,0 +1,78 @@
+Name	 DEVMAP;
+PartNo   DEVMAP;
+Date     03/30/2024;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1504isptqfp44;
+
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+
+
+/* 
+                                                Inputs
+    ##########################################################################################
+*/
+
+// From CPU
+Pin = [CPU_A27..8];
+Pin = CPU_RW;
+
+// From Bus Controller CPLD
+Pin = nDEV8BITCS;
+Pin = nDEV16BITCS;
+Pin = nDEV32BITCS;
+Pin = CPU_CLK;
+Pin = nSYS_RESET;
+
+/* 
+                                                Outputs 
+   ##########################################################################################
+*/
+
+Pin = SYS_RESET;  // Inverted version of reset, needed for the UART IC.
+Pin = nUART_CSA;
+Pin = nUART_CSB;
+Pin = nDEV_OE;
+Pin = nDEV_WE;
+Pin = nPTC_CS;
+Pin = nIDE1_CSA;
+Pin = nIDE1_CSB;
+Pin = nIDE2_CSA;
+Pin = nIDE2_CSB;
+Pin = nINTCTRL_CS;
+Pin = nRTC_CS;
+Pin = nPOWERCTRL_CS;
+Pin = nSTATUS7SEG_CS;
+Pin = nBOARDLEDS_CS;
+Pin = nVGA_CTRL_CS;
+Pin = nUSB_CS;
+Pin = nNIC_CS;
+
+FIELD field_CPU_ADDRESS = [CPU_A27..8];
+
+/* 8 bit devices */
+
+nUART_CSA = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
+nUART_CSB = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
+nINTCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00002XX]);
+nRTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00003XX]);
+nPTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
+nPOWERCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
+
+/* 16 bit devices */
+
+nSTATUS7SEG_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
+nBOARDLEDS_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
+nIDE1_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
+nIDE1_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
+nIDE2_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00006XX]);
+nIDE2_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00007XX]);
+nVGA_CTRL_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00008XX] # field_CPU_ADDRESS:['h'00009XX]);
+nUSB_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'0000AXX] # field_CPU_ADDRESS:['h'0000BXX]);
+nNIC_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00010XX] # field_CPU_ADDRESS:['h'00011XX]
+                        # field_CPU_ADDRESS:['h'00012XX] # field_CPU_ADDRESS:['h'00013XX]);

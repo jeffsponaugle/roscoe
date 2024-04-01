@@ -6,7 +6,7 @@ Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
 Location None;
-Device   f1508ispqfp100;
+Device   f1508isptqfp100;
 
 PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
