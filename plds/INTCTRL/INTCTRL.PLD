@@ -45,17 +45,19 @@ Pin = vINT1A, vINT1B;
     ##########################################################################################
 */
 
-Pin = [CPU_IPL0..2];
+Pin = [CPU_IPL2..0];
 
 /* 
                                                 Internal NODES
     ##########################################################################################
 */
-NODE [INT_ACK_LEVEL0..2];       // a recording of the current interrupt acknowledged from the CPU
+NODE [INT_ACK_LEVEL2..0];       // a recording of the current interrupt acknowledged from the CPU
 NODE [INT_MSK15..0];            // 16 bit Interrupt Mask.  15=INT7A...0=INT1B
 NODE INT7A_REQUEST;
 NODE INT6A_REQUEST;
 NODE INT6B_REQUEST;
+NODE INT_ACK_RESET_PRE;
+NODE INT_ACK_RESET;
 
 // The following NODES are in place to compact the total size of some later fields.  The use of NODES adds a bit of latency
 // but allows the complex expressions to compile and optmize correctly.
@@ -92,11 +94,12 @@ NODE INT2B_REQUEST_PE;
     Those same flip flops are used during the vector generation, as well as ackowledgement clearing at the end of the ack cycle.
 */
 
-[INT_ACK_LEVEL0..2].ck = !nINT_ACK_CYCLE;
-[INT_ACK_LEVEL0..2].ar = !nSYS_RESET;
+[INT_ACK_LEVEL2..0].ck = !nINT_ACK_CYCLE;
+[INT_ACK_LEVEL2..0].ar = !nSYS_RESET;
 INT_ACK_LEVEL0.d = CPU_A1;
 INT_ACK_LEVEL1.d = CPU_A2;
 INT_ACK_LEVEL2.d = CPU_A3;
+FIELD field_INT_ACK_LEVEL = [INT_ACK_LEVEL2..0];
 
 
 // Interrupt Lines converted to Interrupt Requests (active high).  We will also integrate
@@ -104,18 +107,18 @@ INT_ACK_LEVEL2.d = CPU_A3;
 // INT7A is the debug button which is an falling edge triggered interrupt.
 INT7A_REQUEST.d = INT_MSK15;
 INT7A_REQUEST.ck = !vINT7A;
-INT7A_REQUEST.ar = !nSYS_RESET;         // TOOD Needs some kind of ACK clear.
+INT7A_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT7A_REQUEST & field_INT_ACK_LEVEL:['d'7]);         // If INT7A_REQUEST is set, and we are ack'ing a level 7, clear this.
 
 // INT6A and INT6B come from the PTC.  The are falling edge triggers so they need
 // capture flip flops.
 
 INT6A_REQUEST.d = INT_MSK14;
 INT6A_REQUEST.ck = !vINT6A;
-INT6A_REQUEST.ar = !nSYS_RESET;         // TOOD Needs some kind of ACK clear.
+INT6A_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT6A_REQUEST_PE & field_INT_ACK_LEVEL:['d'6]);         // TOOD Needs some kind of ACK clear.
 
 INT6B_REQUEST.d = INT_MSK13;
 INT6B_REQUEST.ck = !vINT6B;
-INT6B_REQUEST.ar = !nSYS_RESET;         // TOOD Needs some kind of ACK clear.
+INT6B_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT6B_REQUEST_PE & field_INT_ACK_LEVEL:['d'6]);         // TOOD Needs some kind of ACK clear.
 
 INT5A_REQUEST = !vINT5A & INT_MSK12;        // INT5A comes from the NIC.  Active low signal.
 INT5B_REQUEST = !vINT5B & INT_MSK11;        // INT5B and INT5C come from the IDE interfaces.  Active low signal
@@ -206,17 +209,41 @@ CPU_D0 = (INTL6_REQUEST_PE & INT6A_REQUEST_PE) # (INTL5_REQUEST_PE & INT5A_REQUE
        # (INTL4_REQUEST_PE & INT4A_REQUEST_PE) # (INTL3_REQUEST_PE & INT3A_REQUEST_PE)
        # (INTL2_REQUEST_PE & INT2A_REQUEST_PE) # (INTL1_REQUEST_PE & INT1A_REQUEST_PE);
 
+
+/* 
+   As a last part of the interrupt acklowdegement cycle, we need to build a single cycle signal that
+   can be used to reset the flip flop of the particular edge triggered interrupt source. 
+
+   We know the nINT_ACK_CYCLE flag will go low at the start of the acklowdegement cycle, and go high at
+   the end of it.  We will use that rising edge to set flag call INT_ACK_RESET_PRE.  The flag will then go into 
+   a second flip flop called INT_ACK_RESET that is clocked on the rising edge of the CPU_CLOCK.  When that second flip
+   flop goes to 1 it will reset the _PRE flip flp, and on the next rising edge of the CPU_CLOCK the INT_ACK_RESET flip flop 
+   will latch in a zero.  This will generate a once CPU_CLK cycle long pulse at the end of the interrupt acklowdegement cycle. 
+*/
+
+
+
+INT_ACK_RESET_PRE.d = 'b'1;
+INT_ACK_RESET_PRE.ck = nINT_ACK_CYCLE;
+INT_ACK_RESET_PRE.ar = !nSYS_RESET # INT_ACK_RESET;
+
+INT_ACK_RESET.d = INT_ACK_RESET_PRE;
+INT_ACK_RESET.ck = CPU_CLK;
+INT_ACK_RESET.ar = !nSYS_RESET;
+
+
+
 /*
 Total dedicated input used:	3/4 	(75%)
-Total I/O pins used		34/80 	(42%)
-Total Logic cells used 		44/128 	(34%)
-Total Flip-Flop used 		22/128 	(17%)
-Total Foldback logic used 	0/128 	(0%)
-Total Nodes+FB/MCells 		42/128 	(32%)
+Total I/O pins used		35/80 	(43%)
+Total Logic cells used 		49/128 	(38%)
+Total Flip-Flop used 		24/128 	(18%)
+Total Foldback logic used 	1/128 	(0%)
+Total Nodes+FB/MCells 		48/128 	(37%)
 Total cascade used 		2
-Total input pins 		26
+Total input pins 		27
 Total output pins 		11
-Total Pts 			94
+Total Pts 			110
 
 */
 

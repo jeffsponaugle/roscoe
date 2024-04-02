@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Tue Apr 02 16:12:02 2024
+Created         Tue Apr 02 16:32:37 2024
 Name            INTCTRL
 Partno          INTCTRL
 Revision        01
@@ -179,6 +179,8 @@ INT6A_REQUEST.d  =>
 
 INT6A_REQUEST.ar  =>
     !nSYS_RESET
+  # INT6A_REQUEST & !INT_ACK_LEVEL0 & INT_ACK_LEVEL1 & INT_ACK_LEVEL2 & 
+      INT_ACK_RESET
 
 INT6A_REQUEST.ck  =>
     !vINT6A
@@ -191,6 +193,8 @@ INT6B_REQUEST.d  =>
 
 INT6B_REQUEST.ar  =>
     !nSYS_RESET
+  # INT6B_REQUEST_PE & !INT_ACK_LEVEL0 & INT_ACK_LEVEL1 & INT_ACK_LEVEL2 & 
+      INT_ACK_RESET
 
 INT6B_REQUEST.ck  =>
     !vINT6B
@@ -203,6 +207,8 @@ INT7A_REQUEST.d  =>
 
 INT7A_REQUEST.ar  =>
     !nSYS_RESET
+  # INT7A_REQUEST & INT_ACK_LEVEL0 & INT_ACK_LEVEL1 & INT_ACK_LEVEL2 & 
+      INT_ACK_RESET
 
 INT7A_REQUEST.ck  =>
     !vINT7A
@@ -275,6 +281,25 @@ INT_ACK_LEVEL2.ar  =>
 
 INT_ACK_LEVEL2.ck  =>
     !nINT_ACK_CYCLE
+
+INT_ACK_RESET.d  =>
+    INT_ACK_RESET_PRE
+
+INT_ACK_RESET.ar  =>
+    !nSYS_RESET
+
+INT_ACK_RESET.ck  =>
+    CPU_CLK
+
+INT_ACK_RESET_PRE.d  =>
+    1 
+
+INT_ACK_RESET_PRE.ar  =>
+    !nSYS_RESET
+  # INT_ACK_RESET
+
+INT_ACK_RESET_PRE.ck  =>
+    nINT_ACK_CYCLE
 
 INT_MSK0.d  =>
     CPU_D0.io 
@@ -420,6 +445,9 @@ INT_MSK15.ar  =>
 INT_MSK15.ck  =>
     CPU_A0 & nINTCTRL_CS
 
+field_INT_ACK_LEVEL =>
+    INT_ACK_LEVEL2 , INT_ACK_LEVEL1 , INT_ACK_LEVEL0
+
 
 ===============================================================================
                                  Symbol Table
@@ -489,59 +517,67 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     INT2A_REQUEST               0        I        1       -       -     
     INT2A_REQUEST_PE            0        I        1       -       -     
     INT2B_REQUEST               0        I        1       -       -     
-    INT2B_REQUEST_PE            136      N        2       0       2     
+    INT2B_REQUEST_PE            138      N        2       0       2     
     INT3A_REQUEST               0        I        1       -       -     
     INT3A_REQUEST_PE            0        I        1       -       -     
     INT3B_REQUEST               0        I        1       -       -     
-    INT3B_REQUEST_PE            135      N        2       0       2     
+    INT3B_REQUEST_PE            137      N        2       0       2     
     INT4A_REQUEST               0        I        1       -       -     
     INT4A_REQUEST_PE            0        I        1       -       -     
     INT4B_REQUEST               0        I        1       -       -     
-    INT4B_REQUEST_PE            134      N        2       0       2     
+    INT4B_REQUEST_PE            136      N        2       0       2     
     INT4C_REQUEST               0        I        1       -       -     
-    INT4C_REQUEST_PE            131      N        2       0       2     
+    INT4C_REQUEST_PE            133      N        2       0       2     
     INT5A_REQUEST               0        I        1       -       -     
     INT5A_REQUEST_PE            0        I        1       -       -     
     INT5B_REQUEST               0        I        1       -       -     
-    INT5B_REQUEST_PE            133      N        2       0       2     
+    INT5B_REQUEST_PE            135      N        2       0       2     
     INT5C_REQUEST               0        I        1       -       -     
-    INT5C_REQUEST_PE            130      N        2       0       2     
+    INT5C_REQUEST_PE            132      N        2       0       2     
     INT5D_REQUEST               0        I        1       -       -     
-    INT5D_REQUEST_PE            129      N        2       0       2     
+    INT5D_REQUEST_PE            131      N        2       0       2     
     INT6A_REQUEST               121      N        -       -       -     
     INT6A_REQUEST       d       121      M        1       0       2     
-    INT6A_REQUEST       ar      121      M        1       0       1     
+    INT6A_REQUEST       ar      121      M        2       0       1     
     INT6A_REQUEST       ck      121      M        1       0       1     
     INT6A_REQUEST_PE            0        I        1       -       -     
     INT6B_REQUEST               122      N        -       -       -     
     INT6B_REQUEST       d       122      M        1       0       2     
-    INT6B_REQUEST       ar      122      M        1       0       1     
+    INT6B_REQUEST       ar      122      M        2       0       1     
     INT6B_REQUEST       ck      122      M        1       0       1     
-    INT6B_REQUEST_PE            132      N        1       0       2     
+    INT6B_REQUEST_PE            134      N        1       0       2     
     INT7A_REQUEST               120      N        -       -       -     
     INT7A_REQUEST       d       120      M        1       0       2     
-    INT7A_REQUEST       ar      120      M        1       0       1     
+    INT7A_REQUEST       ar      120      M        2       0       1     
     INT7A_REQUEST       ck      120      M        1       0       1     
     INT7A_REQUEST_PE            0        I        1       -       -     
-    INTL1_REQUEST_PE            128      N        2       0       2     
-    INTL2_REQUEST_PE            127      N        2       0       2     
-    INTL3_REQUEST_PE            126      N        2       0       2     
-    INTL4_REQUEST_PE            125      N        3       0       2     
-    INTL5_REQUEST_PE            124      N        4       0       2     
-    INTL6_REQUEST_PE            123      N        2       0       2     
+    INTL1_REQUEST_PE            130      N        2       0       2     
+    INTL2_REQUEST_PE            129      N        2       0       2     
+    INTL3_REQUEST_PE            128      N        2       0       2     
+    INTL4_REQUEST_PE            127      N        3       0       2     
+    INTL5_REQUEST_PE            126      N        4       0       2     
+    INTL6_REQUEST_PE            125      N        2       0       2     
     INTL7_REQUEST_PE            0        I        1       -       -     
-    INT_ACK_LEVEL0              101      N        -       -       -     
-    INT_ACK_LEVEL0      d       101      M        1       0       2     
-    INT_ACK_LEVEL0      ar      101      M        1       0       1     
-    INT_ACK_LEVEL0      ck      101      M        1       0       1     
+    INT_ACK_LEVEL0              103      N        -       -       -     
+    INT_ACK_LEVEL0      d       103      M        1       0       2     
+    INT_ACK_LEVEL0      ar      103      M        1       0       1     
+    INT_ACK_LEVEL0      ck      103      M        1       0       1     
     INT_ACK_LEVEL1              102      N        -       -       -     
     INT_ACK_LEVEL1      d       102      M        1       0       2     
     INT_ACK_LEVEL1      ar      102      M        1       0       1     
     INT_ACK_LEVEL1      ck      102      M        1       0       1     
-    INT_ACK_LEVEL2              103      N        -       -       -     
-    INT_ACK_LEVEL2      d       103      M        1       0       2     
-    INT_ACK_LEVEL2      ar      103      M        1       0       1     
-    INT_ACK_LEVEL2      ck      103      M        1       0       1     
+    INT_ACK_LEVEL2              101      N        -       -       -     
+    INT_ACK_LEVEL2      d       101      M        1       0       2     
+    INT_ACK_LEVEL2      ar      101      M        1       0       1     
+    INT_ACK_LEVEL2      ck      101      M        1       0       1     
+    INT_ACK_RESET               124      N        -       -       -     
+    INT_ACK_RESET       d       124      M        1       0       2     
+    INT_ACK_RESET       ar      124      M        1       0       1     
+    INT_ACK_RESET       ck      124      M        1       0       1     
+    INT_ACK_RESET_PRE           123      N        -       -       -     
+    INT_ACK_RESET_PRE   d       123      M        1       0       2     
+    INT_ACK_RESET_PRE   ar      123      M        2       0       1     
+    INT_ACK_RESET_PRE   ck      123      M        1       0       1     
     INT_MSK0                    119      N        -       -       -     
     INT_MSK0            d       119      M        1       0       2     
     INT_MSK0            ar      119      M        1       0       1     
@@ -606,6 +642,7 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     INT_MSK15           d       104      M        1       0       2     
     INT_MSK15           ar      104      M        1       0       1     
     INT_MSK15           ck      104      M        1       0       1     
+    field_INT_ACK_LEVEL         0        F        -       -       -     
     nINTCTRL_CS                 0        V        -       -       -     
     nINT_ACK_CYCLE              0        V        -       -       -     
     nSYS_RESET                  0        V        -       -       -     
