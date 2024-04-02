@@ -20,11 +20,15 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 
 // From CPU
 Pin = [CPU_A27..8];
+Pin = [CPU_A3..0];
 Pin = CPU_RW;
+Pin = [CPU_D7..0];
 
 // From Bus Controller CPLD
 Pin = CPU_CLK;
 Pin = nSYS_RESET;
+Pin = nINTCTRL_CS;
+Pin = nINT_ACK_CYCLE;           // Active low signal indicating the start of an Interrupt Acknowledge Cycle from the CPU
 
 // Incoming Interrupt Lines
 
@@ -43,39 +47,66 @@ Pin = vINT1A, vINT1B;
 
 Pin = [CPU_IPL0..2];
 
+/* 
+                                                Internal NODES
+    ##########################################################################################
+*/
 NODE [INT_ACK_LEVEL0..2];       // a recording of the current interrupt acknowledged from the CPU
+NODE [INT_MSK15..0];            // 16 bit Interrupt Mask.  15=INT7A...0=INT1B
 
-// Interrupt Lines converted to Interrupt Requests (active high)
+
+/* 
+    Interrupt Mask Register 
+    Byte Write to high,then low. 
+    1=Enable Interrupt, 0=Disable Interrupt
+    RESETs to all 0
+*/
+
+[INT_MSK15..8].ck = nINTCTRL_CS & CPU_A0;
+[INT_MSK7..0].ck = nINTCTRL_CS & !CPU_A0;
+[INT_MSK15..0].ar = !nSYS_RESET;
+[INT_MSK15..8].d = [CPU_D7..0];
+[INT_MSK7..0].d = [CPU_D7..0];
+
+
+[INT_ACK_LEVEL0..2].ck = !nINT_ACK_CYCLE
+[INT_ACK_LEVEL0..2].ar = !nSYS_RESET;
+INT_ACK_LEVEL0.d = CPU_A1;
+INT_ACK_LEVEL1.d = CPU_A2;
+INT_ACK_LEVEL2.d = CPU_A3;
+
+
+// Interrupt Lines converted to Interrupt Requests (active high).  We will also integrate
 
 // INT7A is the debug button which is an falling edge triggered interrupt.
-INT7A_REQUEST.d = 'b'1;
+INT7A_REQUEST.d = INT_MSK15;
 INT7A_REQUEST.ck = !vINT7A;
 INT7A_REQUEST.ar = !nSYS_RESET;         // TOOD Needs some kind of ACK clear.
 
 // INT6A and INT6B come from the PTC.  The are falling edge triggers so they need
 // capture flip flops.
 
-INT6A_REQUEST.d = 'b'1;
+INT6A_REQUEST.d = INT_MSK14;
 INT6A_REQUEST.ck = !vINT6A;
 INT6A_REQUEST.ar = !nSYS_RESET;
 
-INT6B_REQUEST.d = 'b'1;
+INT6B_REQUEST.d = INT_MSK13;
 INT6B_REQUEST.ck = !vINT6B;
 INT6B_REQUEST.ar = !nSYS_RESET;
 
-INT5A_REQUEST = !vINT5A;    // INT5A comes from the NIC.  Active low signal.
-INT5B_REQUEST = !vINT5B;    // INT5B and INT5C come from the IDE interfaces.  Active low signal
-INT5C_REQUEST = !vINT5B;
-INT5D_REQUEST = !vINT5D;    // INT5D in an expansion interrupt (undefined)  Make active low, with pullup
-INT4A_REQUEST = vINT4A;     // INT4A is UART1.  The 2550 UARTs are active high interrupts
-INT4B_REQUEST = vINT4B;     // INT4B is UART2.  The 2550 UARTs are active high interrupts
-INT4C_REQUEST = !vINT4C;    // INT4C in an expansion interrupt (undefined)  Make active low, with pullup
-INT3A_REQUEST = !vINT3A;    // INT3A comes from the FT-120 USB interface.  Active low signal.
-INT3B_REQUEST = !vINT3B;    // INT3B in an expansion interrupt (undefined)  Make active low, with pullup
-INT2A_REQUEST = !vINT2A;    // INT2A comed from the Video Interface, Active low signal
-INT2B_REQUEST = !vINT2B;    // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
-INT1A_REQUEST = !vINT1A;    // INT2A comed from the Video Interface, Active low signal
-INT1B_REQUEST = !vINT1B;    // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
+INT5A_REQUEST = !vINT5A & INT_MSK12;        // INT5A comes from the NIC.  Active low signal.
+INT5B_REQUEST = !vINT5B & INT_MSK11;        // INT5B and INT5C come from the IDE interfaces.  Active low signal
+INT5C_REQUEST = !vINT5B & INT_MSK10;
+INT5D_REQUEST = !vINT5D & INT_MSK9;         // INT5D in an expansion interrupt (undefined)  Make active low, with pullup
+INT4A_REQUEST = vINT4A & INT_MSK8;          // INT4A is UART1.  The 2550 UARTs are active high interrupts
+INT4B_REQUEST = vINT4B & INT_MSK7;          // INT4B is UART2.  The 2550 UARTs are active high interrupts
+INT4C_REQUEST = !vINT4C & INT_MSK6;         // INT4C in an expansion interrupt (undefined)  Make active low, with pullup
+INT3A_REQUEST = !vINT3A & INT_MSK5;         // INT3A comes from the FT-120 USB interface.  Active low signal.
+INT3B_REQUEST = !vINT3B & INT_MSK4;         // INT3B in an expansion interrupt (undefined)  Make active low, with pullup
+INT2A_REQUEST = !vINT2A & INT_MSK3;         // INT2A comed from the Video Interface, Active low signal
+INT2B_REQUEST = !vINT2B & INT_MSK2;         // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
+INT1A_REQUEST = !vINT1A & INT_MSK1;         // INT2A comed from the Video Interface, Active low signal
+INT1B_REQUEST = !vINT1B & INT_MSK0;         // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
 
 /* 
    We will create a priority encoded version of each interrupt level so we can set the CPU_IPL0-2
