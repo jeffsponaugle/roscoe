@@ -36,6 +36,15 @@ Pin = vINT3A, vINT3B;
 Pin = vINT2A, vINT2B;
 Pin = vINT1A, vINT1B;
 
+/* 
+                                                Outputs
+    ##########################################################################################
+*/
+
+Pin = [CPU_IPL0..2];
+
+NODE [INT_ACK_LEVEL0..2];       // a recording of the current interrupt acknowledged from the CPU
+
 // Interrupt Lines converted to Interrupt Requests (active high)
 
 // INT7A is the debug button which is an falling edge triggered interrupt.
@@ -68,7 +77,8 @@ INT2B_REQUEST = !vINT2B;    // INT2B is an expansion interrupt (undefined)  Make
 INT1A_REQUEST = !vINT1A;    // INT2A comed from the Video Interface, Active low signal
 INT1B_REQUEST = !vINT1B;    // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
 
-/* We will create a priority encoded version of each interrupt level so we can set the CPU_IPL0-2
+/* 
+   We will create a priority encoded version of each interrupt level so we can set the CPU_IPL0-2
    pins.  These are all active high signals, and only one will be active.
 */
 
@@ -85,10 +95,45 @@ INTL2_REQUEST_PE = (!INTL3_REQUEST_PE & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & 
 INTL1_REQUEST_PE = (!INTL2_REQUEST_PE & !INTL3_REQUEST_PE & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
                  & (INT1A_REQUEST # INT1B_REQUEST );
 
-                 
+/* 
+    We will create the CPU_IPL signals back to the CPU.
+*/
 
+CPU_IPL2 = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL5_REQUEST_PE # INTL4_REQUEST_PE);
+CPU_IPL1 = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL3_REQUEST_PE # INTL2_REQUEST_PE);
+CPU_IPL0 = !(INTL7_REQUEST_PE # INTL5_REQUEST_PE # INTL3_REQUEST_PE # INTL1_REQUEST_PE);
 
 /* 
-                                                Outputs 
-   ##########################################################################################
+    Next we will create a set of priorty encoders for each level to pick the particular winning interrupt.
+    In each level group only one sub interrupt will be active.
 */
+
+INT7A_REQUEST_PE = INT7A_REQUEST;
+
+INT6A_REQUEST_PE = INT6A_REQUEST;
+INT6B_REQUEST_PE = !INT6A_REQUEST_PE & INT6B_REQUEST;
+
+INT5A_REQUEST_PE = INT5A_REQUEST;
+INT5B_REQUEST_PE = !INT5A_REQUEST_PE & INT5B_REQUEST;
+INT5C_REQUEST_PE = !INT5A_REQUEST_PE & !INT5B_REQUEST_PE & INT5C_REQUEST;
+INT5D_REQUEST_PE = !INT5A_REQUEST_PE & !INT5B_REQUEST_PE & !INT5C_REQUEST_PE & INT5D_REQUEST;
+
+INT4A_REQUEST_PE = INT4A_REQUEST;
+INT4B_REQUEST_PE = !INT4A_REQUEST_PE & INT4B_REQUEST;
+INT4C_REQUEST_PE = !INT4A_REQUEST_PE & !INT4B_REQUEST_PE & INT4C_REQUEST;
+
+INT3A_REQUEST_PE = INT3A_REQUEST;
+INT3B_REQUEST_PE = !INT3A_REQUEST_PE & INT3B_REQUEST;
+
+INT2A_REQUEST_PE = INT3A_REQUEST;
+INT2B_REQUEST_PE = !INT2A_REQUEST_PE & INT2B_REQUEST;
+
+INT1A_REQUEST_PE = INT1A_REQUEST;
+INT1B_REQUEST_PE = !INT1A_REQUEST_PE & INT1B_REQUEST;
+
+/* 
+   With the per level priority encoder we can build the vector number that needs to be driven onto the CPU 
+   data bus 
+*/
+
+
