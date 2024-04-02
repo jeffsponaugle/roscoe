@@ -1,0 +1,299 @@
+LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 1
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Tue Apr 02 16:12:00 2024
+
+  1:Name     INTCTRL;
+  2:PartNo   INTCTRL;
+  3:Date     03/30/2024;
+  4:Revision 01;
+  5:Designer Sponaugle;
+  6:Company  Ratiometric;
+  7:Assembly None;
+  8:Location None;
+  9:Device   f1508isptqfp100;
+ 10:
+ 11:PROPERTY ATMEL {TDI_PULLUP = ON};
+ 12:PROPERTY ATMEL {TMS_PULLUP = ON};
+ 13:PROPERTY ATMEL {PREASSIGN = KEEP};
+ 14:
+ 15:
+ 16:/* 
+ 17:                                                Inputs
+ 18:    ##########################################################################################
+ 19:*/
+ 20:
+ 21:// From CPU
+
+ 22:Pin [0..0] = [CPU_A27..8];
+ 23:Pin [0..0] = [CPU_A3..0];
+ 24:Pin  0  = CPU_RW;
+ 25:Pin [0..0] = [CPU_D7..0];
+ 26:
+ 27:// From Bus Controller CPLD
+
+ 28:Pin  0  = CPU_CLK;
+ 29:Pin  0  = nSYS_RESET;
+ 30:Pin  0  = nINTCTRL_CS;
+ 31:Pin  0  = nINT_ACK_CYCLE;           // Active low signal indicating the start of an Interrupt Acknowledge Cycle from the CPU
+
+ 32:
+ 33:// Incoming Interrupt Lines
+
+ 34:
+ 35:Pin  0  = vINT7A;
+ 36:Pin  0  = vINT6A,vINT6B;
+ 37:Pin  0  = vINT5A, vINT5B,vINT5C,vINT5D;
+ 38:Pin  0  = vINT4A, vINT4B,vINT4C;
+ 39:Pin  0  = vINT3A, vINT3B;
+ 40:Pin  0  = vINT2A, vINT2B;
+ 41:Pin  0  = vINT1A, vINT1B;
+ 42:
+ 43:/* 
+ 44:                                                Outputs
+ 45:    ##########################################################################################
+ 46:*/
+ 47:
+ 48:Pin [0..0] = [CPU_IPL0..2];
+ 49:
+ 50:/* 
+ 51:                                                Internal NODES
+ 52:    ##########################################################################################
+ 53:*/
+
+LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 2
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Tue Apr 02 16:12:00 2024
+
+ 54:NODE [INT_ACK_LEVEL0..2];       // a recording of the current interrupt acknowledged from the CPU
+
+ 55:NODE [INT_MSK15..0];            // 16 bit Interrupt Mask.  15=INT7A...0=INT1B
+
+ 56:NODE INT7A_REQUEST;
+ 57:NODE INT6A_REQUEST;
+ 58:NODE INT6B_REQUEST;
+ 59:NODE INTL6_REQUEST_PE;
+ 60:NODE INTL5_REQUEST_PE;
+ 61:NODE INTL4_REQUEST_PE;
+ 62:NODE INTL3_REQUEST_PE;
+ 63:NODE INTL2_REQUEST_PE;
+ 64:NODE INTL1_REQUEST_PE;
+ 65:
+ 66:/* 
+ 67:    Interrupt Mask Register 
+ 68:    Byte Write to high,then low. 
+ 69:    1=Enable Interrupt, 0=Disable Interrupt
+ 70:    RESETs to all 0
+ 71:*/
+ 72:
+ 73:[INT_MSK15..8].ck = nINTCTRL_CS & CPU_A0;
+ 74:[INT_MSK7..0].ck = nINTCTRL_CS & !CPU_A0;
+ 75:[INT_MSK15..0].ar = !nSYS_RESET;
+ 76:[INT_MSK15..8].d = [CPU_D7..0].io;
+ 77:[INT_MSK7..0].d = [CPU_D7..0].io;
+ 78:
+ 79:
+ 80:[INT_ACK_LEVEL0..2].ck = !nINT_ACK_CYCLE;
+ 81:[INT_ACK_LEVEL0..2].ar = !nSYS_RESET;
+ 82:INT_ACK_LEVEL0.d = CPU_A1;
+ 83:INT_ACK_LEVEL1.d = CPU_A2;
+ 84:INT_ACK_LEVEL2.d = CPU_A3;
+ 85:
+ 86:
+ 87:// Interrupt Lines converted to Interrupt Requests (active high).  We will also integrate
+
+ 88:
+ 89:// INT7A is the debug button which is an falling edge triggered interrupt.
+
+ 90:INT7A_REQUEST.d = INT_MSK15;
+ 91:INT7A_REQUEST.ck = !vINT7A;
+ 92:INT7A_REQUEST.ar = !nSYS_RESET;         // TOOD Needs some kind of ACK clear.
+
+ 93:
+ 94:// INT6A and INT6B come from the PTC.  The are falling edge triggers so they need
+
+ 95:// capture flip flops.
+
+ 96:
+ 97:INT6A_REQUEST.d = INT_MSK14;
+ 98:INT6A_REQUEST.ck = !vINT6A;
+ 99:INT6A_REQUEST.ar = !nSYS_RESET;
+100:
+101:INT6B_REQUEST.d = INT_MSK13;
+102:INT6B_REQUEST.ck = !vINT6B;
+103:INT6B_REQUEST.ar = !nSYS_RESET;
+104:
+105:INT5A_REQUEST = !vINT5A & INT_MSK12;        // INT5A comes from the NIC.  Active low signal.
+
+106:INT5B_REQUEST = !vINT5B & INT_MSK11;        // INT5B and INT5C come from the IDE interfaces.  Active low signal
+
+107:INT5C_REQUEST = !vINT5B & INT_MSK10;
+
+LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 3
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Tue Apr 02 16:12:00 2024
+
+108:INT5D_REQUEST = !vINT5D & INT_MSK9;         // INT5D in an expansion interrupt (undefined)  Make active low, with pullup
+
+109:INT4A_REQUEST = vINT4A & INT_MSK8;          // INT4A is UART1.  The 2550 UARTs are active high interrupts
+
+110:INT4B_REQUEST = vINT4B & INT_MSK7;          // INT4B is UART2.  The 2550 UARTs are active high interrupts
+
+111:INT4C_REQUEST = !vINT4C & INT_MSK6;         // INT4C in an expansion interrupt (undefined)  Make active low, with pullup
+
+112:INT3A_REQUEST = !vINT3A & INT_MSK5;         // INT3A comes from the FT-120 USB interface.  Active low signal.
+
+113:INT3B_REQUEST = !vINT3B & INT_MSK4;         // INT3B in an expansion interrupt (undefined)  Make active low, with pullup
+
+114:INT2A_REQUEST = !vINT2A & INT_MSK3;         // INT2A comed from the Video Interface, Active low signal
+
+115:INT2B_REQUEST = !vINT2B & INT_MSK2;         // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
+
+116:INT1A_REQUEST = !vINT1A & INT_MSK1;         // INT2A comed from the Video Interface, Active low signal
+
+117:INT1B_REQUEST = !vINT1B & INT_MSK0;         // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
+
+118:
+119:/* 
+120:   We will create a priority encoded version of each interrupt level so we can set the CPU_IPL0-2
+121:   pins.  These are all active high signals, and only one will be active.
+122:*/
+123:
+124:
+125:INTL7_REQUEST_PE = INT7A_REQUEST;
+126:INTL6_REQUEST_PE = (!INT7A_REQUEST) & (INT6A_REQUEST # INT6B_REQUEST );
+127:INTL5_REQUEST_PE = (!INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
+128:                 & (INT5A_REQUEST # INT5B_REQUEST # INT5C_REQUEST # INT5D_REQUEST );
+129:INTL4_REQUEST_PE = (!INTL5_REQUEST_PE &!INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
+130:                 & (INT4A_REQUEST # INT4B_REQUEST # INT4C_REQUEST );
+131:INTL3_REQUEST_PE = (!INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
+132:                 & (INT3A_REQUEST # INT3B_REQUEST );
+133:INTL2_REQUEST_PE = (!INTL3_REQUEST_PE & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
+134:                 & (INT2A_REQUEST # INT2B_REQUEST );
+135:INTL1_REQUEST_PE = (!INTL2_REQUEST_PE & !INTL3_REQUEST_PE & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
+136:                 & (INT1A_REQUEST # INT1B_REQUEST );
+137:
+138:/* 
+139:    We will create the CPU_IPL signals back to the CPU.
+140:*/
+141:
+142:CPU_IPL2 = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL5_REQUEST_PE # INTL4_REQUEST_PE);
+143:CPU_IPL1 = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL3_REQUEST_PE # INTL2_REQUEST_PE);
+144:CPU_IPL0 = !(INTL7_REQUEST_PE # INTL5_REQUEST_PE # INTL3_REQUEST_PE # INTL1_REQUEST_PE);
+145:
+146:/* 
+147:    Next we will create a set of priorty encoders for each level to pick the particular winning interrupt.
+148:    In each level group only one sub interrupt will be active.
+149:*/
+150:
+151:NODE INT5D_REQUEST_PE;
+152:NODE INT5C_REQUEST_PE;
+153:NODE INT4C_REQUEST_PE;
+154:NODE INT6B_REQUEST_PE;
+155:NODE INT5B_REQUEST_PE;
+156:NODE INT4B_REQUEST_PE;
+157:NODE INT3B_REQUEST_PE;
+158:NODE INT2B_REQUEST_PE;
+159:
+160:
+161:
+
+LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 4
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Tue Apr 02 16:12:00 2024
+
+162:
+163:INT7A_REQUEST_PE = INT7A_REQUEST;
+164:
+165:INT6A_REQUEST_PE = INT6A_REQUEST;
+166:INT6B_REQUEST_PE = !INT6A_REQUEST_PE & INT6B_REQUEST;
+167:
+168:INT5A_REQUEST_PE = INT5A_REQUEST;
+169:INT5B_REQUEST_PE = !INT5A_REQUEST_PE & INT5B_REQUEST;
+170:INT5C_REQUEST_PE = !INT5A_REQUEST_PE & !INT5B_REQUEST_PE & INT5C_REQUEST;
+171:INT5D_REQUEST_PE = !INT5A_REQUEST_PE & !INT5B_REQUEST_PE & !INT5C_REQUEST_PE & INT5D_REQUEST;
+172:
+173:INT4A_REQUEST_PE = INT4A_REQUEST;
+174:INT4B_REQUEST_PE = !INT4A_REQUEST_PE & INT4B_REQUEST;
+175:INT4C_REQUEST_PE = !INT4A_REQUEST_PE & !INT4B_REQUEST_PE & INT4C_REQUEST;
+176:
+177:INT3A_REQUEST_PE = INT3A_REQUEST;
+178:INT3B_REQUEST_PE = !INT3A_REQUEST_PE & INT3B_REQUEST;
+179:
+180:INT2A_REQUEST_PE = INT3A_REQUEST;
+181:INT2B_REQUEST_PE = !INT2A_REQUEST_PE & INT2B_REQUEST;
+182:
+183:INT1A_REQUEST_PE = INT1A_REQUEST;
+184:INT1B_REQUEST_PE = !INT1A_REQUEST_PE & INT1B_REQUEST;
+185:
+186:/* 
+187:   With the per level priority encoder we can build the vector number that needs to be driven onto the CPU 
+188:   data bus 
+189:*/
+190:
+191:[CPU_D7..0].oe = !nINT_ACK_CYCLE;       // If we are in an Interrupt Ack Cycle, enable the data bus outputs.
+
+192:
+193:CPU_D7 = 'b'1;
+194:CPU_D6 = INT_ACK_LEVEL2;
+195:CPU_D5 = INT_ACK_LEVEL1;
+196:CPU_D4 = INT_ACK_LEVEL0;
+197:CPU_D3 = (INTL5_REQUEST_PE & INT5D_REQUEST_PE);
+198:CPU_D2 = (INTL5_REQUEST_PE & INT5C_REQUEST_PE) # (INTL4_REQUEST_PE & INT4C_REQUEST_PE);
+199:CPU_D1 = (INTL6_REQUEST_PE & INT6B_REQUEST_PE) # (INTL5_REQUEST_PE & INT5B_REQUEST_PE)
+200:       # (INTL4_REQUEST_PE & INT4B_REQUEST_PE) # (INTL3_REQUEST_PE & INT3B_REQUEST_PE)
+201:       # (INTL2_REQUEST_PE & INT2B_REQUEST_PE) # (INTL1_REQUEST_PE & INT1B_REQUEST_PE);
+202:CPU_D0 = (INTL6_REQUEST_PE & INT6A_REQUEST_PE) # (INTL5_REQUEST_PE & INT5A_REQUEST_PE)
+203:       # (INTL4_REQUEST_PE & INT4A_REQUEST_PE) # (INTL3_REQUEST_PE & INT3A_REQUEST_PE)
+204:       # (INTL2_REQUEST_PE & INT2A_REQUEST_PE) # (INTL1_REQUEST_PE & INT1A_REQUEST_PE);
+205:
+206:/*
+207:Total dedicated input used:     3/4     (75%)
+208:Total I/O pins used             34/80   (42%)
+209:Total Logic cells used          43/128  (33%)
+210:Total Flip-Flop used            22/128  (17%)
+211:Total Foldback logic used       0/128   (0%)
+212:Total Nodes+FB/MCells           39/128  (30%)
+213:Total cascade used              4
+214:Total input pins                26
+215:Total output pins               11
+
+LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 5
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Tue Apr 02 16:12:00 2024
+
+216:Total Pts                       95
+217:
+218:Total dedicated input used:     3/4     (75%)
+219:Total I/O pins used             34/80   (42%)
+220:Total Logic cells used          44/128  (34%)
+221:Total Flip-Flop used            22/128  (17%)
+222:Total Foldback logic used       0/128   (0%)
+223:Total Nodes+FB/MCells           40/128  (31%)
+224:Total cascade used              4
+225:Total input pins                26
+226:Total output pins               11
+227:Total Pts                       96
+228:
+229:*/
+230:
+231:
+232:
+233:
+
+
+

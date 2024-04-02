@@ -53,7 +53,26 @@ Pin = [CPU_IPL0..2];
 */
 NODE [INT_ACK_LEVEL0..2];       // a recording of the current interrupt acknowledged from the CPU
 NODE [INT_MSK15..0];            // 16 bit Interrupt Mask.  15=INT7A...0=INT1B
+NODE INT7A_REQUEST;
+NODE INT6A_REQUEST;
+NODE INT6B_REQUEST;
 
+// The following NODES are in place to compact the total size of some later fields.  The use of NODES adds a bit of latency
+// but allows the complex expressions to compile and optmize correctly.
+NODE INTL6_REQUEST_PE;
+NODE INTL5_REQUEST_PE;
+NODE INTL4_REQUEST_PE;
+NODE INTL3_REQUEST_PE;
+NODE INTL2_REQUEST_PE;
+NODE INTL1_REQUEST_PE;
+NODE INT5D_REQUEST_PE;
+NODE INT5C_REQUEST_PE;
+NODE INT4C_REQUEST_PE;
+NODE INT6B_REQUEST_PE;
+NODE INT5B_REQUEST_PE;
+NODE INT4B_REQUEST_PE;
+NODE INT3B_REQUEST_PE;
+NODE INT2B_REQUEST_PE;
 
 /* 
     Interrupt Mask Register 
@@ -65,11 +84,15 @@ NODE [INT_MSK15..0];            // 16 bit Interrupt Mask.  15=INT7A...0=INT1B
 [INT_MSK15..8].ck = nINTCTRL_CS & CPU_A0;
 [INT_MSK7..0].ck = nINTCTRL_CS & !CPU_A0;
 [INT_MSK15..0].ar = !nSYS_RESET;
-[INT_MSK15..8].d = [CPU_D7..0];
-[INT_MSK7..0].d = [CPU_D7..0];
+[INT_MSK15..8].d = [CPU_D7..0].io;
+[INT_MSK7..0].d = [CPU_D7..0].io;
 
+/*
+    At the start of the Interrupt Acknowlegement Cycle we will record the interrupt level being acknowledged in the INT_ACK_LEVEL0..2 flip flops.
+    Those same flip flops are used during the vector generation, as well as ackowledgement clearing at the end of the ack cycle.
+*/
 
-[INT_ACK_LEVEL0..2].ck = !nINT_ACK_CYCLE
+[INT_ACK_LEVEL0..2].ck = !nINT_ACK_CYCLE;
 [INT_ACK_LEVEL0..2].ar = !nSYS_RESET;
 INT_ACK_LEVEL0.d = CPU_A1;
 INT_ACK_LEVEL1.d = CPU_A2;
@@ -88,11 +111,11 @@ INT7A_REQUEST.ar = !nSYS_RESET;         // TOOD Needs some kind of ACK clear.
 
 INT6A_REQUEST.d = INT_MSK14;
 INT6A_REQUEST.ck = !vINT6A;
-INT6A_REQUEST.ar = !nSYS_RESET;
+INT6A_REQUEST.ar = !nSYS_RESET;         // TOOD Needs some kind of ACK clear.
 
 INT6B_REQUEST.d = INT_MSK13;
 INT6B_REQUEST.ck = !vINT6B;
-INT6B_REQUEST.ar = !nSYS_RESET;
+INT6B_REQUEST.ar = !nSYS_RESET;         // TOOD Needs some kind of ACK clear.
 
 INT5A_REQUEST = !vINT5A & INT_MSK12;        // INT5A comes from the NIC.  Active low signal.
 INT5B_REQUEST = !vINT5B & INT_MSK11;        // INT5B and INT5C come from the IDE interfaces.  Active low signal
@@ -112,6 +135,7 @@ INT1B_REQUEST = !vINT1B & INT_MSK0;         // INT2B is an expansion interrupt (
    We will create a priority encoded version of each interrupt level so we can set the CPU_IPL0-2
    pins.  These are all active high signals, and only one will be active.
 */
+
 
 INTL7_REQUEST_PE = INT7A_REQUEST;
 INTL6_REQUEST_PE = (!INT7A_REQUEST) & (INT6A_REQUEST # INT6B_REQUEST );
@@ -165,6 +189,35 @@ INT1B_REQUEST_PE = !INT1A_REQUEST_PE & INT1B_REQUEST;
 /* 
    With the per level priority encoder we can build the vector number that needs to be driven onto the CPU 
    data bus 
+*/
+
+[CPU_D7..0].oe = !nINT_ACK_CYCLE;       // If we are in an Interrupt Ack Cycle, enable the data bus outputs.
+
+CPU_D7 = 'b'1;
+CPU_D6 = INT_ACK_LEVEL2;
+CPU_D5 = INT_ACK_LEVEL1;
+CPU_D4 = INT_ACK_LEVEL0;
+CPU_D3 = (INTL5_REQUEST_PE & INT5D_REQUEST_PE);
+CPU_D2 = (INTL5_REQUEST_PE & INT5C_REQUEST_PE) # (INTL4_REQUEST_PE & INT4C_REQUEST_PE);
+CPU_D1 = (INTL6_REQUEST_PE & INT6B_REQUEST_PE) # (INTL5_REQUEST_PE & INT5B_REQUEST_PE)
+       # (INTL4_REQUEST_PE & INT4B_REQUEST_PE) # (INTL3_REQUEST_PE & INT3B_REQUEST_PE)
+       # (INTL2_REQUEST_PE & INT2B_REQUEST_PE) # (INTL1_REQUEST_PE & INT1B_REQUEST_PE);
+CPU_D0 = (INTL6_REQUEST_PE & INT6A_REQUEST_PE) # (INTL5_REQUEST_PE & INT5A_REQUEST_PE)
+       # (INTL4_REQUEST_PE & INT4A_REQUEST_PE) # (INTL3_REQUEST_PE & INT3A_REQUEST_PE)
+       # (INTL2_REQUEST_PE & INT2A_REQUEST_PE) # (INTL1_REQUEST_PE & INT1A_REQUEST_PE);
+
+/*
+Total dedicated input used:	3/4 	(75%)
+Total I/O pins used		34/80 	(42%)
+Total Logic cells used 		44/128 	(34%)
+Total Flip-Flop used 		22/128 	(17%)
+Total Foldback logic used 	0/128 	(0%)
+Total Nodes+FB/MCells 		42/128 	(32%)
+Total cascade used 		2
+Total input pins 		26
+Total output pins 		11
+Total Pts 			94
+
 */
 
 

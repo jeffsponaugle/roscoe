@@ -1,0 +1,634 @@
+
+*******************************************************************************
+                                    INTCTRL
+*******************************************************************************
+
+CUPL(WM)        5.0a Serial# 60008009
+Device          f1508isptqfp100  Library DLIB-h-40-2
+Created         Tue Apr 02 16:12:02 2024
+Name            INTCTRL
+Partno          INTCTRL
+Revision        01
+Date            03/30/2024
+Designer        Sponaugle
+Company         Ratiometric
+Assembly        None
+Location        None
+
+===============================================================================
+                            Expanded Product Terms
+===============================================================================
+
+CPU_D0 =>
+    INT6A_REQUEST & INTL6_REQUEST_PE
+  # INTL1_REQUEST_PE & INT_MSK1 & !vINT1A
+  # INTL2_REQUEST_PE & INT_MSK5 & !vINT3A
+  # INTL3_REQUEST_PE & INT_MSK5 & !vINT3A
+  # INTL4_REQUEST_PE & INT_MSK8 & vINT4A
+  # INTL5_REQUEST_PE & INT_MSK12 & !vINT5A
+
+CPU_D0.oe  =>
+    !nINT_ACK_CYCLE
+
+CPU_D1 =>
+    INT2B_REQUEST_PE & INTL2_REQUEST_PE
+  # INT3B_REQUEST_PE & INTL3_REQUEST_PE
+  # INT4B_REQUEST_PE & INTL4_REQUEST_PE
+  # INT5B_REQUEST_PE & INTL5_REQUEST_PE
+  # INT6B_REQUEST_PE & INTL6_REQUEST_PE
+  # INTL1_REQUEST_PE & INT_MSK0 & !INT_MSK1 & !vINT1B
+  # INTL1_REQUEST_PE & INT_MSK0 & vINT1A & !vINT1B
+
+CPU_D1.oe  =>
+    !nINT_ACK_CYCLE
+
+CPU_D2 =>
+    INT4C_REQUEST_PE & INTL4_REQUEST_PE
+  # INT5C_REQUEST_PE & INTL5_REQUEST_PE
+
+CPU_D2.oe  =>
+    !nINT_ACK_CYCLE
+
+CPU_D3 =>
+    INT5D_REQUEST_PE & INTL5_REQUEST_PE
+
+CPU_D3.oe  =>
+    !nINT_ACK_CYCLE
+
+CPU_D4 =>
+    INT_ACK_LEVEL0
+
+CPU_D4.oe  =>
+    !nINT_ACK_CYCLE
+
+CPU_D5 =>
+    INT_ACK_LEVEL1
+
+CPU_D5.oe  =>
+    !nINT_ACK_CYCLE
+
+CPU_D6 =>
+    INT_ACK_LEVEL2
+
+CPU_D6.oe  =>
+    !nINT_ACK_CYCLE
+
+CPU_D7 =>
+    1 
+
+CPU_D7.oe  =>
+    !nINT_ACK_CYCLE
+
+CPU_IPL0 =>
+    !INT7A_REQUEST & !INTL1_REQUEST_PE & !INTL3_REQUEST_PE & !INTL5_REQUEST_PE
+
+CPU_IPL1 =>
+    !INT7A_REQUEST & !INTL2_REQUEST_PE & !INTL3_REQUEST_PE & !INTL6_REQUEST_PE
+
+CPU_IPL2 =>
+    !INT7A_REQUEST & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE
+
+INT1A_REQUEST =>
+    INT_MSK1 & !vINT1A
+
+INT1A_REQUEST_PE =>
+    INT_MSK1 & !vINT1A
+
+INT1B_REQUEST =>
+    INT_MSK0 & !vINT1B
+
+INT1B_REQUEST_PE =>
+    INT_MSK0 & vINT1A & !vINT1B
+  # INT_MSK0 & !INT_MSK1 & !vINT1B
+
+INT2A_REQUEST =>
+    INT_MSK3 & !vINT2A
+
+INT2A_REQUEST_PE =>
+    INT_MSK5 & !vINT3A
+
+INT2B_REQUEST =>
+    INT_MSK2 & !vINT2B
+
+INT2B_REQUEST_PE =>
+    INT_MSK2 & !INT_MSK5 & !vINT2B
+  # INT_MSK2 & !vINT2B & vINT3A
+
+INT3A_REQUEST =>
+    INT_MSK5 & !vINT3A
+
+INT3A_REQUEST_PE =>
+    INT_MSK5 & !vINT3A
+
+INT3B_REQUEST =>
+    INT_MSK4 & !vINT3B
+
+INT3B_REQUEST_PE =>
+    INT_MSK4 & !INT_MSK5 & !vINT3B
+  # INT_MSK4 & vINT3A & !vINT3B
+
+INT4A_REQUEST =>
+    INT_MSK8 & vINT4A
+
+INT4A_REQUEST_PE =>
+    INT_MSK8 & vINT4A
+
+INT4B_REQUEST =>
+    INT_MSK7 & vINT4B
+
+INT4B_REQUEST_PE =>
+    INT_MSK7 & !INT_MSK8 & vINT4B
+  # INT_MSK7 & !vINT4A & vINT4B
+
+INT4C_REQUEST =>
+    INT_MSK6 & !vINT4C
+
+INT4C_REQUEST_PE =>
+    !INT4B_REQUEST_PE & INT_MSK6 & !INT_MSK8 & !vINT4C
+  # !INT4B_REQUEST_PE & INT_MSK6 & !vINT4A & !vINT4C
+
+INT5A_REQUEST =>
+    INT_MSK12 & !vINT5A
+
+INT5A_REQUEST_PE =>
+    INT_MSK12 & !vINT5A
+
+INT5B_REQUEST =>
+    INT_MSK11 & !vINT5B
+
+INT5B_REQUEST_PE =>
+    INT_MSK11 & !INT_MSK12 & !vINT5B
+  # INT_MSK11 & vINT5A & !vINT5B
+
+INT5C_REQUEST =>
+    INT_MSK10 & !vINT5B
+
+INT5C_REQUEST_PE =>
+    !INT5B_REQUEST_PE & INT_MSK10 & !INT_MSK12 & !vINT5B
+  # !INT5B_REQUEST_PE & INT_MSK10 & vINT5A & !vINT5B
+
+INT5D_REQUEST =>
+    INT_MSK9 & !vINT5D
+
+INT5D_REQUEST_PE =>
+    !INT5B_REQUEST_PE & !INT5C_REQUEST_PE & INT_MSK9 & !INT_MSK12 & !vINT5D
+  # !INT5B_REQUEST_PE & !INT5C_REQUEST_PE & INT_MSK9 & vINT5A & !vINT5D
+
+INT6A_REQUEST.d  =>
+    INT_MSK14
+
+INT6A_REQUEST.ar  =>
+    !nSYS_RESET
+
+INT6A_REQUEST.ck  =>
+    !vINT6A
+
+INT6A_REQUEST_PE =>
+    INT6A_REQUEST
+
+INT6B_REQUEST.d  =>
+    INT_MSK13
+
+INT6B_REQUEST.ar  =>
+    !nSYS_RESET
+
+INT6B_REQUEST.ck  =>
+    !vINT6B
+
+INT6B_REQUEST_PE =>
+    !INT6A_REQUEST & INT6B_REQUEST
+
+INT7A_REQUEST.d  =>
+    INT_MSK15
+
+INT7A_REQUEST.ar  =>
+    !nSYS_RESET
+
+INT7A_REQUEST.ck  =>
+    !vINT7A
+
+INT7A_REQUEST_PE =>
+    INT7A_REQUEST
+
+INTL1_REQUEST_PE =>
+    !INT7A_REQUEST & !INTL2_REQUEST_PE & !INTL3_REQUEST_PE & !INTL4_REQUEST_PE & 
+      !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & INT_MSK1 & !vINT1A
+  # !INT7A_REQUEST & !INTL2_REQUEST_PE & !INTL3_REQUEST_PE & !INTL4_REQUEST_PE & 
+      !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & INT_MSK0 & !vINT1B
+
+INTL2_REQUEST_PE =>
+    !INT7A_REQUEST & !INTL3_REQUEST_PE & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & 
+      !INTL6_REQUEST_PE & INT_MSK3 & !vINT2A
+  # !INT7A_REQUEST & !INTL3_REQUEST_PE & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & 
+      !INTL6_REQUEST_PE & INT_MSK2 & !vINT2B
+
+INTL3_REQUEST_PE =>
+    !INT7A_REQUEST & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & 
+      INT_MSK5 & !vINT3A
+  # !INT7A_REQUEST & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & 
+      INT_MSK4 & !vINT3B
+
+INTL4_REQUEST_PE =>
+    !INT7A_REQUEST & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & INT_MSK8 & 
+      vINT4A
+  # !INT7A_REQUEST & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & INT_MSK7 & 
+      vINT4B
+  # !INT7A_REQUEST & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & INT_MSK6 & 
+      !vINT4C
+
+INTL5_REQUEST_PE =>
+    !INT7A_REQUEST & !INTL6_REQUEST_PE & INT_MSK12 & !vINT5A
+  # !INT7A_REQUEST & !INTL6_REQUEST_PE & INT_MSK10 & !vINT5B
+  # !INT7A_REQUEST & !INTL6_REQUEST_PE & INT_MSK11 & !vINT5B
+  # !INT7A_REQUEST & !INTL6_REQUEST_PE & INT_MSK9 & !vINT5D
+
+INTL6_REQUEST_PE =>
+    INT6A_REQUEST & !INT7A_REQUEST
+  # INT6B_REQUEST & !INT7A_REQUEST
+
+INTL7_REQUEST_PE =>
+    INT7A_REQUEST
+
+INT_ACK_LEVEL0.d  =>
+    CPU_A1
+
+INT_ACK_LEVEL0.ar  =>
+    !nSYS_RESET
+
+INT_ACK_LEVEL0.ck  =>
+    !nINT_ACK_CYCLE
+
+INT_ACK_LEVEL1.d  =>
+    CPU_A2
+
+INT_ACK_LEVEL1.ar  =>
+    !nSYS_RESET
+
+INT_ACK_LEVEL1.ck  =>
+    !nINT_ACK_CYCLE
+
+INT_ACK_LEVEL2.d  =>
+    CPU_A3
+
+INT_ACK_LEVEL2.ar  =>
+    !nSYS_RESET
+
+INT_ACK_LEVEL2.ck  =>
+    !nINT_ACK_CYCLE
+
+INT_MSK0.d  =>
+    CPU_D0.io 
+
+INT_MSK0.ar  =>
+    !nSYS_RESET
+
+INT_MSK0.ck  =>
+    !CPU_A0 & nINTCTRL_CS
+
+INT_MSK1.d  =>
+    CPU_D1.io 
+
+INT_MSK1.ar  =>
+    !nSYS_RESET
+
+INT_MSK1.ck  =>
+    !CPU_A0 & nINTCTRL_CS
+
+INT_MSK2.d  =>
+    CPU_D2.io 
+
+INT_MSK2.ar  =>
+    !nSYS_RESET
+
+INT_MSK2.ck  =>
+    !CPU_A0 & nINTCTRL_CS
+
+INT_MSK3.d  =>
+    CPU_D3.io 
+
+INT_MSK3.ar  =>
+    !nSYS_RESET
+
+INT_MSK3.ck  =>
+    !CPU_A0 & nINTCTRL_CS
+
+INT_MSK4.d  =>
+    CPU_D4.io 
+
+INT_MSK4.ar  =>
+    !nSYS_RESET
+
+INT_MSK4.ck  =>
+    !CPU_A0 & nINTCTRL_CS
+
+INT_MSK5.d  =>
+    CPU_D5.io 
+
+INT_MSK5.ar  =>
+    !nSYS_RESET
+
+INT_MSK5.ck  =>
+    !CPU_A0 & nINTCTRL_CS
+
+INT_MSK6.d  =>
+    CPU_D6.io 
+
+INT_MSK6.ar  =>
+    !nSYS_RESET
+
+INT_MSK6.ck  =>
+    !CPU_A0 & nINTCTRL_CS
+
+INT_MSK7.d  =>
+    CPU_D7.io 
+
+INT_MSK7.ar  =>
+    !nSYS_RESET
+
+INT_MSK7.ck  =>
+    !CPU_A0 & nINTCTRL_CS
+
+INT_MSK8.d  =>
+    CPU_D0.io 
+
+INT_MSK8.ar  =>
+    !nSYS_RESET
+
+INT_MSK8.ck  =>
+    CPU_A0 & nINTCTRL_CS
+
+INT_MSK9.d  =>
+    CPU_D1.io 
+
+INT_MSK9.ar  =>
+    !nSYS_RESET
+
+INT_MSK9.ck  =>
+    CPU_A0 & nINTCTRL_CS
+
+INT_MSK10.d  =>
+    CPU_D2.io 
+
+INT_MSK10.ar  =>
+    !nSYS_RESET
+
+INT_MSK10.ck  =>
+    CPU_A0 & nINTCTRL_CS
+
+INT_MSK11.d  =>
+    CPU_D3.io 
+
+INT_MSK11.ar  =>
+    !nSYS_RESET
+
+INT_MSK11.ck  =>
+    CPU_A0 & nINTCTRL_CS
+
+INT_MSK12.d  =>
+    CPU_D4.io 
+
+INT_MSK12.ar  =>
+    !nSYS_RESET
+
+INT_MSK12.ck  =>
+    CPU_A0 & nINTCTRL_CS
+
+INT_MSK13.d  =>
+    CPU_D5.io 
+
+INT_MSK13.ar  =>
+    !nSYS_RESET
+
+INT_MSK13.ck  =>
+    CPU_A0 & nINTCTRL_CS
+
+INT_MSK14.d  =>
+    CPU_D6.io 
+
+INT_MSK14.ar  =>
+    !nSYS_RESET
+
+INT_MSK14.ck  =>
+    CPU_A0 & nINTCTRL_CS
+
+INT_MSK15.d  =>
+    CPU_D7.io 
+
+INT_MSK15.ar  =>
+    !nSYS_RESET
+
+INT_MSK15.ck  =>
+    CPU_A0 & nINTCTRL_CS
+
+
+===============================================================================
+                                 Symbol Table
+===============================================================================
+
+Pin Variable                                    Pterms   Max     Min    
+Pol   Name              Ext     Pin     Type     Used   Pterms  Level   
+--- --------            ---     ---     ----    ------  ------  -----   
+
+    CPU_A0                      0        V        -       -       -     
+    CPU_A1                      0        V        -       -       -     
+    CPU_A2                      0        V        -       -       -     
+    CPU_A3                      0        V        -       -       -     
+    CPU_A8                      0        V        -       -       -     
+    CPU_A9                      0        V        -       -       -     
+    CPU_A10                     0        V        -       -       -     
+    CPU_A11                     0        V        -       -       -     
+    CPU_A12                     0        V        -       -       -     
+    CPU_A13                     0        V        -       -       -     
+    CPU_A14                     0        V        -       -       -     
+    CPU_A15                     0        V        -       -       -     
+    CPU_A16                     0        V        -       -       -     
+    CPU_A17                     0        V        -       -       -     
+    CPU_A18                     0        V        -       -       -     
+    CPU_A19                     0        V        -       -       -     
+    CPU_A20                     0        V        -       -       -     
+    CPU_A21                     0        V        -       -       -     
+    CPU_A22                     0        V        -       -       -     
+    CPU_A23                     0        V        -       -       -     
+    CPU_A24                     0        V        -       -       -     
+    CPU_A25                     0        V        -       -       -     
+    CPU_A26                     0        V        -       -       -     
+    CPU_A27                     0        V        -       -       -     
+    CPU_CLK                     0        V        -       -       -     
+    CPU_D0                      0        V        6       0       2     
+    CPU_D0              io      0        X        -       -       -     
+    CPU_D0              oe      0        X        1       0       1     
+    CPU_D1                      0        V        7       0       2     
+    CPU_D1              io      0        X        -       -       -     
+    CPU_D1              oe      0        X        1       0       1     
+    CPU_D2                      0        V        2       0       2     
+    CPU_D2              io      0        X        -       -       -     
+    CPU_D2              oe      0        X        1       0       1     
+    CPU_D3                      0        V        1       0       2     
+    CPU_D3              io      0        X        -       -       -     
+    CPU_D3              oe      0        X        1       0       1     
+    CPU_D4                      0        V        1       0       2     
+    CPU_D4              io      0        X        -       -       -     
+    CPU_D4              oe      0        X        1       0       1     
+    CPU_D5                      0        V        1       0       2     
+    CPU_D5              io      0        X        -       -       -     
+    CPU_D5              oe      0        X        1       0       1     
+    CPU_D6                      0        V        1       0       2     
+    CPU_D6              io      0        X        -       -       -     
+    CPU_D6              oe      0        X        1       0       1     
+    CPU_D7                      0        V        1       0       2     
+    CPU_D7              io      0        X        -       -       -     
+    CPU_D7              oe      0        X        1       0       1     
+    CPU_IPL0                    0        V        1       0       2     
+    CPU_IPL1                    0        V        1       0       2     
+    CPU_IPL2                    0        V        1       0       2     
+    CPU_RW                      0        V        -       -       -     
+    INT1A_REQUEST               0        I        1       -       -     
+    INT1A_REQUEST_PE            0        I        1       -       -     
+    INT1B_REQUEST               0        I        1       -       -     
+    INT1B_REQUEST_PE            0        I        2       -       -     
+    INT2A_REQUEST               0        I        1       -       -     
+    INT2A_REQUEST_PE            0        I        1       -       -     
+    INT2B_REQUEST               0        I        1       -       -     
+    INT2B_REQUEST_PE            136      N        2       0       2     
+    INT3A_REQUEST               0        I        1       -       -     
+    INT3A_REQUEST_PE            0        I        1       -       -     
+    INT3B_REQUEST               0        I        1       -       -     
+    INT3B_REQUEST_PE            135      N        2       0       2     
+    INT4A_REQUEST               0        I        1       -       -     
+    INT4A_REQUEST_PE            0        I        1       -       -     
+    INT4B_REQUEST               0        I        1       -       -     
+    INT4B_REQUEST_PE            134      N        2       0       2     
+    INT4C_REQUEST               0        I        1       -       -     
+    INT4C_REQUEST_PE            131      N        2       0       2     
+    INT5A_REQUEST               0        I        1       -       -     
+    INT5A_REQUEST_PE            0        I        1       -       -     
+    INT5B_REQUEST               0        I        1       -       -     
+    INT5B_REQUEST_PE            133      N        2       0       2     
+    INT5C_REQUEST               0        I        1       -       -     
+    INT5C_REQUEST_PE            130      N        2       0       2     
+    INT5D_REQUEST               0        I        1       -       -     
+    INT5D_REQUEST_PE            129      N        2       0       2     
+    INT6A_REQUEST               121      N        -       -       -     
+    INT6A_REQUEST       d       121      M        1       0       2     
+    INT6A_REQUEST       ar      121      M        1       0       1     
+    INT6A_REQUEST       ck      121      M        1       0       1     
+    INT6A_REQUEST_PE            0        I        1       -       -     
+    INT6B_REQUEST               122      N        -       -       -     
+    INT6B_REQUEST       d       122      M        1       0       2     
+    INT6B_REQUEST       ar      122      M        1       0       1     
+    INT6B_REQUEST       ck      122      M        1       0       1     
+    INT6B_REQUEST_PE            132      N        1       0       2     
+    INT7A_REQUEST               120      N        -       -       -     
+    INT7A_REQUEST       d       120      M        1       0       2     
+    INT7A_REQUEST       ar      120      M        1       0       1     
+    INT7A_REQUEST       ck      120      M        1       0       1     
+    INT7A_REQUEST_PE            0        I        1       -       -     
+    INTL1_REQUEST_PE            128      N        2       0       2     
+    INTL2_REQUEST_PE            127      N        2       0       2     
+    INTL3_REQUEST_PE            126      N        2       0       2     
+    INTL4_REQUEST_PE            125      N        3       0       2     
+    INTL5_REQUEST_PE            124      N        4       0       2     
+    INTL6_REQUEST_PE            123      N        2       0       2     
+    INTL7_REQUEST_PE            0        I        1       -       -     
+    INT_ACK_LEVEL0              101      N        -       -       -     
+    INT_ACK_LEVEL0      d       101      M        1       0       2     
+    INT_ACK_LEVEL0      ar      101      M        1       0       1     
+    INT_ACK_LEVEL0      ck      101      M        1       0       1     
+    INT_ACK_LEVEL1              102      N        -       -       -     
+    INT_ACK_LEVEL1      d       102      M        1       0       2     
+    INT_ACK_LEVEL1      ar      102      M        1       0       1     
+    INT_ACK_LEVEL1      ck      102      M        1       0       1     
+    INT_ACK_LEVEL2              103      N        -       -       -     
+    INT_ACK_LEVEL2      d       103      M        1       0       2     
+    INT_ACK_LEVEL2      ar      103      M        1       0       1     
+    INT_ACK_LEVEL2      ck      103      M        1       0       1     
+    INT_MSK0                    119      N        -       -       -     
+    INT_MSK0            d       119      M        1       0       2     
+    INT_MSK0            ar      119      M        1       0       1     
+    INT_MSK0            ck      119      M        1       0       1     
+    INT_MSK1                    118      N        -       -       -     
+    INT_MSK1            d       118      M        1       0       2     
+    INT_MSK1            ar      118      M        1       0       1     
+    INT_MSK1            ck      118      M        1       0       1     
+    INT_MSK2                    117      N        -       -       -     
+    INT_MSK2            d       117      M        1       0       2     
+    INT_MSK2            ar      117      M        1       0       1     
+    INT_MSK2            ck      117      M        1       0       1     
+    INT_MSK3                    116      N        -       -       -     
+    INT_MSK3            d       116      M        1       0       2     
+    INT_MSK3            ar      116      M        1       0       1     
+    INT_MSK3            ck      116      M        1       0       1     
+    INT_MSK4                    115      N        -       -       -     
+    INT_MSK4            d       115      M        1       0       2     
+    INT_MSK4            ar      115      M        1       0       1     
+    INT_MSK4            ck      115      M        1       0       1     
+    INT_MSK5                    114      N        -       -       -     
+    INT_MSK5            d       114      M        1       0       2     
+    INT_MSK5            ar      114      M        1       0       1     
+    INT_MSK5            ck      114      M        1       0       1     
+    INT_MSK6                    113      N        -       -       -     
+    INT_MSK6            d       113      M        1       0       2     
+    INT_MSK6            ar      113      M        1       0       1     
+    INT_MSK6            ck      113      M        1       0       1     
+    INT_MSK7                    112      N        -       -       -     
+    INT_MSK7            d       112      M        1       0       2     
+    INT_MSK7            ar      112      M        1       0       1     
+    INT_MSK7            ck      112      M        1       0       1     
+    INT_MSK8                    111      N        -       -       -     
+    INT_MSK8            d       111      M        1       0       2     
+    INT_MSK8            ar      111      M        1       0       1     
+    INT_MSK8            ck      111      M        1       0       1     
+    INT_MSK9                    110      N        -       -       -     
+    INT_MSK9            d       110      M        1       0       2     
+    INT_MSK9            ar      110      M        1       0       1     
+    INT_MSK9            ck      110      M        1       0       1     
+    INT_MSK10                   109      N        -       -       -     
+    INT_MSK10           d       109      M        1       0       2     
+    INT_MSK10           ar      109      M        1       0       1     
+    INT_MSK10           ck      109      M        1       0       1     
+    INT_MSK11                   108      N        -       -       -     
+    INT_MSK11           d       108      M        1       0       2     
+    INT_MSK11           ar      108      M        1       0       1     
+    INT_MSK11           ck      108      M        1       0       1     
+    INT_MSK12                   107      N        -       -       -     
+    INT_MSK12           d       107      M        1       0       2     
+    INT_MSK12           ar      107      M        1       0       1     
+    INT_MSK12           ck      107      M        1       0       1     
+    INT_MSK13                   106      N        -       -       -     
+    INT_MSK13           d       106      M        1       0       2     
+    INT_MSK13           ar      106      M        1       0       1     
+    INT_MSK13           ck      106      M        1       0       1     
+    INT_MSK14                   105      N        -       -       -     
+    INT_MSK14           d       105      M        1       0       2     
+    INT_MSK14           ar      105      M        1       0       1     
+    INT_MSK14           ck      105      M        1       0       1     
+    INT_MSK15                   104      N        -       -       -     
+    INT_MSK15           d       104      M        1       0       2     
+    INT_MSK15           ar      104      M        1       0       1     
+    INT_MSK15           ck      104      M        1       0       1     
+    nINTCTRL_CS                 0        V        -       -       -     
+    nINT_ACK_CYCLE              0        V        -       -       -     
+    nSYS_RESET                  0        V        -       -       -     
+    vINT1A                      0        V        -       -       -     
+    vINT1B                      0        V        -       -       -     
+    vINT2A                      0        V        -       -       -     
+    vINT2B                      0        V        -       -       -     
+    vINT3A                      0        V        -       -       -     
+    vINT3B                      0        V        -       -       -     
+    vINT4A                      0        V        -       -       -     
+    vINT4B                      0        V        -       -       -     
+    vINT4C                      0        V        -       -       -     
+    vINT5A                      0        V        -       -       -     
+    vINT5B                      0        V        -       -       -     
+    vINT5C                      0        V        -       -       -     
+    vINT5D                      0        V        -       -       -     
+    vINT6A                      0        V        -       -       -     
+    vINT6B                      0        V        -       -       -     
+    vINT7A                      0        V        -       -       -     
+
+
+LEGEND    D : default variable         F : field      G : group
+          I : intermediate variable    N : node       M : extended node
+          U : undefined                V : variable   X : extended variable
+          T : function
+
