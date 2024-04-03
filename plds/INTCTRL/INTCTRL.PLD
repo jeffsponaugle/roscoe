@@ -142,9 +142,12 @@ INT1B_REQUEST = !vINT1B & INT_MSK0;         // INT2B is an expansion interrupt (
    acknowlegment cycle as soon as the current cycle ends.   These are held active until either the device stops 
    asserting the request, or if edge triggered when the int ack cycle ends. 
 
-   The CPU has an internal interrupt level mask, and will ignore request that are lower than that current level.  On powerup
-   that level is set to 7, so only interrupt on level 7 will actually happen.  That is why level 7 interrupts are called NMI 
-   (Non Maskable Interrupts).
+   The CPU has an internal interrupt level mask, and will ignore request that are equal too or lower than that current level.  
+   On powerup that level is set to 7, which should ignore all interrupts.  However level 7 is special in that it will ignore only
+   level 6 and below.  That is why level 7 interrupts are called NMI (Non Maskable Interrupts).
+
+   When an interrupt is being serviced the interrupt level mask is set to the level of the interrupt being serviced.  That prevents further interrupts 
+   at that level from forcing reentry.
 */
 
 
