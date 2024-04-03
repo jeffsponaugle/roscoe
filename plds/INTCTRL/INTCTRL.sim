@@ -377,7 +377,8 @@ INT_MSK0.ar  =>
     !nSYS_RESET
 
 INT_MSK0.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK1.d  =>
     CPU_D1.io 
@@ -386,7 +387,8 @@ INT_MSK1.ar  =>
     !nSYS_RESET
 
 INT_MSK1.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK2.d  =>
     CPU_D2.io 
@@ -395,7 +397,8 @@ INT_MSK2.ar  =>
     !nSYS_RESET
 
 INT_MSK2.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK3.d  =>
     CPU_D3.io 
@@ -404,7 +407,8 @@ INT_MSK3.ar  =>
     !nSYS_RESET
 
 INT_MSK3.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK4.d  =>
     CPU_D4.io 
@@ -413,7 +417,8 @@ INT_MSK4.ar  =>
     !nSYS_RESET
 
 INT_MSK4.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK5.d  =>
     CPU_D5.io 
@@ -422,7 +427,8 @@ INT_MSK5.ar  =>
     !nSYS_RESET
 
 INT_MSK5.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK6.d  =>
     CPU_D6.io 
@@ -431,7 +437,8 @@ INT_MSK6.ar  =>
     !nSYS_RESET
 
 INT_MSK6.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK7.d  =>
     CPU_D7.io 
@@ -440,7 +447,8 @@ INT_MSK7.ar  =>
     !nSYS_RESET
 
 INT_MSK7.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK8.d  =>
     CPU_D0.io 
@@ -449,7 +457,8 @@ INT_MSK8.ar  =>
     !nSYS_RESET
 
 INT_MSK8.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK9.d  =>
     CPU_D1.io 
@@ -458,7 +467,8 @@ INT_MSK9.ar  =>
     !nSYS_RESET
 
 INT_MSK9.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK10.d  =>
     CPU_D2.io 
@@ -467,7 +477,8 @@ INT_MSK10.ar  =>
     !nSYS_RESET
 
 INT_MSK10.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK11.d  =>
     CPU_D3.io 
@@ -476,7 +487,8 @@ INT_MSK11.ar  =>
     !nSYS_RESET
 
 INT_MSK11.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK12.d  =>
     CPU_D4.io 
@@ -485,7 +497,8 @@ INT_MSK12.ar  =>
     !nSYS_RESET
 
 INT_MSK12.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK13.d  =>
     CPU_D5.io 
@@ -494,7 +507,8 @@ INT_MSK13.ar  =>
     !nSYS_RESET
 
 INT_MSK13.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK14.d  =>
     CPU_D6.io 
@@ -503,7 +517,8 @@ INT_MSK14.ar  =>
     !nSYS_RESET
 
 INT_MSK14.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK15.d  =>
     CPU_D7.io 
@@ -512,6 +527,7 @@ INT_MSK15.ar  =>
     !nSYS_RESET
 
 INT_MSK15.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 %END

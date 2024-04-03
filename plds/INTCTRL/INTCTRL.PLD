@@ -83,8 +83,8 @@ NODE INT2B_REQUEST_PE;
     RESETs to all 0
 */
 
-[INT_MSK15..8].ck = nINTCTRL_CS & CPU_A0;
-[INT_MSK7..0].ck = nINTCTRL_CS & !CPU_A0;
+[INT_MSK15..8].ck = nINTCTRL_CS # CPU_A0;               // An 8 bit write to 0x3000 0200
+[INT_MSK7..0].ck = nINTCTRL_CS # !CPU_A0;               // An 8 bit write to 0x3000 0201
 [INT_MSK15..0].ar = !nSYS_RESET;
 [INT_MSK15..8].d = [CPU_D7..0].io;
 [INT_MSK7..0].d = [CPU_D7..0].io;
@@ -133,7 +133,7 @@ INT3B_REQUEST = !vINT3B & INT_MSK4;         // INT3B in an expansion interrupt (
 INT2A_REQUEST = !vINT2A & INT_MSK3;         // INT2A comed from the Video Interface, Active low signal
 INT2B_REQUEST = !vINT2B & INT_MSK2;         // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
 INT1A_REQUEST = !vINT1A & INT_MSK1;         // INT2A comed from the Video Interface, Active low signal
-INT1B_REQUEST = !vINT1B & INT_MSK0;         // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
+INT1B_REQUEST = !vINT1B & INT_MSK0;         // INT2B is the power controller interrupt. Active low signal.
 
 /* 
    We will create a priority encoded version of each interrupt level so we can set the CPU_IPL0-2
@@ -202,7 +202,29 @@ INT1B_REQUEST_PE = !INT1A_REQUEST_PE & INT1B_REQUEST;
 
 /* 
    With the per level priority encoder we can build the vector number that needs to be driven onto the CPU 
-   data bus 
+   data bus.
+
+      IRQ         IRQL       Vector#              System Use
+      ------      -----      --------             -------------------------------
+      INT7A         7        11110000 (0xF0)      DEBUG (Button)
+      INT6A         6        11100001 (0xE1)      PTC #1 (Programmable Timer)
+      INT6B         6        11100010 (0xE2)      PTC #2 (Programmable Timer)
+      INT5A         5        11010001 (0xD1)      NIC
+      INT5B         5        11010010 (0xD2)      IDE 1
+      INT5C         5        11010100 (0xD4)      IDE 2
+      INT5D         5        11011000 (0xD8)      EXPANSION_I5
+      INT4A         4        11000001 (0xC1)      UART 1
+      INT4B         4        11000010 (0xC2)      UART 2
+      INT4C         4        11000100 (0xC4)      EXPANSION_I4
+      INT3A         3        10110001 (0xB1)      USB
+      INT3B         3        10110010 (0xB2)      EXPANSION_I3
+      INT2A         2        10100001 (0xA1)      VIDEO
+      INT2B         2        10100010 (0xA2)      EXPANSION_I2
+      INT1A         1        10010001 (0x91)      RTC
+      INT1B         1        10010010 (0x92)      POWER CONTROLLER
+     
+      Note that all of the other vectors starting with 1XXXXXXX should be vectored to a spurious interrupt handler.
+
 */
 
 [CPU_D7..0].oe = !nINT_ACK_CYCLE;       // If we are in an Interrupt Ack Cycle, enable the data bus outputs.
@@ -249,12 +271,12 @@ Total dedicated input used:	3/4 	(75%)
 Total I/O pins used		35/80 	(43%)
 Total Logic cells used 		49/128 	(38%)
 Total Flip-Flop used 		24/128 	(18%)
-Total Foldback logic used 	1/128 	(0%)
-Total Nodes+FB/MCells 		48/128 	(37%)
+Total Foldback logic used 	5/128 	(3%)
+Total Nodes+FB/MCells 		52/128 	(40%)
 Total cascade used 		2
 Total input pins 		27
 Total output pins 		11
-Total Pts 			110
+Total Pts 			114
 
 */
 

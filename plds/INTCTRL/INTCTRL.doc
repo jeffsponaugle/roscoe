@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Tue Apr 02 16:32:37 2024
+Created         Wed Apr 03 10:05:16 2024
 Name            INTCTRL
 Partno          INTCTRL
 Revision        01
@@ -308,7 +308,8 @@ INT_MSK0.ar  =>
     !nSYS_RESET
 
 INT_MSK0.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK1.d  =>
     CPU_D1.io 
@@ -317,7 +318,8 @@ INT_MSK1.ar  =>
     !nSYS_RESET
 
 INT_MSK1.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK2.d  =>
     CPU_D2.io 
@@ -326,7 +328,8 @@ INT_MSK2.ar  =>
     !nSYS_RESET
 
 INT_MSK2.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK3.d  =>
     CPU_D3.io 
@@ -335,7 +338,8 @@ INT_MSK3.ar  =>
     !nSYS_RESET
 
 INT_MSK3.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK4.d  =>
     CPU_D4.io 
@@ -344,7 +348,8 @@ INT_MSK4.ar  =>
     !nSYS_RESET
 
 INT_MSK4.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK5.d  =>
     CPU_D5.io 
@@ -353,7 +358,8 @@ INT_MSK5.ar  =>
     !nSYS_RESET
 
 INT_MSK5.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK6.d  =>
     CPU_D6.io 
@@ -362,7 +368,8 @@ INT_MSK6.ar  =>
     !nSYS_RESET
 
 INT_MSK6.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK7.d  =>
     CPU_D7.io 
@@ -371,7 +378,8 @@ INT_MSK7.ar  =>
     !nSYS_RESET
 
 INT_MSK7.ck  =>
-    !CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # !CPU_A0
 
 INT_MSK8.d  =>
     CPU_D0.io 
@@ -380,7 +388,8 @@ INT_MSK8.ar  =>
     !nSYS_RESET
 
 INT_MSK8.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK9.d  =>
     CPU_D1.io 
@@ -389,7 +398,8 @@ INT_MSK9.ar  =>
     !nSYS_RESET
 
 INT_MSK9.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK10.d  =>
     CPU_D2.io 
@@ -398,7 +408,8 @@ INT_MSK10.ar  =>
     !nSYS_RESET
 
 INT_MSK10.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK11.d  =>
     CPU_D3.io 
@@ -407,7 +418,8 @@ INT_MSK11.ar  =>
     !nSYS_RESET
 
 INT_MSK11.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK12.d  =>
     CPU_D4.io 
@@ -416,7 +428,8 @@ INT_MSK12.ar  =>
     !nSYS_RESET
 
 INT_MSK12.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK13.d  =>
     CPU_D5.io 
@@ -425,7 +438,8 @@ INT_MSK13.ar  =>
     !nSYS_RESET
 
 INT_MSK13.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK14.d  =>
     CPU_D6.io 
@@ -434,7 +448,8 @@ INT_MSK14.ar  =>
     !nSYS_RESET
 
 INT_MSK14.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 INT_MSK15.d  =>
     CPU_D7.io 
@@ -443,7 +458,8 @@ INT_MSK15.ar  =>
     !nSYS_RESET
 
 INT_MSK15.ck  =>
-    CPU_A0 & nINTCTRL_CS
+    nINTCTRL_CS
+  # CPU_A0
 
 field_INT_ACK_LEVEL =>
     INT_ACK_LEVEL2 , INT_ACK_LEVEL1 , INT_ACK_LEVEL0
@@ -581,67 +597,67 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     INT_MSK0                    119      N        -       -       -     
     INT_MSK0            d       119      M        1       0       2     
     INT_MSK0            ar      119      M        1       0       1     
-    INT_MSK0            ck      119      M        1       0       1     
+    INT_MSK0            ck      119      M        2       0       1     
     INT_MSK1                    118      N        -       -       -     
     INT_MSK1            d       118      M        1       0       2     
     INT_MSK1            ar      118      M        1       0       1     
-    INT_MSK1            ck      118      M        1       0       1     
+    INT_MSK1            ck      118      M        2       0       1     
     INT_MSK2                    117      N        -       -       -     
     INT_MSK2            d       117      M        1       0       2     
     INT_MSK2            ar      117      M        1       0       1     
-    INT_MSK2            ck      117      M        1       0       1     
+    INT_MSK2            ck      117      M        2       0       1     
     INT_MSK3                    116      N        -       -       -     
     INT_MSK3            d       116      M        1       0       2     
     INT_MSK3            ar      116      M        1       0       1     
-    INT_MSK3            ck      116      M        1       0       1     
+    INT_MSK3            ck      116      M        2       0       1     
     INT_MSK4                    115      N        -       -       -     
     INT_MSK4            d       115      M        1       0       2     
     INT_MSK4            ar      115      M        1       0       1     
-    INT_MSK4            ck      115      M        1       0       1     
+    INT_MSK4            ck      115      M        2       0       1     
     INT_MSK5                    114      N        -       -       -     
     INT_MSK5            d       114      M        1       0       2     
     INT_MSK5            ar      114      M        1       0       1     
-    INT_MSK5            ck      114      M        1       0       1     
+    INT_MSK5            ck      114      M        2       0       1     
     INT_MSK6                    113      N        -       -       -     
     INT_MSK6            d       113      M        1       0       2     
     INT_MSK6            ar      113      M        1       0       1     
-    INT_MSK6            ck      113      M        1       0       1     
+    INT_MSK6            ck      113      M        2       0       1     
     INT_MSK7                    112      N        -       -       -     
     INT_MSK7            d       112      M        1       0       2     
     INT_MSK7            ar      112      M        1       0       1     
-    INT_MSK7            ck      112      M        1       0       1     
+    INT_MSK7            ck      112      M        2       0       1     
     INT_MSK8                    111      N        -       -       -     
     INT_MSK8            d       111      M        1       0       2     
     INT_MSK8            ar      111      M        1       0       1     
-    INT_MSK8            ck      111      M        1       0       1     
+    INT_MSK8            ck      111      M        2       0       1     
     INT_MSK9                    110      N        -       -       -     
     INT_MSK9            d       110      M        1       0       2     
     INT_MSK9            ar      110      M        1       0       1     
-    INT_MSK9            ck      110      M        1       0       1     
+    INT_MSK9            ck      110      M        2       0       1     
     INT_MSK10                   109      N        -       -       -     
     INT_MSK10           d       109      M        1       0       2     
     INT_MSK10           ar      109      M        1       0       1     
-    INT_MSK10           ck      109      M        1       0       1     
+    INT_MSK10           ck      109      M        2       0       1     
     INT_MSK11                   108      N        -       -       -     
     INT_MSK11           d       108      M        1       0       2     
     INT_MSK11           ar      108      M        1       0       1     
-    INT_MSK11           ck      108      M        1       0       1     
+    INT_MSK11           ck      108      M        2       0       1     
     INT_MSK12                   107      N        -       -       -     
     INT_MSK12           d       107      M        1       0       2     
     INT_MSK12           ar      107      M        1       0       1     
-    INT_MSK12           ck      107      M        1       0       1     
+    INT_MSK12           ck      107      M        2       0       1     
     INT_MSK13                   106      N        -       -       -     
     INT_MSK13           d       106      M        1       0       2     
     INT_MSK13           ar      106      M        1       0       1     
-    INT_MSK13           ck      106      M        1       0       1     
+    INT_MSK13           ck      106      M        2       0       1     
     INT_MSK14                   105      N        -       -       -     
     INT_MSK14           d       105      M        1       0       2     
     INT_MSK14           ar      105      M        1       0       1     
-    INT_MSK14           ck      105      M        1       0       1     
+    INT_MSK14           ck      105      M        2       0       1     
     INT_MSK15                   104      N        -       -       -     
     INT_MSK15           d       104      M        1       0       2     
     INT_MSK15           ar      104      M        1       0       1     
-    INT_MSK15           ck      104      M        1       0       1     
+    INT_MSK15           ck      104      M        2       0       1     
     field_INT_ACK_LEVEL         0        F        -       -       -     
     nINTCTRL_CS                 0        V        -       -       -     
     nINT_ACK_CYCLE              0        V        -       -       -     
