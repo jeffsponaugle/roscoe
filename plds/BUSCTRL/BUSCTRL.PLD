@@ -20,7 +20,7 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
     ##########################################################################################
 */
 Pin = [CPU_FC0..2];
-Pin = [CPU_A31..20];
+Pin = [CPU_A31..16];
 Pin = [CPU_SIZ0..1];
 Pin = [CPU_AA1..0];
 Pin = nCPU_ECS;
@@ -60,6 +60,7 @@ Pin = nSRAM_WE;
 Pin = nDEV8BITCS;
 Pin = nDEV16BITCS;
 Pin = nDEV32BITCS;
+Pin = nINT_ACK_CYCLE;
 
 // To DRAM
 
@@ -190,6 +191,15 @@ BA16_LH = !(!CPU_AA0 & CPU_SIZ0 & !CPU_SIZ1);
 
 BA8 = 'b'1;
 
+/* FC pins
+
+    The FC pins are used by the CPU to indicate the type of memory access.  
+    We are not using the USER and SUPERVISOR types, so we only need to know if the 
+    access is a CPU_SPACE or not.
+*/
+
+FC_CPU_SPACE = CPU_FC0 & CPU_FC1 & CPU_FC2;
+
 /* 
     Region selection logic:
 
@@ -202,20 +212,24 @@ BA8 = 'b'1;
     DEV16BIT_REGION_ACCESS - Any access to 0x4000 0000 to 0x4FFF FFFF
     DEV32BIT_REGION_ACCESS - Any access to 0x5000 0000 to 0x5FFF FFFF
     VIDEO_REGION_ACCESS - Any access to 0x6000 0000 to 0x7FFF FFFF
+    INTERRUPT_ACK_ACCESS - Any access in the CPU Space that is also an Interrupt ACK (Determined by A16-A19)
 
 */
 
-DRAM_REGION_ACCESS = !nCPU_AS & CPU_A31 # !REFRESH_ACTIVE;                    // 0x8000 0000 - 0xFFFF FFFF
-FLASH_REGION_ACCESS = !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28;  // 0x0000 0000 - 0x0FFF FFFF
-SRAM_REGION_ACCESS = !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & CPU_A28;    // 0x1000 0000 - 0x1FFF FFFF
-DEV8BIT_REGION_ACCESS = !nCPU_AS & !CPU_A31 & !CPU_A30 
+DRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & CPU_A31 # !REFRESH_ACTIVE;                    // 0x8000 0000 - 0xFFFF FFFF
+FLASH_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28;  // 0x0000 0000 - 0x0FFF FFFF
+SRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & CPU_A28;    // 0x1000 0000 - 0x1FFF FFFF
+DEV8BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 
                         & CPU_A29 & CPU_A28;                                // 0x3000 0000 - 0x3FFF FFFF
-DEV16BIT_REGION_ACCESS = !nCPU_AS & !CPU_A31 & CPU_A30 
+DEV16BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 
                         & !CPU_A29 & !CPU_A28;                              // 0x4000 0000 - 0x4FFF FFFF
-DEV32BIT_REGION_ACCESS = !nCPU_AS & !CPU_A31 & CPU_A30 
+DEV32BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 
                         & !CPU_A29 & CPU_A28;                               // 0x5000 0000 - 0x5FFF FFFF
-VIDEO_REGION_ACCESS = !nCPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;               // 0x6000 0000 - 0x7FFF FFFF
+VIDEO_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;               // 0x6000 0000 - 0x7FFF FFFF
+INTERRUPT_ACK_ACCESS =  !nCPU_AS & FC_CPU_SPACE & CPU_A16 & CPU_A17 & CPU_A18 & CPU_A19;
 
+
+nINT_ACK_CYCLE = !INTERRUPT_ACK_ACCESS;
 
 /*
     DSACK Generation 
@@ -244,9 +258,11 @@ VIDEO_REGION_ACCESS = !nCPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;               // 
     the DRAM_REGION_ACCESS flag to go to 1.  This transistion will start the DRAM access, which will then assert the DSACK 
     signals ending the wait states the CPU inserted.
 
+    Interrupt Ack Access is set to 8 bits since the INTCTRL (Interrupt controller) is 8 bit.
+
 */
 
-nCPU_DSACK0 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # DEV32BIT_REGION_ACCESS # DEV8BIT_REGION_ACCESS);
+nCPU_DSACK0 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # DEV32BIT_REGION_ACCESS # DEV8BIT_REGION_ACCESS # INTERRUPT_ACK_ACCESS);
 nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # DEV32BIT_REGION_ACCESS # DEV16BIT_REGION_ACCESS);
 
 
@@ -585,15 +601,14 @@ nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
 /*
 Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		54/80 	(67%)
-Total Logic cells used 		59/128 	(46%)
+Total I/O pins used		62/80 	(77%)
+Total Logic cells used 		62/128 	(48%)
 Total Flip-Flop used 		25/128 	(19%)
-Total Foldback logic used 	10/128 	(7%)
-Total Nodes+FB/MCells 		69/128 	(53%)
+Total Foldback logic used 	8/128 	(6%)
+Total Nodes+FB/MCells 		70/128 	(54%)
 Total cascade used 		0
-Total input pins 		24
-Total output pins 		32
-Total Pts 			156
-*/
+Total input pins 		31
+Total output pins 		33
+Total Pts 			188*/
 
 

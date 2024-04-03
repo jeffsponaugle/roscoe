@@ -4,8 +4,8 @@
 *******************************************************************************
 
 CUPL(WM)        5.0a Serial# 60008009
-Device          f1508ispqfp100  Library DLIB-h-40-2
-Created         Sun Mar 31 16:57:01 2024
+Device          f1508isptqfp100  Library DLIB-h-40-2
+Created         Tue Apr 02 17:32:41 2024
 Name            BUSCTRL
 Partno          BUSCTRL
 Revision        01
@@ -84,19 +84,26 @@ CPU_CLK_div16.ck  =>
     CPU_CLK_div8
 
 DEV16BIT_REGION_ACCESS =>
-    !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !nCPU_AS
+    !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 DEV32BIT_REGION_ACCESS =>
-    CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !nCPU_AS
+    CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 DEV8BIT_REGION_ACCESS =>
-    CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS
+    CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 DRAM_ACCESS_MUX.d  =>
     1 
 
 DRAM_ACCESS_MUX.ar  =>
-    REFRESH_ACTIVE & nCPU_AS
+    CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
+  # REFRESH_ACTIVE & nCPU_AS
   # !CPU_A31 & REFRESH_ACTIVE
   # !nSYS_RESET
 
@@ -127,11 +134,22 @@ DRAM_MUX =>
     DRAM_ACCESS_MUX
 
 DRAM_REGION_ACCESS =>
-    CPU_A31 & !nCPU_AS
+    CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # CPU_A31 & !CPU_FC2 & !nCPU_AS
   # !REFRESH_ACTIVE
 
+FC_CPU_SPACE =>
+    CPU_FC0 & CPU_FC1 & CPU_FC2
+
 FLASH_REGION_ACCESS =>
-    !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS
+    !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
+
+INTERRUPT_ACK_ACCESS =>
+    CPU_A16 & CPU_A17 & CPU_A18 & CPU_A19 & CPU_FC0 & CPU_FC1 & CPU_FC2 & 
+      !nCPU_AS
 
 REFRESH_ACTIVE.d  =>
     REFRESH_ACTIVE
@@ -272,10 +290,14 @@ REFRESH_TIMER_RESET.ck  =>
     !CPU_CLK_div8
 
 SRAM_REGION_ACCESS =>
-    CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS
+    CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 VIDEO_REGION_ACCESS =>
-    CPU_A29 & CPU_A30 & !CPU_A31 & !nCPU_AS
+    CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 field_CPU_ADDRESS =>
     CPU_A31 , CPU_A30 , CPU_A29 , CPU_A28 , CPU_A27 , CPU_A26 , CPU_A25 , 
@@ -286,28 +308,44 @@ field_REFRESH_STATE_MACHINE =>
 
 nCPU_DSACK0 =>
     REFRESH_ACTIVE & nCPU_AS
-  # !CPU_A28 & !CPU_A31 & REFRESH_ACTIVE
-  # CPU_A29 & CPU_A30 & !CPU_A31 & REFRESH_ACTIVE
+  # !CPU_A28 & !CPU_A31 & !CPU_FC0 & REFRESH_ACTIVE
+  # !CPU_A28 & !CPU_A31 & !CPU_FC1 & REFRESH_ACTIVE
+  # !CPU_A28 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE
+  # CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & REFRESH_ACTIVE
+  # CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC1 & REFRESH_ACTIVE
+  # !CPU_A16 & CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
+  # !CPU_A17 & CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
+  # !CPU_A18 & CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
+  # !CPU_A19 & CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
+  # CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE
 
 nCPU_DSACK1 =>
     REFRESH_ACTIVE & nCPU_AS
   # CPU_A29 & !CPU_A31 & REFRESH_ACTIVE
   # !CPU_A28 & !CPU_A30 & !CPU_A31 & REFRESH_ACTIVE
+  # CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
 
 nDEV16BITCS =>
-    !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !nCPU_AS
+    !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 nDEV32BITCS =>
-    CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !nCPU_AS
+    CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 nDEV8BITCS =>
-    CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS
+    CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 nDRAM_ACCESS_CAS.d  =>
     0 
 
 nDRAM_ACCESS_CAS.ap  =>
-    REFRESH_ACTIVE & nCPU_AS
+    CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
+  # REFRESH_ACTIVE & nCPU_AS
   # !CPU_A31 & REFRESH_ACTIVE
   # !nSYS_RESET
 
@@ -322,7 +360,9 @@ nDRAM_ACCESS_RAS.ap  =>
   # !nSYS_RESET
 
 nDRAM_ACCESS_RAS.ck  =>
-    CPU_A31 & !nCPU_AS
+    CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # CPU_A31 & !CPU_FC2 & !nCPU_AS
   # !REFRESH_ACTIVE
 
 nDRAM_CAS0 =>
@@ -351,6 +391,7 @@ nDRAM_CAS3 =>
 nDRAM_DATA_EN =>
     !CPU_A31 & REFRESH_ACTIVE
   # REFRESH_ACTIVE & nCPU_AS
+  # CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
 
 nDRAM_S1A_RAS =>
     CPU_A24 & nREFRESH_RAS
@@ -412,6 +453,17 @@ nDRAM_WE =>
     CPU_RW
   # !CPU_A31 & REFRESH_ACTIVE
   # REFRESH_ACTIVE & nCPU_AS
+  # CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
+
+nINT_ACK_CYCLE =>
+    !CPU_A16
+  # !CPU_A17
+  # !CPU_A18
+  # !CPU_A19
+  # !CPU_FC0
+  # !CPU_FC1
+  # !CPU_FC2
+  # nCPU_AS
 
 nREFRESH_CAS.d  =>
     REFRESH_STATE_MACHINE2
@@ -451,6 +503,7 @@ nSRAM_BANK1_CE =>
   # CPU_A30
   # CPU_A31
   # nCPU_AS
+  # CPU_FC0 & CPU_FC1 & CPU_FC2
 
 nSRAM_BANK2_CE =>
     !CPU_A20
@@ -466,6 +519,7 @@ nSRAM_BANK2_CE =>
   # CPU_A30
   # CPU_A31
   # nCPU_AS
+  # CPU_FC0 & CPU_FC1 & CPU_FC2
 
 nSRAM_BANK3_CE =>
     CPU_A20
@@ -481,6 +535,7 @@ nSRAM_BANK3_CE =>
   # CPU_A30
   # CPU_A31
   # nCPU_AS
+  # CPU_FC0 & CPU_FC1 & CPU_FC2
 
 nSRAM_BANK4_CE =>
     !CPU_A20
@@ -496,6 +551,7 @@ nSRAM_BANK4_CE =>
   # CPU_A30
   # CPU_A31
   # nCPU_AS
+  # CPU_FC0 & CPU_FC1 & CPU_FC2
 
 nSRAM_LH_SEL =>
     CPU_AA1 & !CPU_RW
@@ -548,6 +604,10 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     BA32_UL                     0        I        7       -       -     
     BA8                         0        I        1       -       -     
     CLK_IN                      0        V        -       -       -     
+    CPU_A16                     0        V        -       -       -     
+    CPU_A17                     0        V        -       -       -     
+    CPU_A18                     0        V        -       -       -     
+    CPU_A19                     0        V        -       -       -     
     CPU_A20                     0        V        -       -       -     
     CPU_A21                     0        V        -       -       -     
     CPU_A22                     0        V        -       -       -     
@@ -584,12 +644,12 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     CPU_RW                      0        V        -       -       -     
     CPU_SIZ0                    0        V        -       -       -     
     CPU_SIZ1                    0        V        -       -       -     
-    DEV16BIT_REGION_ACCESS        0        I        1       -       -     
-    DEV32BIT_REGION_ACCESS        0        I        1       -       -     
-    DEV8BIT_REGION_ACCESS        0        I        1       -       -     
+    DEV16BIT_REGION_ACCESS        0        I        3       -       -     
+    DEV32BIT_REGION_ACCESS        0        I        3       -       -     
+    DEV8BIT_REGION_ACCESS        0        I        3       -       -     
     DRAM_ACCESS_MUX             113      N        -       -       -     
     DRAM_ACCESS_MUX     d       113      M        1       0       2     
-    DRAM_ACCESS_MUX     ar      113      M        3       0       1     
+    DRAM_ACCESS_MUX     ar      113      M        4       0       1     
     DRAM_ACCESS_MUX     ck      113      M        1       0       1     
     DRAM_ACCESS_RAS_RESET1        109      N        -       -       -     
     DRAM_ACCESS_RAS_RESET1d       109      M        1       0       2     
@@ -600,8 +660,10 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     DRAM_ACCESS_RAS_RESET2ar      110      M        2       0       1     
     DRAM_ACCESS_RAS_RESET2ck      110      M        1       0       1     
     DRAM_MUX                    0        V        1       0       2     
-    DRAM_REGION_ACCESS          0        I        2       -       -     
-    FLASH_REGION_ACCESS         0        I        1       -       -     
+    DRAM_REGION_ACCESS          0        I        4       -       -     
+    FC_CPU_SPACE                0        I        1       -       -     
+    FLASH_REGION_ACCESS         0        I        3       -       -     
+    INTERRUPT_ACK_ACCESS        0        I        1       -       -     
     REFRESH_ACTIVE              101      N        -       -       -     
     REFRESH_ACTIVE      d       101      M        3       0       2     
     REFRESH_ACTIVE      ar      101      M        2       0       1     
@@ -651,33 +713,33 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     REFRESH_TIMER_RESET d       121      M        1       0       2     
     REFRESH_TIMER_RESET ar      121      M        1       0       1     
     REFRESH_TIMER_RESET ck      121      M        1       0       1     
-    SRAM_REGION_ACCESS          0        I        1       -       -     
-    VIDEO_REGION_ACCESS         0        I        1       -       -     
+    SRAM_REGION_ACCESS          0        I        3       -       -     
+    VIDEO_REGION_ACCESS         0        I        3       -       -     
     field_CPU_ADDRESS           0        F        -       -       -     
     field_REFRESH_STATE_MACHINE        0        F        -       -       -     
     nCPU_AS                     0        V        -       -       -     
     nCPU_BERR                   0        V        -       -       -     
-    nCPU_DSACK0                 0        V        3       0       2     
-    nCPU_DSACK1                 0        V        3       0       2     
+    nCPU_DSACK0                 0        V        11      0       2     
+    nCPU_DSACK1                 0        V        4       0       2     
     nCPU_ECS                    0        V        -       -       -     
     nCPU_HALT                   0        V        -       -       -     
     nCPU_STERM                  0        V        -       -       -     
-    nDEV16BITCS                 0        V        1       0       2     
-    nDEV32BITCS                 0        V        1       0       2     
-    nDEV8BITCS                  0        V        1       0       2     
+    nDEV16BITCS                 0        V        3       0       2     
+    nDEV32BITCS                 0        V        3       0       2     
+    nDEV8BITCS                  0        V        3       0       2     
     nDRAM_ACCESS_CAS            114      N        -       -       -     
     nDRAM_ACCESS_CAS    d       114      M        1       0       2     
-    nDRAM_ACCESS_CAS    ap      114      M        3       0       1     
+    nDRAM_ACCESS_CAS    ap      114      M        4       0       1     
     nDRAM_ACCESS_CAS    ck      114      M        1       0       1     
     nDRAM_ACCESS_RAS            106      N        -       -       -     
     nDRAM_ACCESS_RAS    d       106      M        1       0       2     
     nDRAM_ACCESS_RAS    ap      106      M        2       0       1     
-    nDRAM_ACCESS_RAS    ck      106      M        2       0       1     
+    nDRAM_ACCESS_RAS    ck      106      M        4       0       1     
     nDRAM_CAS0                  0        V        5       0       2     
     nDRAM_CAS1                  0        V        4       0       2     
     nDRAM_CAS2                  0        V        3       0       2     
     nDRAM_CAS3                  0        V        3       0       2     
-    nDRAM_DATA_EN               0        V        2       0       2     
+    nDRAM_DATA_EN               0        V        3       0       2     
     nDRAM_S1A_RAS               0        V        5       0       2     
     nDRAM_S1B_RAS               0        V        5       0       2     
     nDRAM_S2A_RAS               0        V        5       0       2     
@@ -686,7 +748,8 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     nDRAM_S3B_RAS               0        V        5       0       2     
     nDRAM_S4A_RAS               0        V        5       0       2     
     nDRAM_S4B_RAS               0        V        5       0       2     
-    nDRAM_WE                    0        V        3       0       2     
+    nDRAM_WE                    0        V        4       0       2     
+    nINT_ACK_CYCLE              0        V        8       0       2     
     nREFRESH_CAS                112      N        -       -       -     
     nREFRESH_CAS        d       112      M        3       0       2     
     nREFRESH_CAS        ap      112      M        2       0       1     
@@ -695,10 +758,10 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     nREFRESH_RAS        d       111      M        3       0       2     
     nREFRESH_RAS        ap      111      M        2       0       1     
     nREFRESH_RAS        ck      111      M        1       0       1     
-    nSRAM_BANK1_CE              0        V        13      0       2     
-    nSRAM_BANK2_CE              0        V        13      0       2     
-    nSRAM_BANK3_CE              0        V        13      0       2     
-    nSRAM_BANK4_CE              0        V        13      0       2     
+    nSRAM_BANK1_CE              0        V        14      0       2     
+    nSRAM_BANK2_CE              0        V        14      0       2     
+    nSRAM_BANK3_CE              0        V        14      0       2     
+    nSRAM_BANK4_CE              0        V        14      0       2     
     nSRAM_LH_SEL                0        V        2       0       2     
     nSRAM_LL_SEL                0        V        2       0       2     
     nSRAM_OE                    0        V        1       0       2     
