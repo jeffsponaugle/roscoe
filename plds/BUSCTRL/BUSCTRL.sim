@@ -1,5 +1,4 @@
 %SIGNAL
-PIN   0 =  CLK_IN 
 PIN   0 =  CPU_A16 
 PIN   0 =  CPU_A17 
 PIN   0 =  CPU_A18 
@@ -144,12 +143,6 @@ BOOTFLASH_REGION_ACCESS =>
     !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
   # !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
   # !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
-
-CPU_CLK.d  =>
-    !CPU_CLK
-
-CPU_CLK.ck  =>
-    CLK_IN
 
 CPU_CLK_div2.d  =>
     !CPU_CLK_div2
@@ -713,7 +706,7 @@ nSYS_RESET.d  =>
     1 
 
 nSYS_RESET.ar  =>
-    nSYS_RESET_IN
+    !nSYS_RESET_IN
 
 nSYS_RESET.ck  =>
     !CPU_CLK

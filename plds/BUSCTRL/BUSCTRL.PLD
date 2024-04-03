@@ -27,7 +27,7 @@ Pin = nCPU_ECS;
 Pin = CPU_RW;
 Pin = nCPU_AS;
 Pin = nSYS_RESET_IN;
-Pin = CLK_IN;
+Pin = CPU_CLK;
 
 /* 
                                                 Outputs 
@@ -41,8 +41,6 @@ Pin = nSYS_RESET;
 Pin = nCPU_HALT;
 Pin = nCPU_BERR;
 Pin = nCPU_STERM;
-Pin = CPU_CLK;
-
 Pin = nCPU_RD;       // An inverted version of the CPU_RW line, used to /OE pins on memory and devices.
 
 // To Boot Flash
@@ -92,10 +90,6 @@ Pin = nDRAM_WE;
 
 Pin = UNUSED1;
 
-
-
-
-
 NODE REFRESH_ACTIVE;
 NODE CPU_CLK_div2;
 NODE CPU_CLK_div4;
@@ -126,16 +120,13 @@ UNUSED1 = (CPU_A31 & CPU_A30 & CPU_A29 & CPU_A28 & CPU_A27) #  ( CPU_A26 & CPU_A
 
 /* 
     Clock Generation:
-    We assume an input clock in CLK_IN that is 2 times the target CPU speed.
-    CPU_CLK is the CPU Clock, which is a flip-flop toggeled by the CLK_IN rising edge.
+    CPU_CLK is the CPU Clock
     CPU_CLK is is not held in reset during a SYS_RESET event, so the CPU will have a clock running 
     all of the time.
 
     We will also generate some subdivisor clocks to use in the DRAM system.
 */
 
-CPU_CLK.d = !CPU_CLK;               /* [16],20,25,33,40 Mhz */
-CPU_CLK.ck = CLK_IN;
 
 CPU_CLK_div2.d = !CPU_CLK_div2;     /* [8],10,12.5,16.5,20 Mhz */
 CPU_CLK_div2.ck = CPU_CLK;
@@ -153,7 +144,7 @@ CPU_CLK_div16.ck = CPU_CLK_div8;
 /* 
    System Reset Control:
 
-   SYS_RESET_IN is an input signal that comes from a reset button or reset controller (DS1288).  It is an active low signal
+   SYS_RESET_IN is an input signal that comes from a reset controller (POWER_CONTROLLER).  It is an active low signal
    that indicated a system reset.  When this line goes low the SYS_RESET output will instantly go low.  SYS_RESET will only 
    come out of reset on the falling edge of the CPU_CLK.
 
@@ -163,7 +154,7 @@ CPU_CLK_div16.ck = CPU_CLK_div8;
 */
 
 nSYS_RESET.d = 'b'1;
-nSYS_RESET.ar = nSYS_RESET_IN;
+nSYS_RESET.ar = !nSYS_RESET_IN;
 nSYS_RESET.ck = !CPU_CLK;
 
 /* 
@@ -630,15 +621,14 @@ nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
 /*
 Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		68/80 	(85%)
-Total Logic cells used 		69/128 	(53%)
-Total Flip-Flop used 		25/128 	(19%)
-Total Foldback logic used 	8/128 	(6%)
+Total I/O pins used		69/80 	(86%)
+Total Logic cells used 		70/128 	(54%)
+Total Flip-Flop used 		24/128 	(18%)
+Total Foldback logic used 	7/128 	(5%)
 Total Nodes+FB/MCells 		77/128 	(60%)
 Total cascade used 		0
 Total input pins 		31
-Total output pins 		39
-Total Pts 			199
-*/
+Total output pins 		40
+Total Pts 			194*/
 
 

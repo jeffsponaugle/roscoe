@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Tue Apr 02 20:33:30 2024 "}
+  {DBtime "Wed Apr 03 12:33:26 2024 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -38,7 +38,7 @@
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 190 1430}
+   {Rdl 190 1410}
 
    [Ly "PINNUM"]
    [Ts 15][Tj "RC"]
@@ -50,7 +50,7 @@
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 1420 250 0}
+   {R 130 1400 250 0}
    [Ly "PINNAM"]
    [Tj "LC"]
    [Tj "RC"]
@@ -61,13 +61,13 @@
 
   {ATR
    {IN
-    {Org 100 1420}
+    {Org 100 1400}
     {Ty 255}
    }
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\BUSCTRL 190 1420}
+    {At PLD C:\BUSCTRL 190 1400}
    }
   }
  }

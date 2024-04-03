@@ -53,6 +53,12 @@ Pin = nVGA_CTRL_CS;
 Pin = nUSB_CS;
 Pin = nNIC_CS;
 
+Pin = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
+
+// dummy expression to force the pins to be assigned.
+
+EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & SYS_RESET & nDEV32BITCS & CPU_RW;
+
 FIELD field_CPU_ADDRESS = [CPU_A27..8];
 
 /* 8 bit devices */

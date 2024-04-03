@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Tue Apr 02 20:33:30 2024
+Created         Wed Apr 03 12:33:26 2024
 Name            BUSCTRL
 Partno          BUSCTRL
 Revision        01
@@ -62,12 +62,6 @@ BOOTFLASH_REGION_ACCESS =>
     !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
   # !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
   # !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
-
-CPU_CLK.d  =>
-    !CPU_CLK
-
-CPU_CLK.ck  =>
-    CLK_IN
 
 CPU_CLK_div2.d  =>
     !CPU_CLK_div2
@@ -641,7 +635,7 @@ nSYS_RESET.d  =>
     1 
 
 nSYS_RESET.ar  =>
-    nSYS_RESET_IN
+    !nSYS_RESET_IN
 
 nSYS_RESET.ck  =>
     !CPU_CLK
@@ -664,7 +658,6 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     BA8                         0        I        1       -       -     
     BIGFLASH_REGION_ACCESS        0        I        3       -       -     
     BOOTFLASH_REGION_ACCESS        0        I        3       -       -     
-    CLK_IN                      0        V        -       -       -     
     CPU_A16                     0        V        -       -       -     
     CPU_A17                     0        V        -       -       -     
     CPU_A18                     0        V        -       -       -     
@@ -684,8 +677,6 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     CPU_AA0                     0        V        -       -       -     
     CPU_AA1                     0        V        -       -       -     
     CPU_CLK                     0        V        -       -       -     
-    CPU_CLK             d       0        X        1       0       2     
-    CPU_CLK             ck      0        X        1       0       1     
     CPU_CLK_div2                102      N        -       -       -     
     CPU_CLK_div2        d       102      M        1       0       2     
     CPU_CLK_div2        ck      102      M        1       0       1     
