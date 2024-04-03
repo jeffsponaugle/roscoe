@@ -36,12 +36,22 @@ Pin = CLK_IN;
 
 // To CPU
 Pin = [nCPU_DSACK0..1];
-Pin = CPU_CIIN;
+Pin = nCPU_CIIN;
 Pin = nSYS_RESET;
 Pin = nCPU_HALT;
 Pin = nCPU_BERR;
 Pin = nCPU_STERM;
 Pin = CPU_CLK;
+
+Pin = nCPU_RD;       // An inverted version of the CPU_RW line, used to /OE pins on memory and devices.
+
+// To Boot Flash
+Pin = nBFLASH_CE;
+Pin = nBFLASH_WE;
+
+// To 64M Flash
+
+Pin = bBIGFLASH_CE;
 
 // To SRAM
 
@@ -53,8 +63,8 @@ Pin = nSRAM_LL_SEL;
 Pin = nSRAM_LH_SEL;
 Pin = nSRAM_UL_SEL;
 Pin = nSRAM_UH_SEL;
-Pin = nSRAM_OE;
-Pin = nSRAM_WE;
+Pin = nSRAM_OE;             // Might not need this - could use nMEM_OE;
+Pin = nSRAM_WE;             // Might not need this - could use CPU_RW;
 
 // To Devices
 Pin = nDEV8BITCS;
@@ -80,6 +90,8 @@ Pin = DRAM_MUX;              // MUX for addess lines going to DRAM (0=ROW, 1=COL
 Pin = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the CPU.
 Pin = nDRAM_WE;
 
+Pin = UNUSED1;
+
 
 
 
@@ -100,6 +112,15 @@ NODE DRAM_ACCESS_MUX;
 NODE nDRAM_ACCESS_CAS;
 
 
+/* Unused pin defauts */
+nCPU_HALT = 'b'1;
+nCPU_BERR = 'b'1;
+nCPU_STERM = 'b'1;
+nCPU_RD = !CPU_RW;
+nCPU_CIIN = 'b'1;
+
+// UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
+UNUSED1 = (CPU_A31 & CPU_A30 & CPU_A29 & CPU_A28 & CPU_A27) #  ( CPU_A26 & CPU_A25 & CPU_A24 & CPU_A23 & CPU_A22) # ( CPU_A21 & CPU_A20 & CPU_A19 & CPU_A18 & CPU_A17 );
 
 
 
@@ -206,7 +227,7 @@ FC_CPU_SPACE = CPU_FC0 & CPU_FC1 & CPU_FC2;
     These variables are active high indicators of access to a particular area of memory.
 
     DRAM_REGION_ACCESS - Any access to the upper 2GB of address space
-    FLASH_REGION_ACCESS - Any access to 0x0000 0000 to 0x0FFF FFFF
+    BOOTFLASH_REGION_ACCESS - Any access to 0x0000 0000 to 0x0FFF FFFF
     SRAM_REGION_ACCESS - Any access to 0x1000 0000 to 0x1FFF FFFF
     DEV8BIT_REGION_ACCESS - Any access to 0x3000 0000 to 0x3FFF FFFF
     DEV16BIT_REGION_ACCESS - Any access to 0x4000 0000 to 0x4FFF FFFF
@@ -216,18 +237,18 @@ FC_CPU_SPACE = CPU_FC0 & CPU_FC1 & CPU_FC2;
 
 */
 
-DRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & CPU_A31 # !REFRESH_ACTIVE;                    // 0x8000 0000 - 0xFFFF FFFF
-FLASH_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28;  // 0x0000 0000 - 0x0FFF FFFF
-SRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & CPU_A28;    // 0x1000 0000 - 0x1FFF FFFF
+DRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & CPU_A31 # !REFRESH_ACTIVE;                                  // 0x8000 0000 - 0xFFFF FFFF
+BOOTFLASH_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28 & !CPU_A27;  // 0x0000 0000 - 0x07FF FFFF
+BIGFLASH_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28 & CPU_A27;    // 0x0800 0000 - 0x0FFF FFFF
+SRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & CPU_A28;                   // 0x1000 0000 - 0x1FFF FFFF
 DEV8BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 
-                        & CPU_A29 & CPU_A28;                                // 0x3000 0000 - 0x3FFF FFFF
+                        & CPU_A29 & CPU_A28;                                                                // 0x3000 0000 - 0x3FFF FFFF
 DEV16BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 
-                        & !CPU_A29 & !CPU_A28;                              // 0x4000 0000 - 0x4FFF FFFF
+                        & !CPU_A29 & !CPU_A28;                                                              // 0x4000 0000 - 0x4FFF FFFF
 DEV32BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 
-                        & !CPU_A29 & CPU_A28;                               // 0x5000 0000 - 0x5FFF FFFF
-VIDEO_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;               // 0x6000 0000 - 0x7FFF FFFF
+                        & !CPU_A29 & CPU_A28;                                                               // 0x5000 0000 - 0x5FFF FFFF
+VIDEO_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;                              // 0x6000 0000 - 0x7FFF FFFF
 INTERRUPT_ACK_ACCESS =  !nCPU_AS & FC_CPU_SPACE & CPU_A16 & CPU_A17 & CPU_A18 & CPU_A19;
-
 
 nINT_ACK_CYCLE = !INTERRUPT_ACK_ACCESS;
 
@@ -244,8 +265,8 @@ nINT_ACK_CYCLE = !INTERRUPT_ACK_ACCESS;
     CPU_AS signal goes low.
 
     Transfer Size      DSACK1   DSACK0
-    8 bit               1          0            DEV8BIT,FLASH
-    16 bit              0          1            DEV16BIT
+    8 bit               1          0            DEV8BIT,BOOTFLASH,INTACK
+    16 bit              0          1            DEV16BIT,BIGFLASH
     32 bit              0          0            DEV32BIT,DRAM,SRAM
 
     Since the xxxx_REGION_ACCESS variables contain nCPU_AS, these DSACK signals will go low shortly after AS, but then 
@@ -262,9 +283,17 @@ nINT_ACK_CYCLE = !INTERRUPT_ACK_ACCESS;
 
 */
 
-nCPU_DSACK0 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # DEV32BIT_REGION_ACCESS # DEV8BIT_REGION_ACCESS # INTERRUPT_ACK_ACCESS);
-nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # DEV32BIT_REGION_ACCESS # DEV16BIT_REGION_ACCESS);
+nCPU_DSACK0 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # DEV32BIT_REGION_ACCESS # DEV8BIT_REGION_ACCESS # INTERRUPT_ACK_ACCESS # BOOTFLASH_REGION_ACCESS);
+nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # DEV32BIT_REGION_ACCESS # DEV16BIT_REGION_ACCESS # BIGFLASH_REGION_ACCESS );
 
+/* Boot Flash signaling */
+
+nBFLASH_CE = !BOOTFLASH_REGION_ACCESS;
+nBFLASH_WE = !BOOTFLASH_REGION_ACCESS # CPU_RW;
+
+/* 64MB Flash signaling */
+
+nBIGFLASH_CE = !BIGFLASH_REGION_ACCESS;
 
 
 /*
@@ -523,7 +552,7 @@ REFRESH_COMPLETE.ar = !nSYS_RESET;
     In this design we will map all of the first 'ranks' of each SIMM slot in order, then map the second 'ranks' of each 
     SIMM.
 
-    For this first iteration we will assume each 'rank' is 16MBs in size.
+    For this first iteration we will assume each 'rank' is 16MBs in size.  128MB support will require a few small changes.
 
     The memory layout:
 
@@ -601,14 +630,15 @@ nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
 /*
 Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		62/80 	(77%)
-Total Logic cells used 		62/128 	(48%)
+Total I/O pins used		68/80 	(85%)
+Total Logic cells used 		69/128 	(53%)
 Total Flip-Flop used 		25/128 	(19%)
 Total Foldback logic used 	8/128 	(6%)
-Total Nodes+FB/MCells 		70/128 	(54%)
+Total Nodes+FB/MCells 		77/128 	(60%)
 Total cascade used 		0
 Total input pins 		31
-Total output pins 		33
-Total Pts 			188*/
+Total output pins 		39
+Total Pts 			199
+*/
 
 

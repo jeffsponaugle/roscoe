@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Tue Apr 02 17:32:41 2024
+Created         Tue Apr 02 20:33:30 2024
 Name            BUSCTRL
 Partno          BUSCTRL
 Revision        01
@@ -52,6 +52,16 @@ BA32_UL =>
 
 BA8 =>
     1 
+
+BIGFLASH_REGION_ACCESS =>
+    CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
+
+BOOTFLASH_REGION_ACCESS =>
+    !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
+  # !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
+  # !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 CPU_CLK.d  =>
     !CPU_CLK
@@ -141,11 +151,6 @@ DRAM_REGION_ACCESS =>
 
 FC_CPU_SPACE =>
     CPU_FC0 & CPU_FC1 & CPU_FC2
-
-FLASH_REGION_ACCESS =>
-    !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
-  # !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
-  # !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 INTERRUPT_ACK_ACCESS =>
     CPU_A16 & CPU_A17 & CPU_A18 & CPU_A19 & CPU_FC0 & CPU_FC1 & CPU_FC2 & 
@@ -294,6 +299,11 @@ SRAM_REGION_ACCESS =>
   # CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
   # CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
+UNUSED1 =>
+    CPU_A17 & CPU_A18 & CPU_A19 & CPU_A20 & CPU_A21
+  # CPU_A22 & CPU_A23 & CPU_A24 & CPU_A25 & CPU_A26
+  # CPU_A27 & CPU_A28 & CPU_A29 & CPU_A30 & CPU_A31
+
 VIDEO_REGION_ACCESS =>
     CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
   # CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC1 & !nCPU_AS
@@ -306,24 +316,73 @@ field_CPU_ADDRESS =>
 field_REFRESH_STATE_MACHINE =>
     REFRESH_STATE_MACHINE0 , REFRESH_STATE_MACHINE1 , REFRESH_STATE_MACHINE2
 
+nBFLASH_CE =>
+    CPU_A27
+  # CPU_A28
+  # CPU_A29
+  # CPU_A30
+  # CPU_A31
+  # nCPU_AS
+  # CPU_FC0 & CPU_FC1 & CPU_FC2
+
+nBFLASH_WE =>
+    CPU_A27
+  # CPU_A28
+  # CPU_A29
+  # CPU_A30
+  # CPU_A31
+  # CPU_RW
+  # nCPU_AS
+  # CPU_FC0 & CPU_FC1 & CPU_FC2
+
+nBIGFLASH_CE =>
+    CPU_FC0 & CPU_FC1 & CPU_FC2
+  # nCPU_AS
+  # CPU_A31
+  # CPU_A30
+  # CPU_A29
+  # CPU_A28
+  # !CPU_A27
+
+nCPU_BERR =>
+    1 
+
+nCPU_CIIN =>
+    1 
+
 nCPU_DSACK0 =>
     REFRESH_ACTIVE & nCPU_AS
-  # !CPU_A28 & !CPU_A31 & !CPU_FC0 & REFRESH_ACTIVE
-  # !CPU_A28 & !CPU_A31 & !CPU_FC1 & REFRESH_ACTIVE
-  # !CPU_A28 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE
+  # CPU_A27 & !CPU_A28 & !CPU_A31 & !CPU_FC0 & REFRESH_ACTIVE
+  # !CPU_A28 & CPU_A29 & !CPU_A31 & !CPU_FC0 & REFRESH_ACTIVE
+  # !CPU_A28 & CPU_A30 & !CPU_A31 & !CPU_FC0 & REFRESH_ACTIVE
   # CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & REFRESH_ACTIVE
+  # CPU_A27 & !CPU_A28 & !CPU_A31 & !CPU_FC1 & REFRESH_ACTIVE
+  # !CPU_A28 & CPU_A29 & !CPU_A31 & !CPU_FC1 & REFRESH_ACTIVE
+  # !CPU_A28 & CPU_A30 & !CPU_A31 & !CPU_FC1 & REFRESH_ACTIVE
   # CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC1 & REFRESH_ACTIVE
   # !CPU_A16 & CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
   # !CPU_A17 & CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
   # !CPU_A18 & CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
   # !CPU_A19 & CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
+  # CPU_A27 & !CPU_A28 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE
+  # !CPU_A28 & CPU_A29 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE
+  # !CPU_A28 & CPU_A30 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE
   # CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE
 
 nCPU_DSACK1 =>
     REFRESH_ACTIVE & nCPU_AS
   # CPU_A29 & !CPU_A31 & REFRESH_ACTIVE
-  # !CPU_A28 & !CPU_A30 & !CPU_A31 & REFRESH_ACTIVE
   # CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
+  # !CPU_A27 & !CPU_A28 & !CPU_A30 & !CPU_A31 & REFRESH_ACTIVE
+
+nCPU_HALT =>
+    1 
+
+nCPU_RD =>
+    !CPU_RW
+
+nCPU_STERM =>
+    1 
 
 nDEV16BITCS =>
     !CPU_A28 & !CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
@@ -603,6 +662,8 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     BA32_UH                     0        I        4       -       -     
     BA32_UL                     0        I        7       -       -     
     BA8                         0        I        1       -       -     
+    BIGFLASH_REGION_ACCESS        0        I        3       -       -     
+    BOOTFLASH_REGION_ACCESS        0        I        3       -       -     
     CLK_IN                      0        V        -       -       -     
     CPU_A16                     0        V        -       -       -     
     CPU_A17                     0        V        -       -       -     
@@ -622,7 +683,6 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     CPU_A31                     0        V        -       -       -     
     CPU_AA0                     0        V        -       -       -     
     CPU_AA1                     0        V        -       -       -     
-    CPU_CIIN                    0        V        -       -       -     
     CPU_CLK                     0        V        -       -       -     
     CPU_CLK             d       0        X        1       0       2     
     CPU_CLK             ck      0        X        1       0       1     
@@ -662,7 +722,6 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     DRAM_MUX                    0        V        1       0       2     
     DRAM_REGION_ACCESS          0        I        4       -       -     
     FC_CPU_SPACE                0        I        1       -       -     
-    FLASH_REGION_ACCESS         0        I        3       -       -     
     INTERRUPT_ACK_ACCESS        0        I        1       -       -     
     REFRESH_ACTIVE              101      N        -       -       -     
     REFRESH_ACTIVE      d       101      M        3       0       2     
@@ -714,16 +773,23 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     REFRESH_TIMER_RESET ar      121      M        1       0       1     
     REFRESH_TIMER_RESET ck      121      M        1       0       1     
     SRAM_REGION_ACCESS          0        I        3       -       -     
+    UNUSED1                     0        V        3       0       2     
     VIDEO_REGION_ACCESS         0        I        3       -       -     
+    bBIGFLASH_CE                0        V        -       -       -     
     field_CPU_ADDRESS           0        F        -       -       -     
     field_REFRESH_STATE_MACHINE        0        F        -       -       -     
+    nBFLASH_CE                  0        V        7       0       2     
+    nBFLASH_WE                  0        V        8       0       2     
+    nBIGFLASH_CE                0        I        7       -       -     
     nCPU_AS                     0        V        -       -       -     
-    nCPU_BERR                   0        V        -       -       -     
-    nCPU_DSACK0                 0        V        11      0       2     
+    nCPU_BERR                   0        V        1       0       2     
+    nCPU_CIIN                   0        V        1       0       2     
+    nCPU_DSACK0                 0        V        17      0       2     
     nCPU_DSACK1                 0        V        4       0       2     
     nCPU_ECS                    0        V        -       -       -     
-    nCPU_HALT                   0        V        -       -       -     
-    nCPU_STERM                  0        V        -       -       -     
+    nCPU_HALT                   0        V        1       0       2     
+    nCPU_RD                     0        V        1       0       2     
+    nCPU_STERM                  0        V        1       0       2     
     nDEV16BITCS                 0        V        3       0       2     
     nDEV32BITCS                 0        V        3       0       2     
     nDEV8BITCS                  0        V        3       0       2     
