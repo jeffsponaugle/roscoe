@@ -91,7 +91,8 @@ NODE INT2B_REQUEST_PE;
 
 /*
     At the start of the Interrupt Acknowlegement Cycle we will record the interrupt level being acknowledged in the INT_ACK_LEVEL0..2 flip flops.
-    Those same flip flops are used during the vector generation, as well as ackowledgement clearing at the end of the ack cycle.
+    Those same flip flops are used during the vector generation, as well as ackowledgement clearing at the end of the ack cycle.  These will remember 
+    the last interrupt ack number as these are not cleared but only reset on the next intack.
 */
 
 [INT_ACK_LEVEL2..0].ck = !nINT_ACK_CYCLE;
@@ -99,10 +100,10 @@ NODE INT2B_REQUEST_PE;
 INT_ACK_LEVEL0.d = CPU_A1;
 INT_ACK_LEVEL1.d = CPU_A2;
 INT_ACK_LEVEL2.d = CPU_A3;
-FIELD field_INT_ACK_LEVEL = [INT_ACK_LEVEL2..0];
+FIELD field_INT_ACK_LEVEL = [INT_ACK_LEVEL2..0];            // This field is just a convient way to do numerical selection of a value.
 
 
-// Interrupt Lines converted to Interrupt Requests (active high).  We will also integrate
+// Interrupt Lines converted to Interrupt Requests (active high).  
 
 // INT7A is the debug button which is an falling edge triggered interrupt.
 INT7A_REQUEST.d = INT_MSK15;
@@ -121,8 +122,8 @@ INT6B_REQUEST.ck = !vINT6B;
 INT6B_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT6B_REQUEST_PE & field_INT_ACK_LEVEL:['d'6]);         // TOOD Needs some kind of ACK clear.
 
 INT5A_REQUEST = !vINT5A & INT_MSK12;        // INT5A comes from the NIC.  Active low signal.
-INT5B_REQUEST = !vINT5B & INT_MSK11;        // INT5B and INT5C come from the IDE interfaces.  Active low signal
-INT5C_REQUEST = !vINT5B & INT_MSK10;
+INT5B_REQUEST = !vINT5B & INT_MSK11;        // INT5B comes from the IDE #1 interfaces.  Active low signal
+INT5C_REQUEST = !vINT5B & INT_MSK10;        // INT5C comes from the IDE #2 interfaces.  Active low signal
 INT5D_REQUEST = !vINT5D & INT_MSK9;         // INT5D in an expansion interrupt (undefined)  Make active low, with pullup
 INT4A_REQUEST = vINT4A & INT_MSK8;          // INT4A is UART1.  The 2550 UARTs are active high interrupts
 INT4B_REQUEST = vINT4B & INT_MSK7;          // INT4B is UART2.  The 2550 UARTs are active high interrupts
@@ -136,7 +137,14 @@ INT1B_REQUEST = !vINT1B & INT_MSK0;         // INT2B is an expansion interrupt (
 
 /* 
    We will create a priority encoded version of each interrupt level so we can set the CPU_IPL0-2
-   pins.  These are all active high signals, and only one will be active.
+   pins.  These are all active high signals, and only one will be active.  These three pin (CPU_IPL2-0), when set
+   will actually call for an interrupt to occur on the CPU.  When the CPU sees this request it will do an interrupt 
+   acknowlegment cycle as soon as the current cycle ends.   These are held active until either the device stops 
+   asserting the request, or if edge triggered when the int ack cycle ends. 
+
+   The CPU has an internal interrupt level mask, and will ignore request that are lower than that current level.  On powerup
+   that level is set to 7, so only interrupt on level 7 will actually happen.  That is why level 7 interrupts are called NMI 
+   (Non Maskable Interrupts).
 */
 
 
