@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Sun Mar 31 19:50:26 2024
+Created         Wed Apr 03 12:44:43 2024
 Name            DEVMAP
 Partno          DEVMAP
 Revision        01
@@ -18,6 +18,9 @@ Location        None
 ===============================================================================
                             Expanded Product Terms
 ===============================================================================
+
+EXPANSION_EXTRA1 =>
+    CPU_RW & EXPANSION_EXTRA2 & SYS_RESET & nDEV32BITCS
 
 field_CPU_ADDRESS =>
     CPU_A27 , CPU_A26 , CPU_A25 , CPU_A24 , CPU_A23 , CPU_A22 , CPU_A21 , 
@@ -138,6 +141,33 @@ nIDE2_CSB =>
   # CPU_A26
   # CPU_A27
   # nDEV16BITCS
+
+nIDE_BUFFER_EN =>
+    nIDE1_CSA & nIDE1_CSB
+
+nIDE_WR =>
+    CPU_RW
+  # nIDE_WR_DELAY2
+
+nIDE_WR_DELAY1.d  =>
+    1 
+
+nIDE_WR_DELAY1.ar  =>
+    nIDE_BUFFER_EN
+  # !SYS_RESET
+
+nIDE_WR_DELAY1.ck  =>
+    CPU_CLK
+
+nIDE_WR_DELAY2.d  =>
+    nIDE_WR_DELAY1
+
+nIDE_WR_DELAY2.ar  =>
+    nIDE_BUFFER_EN
+  # !SYS_RESET
+
+nIDE_WR_DELAY2.ck  =>
+    CPU_CLK
 
 nINTCTRL_CS =>
     CPU_A8
@@ -396,6 +426,8 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     CPU_A27                     0        V        -       -       -     
     CPU_CLK                     0        V        -       -       -     
     CPU_RW                      0        V        -       -       -     
+    EXPANSION_EXTRA1            0        V        1       0       2     
+    EXPANSION_EXTRA2            0        V        -       -       -     
     SYS_RESET                   0        V        -       -       -     
     field_CPU_ADDRESS           0        F        -       -       -     
     nBOARDLEDS_CS               0        V        21      0       2     
@@ -408,6 +440,16 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     nIDE1_CSB                   0        V        21      0       2     
     nIDE2_CSA                   0        V        21      0       2     
     nIDE2_CSB                   0        V        21      0       2     
+    nIDE_BUFFER_EN              0        V        1       0       2     
+    nIDE_WR                     0        V        2       0       2     
+    nIDE_WR_DELAY1              101      N        -       -       -     
+    nIDE_WR_DELAY1      d       101      M        1       0       2     
+    nIDE_WR_DELAY1      ar      101      M        2       0       1     
+    nIDE_WR_DELAY1      ck      101      M        1       0       1     
+    nIDE_WR_DELAY2              102      N        -       -       -     
+    nIDE_WR_DELAY2      d       102      M        1       0       2     
+    nIDE_WR_DELAY2      ar      102      M        2       0       1     
+    nIDE_WR_DELAY2      ck      102      M        1       0       1     
     nINTCTRL_CS                 0        V        21      0       2     
     nNIC_CS                     0        V        19      0       2     
     nPOWERCTRL_CS               0        V        21      0       2     

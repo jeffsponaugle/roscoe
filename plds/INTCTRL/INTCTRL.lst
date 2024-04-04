@@ -3,7 +3,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 1
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Wed Apr 03 10:05:14 2024
+Created Wed Apr 03 17:52:58 2024
 
   1:Name     INTCTRL;
   2:PartNo   INTCTRL;
@@ -57,311 +57,333 @@ Created Wed Apr 03 10:05:14 2024
  46:*/
  47:
  48:Pin [0..0] = [CPU_IPL2..0];
- 49:
- 50:/* 
- 51:                                                Internal NODES
- 52:    ##########################################################################################
- 53:*/
+ 49:Pin  0  = POWER_CONTROL_OUT;
+ 50:Pin  0  = RESET_CONTROL_OUT;
+ 51:
+ 52:/* 
+ 53:                                                Internal NODES
 
 LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 2
 
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Wed Apr 03 10:05:14 2024
+Created Wed Apr 03 17:52:58 2024
 
- 54:NODE [INT_ACK_LEVEL2..0];       // a recording of the current interrupt acknowledged from the CPU
+ 54:    ##########################################################################################
+ 55:*/
+ 56:NODE [INT_ACK_LEVEL2..0];       // a recording of the current interrupt acknowledged from the CPU
 
- 55:NODE [INT_MSK15..0];            // 16 bit Interrupt Mask.  15=INT7A...0=INT1B
+ 57:NODE [INT_MSK15..0];            // 16 bit Interrupt Mask.  15=INT7A...0=INT1B
 
- 56:NODE INT7A_REQUEST;
- 57:NODE INT6A_REQUEST;
- 58:NODE INT6B_REQUEST;
- 59:NODE INT_ACK_RESET_PRE;
- 60:NODE INT_ACK_RESET;
- 61:
- 62:// The following NODES are in place to compact the total size of some later fields.  The use of NODES adds a bit of latency
+ 58:
+ 59:NODE POWER_CONTROL_STATE;
+ 60:NODE INT7A_REQUEST;
+ 61:NODE INT6A_REQUEST;
+ 62:NODE INT6B_REQUEST;
+ 63:NODE INT1B_REQUEST;
+ 64:NODE INT_ACK_RESET_PRE;
+ 65:NODE INT_ACK_RESET;
+ 66:
+ 67:// The following NODES are in place to compact the total size of some later fields.  The use of NODES adds a bit of latency
 
- 63:// but allows the complex expressions to compile and optmize correctly.
+ 68:// but allows the complex expressions to compile and optmize correctly.
 
- 64:NODE INTL6_REQUEST_PE;
- 65:NODE INTL5_REQUEST_PE;
- 66:NODE INTL4_REQUEST_PE;
- 67:NODE INTL3_REQUEST_PE;
- 68:NODE INTL2_REQUEST_PE;
- 69:NODE INTL1_REQUEST_PE;
- 70:NODE INT5D_REQUEST_PE;
- 71:NODE INT5C_REQUEST_PE;
- 72:NODE INT4C_REQUEST_PE;
- 73:NODE INT6B_REQUEST_PE;
- 74:NODE INT5B_REQUEST_PE;
- 75:NODE INT4B_REQUEST_PE;
- 76:NODE INT3B_REQUEST_PE;
- 77:NODE INT2B_REQUEST_PE;
- 78:
- 79:/* 
- 80:    Interrupt Mask Register 
- 81:    Byte Write to high,then low. 
- 82:    1=Enable Interrupt, 0=Disable Interrupt
- 83:    RESETs to all 0
- 84:*/
- 85:
- 86:[INT_MSK15..8].ck = nINTCTRL_CS # CPU_A0;               // An 8 bit write to 0x3000 0200
+ 69:NODE INTL6_REQUEST_PE;
+ 70:NODE INTL5_REQUEST_PE;
+ 71:NODE INTL4_REQUEST_PE;
+ 72:NODE INTL3_REQUEST_PE;
+ 73:NODE INTL2_REQUEST_PE;
+ 74:NODE INTL1_REQUEST_PE;
+ 75:NODE INT5D_REQUEST_PE;
+ 76:NODE INT5C_REQUEST_PE;
+ 77:NODE INT4C_REQUEST_PE;
+ 78:NODE INT6B_REQUEST_PE;
+ 79:NODE INT5B_REQUEST_PE;
+ 80:NODE INT4B_REQUEST_PE;
+ 81:NODE INT3B_REQUEST_PE;
+ 82:NODE INT2B_REQUEST_PE;
+ 83:
+ 84:/* 
+ 85:    Interrupt Mask Register 
+ 86:    Byte Write to high,then low. 
+ 87:    1=Enable Interrupt, 0=Disable Interrupt
+ 88:    RESETs to all 0
+ 89:*/
+ 90:
+ 91:[INT_MSK15..8].ck = nINTCTRL_CS # CPU_A0 # CPU_A1;               // An 8 bit write to 0x3000 0200
 
- 87:[INT_MSK7..0].ck = nINTCTRL_CS # !CPU_A0;               // An 8 bit write to 0x3000 0201
+ 92:[INT_MSK7..0].ck = nINTCTRL_CS # !CPU_A0 # CPU_A1;               // An 8 bit write to 0x3000 0201
 
- 88:[INT_MSK15..0].ar = !nSYS_RESET;
- 89:[INT_MSK15..8].d = [CPU_D7..0].io;
- 90:[INT_MSK7..0].d = [CPU_D7..0].io;
- 91:
- 92:/*
- 93:    At the start of the Interrupt Acknowlegement Cycle we will record the interrupt level being acknowledged in the INT_ACK_LEVEL0..2 flip flops.
- 94:    Those same flip flops are used during the vector generation, as well as ackowledgement clearing at the end of the ack cycle.  These will remember 
- 95:    the last interrupt ack number as these are not cleared but only reset on the next intack.
- 96:*/
- 97:
- 98:[INT_ACK_LEVEL2..0].ck = !nINT_ACK_CYCLE;
- 99:[INT_ACK_LEVEL2..0].ar = !nSYS_RESET;
-100:INT_ACK_LEVEL0.d = CPU_A1;
-101:INT_ACK_LEVEL1.d = CPU_A2;
-102:INT_ACK_LEVEL2.d = CPU_A3;
-103:FIELD field_INT_ACK_LEVEL = [INT_ACK_LEVEL2..0];            // This field is just a convient way to do numerical selection of a value.
+ 93:[INT_MSK15..0].ar = !nSYS_RESET;
+ 94:[INT_MSK15..8].d = [CPU_D7..0].io;
+ 95:[INT_MSK7..0].d = [CPU_D7..0].io;
+ 96:
+ 97:/* Power Control and Reset Control Register */
+ 98:
+ 99:POWER_CONTROL_STATE.d = CPU_D0.io;
+100:POWER_CONTROL_STATE.ck = nINTCTRL_CS # !CPU_A0 # !CPU_A1;         // An 8-bit write to 0x3000 0202
 
-104:
+101:POWER_CONTROL_STATE.ar = !nSYS_RESET;
+102:
+103:POWER_CONTROL_OUT = 'b'1;
+104:POWER_CONTROL_OUT.oe = POWER_CONTROL_STATE;
 105:
-106:// Interrupt Lines converted to Interrupt Requests (active high).  
-
-107:
+106:RESET_CONTROL_OUT.d = CPU_D1.io;
+107:RESET_CONTROL_OUT.ck = nINTCTRL_CS # !CPU_A0 # !CPU_A1; 
 
 LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 3
 
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Wed Apr 03 10:05:14 2024
+Created Wed Apr 03 17:52:58 2024
 
-108:// INT7A is the debug button which is an falling edge triggered interrupt.
-
-109:INT7A_REQUEST.d = INT_MSK15;
-110:INT7A_REQUEST.ck = !vINT7A;
-111:INT7A_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT7A_REQUEST & field_INT_ACK_LEVEL:['d'7]);         // If INT7A_REQUEST is set, and we are ack'ing a level 7, clear this.
-
-112:
-113:// INT6A and INT6B come from the PTC.  The are falling edge triggers so they need
-
-114:// capture flip flops.
-
+108:RESET_CONTROL_OUT.ar = !nSYS_RESET;
+109:
+110:/*
+111:    At the start of the Interrupt Acknowlegement Cycle we will record the interrupt level being acknowledged in the INT_ACK_LEVEL0..2 flip flops.
+112:    Those same flip flops are used during the vector generation, as well as ackowledgement clearing at the end of the ack cycle.  These will remember 
+113:    the last interrupt ack number as these are not cleared but only reset on the next intack.
+114:*/
 115:
-116:INT6A_REQUEST.d = INT_MSK14;
-117:INT6A_REQUEST.ck = !vINT6A;
-118:INT6A_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT6A_REQUEST_PE & field_INT_ACK_LEVEL:['d'6]);         // TOOD Needs some kind of ACK clear.
+116:[INT_ACK_LEVEL2..0].ck = !nINT_ACK_CYCLE;
+117:[INT_ACK_LEVEL2..0].ar = !nSYS_RESET;
+118:INT_ACK_LEVEL0.d = CPU_A1;
+119:INT_ACK_LEVEL1.d = CPU_A2;
+120:INT_ACK_LEVEL2.d = CPU_A3;
+121:FIELD field_INT_ACK_LEVEL = [INT_ACK_LEVEL2..0];            // This field is just a convient way to do numerical selection of a value.
 
-119:
-120:INT6B_REQUEST.d = INT_MSK13;
-121:INT6B_REQUEST.ck = !vINT6B;
-122:INT6B_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT6B_REQUEST_PE & field_INT_ACK_LEVEL:['d'6]);         // TOOD Needs some kind of ACK clear.
-
+122:
 123:
-124:INT5A_REQUEST = !vINT5A & INT_MSK12;        // INT5A comes from the NIC.  Active low signal.
+124:// Interrupt Lines converted to Interrupt Requests (active high).  
 
-125:INT5B_REQUEST = !vINT5B & INT_MSK11;        // INT5B comes from the IDE #1 interfaces.  Active low signal
+125:
+126:// INT7A is the debug button which is an falling edge triggered interrupt.
 
-126:INT5C_REQUEST = !vINT5B & INT_MSK10;        // INT5C comes from the IDE #2 interfaces.  Active low signal
+127:INT7A_REQUEST.d = INT_MSK15;
+128:INT7A_REQUEST.ck = !vINT7A;
+129:INT7A_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT7A_REQUEST & field_INT_ACK_LEVEL:['d'7]);         // If INT7A_REQUEST is set, and we are ack'ing a level 7, clear this.
 
-127:INT5D_REQUEST = !vINT5D & INT_MSK9;         // INT5D in an expansion interrupt (undefined)  Make active low, with pullup
+130:
+131:// INT6A and INT6B come from the PTC.  The are falling edge triggers so they need
 
-128:INT4A_REQUEST = vINT4A & INT_MSK8;          // INT4A is UART1.  The 2550 UARTs are active high interrupts
+132:// capture flip flops.
 
-129:INT4B_REQUEST = vINT4B & INT_MSK7;          // INT4B is UART2.  The 2550 UARTs are active high interrupts
-
-130:INT4C_REQUEST = !vINT4C & INT_MSK6;         // INT4C in an expansion interrupt (undefined)  Make active low, with pullup
-
-131:INT3A_REQUEST = !vINT3A & INT_MSK5;         // INT3A comes from the FT-120 USB interface.  Active low signal.
-
-132:INT3B_REQUEST = !vINT3B & INT_MSK4;         // INT3B in an expansion interrupt (undefined)  Make active low, with pullup
-
-133:INT2A_REQUEST = !vINT2A & INT_MSK3;         // INT2A comed from the Video Interface, Active low signal
-
-134:INT2B_REQUEST = !vINT2B & INT_MSK2;         // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
-
-135:INT1A_REQUEST = !vINT1A & INT_MSK1;         // INT2A comed from the Video Interface, Active low signal
-
-136:INT1B_REQUEST = !vINT1B & INT_MSK0;         // INT2B is the power controller interrupt. Active low signal.
+133:
+134:INT6A_REQUEST.d = INT_MSK14;
+135:INT6A_REQUEST.ck = !vINT6A;
+136:INT6A_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT6A_REQUEST_PE & field_INT_ACK_LEVEL:['d'6]);         // TOOD Needs some kind of ACK clear.
 
 137:
-138:/* 
-139:   We will create a priority encoded version of each interrupt level so we can set the CPU_IPL0-2
-140:   pins.  These are all active high signals, and only one will be active.  These three pin (CPU_IPL2-0), when set
-141:   will actually call for an interrupt to occur on the CPU.  When the CPU sees this request it will do an interrupt 
-142:   acknowlegment cycle as soon as the current cycle ends.   These are held active until either the device stops 
-143:   asserting the request, or if edge triggered when the int ack cycle ends. 
-144:
-145:   The CPU has an internal interrupt level mask, and will ignore request that are equal too or lower than that current level.  
-146:   On powerup that level is set to 7, which should ignore all interrupts.  However level 7 is special in that it will ignore only
-147:   level 6 and below.  That is why level 7 interrupts are called NMI (Non Maskable Interrupts).
-148:
-149:   When an interrupt is being serviced the interrupt level mask is set to the level of the interrupt being serviced.  That prevents further interrupts 
-150:   at that level from forcing reentry.
-151:*/
-152:
-153:
-154:INTL7_REQUEST_PE = INT7A_REQUEST;
-155:INTL6_REQUEST_PE = (!INT7A_REQUEST) & (INT6A_REQUEST # INT6B_REQUEST );
-156:INTL5_REQUEST_PE = (!INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
-157:                 & (INT5A_REQUEST # INT5B_REQUEST # INT5C_REQUEST # INT5D_REQUEST );
-158:INTL4_REQUEST_PE = (!INTL5_REQUEST_PE &!INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
-159:                 & (INT4A_REQUEST # INT4B_REQUEST # INT4C_REQUEST );
-160:INTL3_REQUEST_PE = (!INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
-161:                 & (INT3A_REQUEST # INT3B_REQUEST );
+138:INT6B_REQUEST.d = INT_MSK13;
+139:INT6B_REQUEST.ck = !vINT6B;
+140:INT6B_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT6B_REQUEST_PE & field_INT_ACK_LEVEL:['d'6]);         // TOOD Needs some kind of ACK clear.
+
+141:
+142:INT5A_REQUEST = !vINT5A & INT_MSK12;        // INT5A comes from the NIC.  Active low signal.
+
+143:INT5B_REQUEST = !vINT5B & INT_MSK11;        // INT5B comes from the IDE #1 interfaces.  Active low signal
+
+144:INT5C_REQUEST = !vINT5B & INT_MSK10;        // INT5C comes from the IDE #2 interfaces.  Active low signal
+
+145:INT5D_REQUEST = !vINT5D & INT_MSK9;         // INT5D in an expansion interrupt (undefined)  Make active low, with pullup
+
+146:INT4A_REQUEST = vINT4A & INT_MSK8;          // INT4A is UART1.  The 2550 UARTs are active high interrupts
+
+147:INT4B_REQUEST = vINT4B & INT_MSK7;          // INT4B is UART2.  The 2550 UARTs are active high interrupts
+
+148:INT4C_REQUEST = !vINT4C & INT_MSK6;         // INT4C in an expansion interrupt (undefined)  Make active low, with pullup
+
+149:INT3A_REQUEST = !vINT3A & INT_MSK5;         // INT3A comes from the FT-120 USB interface.  Active low signal.
+
+150:INT3B_REQUEST = !vINT3B & INT_MSK4;         // INT3B in an expansion interrupt (undefined)  Make active low, with pullup
+
+151:INT2A_REQUEST = !vINT2A & INT_MSK3;         // INT2A comed from the Video Interface, Active low signal
+
+152:INT2B_REQUEST = !vINT2B & INT_MSK2;         // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
+
+153:INT1A_REQUEST = !vINT1A & INT_MSK1;         // INT1A comed from the Video Interface, Active low signal
+
+154:   
+155:INT1B_REQUEST.d = INT_MSK0;                  // INT1B is the power controller interrupt. Rising Edge Triggered.
+
+156:INT1B_REQUEST.ck = !vINT1B;
+157:INT1B_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT1B_REQUEST_PE & field_INT_ACK_LEVEL:['d'1]);
+158:
+159:/* 
+160:   We will create a priority encoded version of each interrupt level so we can set the CPU_IPL0-2
+161:   pins.  These are all active high signals, and only one will be active.  These three pin (CPU_IPL2-0), when set
 
 LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 4
 
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Wed Apr 03 10:05:14 2024
+Created Wed Apr 03 17:52:58 2024
 
-162:INTL2_REQUEST_PE = (!INTL3_REQUEST_PE & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
-163:                 & (INT2A_REQUEST # INT2B_REQUEST );
-164:INTL1_REQUEST_PE = (!INTL2_REQUEST_PE & !INTL3_REQUEST_PE & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
-165:                 & (INT1A_REQUEST # INT1B_REQUEST );
-166:
-167:/* 
-168:    We will create the CPU_IPL signals back to the CPU.
-169:*/
-170:
-171:CPU_IPL2 = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL5_REQUEST_PE # INTL4_REQUEST_PE);
-172:CPU_IPL1 = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL3_REQUEST_PE # INTL2_REQUEST_PE);
-173:CPU_IPL0 = !(INTL7_REQUEST_PE # INTL5_REQUEST_PE # INTL3_REQUEST_PE # INTL1_REQUEST_PE);
+162:   will actually call for an interrupt to occur on the CPU.  When the CPU sees this request it will do an interrupt 
+163:   acknowlegment cycle as soon as the current cycle ends.   These are held active until either the device stops 
+164:   asserting the request, or if edge triggered when the int ack cycle ends. 
+165:
+166:   The CPU has an internal interrupt level mask, and will ignore request that are equal too or lower than that current level.  
+167:   On powerup that level is set to 7, which should ignore all interrupts.  However level 7 is special in that it will ignore only
+168:   level 6 and below.  That is why level 7 interrupts are called NMI (Non Maskable Interrupts).
+169:
+170:   When an interrupt is being serviced the interrupt level mask is set to the level of the interrupt being serviced.  That prevents further interrupts 
+171:   at that level from forcing reentry.
+172:*/
+173:
 174:
-175:/* 
-176:    Next we will create a set of priorty encoders for each level to pick the particular winning interrupt.
-177:    In each level group only one sub interrupt will be active.
-178:*/
-179:
-180:INT7A_REQUEST_PE = INT7A_REQUEST;
-181:
-182:INT6A_REQUEST_PE = INT6A_REQUEST;
-183:INT6B_REQUEST_PE = !INT6A_REQUEST_PE & INT6B_REQUEST;
-184:
-185:INT5A_REQUEST_PE = INT5A_REQUEST;
-186:INT5B_REQUEST_PE = !INT5A_REQUEST_PE & INT5B_REQUEST;
-187:INT5C_REQUEST_PE = !INT5A_REQUEST_PE & !INT5B_REQUEST_PE & INT5C_REQUEST;
-188:INT5D_REQUEST_PE = !INT5A_REQUEST_PE & !INT5B_REQUEST_PE & !INT5C_REQUEST_PE & INT5D_REQUEST;
-189:
-190:INT4A_REQUEST_PE = INT4A_REQUEST;
-191:INT4B_REQUEST_PE = !INT4A_REQUEST_PE & INT4B_REQUEST;
-192:INT4C_REQUEST_PE = !INT4A_REQUEST_PE & !INT4B_REQUEST_PE & INT4C_REQUEST;
-193:
-194:INT3A_REQUEST_PE = INT3A_REQUEST;
-195:INT3B_REQUEST_PE = !INT3A_REQUEST_PE & INT3B_REQUEST;
-196:
-197:INT2A_REQUEST_PE = INT3A_REQUEST;
-198:INT2B_REQUEST_PE = !INT2A_REQUEST_PE & INT2B_REQUEST;
-199:
-200:INT1A_REQUEST_PE = INT1A_REQUEST;
-201:INT1B_REQUEST_PE = !INT1A_REQUEST_PE & INT1B_REQUEST;
+175:INTL7_REQUEST_PE = INT7A_REQUEST;
+176:INTL6_REQUEST_PE = (!INT7A_REQUEST) & (INT6A_REQUEST # INT6B_REQUEST );
+177:INTL5_REQUEST_PE = (!INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
+178:                 & (INT5A_REQUEST # INT5B_REQUEST # INT5C_REQUEST # INT5D_REQUEST );
+179:INTL4_REQUEST_PE = (!INTL5_REQUEST_PE &!INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
+180:                 & (INT4A_REQUEST # INT4B_REQUEST # INT4C_REQUEST );
+181:INTL3_REQUEST_PE = (!INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
+182:                 & (INT3A_REQUEST # INT3B_REQUEST );
+183:INTL2_REQUEST_PE = (!INTL3_REQUEST_PE & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
+184:                 & (INT2A_REQUEST # INT2B_REQUEST );
+185:INTL1_REQUEST_PE = (!INTL2_REQUEST_PE & !INTL3_REQUEST_PE & !INTL4_REQUEST_PE & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & !INTL7_REQUEST_PE) 
+186:                 & (INT1A_REQUEST # INT1B_REQUEST );
+187:
+188:/* 
+189:    We will create the CPU_IPL signals back to the CPU.
+190:*/
+191:
+192:CPU_IPL2 = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL5_REQUEST_PE # INTL4_REQUEST_PE);
+193:CPU_IPL1 = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL3_REQUEST_PE # INTL2_REQUEST_PE);
+194:CPU_IPL0 = !(INTL7_REQUEST_PE # INTL5_REQUEST_PE # INTL3_REQUEST_PE # INTL1_REQUEST_PE);
+195:
+196:/* 
+197:    Next we will create a set of priorty encoders for each level to pick the particular winning interrupt.
+198:    In each level group only one sub interrupt will be active.
+199:*/
+200:
+201:INT7A_REQUEST_PE = INT7A_REQUEST;
 202:
-203:/* 
-204:   With the per level priority encoder we can build the vector number that needs to be driven onto the CPU 
-205:   data bus.
-206:
-207:      IRQ         IRQL       Vector#              System Use
-208:      ------      -----      --------             -------------------------------
-209:      INT7A         7        11110000 (0xF0)      DEBUG (Button)
-210:      INT6A         6        11100001 (0xE1)      PTC #1 (Programmable Timer)
-211:      INT6B         6        11100010 (0xE2)      PTC #2 (Programmable Timer)
-212:      INT5A         5        11010001 (0xD1)      NIC
-213:      INT5B         5        11010010 (0xD2)      IDE 1
-214:      INT5C         5        11010100 (0xD4)      IDE 2
-215:      INT5D         5        11011000 (0xD8)      EXPANSION_I5
+203:INT6A_REQUEST_PE = INT6A_REQUEST;
+204:INT6B_REQUEST_PE = !INT6A_REQUEST_PE & INT6B_REQUEST;
+205:
+206:INT5A_REQUEST_PE = INT5A_REQUEST;
+207:INT5B_REQUEST_PE = !INT5A_REQUEST_PE & INT5B_REQUEST;
+208:INT5C_REQUEST_PE = !INT5A_REQUEST_PE & !INT5B_REQUEST_PE & INT5C_REQUEST;
+209:INT5D_REQUEST_PE = !INT5A_REQUEST_PE & !INT5B_REQUEST_PE & !INT5C_REQUEST_PE & INT5D_REQUEST;
+210:
+211:INT4A_REQUEST_PE = INT4A_REQUEST;
+212:INT4B_REQUEST_PE = !INT4A_REQUEST_PE & INT4B_REQUEST;
+213:INT4C_REQUEST_PE = !INT4A_REQUEST_PE & !INT4B_REQUEST_PE & INT4C_REQUEST;
+214:
+215:INT3A_REQUEST_PE = INT3A_REQUEST;
 
 LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 5
 
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Wed Apr 03 10:05:14 2024
+Created Wed Apr 03 17:52:58 2024
 
-216:      INT4A         4        11000001 (0xC1)      UART 1
-217:      INT4B         4        11000010 (0xC2)      UART 2
-218:      INT4C         4        11000100 (0xC4)      EXPANSION_I4
-219:      INT3A         3        10110001 (0xB1)      USB
-220:      INT3B         3        10110010 (0xB2)      EXPANSION_I3
-221:      INT2A         2        10100001 (0xA1)      VIDEO
-222:      INT2B         2        10100010 (0xA2)      EXPANSION_I2
-223:      INT1A         1        10010001 (0x91)      RTC
-224:      INT1B         1        10010010 (0x92)      POWER CONTROLLER
-225:     
-226:      Note that all of the other vectors starting with 1XXXXXXX should be vectored to a spurious interrupt handler.
+216:INT3B_REQUEST_PE = !INT3A_REQUEST_PE & INT3B_REQUEST;
+217:
+218:INT2A_REQUEST_PE = INT3A_REQUEST;
+219:INT2B_REQUEST_PE = !INT2A_REQUEST_PE & INT2B_REQUEST;
+220:
+221:INT1A_REQUEST_PE = INT1A_REQUEST;
+222:INT1B_REQUEST_PE = !INT1A_REQUEST_PE & INT1B_REQUEST;
+223:
+224:/* 
+225:   With the per level priority encoder we can build the vector number that needs to be driven onto the CPU 
+226:   data bus.
 227:
-228:*/
-229:
-230:[CPU_D7..0].oe = !nINT_ACK_CYCLE;       // If we are in an Interrupt Ack Cycle, enable the data bus outputs.
+228:      IRQ         IRQL       Vector#              System Use
+229:      ------      -----      --------             -------------------------------
+230:      INT7A         7        11110000 (0xF0)      DEBUG (Button)
+231:      INT6A         6        11100001 (0xE1)      PTC #1 (Programmable Timer)
+232:      INT6B         6        11100010 (0xE2)      PTC #2 (Programmable Timer)
+233:      INT5A         5        11010001 (0xD1)      NIC
+234:      INT5B         5        11010010 (0xD2)      IDE 1
+235:      INT5C         5        11010100 (0xD4)      IDE 2
+236:      INT5D         5        11011000 (0xD8)      EXPANSION_I5
+237:      INT4A         4        11000001 (0xC1)      UART 1
+238:      INT4B         4        11000010 (0xC2)      UART 2
+239:      INT4C         4        11000100 (0xC4)      EXPANSION_I4
+240:      INT3A         3        10110001 (0xB1)      USB
+241:      INT3B         3        10110010 (0xB2)      EXPANSION_I3
+242:      INT2A         2        10100001 (0xA1)      VIDEO
+243:      INT2B         2        10100010 (0xA2)      EXPANSION_I2
+244:      INT1A         1        10010001 (0x91)      RTC
+245:      INT1B         1        10010010 (0x92)      POWER CONTROLLER
+246:     
+247:      Note that all of the other vectors starting with 1XXXXXXX should be vectored to a spurious interrupt handler.
+248:
+249:*/
+250:
+251:[CPU_D7..0].oe = !nINT_ACK_CYCLE;       // If we are in an Interrupt Ack Cycle, enable the data bus outputs.
 
-231:
-232:CPU_D7 = 'b'1;
-233:CPU_D6 = INT_ACK_LEVEL2;
-234:CPU_D5 = INT_ACK_LEVEL1;
-235:CPU_D4 = INT_ACK_LEVEL0;
-236:CPU_D3 = (INTL5_REQUEST_PE & INT5D_REQUEST_PE);
-237:CPU_D2 = (INTL5_REQUEST_PE & INT5C_REQUEST_PE) # (INTL4_REQUEST_PE & INT4C_REQUEST_PE);
-238:CPU_D1 = (INTL6_REQUEST_PE & INT6B_REQUEST_PE) # (INTL5_REQUEST_PE & INT5B_REQUEST_PE)
-239:       # (INTL4_REQUEST_PE & INT4B_REQUEST_PE) # (INTL3_REQUEST_PE & INT3B_REQUEST_PE)
-240:       # (INTL2_REQUEST_PE & INT2B_REQUEST_PE) # (INTL1_REQUEST_PE & INT1B_REQUEST_PE);
-241:CPU_D0 = (INTL6_REQUEST_PE & INT6A_REQUEST_PE) # (INTL5_REQUEST_PE & INT5A_REQUEST_PE)
-242:       # (INTL4_REQUEST_PE & INT4A_REQUEST_PE) # (INTL3_REQUEST_PE & INT3A_REQUEST_PE)
-243:       # (INTL2_REQUEST_PE & INT2A_REQUEST_PE) # (INTL1_REQUEST_PE & INT1A_REQUEST_PE);
-244:
-245:
-246:/* 
-247:   As a last part of the interrupt acklowdegement cycle, we need to build a single cycle signal that
-248:   can be used to reset the flip flop of the particular edge triggered interrupt source. 
-249:
-250:   We know the nINT_ACK_CYCLE flag will go low at the start of the acklowdegement cycle, and go high at
-251:   the end of it.  We will use that rising edge to set flag call INT_ACK_RESET_PRE.  The flag will then go into 
-252:   a second flip flop called INT_ACK_RESET that is clocked on the rising edge of the CPU_CLOCK.  When that second flip
-253:   flop goes to 1 it will reset the _PRE flip flp, and on the next rising edge of the CPU_CLOCK the INT_ACK_RESET flip flop 
-254:   will latch in a zero.  This will generate a once CPU_CLK cycle long pulse at the end of the interrupt acklowdegement cycle. 
-255:*/
-256:
-257:
-258:
-259:INT_ACK_RESET_PRE.d = 'b'1;
-260:INT_ACK_RESET_PRE.ck = nINT_ACK_CYCLE;
-261:INT_ACK_RESET_PRE.ar = !nSYS_RESET # INT_ACK_RESET;
-262:
-263:INT_ACK_RESET.d = INT_ACK_RESET_PRE;
-264:INT_ACK_RESET.ck = CPU_CLK;
-265:INT_ACK_RESET.ar = !nSYS_RESET;
+252:
+253:CPU_D7 = 'b'1;
+254:CPU_D6 = INT_ACK_LEVEL2;
+255:CPU_D5 = INT_ACK_LEVEL1;
+256:CPU_D4 = INT_ACK_LEVEL0;
+257:CPU_D3 = (INTL5_REQUEST_PE & INT5D_REQUEST_PE);
+258:CPU_D2 = (INTL5_REQUEST_PE & INT5C_REQUEST_PE) # (INTL4_REQUEST_PE & INT4C_REQUEST_PE);
+259:CPU_D1 = (INTL6_REQUEST_PE & INT6B_REQUEST_PE) # (INTL5_REQUEST_PE & INT5B_REQUEST_PE)
+260:       # (INTL4_REQUEST_PE & INT4B_REQUEST_PE) # (INTL3_REQUEST_PE & INT3B_REQUEST_PE)
+261:       # (INTL2_REQUEST_PE & INT2B_REQUEST_PE) # (INTL1_REQUEST_PE & INT1B_REQUEST_PE);
+262:CPU_D0 = (INTL6_REQUEST_PE & INT6A_REQUEST_PE) # (INTL5_REQUEST_PE & INT5A_REQUEST_PE)
+263:       # (INTL4_REQUEST_PE & INT4A_REQUEST_PE) # (INTL3_REQUEST_PE & INT3A_REQUEST_PE)
+264:       # (INTL2_REQUEST_PE & INT2A_REQUEST_PE) # (INTL1_REQUEST_PE & INT1A_REQUEST_PE);
+265:
 266:
-267:
-268:
-269:/*
+267:/* 
+268:   As a last part of the interrupt acklowdegement cycle, we need to build a single cycle signal that
+269:   can be used to reset the flip flop of the particular edge triggered interrupt source. 
 
 LISTING FOR LOGIC DESCRIPTION FILE: INTCTRL.pld                      Page 6
 
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Wed Apr 03 10:05:14 2024
+Created Wed Apr 03 17:52:58 2024
 
-270:Total dedicated input used:     3/4     (75%)
-271:Total I/O pins used             35/80   (43%)
-272:Total Logic cells used          49/128  (38%)
-273:Total Flip-Flop used            24/128  (18%)
-274:Total Foldback logic used       1/128   (0%)
-275:Total Nodes+FB/MCells           48/128  (37%)
-276:Total cascade used              2
-277:Total input pins                27
-278:Total output pins               11
-279:Total Pts                       110
-280:
-281:*/
-282:
+270:
+271:   We know the nINT_ACK_CYCLE flag will go low at the start of the acklowdegement cycle, and go high at
+272:   the end of it.  We will use that rising edge to set flag call INT_ACK_RESET_PRE.  The flag will then go into 
+273:   a second flip flop called INT_ACK_RESET that is clocked on the rising edge of the CPU_CLOCK.  When that second flip
+274:   flop goes to 1 it will reset the _PRE flip flp, and on the next rising edge of the CPU_CLOCK the INT_ACK_RESET flip flop 
+275:   will latch in a zero.  This will generate a once CPU_CLK cycle long pulse at the end of the interrupt acklowdegement cycle. 
+276:*/
+277:
+278:
+279:
+280:INT_ACK_RESET_PRE.d = 'b'1;
+281:INT_ACK_RESET_PRE.ck = nINT_ACK_CYCLE;
+282:INT_ACK_RESET_PRE.ar = !nSYS_RESET # INT_ACK_RESET;
 283:
-284:
-285:
+284:INT_ACK_RESET.d = INT_ACK_RESET_PRE;
+285:INT_ACK_RESET.ck = CPU_CLK;
+286:INT_ACK_RESET.ar = !nSYS_RESET;
+287:
+288:
+289:
+290:/*
+291:Total dedicated input used:     3/4     (75%)
+292:Total I/O pins used             35/80   (43%)
+293:Total Logic cells used          49/128  (38%)
+294:Total Flip-Flop used            24/128  (18%)
+295:Total Foldback logic used       5/128   (3%)
+296:Total Nodes+FB/MCells           52/128  (40%)
+297:Total cascade used              2
+298:Total input pins                27
+299:Total output pins               11
+300:Total Pts                       114
+301:
+302:*/
+303:
+304:
+305:
+306:
 
 
 

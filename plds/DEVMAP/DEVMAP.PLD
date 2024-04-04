@@ -53,7 +53,13 @@ Pin = nVGA_CTRL_CS;
 Pin = nUSB_CS;
 Pin = nNIC_CS;
 
+Pin = nIDE_WR;
+Pin = nIDE_BUFFER_EN;
+
 Pin = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
+
+
+NODE nIDE_WR_DELAY1, nIDE_WR_DELAY2;
 
 // dummy expression to force the pins to be assigned.
 
@@ -83,16 +89,42 @@ nUSB_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'0000AXX] # field_CPU_ADDRESS:['h
 nNIC_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00010XX] # field_CPU_ADDRESS:['h'00011XX]
                         # field_CPU_ADDRESS:['h'00012XX] # field_CPU_ADDRESS:['h'00013XX]);
 
+
+/* IDE Device custom signals:
+
+      nIDE_WR signal goes directly to the /WR pin on both IDE interfaces.   This signal is asserted (low) as soon as     
+      the CPU_RW signal goes low, which normally happens write at the start of an /AS cycle.  The IDE_WR_DELAY1 and DELAY2 
+      flip flops are configured such that they both start at 0 when an AS cycle starts.  After 2 CLK_16M cycles the 
+      DELAY2 signal is set to 1, which directly unasserts the IDE /WR pin.  The allows the /WR pin to have an active rising
+      edge BEFORE the end of the CPU cpu cycle.  This is critical to allow the IDE interface to latch data, since at the end
+      of the cycle the output buffers to the IDE inteface are turned off.  This was a fix from the original design which 
+      assumed the rising edge of the write signal would be sufficienctly ahead of the buffers getting turned off. 
+      
+       */
+
+nIDE_BUFFER_EN = (nIDE1_CSA & nIDE1_CSB & nIDE1_CSA & nIDE1_CSB);
+
+nIDE_WR = CPU_RW # nIDE_WR_DELAY2;
+
+nIDE_WR_DELAY1.d = 'b'1;
+nIDE_WR_DELAY1.ck = CPU_CLK;
+nIDE_WR_DELAY1.ar = nIDE_BUFFER_EN  # !SYS_RESET;
+
+nIDE_WR_DELAY2.d = nIDE_WR_DELAY1;
+nIDE_WR_DELAY2.ck = CPU_CLK;
+nIDE_WR_DELAY2.ar = nIDE_BUFFER_EN  # !SYS_RESET;
+
+
 /*
-Total dedicated input used:	0/4 	(0%)
-Total I/O pins used		41/80 	(51%)
-Total Logic cells used 		15/128 	(11%)
-Total Flip-Flop used 		0/128 	(0%)
-Total Foldback logic used 	0/128 	(0%)
-Total Nodes+FB/MCells 		15/128 	(11%)
+Total dedicated input used:	1/4 	(25%)
+Total I/O pins used		48/80 	(60%)
+Total Logic cells used 		20/128 	(15%)
+Total Flip-Flop used 		2/128 	(1%)
+Total Foldback logic used 	1/128 	(0%)
+Total Nodes+FB/MCells 		21/128 	(16%)
 Total cascade used 		0
-Total input pins 		26
-Total output pins 		15
-Total Pts 			15
+Total input pins 		31
+Total output pins 		18
+Total Pts 			22
 
 */

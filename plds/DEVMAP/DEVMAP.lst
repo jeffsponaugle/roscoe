@@ -3,7 +3,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: DEVMAP.pld                       Page 1
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Sun Mar 31 19:50:25 2024
+Created Wed Apr 03 12:44:42 2024
 
   1:Name     DEVMAP;
   2:PartNo   DEVMAP;
@@ -67,35 +67,96 @@ LISTING FOR LOGIC DESCRIPTION FILE: DEVMAP.pld                       Page 2
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Sun Mar 31 19:50:25 2024
+Created Wed Apr 03 12:44:42 2024
 
  54:Pin  0  = nNIC_CS;
  55:
- 56:FIELD field_CPU_ADDRESS = [CPU_A27..8];
- 57:
- 58:/* 8 bit devices */
- 59:
- 60:nUART_CSA = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
- 61:nUART_CSB = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
- 62:nINTCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00002XX]);
- 63:nRTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00003XX]);
- 64:nPTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
- 65:nPOWERCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
- 66:
- 67:/* 16 bit devices */
- 68:
- 69:nSTATUS7SEG_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
- 70:nBOARDLEDS_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
- 71:nIDE1_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
- 72:nIDE1_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
- 73:nIDE2_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00006XX]);
- 74:nIDE2_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00007XX]);
- 75:nVGA_CTRL_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00008XX] # field_CPU_ADDRESS:['h'00009XX]);
- 76:nUSB_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'0000AXX] # field_CPU_ADDRESS:['h'0000BXX]);
- 77:nNIC_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00010XX] # field_CPU_ADDRESS:['h'00011XX]
- 78:                        # field_CPU_ADDRESS:['h'00012XX] # field_CPU_ADDRESS:['h'00013XX]);
- 79:
+ 56:Pin  0  = nIDE_WR;
+ 57:Pin  0  = nIDE_BUFFER_EN;
+ 58:
+ 59:Pin  0  = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
+ 60:
+ 61:
+ 62:NODE nIDE_WR_DELAY1, nIDE_WR_DELAY2;
+ 63:
+ 64:// dummy expression to force the pins to be assigned.
+
+ 65:
+ 66:EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & SYS_RESET & nDEV32BITCS & CPU_RW;
+ 67:
+ 68:FIELD field_CPU_ADDRESS = [CPU_A27..8];
+ 69:
+ 70:/* 8 bit devices */
+ 71:
+ 72:nUART_CSA = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
+ 73:nUART_CSB = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
+ 74:nINTCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00002XX]);
+ 75:nRTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00003XX]);
+ 76:nPTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
+ 77:nPOWERCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
+ 78:
+ 79:/* 16 bit devices */
  80:
+ 81:nSTATUS7SEG_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
+ 82:nBOARDLEDS_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
+ 83:nIDE1_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
+ 84:nIDE1_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
+ 85:nIDE2_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00006XX]);
+ 86:nIDE2_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00007XX]);
+ 87:nVGA_CTRL_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00008XX] # field_CPU_ADDRESS:['h'00009XX]);
+ 88:nUSB_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'0000AXX] # field_CPU_ADDRESS:['h'0000BXX]);
+ 89:nNIC_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00010XX] # field_CPU_ADDRESS:['h'00011XX]
+ 90:                        # field_CPU_ADDRESS:['h'00012XX] # field_CPU_ADDRESS:['h'00013XX]);
+ 91:
+ 92:
+ 93:/* IDE Device custom signals:
+ 94:
+ 95:      nIDE_WR signal goes directly to the /WR pin on both IDE interfaces.   This signal is asserted (low) as soon as     
+ 96:      the CPU_RW signal goes low, which normally happens write at the start of an /AS cycle.  The IDE_WR_DELAY1 and DELAY2 
+ 97:      flip flops are configured such that they both start at 0 when an AS cycle starts.  After 2 CLK_16M cycles the 
+ 98:      DELAY2 signal is set to 1, which directly unasserts the IDE /WR pin.  The allows the /WR pin to have an active rising
+ 99:      edge BEFORE the end of the CPU cpu cycle.  This is critical to allow the IDE interface to latch data, since at the end
+100:      of the cycle the output buffers to the IDE inteface are turned off.  This was a fix from the original design which 
+101:      assumed the rising edge of the write signal would be sufficienctly ahead of the buffers getting turned off. 
+102:      
+103:       */
+104:
+105:nIDE_BUFFER_EN = (nIDE1_CSA & nIDE1_CSB & nIDE1_CSA & nIDE1_CSB);
+106:
+107:nIDE_WR = CPU_RW # nIDE_WR_DELAY2;
+
+LISTING FOR LOGIC DESCRIPTION FILE: DEVMAP.pld                       Page 3
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Wed Apr 03 12:44:42 2024
+
+108:
+109:nIDE_WR_DELAY1.d = 'b'1;
+110:nIDE_WR_DELAY1.ck = CPU_CLK;
+111:nIDE_WR_DELAY1.ar = nIDE_BUFFER_EN  # !SYS_RESET;
+112:
+113:nIDE_WR_DELAY2.d = nIDE_WR_DELAY1;
+114:nIDE_WR_DELAY2.ck = CPU_CLK;
+115:nIDE_WR_DELAY2.ar = nIDE_BUFFER_EN  # !SYS_RESET;
+116:
+117:
+118:/*
+119:Total dedicated input used:     0/4     (0%)
+120:Total I/O pins used             41/80   (51%)
+121:Total Logic cells used          15/128  (11%)
+122:Total Flip-Flop used            0/128   (0%)
+123:Total Foldback logic used       0/128   (0%)
+124:Total Nodes+FB/MCells           15/128  (11%)
+125:Total cascade used              0
+126:Total input pins                26
+127:Total output pins               15
+128:Total Pts                       15
+129:
+130:*/
+131:
+132:
 
 
 

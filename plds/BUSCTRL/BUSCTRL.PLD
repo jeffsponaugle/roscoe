@@ -87,8 +87,10 @@ Pin = nDRAM_CAS3;
 Pin = DRAM_MUX;              // MUX for addess lines going to DRAM (0=ROW, 1=COL)
 Pin = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the CPU.
 Pin = nDRAM_WE;
+Pin = RESET_CONTROL_IN;     // Active high signal to perform a system reset.
 
 Pin = UNUSED1;
+Pin = UNUSED2;
 
 NODE REFRESH_ACTIVE;
 NODE CPU_CLK_div2;
@@ -115,7 +117,7 @@ nCPU_CIIN = 'b'1;
 
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
 UNUSED1 = (CPU_A31 & CPU_A30 & CPU_A29 & CPU_A28 & CPU_A27) #  ( CPU_A26 & CPU_A25 & CPU_A24 & CPU_A23 & CPU_A22) # ( CPU_A21 & CPU_A20 & CPU_A19 & CPU_A18 & CPU_A17 );
-
+UNUSED2 = !nCPU_ECS;
 
 
 /* 
@@ -151,10 +153,13 @@ CPU_CLK_div16.ck = CPU_CLK_div8;
    This logic will guarentee the first CPU_CLK edge after reset is a rising edge 
    This makes it possible to have deterministic behaviour on reset startup.
 
+   RESET_CONTROL_IN is a signal from the Interrupt Controller that allows a software reset operation. The reset itself will
+   reset the flip flop in the interrupt controller.
+
 */
 
 nSYS_RESET.d = 'b'1;
-nSYS_RESET.ar = !nSYS_RESET_IN;
+nSYS_RESET.ar = !nSYS_RESET_IN # RESET_CONTROL_IN;
 nSYS_RESET.ck = !CPU_CLK;
 
 /* 
@@ -282,7 +287,11 @@ nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # DEV32BIT_REGION_ACCES
 nBFLASH_CE = !BOOTFLASH_REGION_ACCESS;
 nBFLASH_WE = !BOOTFLASH_REGION_ACCESS # CPU_RW;
 
-/* 64MB Flash signaling */
+/* 
+    64MB Flash signaling.  The 64MB FLASH does not support 8 bit reads/writes.  This does not effect reads as extra data on 
+    reads won't change any state. On writes if the CPU does an 8 bit write or an unaligned write it will write random data
+    to the other 8bit section.  
+*/
 
 nBIGFLASH_CE = !BIGFLASH_REGION_ACCESS;
 

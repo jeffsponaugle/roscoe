@@ -46,6 +46,8 @@ Pin = vINT1A, vINT1B;
 */
 
 Pin = [CPU_IPL2..0];
+Pin = POWER_CONTROL_OUT;
+Pin = RESET_CONTROL_OUT;
 
 /* 
                                                 Internal NODES
@@ -53,9 +55,12 @@ Pin = [CPU_IPL2..0];
 */
 NODE [INT_ACK_LEVEL2..0];       // a recording of the current interrupt acknowledged from the CPU
 NODE [INT_MSK15..0];            // 16 bit Interrupt Mask.  15=INT7A...0=INT1B
+
+NODE POWER_CONTROL_STATE;
 NODE INT7A_REQUEST;
 NODE INT6A_REQUEST;
 NODE INT6B_REQUEST;
+NODE INT1B_REQUEST;
 NODE INT_ACK_RESET_PRE;
 NODE INT_ACK_RESET;
 
@@ -83,11 +88,24 @@ NODE INT2B_REQUEST_PE;
     RESETs to all 0
 */
 
-[INT_MSK15..8].ck = nINTCTRL_CS # CPU_A0;               // An 8 bit write to 0x3000 0200
-[INT_MSK7..0].ck = nINTCTRL_CS # !CPU_A0;               // An 8 bit write to 0x3000 0201
+[INT_MSK15..8].ck = nINTCTRL_CS # CPU_A0 # CPU_A1;               // An 8 bit write to 0x3000 0200
+[INT_MSK7..0].ck = nINTCTRL_CS # !CPU_A0 # CPU_A1;               // An 8 bit write to 0x3000 0201
 [INT_MSK15..0].ar = !nSYS_RESET;
 [INT_MSK15..8].d = [CPU_D7..0].io;
 [INT_MSK7..0].d = [CPU_D7..0].io;
+
+/* Power Control and Reset Control Register */
+
+POWER_CONTROL_STATE.d = CPU_D0.io;
+POWER_CONTROL_STATE.ck = nINTCTRL_CS # !CPU_A0 # !CPU_A1;         // An 8-bit write to 0x3000 0202
+POWER_CONTROL_STATE.ar = !nSYS_RESET;
+
+POWER_CONTROL_OUT = 'b'1;
+POWER_CONTROL_OUT.oe = POWER_CONTROL_STATE;
+
+RESET_CONTROL_OUT.d = CPU_D1.io;
+RESET_CONTROL_OUT.ck = nINTCTRL_CS # !CPU_A0 # !CPU_A1; 
+RESET_CONTROL_OUT.ar = !nSYS_RESET;
 
 /*
     At the start of the Interrupt Acknowlegement Cycle we will record the interrupt level being acknowledged in the INT_ACK_LEVEL0..2 flip flops.
@@ -132,8 +150,11 @@ INT3A_REQUEST = !vINT3A & INT_MSK5;         // INT3A comes from the FT-120 USB i
 INT3B_REQUEST = !vINT3B & INT_MSK4;         // INT3B in an expansion interrupt (undefined)  Make active low, with pullup
 INT2A_REQUEST = !vINT2A & INT_MSK3;         // INT2A comed from the Video Interface, Active low signal
 INT2B_REQUEST = !vINT2B & INT_MSK2;         // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
-INT1A_REQUEST = !vINT1A & INT_MSK1;         // INT2A comed from the Video Interface, Active low signal
-INT1B_REQUEST = !vINT1B & INT_MSK0;         // INT2B is the power controller interrupt. Active low signal.
+INT1A_REQUEST = !vINT1A & INT_MSK1;         // INT1A comed from the Video Interface, Active low signal
+   
+INT1B_REQUEST.d = INT_MSK0;                  // INT1B is the power controller interrupt. Rising Edge Triggered.
+INT1B_REQUEST.ck = !vINT1B;
+INT1B_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT1B_REQUEST_PE & field_INT_ACK_LEVEL:['d'1]);
 
 /* 
    We will create a priority encoded version of each interrupt level so we can set the CPU_IPL0-2
@@ -268,15 +289,15 @@ INT_ACK_RESET.ar = !nSYS_RESET;
 
 /*
 Total dedicated input used:	3/4 	(75%)
-Total I/O pins used		35/80 	(43%)
-Total Logic cells used 		49/128 	(38%)
-Total Flip-Flop used 		24/128 	(18%)
+Total I/O pins used		37/80 	(46%)
+Total Logic cells used 		54/128 	(42%)
+Total Flip-Flop used 		27/128 	(21%)
 Total Foldback logic used 	5/128 	(3%)
-Total Nodes+FB/MCells 		52/128 	(40%)
+Total Nodes+FB/MCells 		57/128 	(44%)
 Total cascade used 		2
 Total input pins 		27
-Total output pins 		11
-Total Pts 			114
+Total output pins 		13
+Total Pts 			125
 
 */
 
