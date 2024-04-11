@@ -41,6 +41,8 @@ Pin = nSYS_RESET;
 Pin = nCPU_HALT;
 Pin = nCPU_BERR;
 Pin = nCPU_STERM;
+
+// To Devices
 Pin = nCPU_RD;       // An inverted version of the CPU_RW line, used to /OE pins on memory and devices.
 
 // To Boot Flash
@@ -61,10 +63,8 @@ Pin = nSRAM_LL_SEL;
 Pin = nSRAM_LH_SEL;
 Pin = nSRAM_UL_SEL;
 Pin = nSRAM_UH_SEL;
-Pin = nSRAM_OE;             // Might not need this - could use nMEM_OE;
-Pin = nSRAM_WE;             // Might not need this - could use CPU_RW;
 
-// To Devices
+// To Device Controller
 Pin = nDEV8BITCS;
 Pin = nDEV16BITCS;
 Pin = nDEV32BITCS;
@@ -80,6 +80,15 @@ Pin = nDRAM_S1B_RAS;
 Pin = nDRAM_S2B_RAS;
 Pin = nDRAM_S3B_RAS;
 Pin = nDRAM_S4B_RAS;
+Pin = nDRAM_S5A_RAS;
+Pin = nDRAM_S6A_RAS;
+Pin = nDRAM_S7A_RAS;
+Pin = nDRAM_S8A_RAS;
+Pin = nDRAM_S5B_RAS;
+Pin = nDRAM_S6B_RAS;
+Pin = nDRAM_S7B_RAS;
+Pin = nDRAM_S8B_RAS;
+
 Pin = nDRAM_CAS0;
 Pin = nDRAM_CAS1;
 Pin = nDRAM_CAS2;
@@ -116,7 +125,7 @@ nCPU_RD = !CPU_RW;
 nCPU_CIIN = 'b'1;
 
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
-UNUSED1 = (CPU_A31 & CPU_A30 & CPU_A29 & CPU_A28 & CPU_A27) #  ( CPU_A26 & CPU_A25 & CPU_A24 & CPU_A23 & CPU_A22) # ( CPU_A21 & CPU_A20 & CPU_A19 & CPU_A18 & CPU_A17 );
+UNUSED1 = CPU_A19 & CPU_A18 & CPU_A17;
 UNUSED2 = !nCPU_ECS;
 
 
@@ -324,11 +333,7 @@ nBIGFLASH_CE = !BIGFLASH_REGION_ACCESS;
 nSRAM_BANK1_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # CPU_A21 # CPU_A20;
 nSRAM_BANK2_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # CPU_A21 # !CPU_A20;
 nSRAM_BANK3_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # CPU_A20;
-nSRAM_BANK4_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # !CPU_A20;
-
-nSRAM_OE = !CPU_RW;         // Can be enabled even when not doing SRAM access because above CE is also required.
-nSRAM_WE = CPU_RW;          // WE can also be enabled for all writes since both CE and one of the UB or LB must also 
-                            // be low. 
+nSRAM_BANK4_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # !CPU_A20; 
 
 // For each of the 4 bank selects, if we are doing a read it will be selected(low), and if we are doing a write
 // it will depend on the value of the BA32_xx functions.  This will enable the correct byte section during a write
@@ -580,11 +585,41 @@ REFRESH_COMPLETE.ar = !nSYS_RESET;
     -------------------------------------------------
     - 0x8700 0000   SIMM4 Rank B        0x87FF FFFF
     -------------------------------------------------
+
+  -------------------------------------------------
+    - 0x8800 0000   SIMM5 Rank A        0x88FF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8900 0000   SIMM6 Rank A        0x89FF FFFF
+    -------------------------------------------------
+     -------------------------------------------------
+    - 0x8A00 0000   SIMM7 Rank A        0x8AFF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8B00 0000   SIMM8 Rank A        0x8BFF FFFF
+    -------------------------------------------------
+      -------------------------------------------------
+    - 0x8C00 0000   SIMM5 Rank B        0x8CFF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8D00 0000   SIMM6 Rank B        0x8DFF FFFF
+    -------------------------------------------------
+     -------------------------------------------------
+    - 0x8E00 0000   SIMM7 Rank B        0x8EFF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8F00 0000   SIMM8 Rank B        0x8FFF FFFF
+    -------------------------------------------------
+
+
+
+
 */
 
 /* We will use a bit field to make address range comparisons easier to read. */
 
 FIELD field_CPU_ADDRESS = [CPU_A31..20];
+
 nDRAM_S1A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X0XXXXXX])) & nREFRESH_RAS;
 nDRAM_S2A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X1XXXXXX])) & nREFRESH_RAS;
 nDRAM_S3A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X2XXXXXX])) & nREFRESH_RAS; 
@@ -594,6 +629,18 @@ nDRAM_S1B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X4XXXXXX])) & nREFRE
 nDRAM_S2B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X5XXXXXX])) & nREFRESH_RAS;
 nDRAM_S3B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X6XXXXXX])) & nREFRESH_RAS;
 nDRAM_S4B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X7XXXXXX])) & nREFRESH_RAS;
+
+nDRAM_S5A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X8XXXXXX])) & nREFRESH_RAS;
+nDRAM_S6A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X9XXXXXX])) & nREFRESH_RAS;
+nDRAM_S7A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XAXXXXXX])) & nREFRESH_RAS; 
+nDRAM_S8A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XBXXXXXX])) & nREFRESH_RAS;
+
+nDRAM_S5B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XCXXXXXX])) & nREFRESH_RAS;
+nDRAM_S6B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XDXXXXXX])) & nREFRESH_RAS;
+nDRAM_S7B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XEXXXXXX])) & nREFRESH_RAS;
+nDRAM_S8B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XFXXXXXX])) & nREFRESH_RAS;
+
+
 
 /* 
         The CAS lines are shared across all of the SIMM slots and ranks.  
@@ -630,14 +677,15 @@ nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
 /*
 Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		69/80 	(86%)
-Total Logic cells used 		70/128 	(54%)
+Total I/O pins used		80/80 	(100%)
+Total Logic cells used 		79/128 	(61%)
 Total Flip-Flop used 		24/128 	(18%)
-Total Foldback logic used 	7/128 	(5%)
-Total Nodes+FB/MCells 		77/128 	(60%)
+Total Foldback logic used 	8/128 	(6%)
+Total Nodes+FB/MCells 		87/128 	(67%)
 Total cascade used 		0
-Total input pins 		31
-Total output pins 		40
-Total Pts 			194*/
+Total input pins 		33
+Total output pins 		49
+Total Pts 			213
+*/
 
 

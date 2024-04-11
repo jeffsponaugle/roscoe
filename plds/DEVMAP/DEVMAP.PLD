@@ -12,7 +12,6 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
-
 /* 
                                                 Inputs
     ##########################################################################################
@@ -55,16 +54,15 @@ Pin = nNIC_CS;
 
 Pin = nIDE_WR;
 Pin = nIDE_BUFFER_EN;
-
+Pin = RTC_A_SEL;
+Pin = RTC_D_SEL;
 Pin = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
-
 
 NODE nIDE_WR_DELAY1, nIDE_WR_DELAY2;
 
 // dummy expression to force the pins to be assigned.
 
 EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & SYS_RESET & nDEV32BITCS & CPU_RW;
-
 FIELD field_CPU_ADDRESS = [CPU_A27..8];
 
 /* 8 bit devices */
@@ -113,6 +111,21 @@ nIDE_WR_DELAY1.ar = nIDE_BUFFER_EN  # !SYS_RESET;
 nIDE_WR_DELAY2.d = nIDE_WR_DELAY1;
 nIDE_WR_DELAY2.ck = CPU_CLK;
 nIDE_WR_DELAY2.ar = nIDE_BUFFER_EN  # !SYS_RESET;
+
+/* 
+    RTC Device custom signals 
+
+   RTC_A_SEL is used to change the address/data select lines going to the DS Real Time Clock IC.
+   It is also used to drive the DS line on the RTC.  The flip flop is reset while RTS_CS is off 
+   (which is tied to /AS), and then increments to 1 on the next falling edge.  It will stay at 1
+   until the end of the bus cycle.
+*/
+
+RTC_A_SEL.d = 'b'1;
+RTC_A_SEL.ck = !CPU_CLK;
+RTC_A_SEL.ar = nRTC_CS;    /* nRTC_CS is active low, so it will be high while RTS is not being accesses */
+RTC_D_SEL = !RTS_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, this will be held at one which is off */
+
 
 
 /*
