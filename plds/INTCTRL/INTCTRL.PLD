@@ -19,7 +19,6 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 */
 
 // From CPU
-Pin = [CPU_A27..8];
 Pin = [CPU_A3..0];
 Pin = CPU_RW;
 Pin = [CPU_D7..0];
@@ -48,6 +47,10 @@ Pin = vINT1A, vINT1B;
 Pin = [CPU_IPL2..0];
 Pin = POWER_CONTROL_OUT;
 Pin = RESET_CONTROL_OUT;
+
+Pin = UNUSED1;
+UNUSED1 = CPU_A0 & CPU_A1 & CPU_A2 & CPU_A3;
+
 
 /* 
                                                 Internal NODES
