@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Wed Apr 10 17:49:43 2024
+Created         Thu Apr 11 20:18:20 2024
 Name            BUSCTRL
 Partno          BUSCTRL
 Revision        01
@@ -294,9 +294,7 @@ SRAM_REGION_ACCESS =>
   # CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 UNUSED1 =>
-    CPU_A17 & CPU_A18 & CPU_A19 & CPU_A20 & CPU_A21
-  # CPU_A22 & CPU_A23 & CPU_A24 & CPU_A25 & CPU_A26
-  # CPU_A27 & CPU_A28 & CPU_A29 & CPU_A30 & CPU_A31
+    CPU_A17 & CPU_A18 & CPU_A19
 
 UNUSED2 =>
     !nCPU_ECS
@@ -673,9 +671,6 @@ nSRAM_LL_SEL =>
     CPU_AA0 & !CPU_RW
   # CPU_AA1 & !CPU_RW
 
-nSRAM_OE =>
-    !CPU_RW
-
 nSRAM_UH_SEL =>
     !CPU_AA0 & !CPU_AA1 & !CPU_RW & CPU_SIZ0
   # !CPU_AA1 & !CPU_RW & !CPU_SIZ0 & CPU_SIZ1
@@ -686,9 +681,6 @@ nSRAM_UL_SEL =>
     CPU_AA0 & CPU_AA1 & !CPU_RW
   # !CPU_AA1 & !CPU_RW & CPU_SIZ0 & !CPU_SIZ1
   # !CPU_AA0 & !CPU_AA1 & !CPU_RW & !CPU_SIZ0 & CPU_SIZ1
-
-nSRAM_WE =>
-    CPU_RW
 
 nSYS_RESET.d  =>
     1 
@@ -718,188 +710,186 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     BA8                         0        I        1       -       -     
     BIGFLASH_REGION_ACCESS        0        I        3       -       -     
     BOOTFLASH_REGION_ACCESS        0        I        3       -       -     
-    CPU_A16                     0        V        -       -       -     
-    CPU_A17                     0        V        -       -       -     
-    CPU_A18                     0        V        -       -       -     
-    CPU_A19                     0        V        -       -       -     
-    CPU_A20                     0        V        -       -       -     
-    CPU_A21                     0        V        -       -       -     
-    CPU_A22                     0        V        -       -       -     
-    CPU_A23                     0        V        -       -       -     
-    CPU_A24                     0        V        -       -       -     
-    CPU_A25                     0        V        -       -       -     
-    CPU_A26                     0        V        -       -       -     
-    CPU_A27                     0        V        -       -       -     
-    CPU_A28                     0        V        -       -       -     
-    CPU_A29                     0        V        -       -       -     
-    CPU_A30                     0        V        -       -       -     
-    CPU_A31                     0        V        -       -       -     
-    CPU_AA0                     0        V        -       -       -     
-    CPU_AA1                     0        V        -       -       -     
-    CPU_CLK                     0        V        -       -       -     
-    CPU_CLK_div2                102      N        -       -       -     
-    CPU_CLK_div2        d       102      M        1       0       2     
-    CPU_CLK_div2        ck      102      M        1       0       1     
-    CPU_CLK_div4                103      N        -       -       -     
-    CPU_CLK_div4        d       103      M        1       0       2     
-    CPU_CLK_div4        ck      103      M        1       0       1     
-    CPU_CLK_div8                104      N        -       -       -     
-    CPU_CLK_div8        d       104      M        1       0       2     
-    CPU_CLK_div8        ck      104      M        1       0       1     
-    CPU_CLK_div16               105      N        -       -       -     
-    CPU_CLK_div16       d       105      M        1       0       2     
-    CPU_CLK_div16       ck      105      M        1       0       1     
-    CPU_FC0                     0        V        -       -       -     
-    CPU_FC1                     0        V        -       -       -     
-    CPU_FC2                     0        V        -       -       -     
-    CPU_RW                      0        V        -       -       -     
-    CPU_SIZ0                    0        V        -       -       -     
-    CPU_SIZ1                    0        V        -       -       -     
+    CPU_A16                     70       V        -       -       -     
+    CPU_A17                     69       V        -       -       -     
+    CPU_A18                     68       V        -       -       -     
+    CPU_A19                     67       V        -       -       -     
+    CPU_A20                     65       V        -       -       -     
+    CPU_A21                     64       V        -       -       -     
+    CPU_A22                     63       V        -       -       -     
+    CPU_A23                     61       V        -       -       -     
+    CPU_A24                     60       V        -       -       -     
+    CPU_A25                     58       V        -       -       -     
+    CPU_A26                     57       V        -       -       -     
+    CPU_A27                     56       V        -       -       -     
+    CPU_A28                     55       V        -       -       -     
+    CPU_A29                     54       V        -       -       -     
+    CPU_A30                     53       V        -       -       -     
+    CPU_A31                     52       V        -       -       -     
+    CPU_AA0                     72       V        -       -       -     
+    CPU_AA1                     71       V        -       -       -     
+    CPU_CLK                     87       V        -       -       -     
+    CPU_CLK_div2                0        N        -       -       -     
+    CPU_CLK_div2        d       0        M        1       0       2     
+    CPU_CLK_div2        ck      0        M        1       0       1     
+    CPU_CLK_div4                0        N        -       -       -     
+    CPU_CLK_div4        d       0        M        1       0       2     
+    CPU_CLK_div4        ck      0        M        1       0       1     
+    CPU_CLK_div8                0        N        -       -       -     
+    CPU_CLK_div8        d       0        M        1       0       2     
+    CPU_CLK_div8        ck      0        M        1       0       1     
+    CPU_CLK_div16               0        N        -       -       -     
+    CPU_CLK_div16       d       0        M        1       0       2     
+    CPU_CLK_div16       ck      0        M        1       0       1     
+    CPU_FC0                     76       V        -       -       -     
+    CPU_FC1                     77       V        -       -       -     
+    CPU_FC2                     78       V        -       -       -     
+    CPU_RW                      75       V        -       -       -     
+    CPU_SIZ0                    79       V        -       -       -     
+    CPU_SIZ1                    80       V        -       -       -     
     DEV16BIT_REGION_ACCESS        0        I        3       -       -     
     DEV32BIT_REGION_ACCESS        0        I        3       -       -     
     DEV8BIT_REGION_ACCESS        0        I        3       -       -     
-    DRAM_ACCESS_MUX             113      N        -       -       -     
-    DRAM_ACCESS_MUX     d       113      M        1       0       2     
-    DRAM_ACCESS_MUX     ar      113      M        4       0       1     
-    DRAM_ACCESS_MUX     ck      113      M        1       0       1     
-    DRAM_ACCESS_RAS_RESET1        109      N        -       -       -     
-    DRAM_ACCESS_RAS_RESET1d       109      M        1       0       2     
-    DRAM_ACCESS_RAS_RESET1ar      109      M        2       0       1     
-    DRAM_ACCESS_RAS_RESET1ck      109      M        1       0       1     
-    DRAM_ACCESS_RAS_RESET2        110      N        -       -       -     
-    DRAM_ACCESS_RAS_RESET2d       110      M        1       0       2     
-    DRAM_ACCESS_RAS_RESET2ar      110      M        2       0       1     
-    DRAM_ACCESS_RAS_RESET2ck      110      M        1       0       1     
-    DRAM_MUX                    0        V        1       0       2     
+    DRAM_ACCESS_MUX             0        N        -       -       -     
+    DRAM_ACCESS_MUX     d       0        M        1       0       2     
+    DRAM_ACCESS_MUX     ar      0        M        4       0       1     
+    DRAM_ACCESS_MUX     ck      0        M        1       0       1     
+    DRAM_ACCESS_RAS_RESET1        0        N        -       -       -     
+    DRAM_ACCESS_RAS_RESET1d       0        M        1       0       2     
+    DRAM_ACCESS_RAS_RESET1ar      0        M        2       0       1     
+    DRAM_ACCESS_RAS_RESET1ck      0        M        1       0       1     
+    DRAM_ACCESS_RAS_RESET2        0        N        -       -       -     
+    DRAM_ACCESS_RAS_RESET2d       0        M        1       0       2     
+    DRAM_ACCESS_RAS_RESET2ar      0        M        2       0       1     
+    DRAM_ACCESS_RAS_RESET2ck      0        M        1       0       1     
+    DRAM_MUX                    12       V        1       0       2     
     DRAM_REGION_ACCESS          0        I        4       -       -     
     FC_CPU_SPACE                0        I        1       -       -     
     INTERRUPT_ACK_ACCESS        0        I        1       -       -     
-    REFRESH_ACTIVE              101      N        -       -       -     
-    REFRESH_ACTIVE      d       101      M        3       0       2     
-    REFRESH_ACTIVE      ar      101      M        2       0       1     
-    REFRESH_ACTIVE      ck      101      M        1       0       1     
-    REFRESH_COMPLETE            107      N        -       -       -     
-    REFRESH_COMPLETE    d       107      M        1       0       2     
-    REFRESH_COMPLETE    ar      107      M        1       0       1     
-    REFRESH_COMPLETE    ck      107      M        1       0       1     
-    REFRESH_REQUESTED           108      N        -       -       -     
-    REFRESH_REQUESTED   d       108      M        1       0       2     
-    REFRESH_REQUESTED   ar      108      M        2       0       1     
-    REFRESH_REQUESTED   ck      108      M        1       0       1     
-    REFRESH_STATE_MACHINE0        122      N        -       -       -     
-    REFRESH_STATE_MACHINE0d       122      M        1       0       2     
-    REFRESH_STATE_MACHINE0ar      122      M        3       0       1     
-    REFRESH_STATE_MACHINE0ck      122      M        1       0       1     
-    REFRESH_STATE_MACHINE1        123      N        -       -       -     
-    REFRESH_STATE_MACHINE1d       123      M        2       0       2     
-    REFRESH_STATE_MACHINE1ar      123      M        3       0       1     
-    REFRESH_STATE_MACHINE1ck      123      M        1       0       1     
-    REFRESH_STATE_MACHINE2        124      N        -       -       -     
-    REFRESH_STATE_MACHINE2d       124      M        3       0       2     
-    REFRESH_STATE_MACHINE2ar      124      M        3       0       1     
-    REFRESH_STATE_MACHINE2ck      124      M        1       0       1     
-    REFRESH_TIMER0              115      N        -       -       -     
-    REFRESH_TIMER0      d       115      M        1       0       2     
-    REFRESH_TIMER0      ar      115      M        2       0       1     
-    REFRESH_TIMER0      ck      115      M        1       0       1     
-    REFRESH_TIMER1              116      N        -       -       -     
-    REFRESH_TIMER1      d       116      M        2       0       2     
-    REFRESH_TIMER1      ar      116      M        2       0       1     
-    REFRESH_TIMER1      ck      116      M        1       0       1     
-    REFRESH_TIMER2              117      N        -       -       -     
-    REFRESH_TIMER2      d       117      M        3       0       2     
-    REFRESH_TIMER2      ar      117      M        2       0       1     
-    REFRESH_TIMER2      ck      117      M        1       0       1     
-    REFRESH_TIMER3              118      N        -       -       -     
-    REFRESH_TIMER3      d       118      M        4       0       2     
-    REFRESH_TIMER3      ar      118      M        2       0       1     
-    REFRESH_TIMER3      ck      118      M        1       0       1     
-    REFRESH_TIMER4              119      N        -       -       -     
-    REFRESH_TIMER4      d       119      M        5       0       2     
-    REFRESH_TIMER4      ar      119      M        2       0       1     
-    REFRESH_TIMER4      ck      119      M        1       0       1     
-    REFRESH_TIMER5              120      N        -       -       -     
-    REFRESH_TIMER_RESET         121      N        -       -       -     
-    REFRESH_TIMER_RESET d       121      M        1       0       2     
-    REFRESH_TIMER_RESET ar      121      M        1       0       1     
-    REFRESH_TIMER_RESET ck      121      M        1       0       1     
-    RESET_CONTROL_IN            0        V        -       -       -     
+    REFRESH_ACTIVE              0        N        -       -       -     
+    REFRESH_ACTIVE      d       0        M        3       0       2     
+    REFRESH_ACTIVE      ar      0        M        2       0       1     
+    REFRESH_ACTIVE      ck      0        M        1       0       1     
+    REFRESH_COMPLETE            0        N        -       -       -     
+    REFRESH_COMPLETE    d       0        M        1       0       2     
+    REFRESH_COMPLETE    ar      0        M        1       0       1     
+    REFRESH_COMPLETE    ck      0        M        1       0       1     
+    REFRESH_REQUESTED           0        N        -       -       -     
+    REFRESH_REQUESTED   d       0        M        1       0       2     
+    REFRESH_REQUESTED   ar      0        M        2       0       1     
+    REFRESH_REQUESTED   ck      0        M        1       0       1     
+    REFRESH_STATE_MACHINE0        0        N        -       -       -     
+    REFRESH_STATE_MACHINE0d       0        M        1       0       2     
+    REFRESH_STATE_MACHINE0ar      0        M        3       0       1     
+    REFRESH_STATE_MACHINE0ck      0        M        1       0       1     
+    REFRESH_STATE_MACHINE1        0        N        -       -       -     
+    REFRESH_STATE_MACHINE1d       0        M        2       0       2     
+    REFRESH_STATE_MACHINE1ar      0        M        3       0       1     
+    REFRESH_STATE_MACHINE1ck      0        M        1       0       1     
+    REFRESH_STATE_MACHINE2        0        N        -       -       -     
+    REFRESH_STATE_MACHINE2d       0        M        3       0       2     
+    REFRESH_STATE_MACHINE2ar      0        M        3       0       1     
+    REFRESH_STATE_MACHINE2ck      0        M        1       0       1     
+    REFRESH_TIMER0              0        N        -       -       -     
+    REFRESH_TIMER0      d       0        M        1       0       2     
+    REFRESH_TIMER0      ar      0        M        2       0       1     
+    REFRESH_TIMER0      ck      0        M        1       0       1     
+    REFRESH_TIMER1              0        N        -       -       -     
+    REFRESH_TIMER1      d       0        M        2       0       2     
+    REFRESH_TIMER1      ar      0        M        2       0       1     
+    REFRESH_TIMER1      ck      0        M        1       0       1     
+    REFRESH_TIMER2              0        N        -       -       -     
+    REFRESH_TIMER2      d       0        M        3       0       2     
+    REFRESH_TIMER2      ar      0        M        2       0       1     
+    REFRESH_TIMER2      ck      0        M        1       0       1     
+    REFRESH_TIMER3              0        N        -       -       -     
+    REFRESH_TIMER3      d       0        M        4       0       2     
+    REFRESH_TIMER3      ar      0        M        2       0       1     
+    REFRESH_TIMER3      ck      0        M        1       0       1     
+    REFRESH_TIMER4              0        N        -       -       -     
+    REFRESH_TIMER4      d       0        M        5       0       2     
+    REFRESH_TIMER4      ar      0        M        2       0       1     
+    REFRESH_TIMER4      ck      0        M        1       0       1     
+    REFRESH_TIMER5              0        N        -       -       -     
+    REFRESH_TIMER_RESET         0        N        -       -       -     
+    REFRESH_TIMER_RESET d       0        M        1       0       2     
+    REFRESH_TIMER_RESET ar      0        M        1       0       1     
+    REFRESH_TIMER_RESET ck      0        M        1       0       1     
+    RESET_CONTROL_IN            83       V        -       -       -     
     SRAM_REGION_ACCESS          0        I        3       -       -     
-    UNUSED1                     0        V        3       0       2     
-    UNUSED2                     0        V        1       0       2     
+    UNUSED1                     48       V        1       0       2     
+    UNUSED2                     47       V        1       0       2     
     VIDEO_REGION_ACCESS         0        I        3       -       -     
-    bBIGFLASH_CE                0        V        -       -       -     
+    bBIGFLASH_CE                7        V        -       -       -     
     field_CPU_ADDRESS           0        F        -       -       -     
     field_REFRESH_STATE_MACHINE        0        F        -       -       -     
-    nBFLASH_CE                  0        V        7       0       2     
-    nBFLASH_WE                  0        V        8       0       2     
+    nBFLASH_CE                  37       V        7       0       2     
+    nBFLASH_WE                  40       V        8       0       2     
     nBIGFLASH_CE                0        I        7       -       -     
-    nCPU_AS                     0        V        -       -       -     
-    nCPU_BERR                   0        V        1       0       2     
-    nCPU_CIIN                   0        V        1       0       2     
-    nCPU_DSACK0                 0        V        17      0       2     
-    nCPU_DSACK1                 0        V        4       0       2     
-    nCPU_ECS                    0        V        -       -       -     
-    nCPU_HALT                   0        V        1       0       2     
-    nCPU_RD                     0        V        1       0       2     
-    nCPU_STERM                  0        V        1       0       2     
-    nDEV16BITCS                 0        V        3       0       2     
-    nDEV32BITCS                 0        V        3       0       2     
-    nDEV8BITCS                  0        V        3       0       2     
-    nDRAM_ACCESS_CAS            114      N        -       -       -     
-    nDRAM_ACCESS_CAS    d       114      M        1       0       2     
-    nDRAM_ACCESS_CAS    ap      114      M        4       0       1     
-    nDRAM_ACCESS_CAS    ck      114      M        1       0       1     
-    nDRAM_ACCESS_RAS            106      N        -       -       -     
-    nDRAM_ACCESS_RAS    d       106      M        1       0       2     
-    nDRAM_ACCESS_RAS    ap      106      M        2       0       1     
-    nDRAM_ACCESS_RAS    ck      106      M        4       0       1     
-    nDRAM_CAS0                  0        V        5       0       2     
-    nDRAM_CAS1                  0        V        4       0       2     
-    nDRAM_CAS2                  0        V        3       0       2     
-    nDRAM_CAS3                  0        V        3       0       2     
-    nDRAM_DATA_EN               0        V        3       0       2     
-    nDRAM_S1A_RAS               0        V        5       0       2     
-    nDRAM_S1B_RAS               0        V        5       0       2     
-    nDRAM_S2A_RAS               0        V        5       0       2     
-    nDRAM_S2B_RAS               0        V        5       0       2     
-    nDRAM_S3A_RAS               0        V        5       0       2     
-    nDRAM_S3B_RAS               0        V        5       0       2     
-    nDRAM_S4A_RAS               0        V        5       0       2     
-    nDRAM_S4B_RAS               0        V        5       0       2     
-    nDRAM_S5A_RAS               0        V        5       0       2     
-    nDRAM_S5B_RAS               0        V        5       0       2     
-    nDRAM_S6A_RAS               0        V        5       0       2     
-    nDRAM_S6B_RAS               0        V        5       0       2     
-    nDRAM_S7A_RAS               0        V        5       0       2     
-    nDRAM_S7B_RAS               0        V        5       0       2     
-    nDRAM_S8A_RAS               0        V        5       0       2     
-    nDRAM_S8B_RAS               0        V        5       0       2     
-    nDRAM_WE                    0        V        4       0       2     
-    nINT_ACK_CYCLE              0        V        8       0       2     
-    nREFRESH_CAS                112      N        -       -       -     
-    nREFRESH_CAS        d       112      M        3       0       2     
-    nREFRESH_CAS        ap      112      M        2       0       1     
-    nREFRESH_CAS        ck      112      M        1       0       1     
-    nREFRESH_RAS                111      N        -       -       -     
-    nREFRESH_RAS        d       111      M        3       0       2     
-    nREFRESH_RAS        ap      111      M        2       0       1     
-    nREFRESH_RAS        ck      111      M        1       0       1     
-    nSRAM_BANK1_CE              0        V        14      0       2     
-    nSRAM_BANK2_CE              0        V        14      0       2     
-    nSRAM_BANK3_CE              0        V        14      0       2     
-    nSRAM_BANK4_CE              0        V        14      0       2     
-    nSRAM_LH_SEL                0        V        2       0       2     
-    nSRAM_LL_SEL                0        V        2       0       2     
-    nSRAM_OE                    0        V        1       0       2     
-    nSRAM_UH_SEL                0        V        4       0       2     
-    nSRAM_UL_SEL                0        V        3       0       2     
-    nSRAM_WE                    0        V        1       0       2     
-    nSYS_RESET                  0        V        -       -       -     
-    nSYS_RESET          d       0        X        1       0       2     
-    nSYS_RESET          ar      0        X        2       0       1     
-    nSYS_RESET          ck      0        X        1       0       1     
-    nSYS_RESET_IN               0        V        -       -       -     
+    nCPU_AS                     41       V        -       -       -     
+    nCPU_BERR                   46       V        1       0       2     
+    nCPU_CIIN                   44       V        1       0       2     
+    nCPU_DSACK0                 50       V        17      0       2     
+    nCPU_DSACK1                 7        V        4       0       2     
+    nCPU_ECS                    84       V        -       -       -     
+    nCPU_HALT                   42       V        1       0       2     
+    nCPU_RD                     8        V        1       0       2     
+    nCPU_STERM                  45       V        1       0       2     
+    nDEV16BITCS                 2        V        3       0       2     
+    nDEV32BITCS                 5        V        3       0       2     
+    nDEV8BITCS                  1        V        3       0       2     
+    nDRAM_ACCESS_CAS            0        N        -       -       -     
+    nDRAM_ACCESS_CAS    d       0        M        1       0       2     
+    nDRAM_ACCESS_CAS    ap      0        M        4       0       1     
+    nDRAM_ACCESS_CAS    ck      0        M        1       0       1     
+    nDRAM_ACCESS_RAS            0        N        -       -       -     
+    nDRAM_ACCESS_RAS    d       0        M        1       0       2     
+    nDRAM_ACCESS_RAS    ap      0        M        2       0       1     
+    nDRAM_ACCESS_RAS    ck      0        M        4       0       1     
+    nDRAM_CAS0                  17       V        5       0       2     
+    nDRAM_CAS1                  16       V        4       0       2     
+    nDRAM_CAS2                  14       V        3       0       2     
+    nDRAM_CAS3                  13       V        3       0       2     
+    nDRAM_DATA_EN               10       V        3       0       2     
+    nDRAM_S1A_RAS               19       V        5       0       2     
+    nDRAM_S1B_RAS               23       V        5       0       2     
+    nDRAM_S2A_RAS               20       V        5       0       2     
+    nDRAM_S2B_RAS               24       V        5       0       2     
+    nDRAM_S3A_RAS               21       V        5       0       2     
+    nDRAM_S3B_RAS               25       V        5       0       2     
+    nDRAM_S4A_RAS               22       V        5       0       2     
+    nDRAM_S4B_RAS               27       V        5       0       2     
+    nDRAM_S5A_RAS               28       V        5       0       2     
+    nDRAM_S5B_RAS               32       V        5       0       2     
+    nDRAM_S6A_RAS               29       V        5       0       2     
+    nDRAM_S6B_RAS               33       V        5       0       2     
+    nDRAM_S7A_RAS               30       V        5       0       2     
+    nDRAM_S7B_RAS               35       V        5       0       2     
+    nDRAM_S8A_RAS               31       V        5       0       2     
+    nDRAM_S8B_RAS               36       V        5       0       2     
+    nDRAM_WE                    9        V        4       0       2     
+    nINT_ACK_CYCLE              6        V        8       0       2     
+    nREFRESH_CAS                0        N        -       -       -     
+    nREFRESH_CAS        d       0        M        3       0       2     
+    nREFRESH_CAS        ap      0        M        2       0       1     
+    nREFRESH_CAS        ck      0        M        1       0       1     
+    nREFRESH_RAS                0        N        -       -       -     
+    nREFRESH_RAS        d       0        M        3       0       2     
+    nREFRESH_RAS        ap      0        M        2       0       1     
+    nREFRESH_RAS        ck      0        M        1       0       1     
+    nSRAM_BANK1_CE              92       V        14      0       2     
+    nSRAM_BANK2_CE              93       V        14      0       2     
+    nSRAM_BANK3_CE              94       V        14      0       2     
+    nSRAM_BANK4_CE              96       V        14      0       2     
+    nSRAM_LH_SEL                98       V        2       0       2     
+    nSRAM_LL_SEL                97       V        2       0       2     
+    nSRAM_UH_SEL                100      V        4       0       2     
+    nSRAM_UL_SEL                99       V        3       0       2     
+    nSYS_RESET                  49       V        -       -       -     
+    nSYS_RESET          d       49       X        1       0       2     
+    nSYS_RESET          ar      49       X        2       0       1     
+    nSYS_RESET          ck      49       X        1       0       1     
+    nSYS_RESET_IN               81       V        -       -       -     
 
 
 LEGEND    D : default variable         F : field      G : group

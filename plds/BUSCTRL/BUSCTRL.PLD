@@ -19,15 +19,15 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
                                                 Inputs
     ##########################################################################################
 */
-Pin = [CPU_FC0..2];
-Pin = [CPU_A31..16];
-Pin = [CPU_SIZ0..1];
-Pin = [CPU_AA1..0];
-Pin = nCPU_ECS;
-Pin = CPU_RW;
-Pin = nCPU_AS;
-Pin = nSYS_RESET_IN;
-Pin = CPU_CLK;
+Pin[76,77,78] = [CPU_FC0..2];
+Pin[52,53,54,55,56,57,58,60,61,63,64,65,67,68,69,70] = [CPU_A31..16];
+Pin[79,80] = [CPU_SIZ0..1];
+Pin[71,72] = [CPU_AA1..0];
+Pin[84] = nCPU_ECS;
+Pin[75] = CPU_RW;
+Pin[41] = nCPU_AS;
+Pin[81] = nSYS_RESET_IN;
+Pin[87] = CPU_CLK;
 
 /* 
                                                 Outputs 
@@ -35,86 +35,86 @@ Pin = CPU_CLK;
 */
 
 // To CPU
-Pin = [nCPU_DSACK0..1];
-Pin = nCPU_CIIN;
-Pin = nSYS_RESET;
-Pin = nCPU_HALT;
-Pin = nCPU_BERR;
-Pin = nCPU_STERM;
+Pin[50,7] = [nCPU_DSACK0..1];
+Pin[44] = nCPU_CIIN;
+Pin[49] = nSYS_RESET;
+Pin[42] = nCPU_HALT;
+Pin[46] = nCPU_BERR;
+Pin[45] = nCPU_STERM;
 
 // To Devices
-Pin = nCPU_RD;       // An inverted version of the CPU_RW line, used to /OE pins on memory and devices.
+Pin[8] = nCPU_RD;       // An inverted version of the CPU_RW line, used to /OE pins on memory and devices.
 
 // To Boot Flash
-Pin = nBFLASH_CE;
-Pin = nBFLASH_WE;
+Pin[37] = nBFLASH_CE;
+Pin[40] = nBFLASH_WE;
 
 // To 64M Flash
 
-Pin = bBIGFLASH_CE;
+Pin[7] = bBIGFLASH_CE;
 
 // To SRAM
 
-Pin = nSRAM_BANK1_CE;
-Pin = nSRAM_BANK2_CE;
-Pin = nSRAM_BANK3_CE;
-Pin = nSRAM_BANK4_CE;
-Pin = nSRAM_LL_SEL;
-Pin = nSRAM_LH_SEL;
-Pin = nSRAM_UL_SEL;
-Pin = nSRAM_UH_SEL;
+Pin[92] = nSRAM_BANK1_CE;
+Pin[93] = nSRAM_BANK2_CE;
+Pin[94] = nSRAM_BANK3_CE;
+Pin[96] = nSRAM_BANK4_CE;
+Pin[97] = nSRAM_LL_SEL;
+Pin[98] = nSRAM_LH_SEL;
+Pin[99] = nSRAM_UL_SEL;
+Pin[100] = nSRAM_UH_SEL;
 
 // To Device Controller
-Pin = nDEV8BITCS;
-Pin = nDEV16BITCS;
-Pin = nDEV32BITCS;
-Pin = nINT_ACK_CYCLE;
+Pin[1] = nDEV8BITCS;
+Pin[2] = nDEV16BITCS;
+Pin[5] = nDEV32BITCS;
+Pin[6] = nINT_ACK_CYCLE;
 
 // To DRAM
 
-Pin = nDRAM_S1A_RAS;
-Pin = nDRAM_S2A_RAS;
-Pin = nDRAM_S3A_RAS;
-Pin = nDRAM_S4A_RAS;
-Pin = nDRAM_S1B_RAS;
-Pin = nDRAM_S2B_RAS;
-Pin = nDRAM_S3B_RAS;
-Pin = nDRAM_S4B_RAS;
-Pin = nDRAM_S5A_RAS;
-Pin = nDRAM_S6A_RAS;
-Pin = nDRAM_S7A_RAS;
-Pin = nDRAM_S8A_RAS;
-Pin = nDRAM_S5B_RAS;
-Pin = nDRAM_S6B_RAS;
-Pin = nDRAM_S7B_RAS;
-Pin = nDRAM_S8B_RAS;
+Pin[19] = nDRAM_S1A_RAS;
+Pin[20] = nDRAM_S2A_RAS;
+Pin[21] = nDRAM_S3A_RAS;
+Pin[22] = nDRAM_S4A_RAS;
+Pin[23] = nDRAM_S1B_RAS;
+Pin[24] = nDRAM_S2B_RAS;
+Pin[25] = nDRAM_S3B_RAS;
+Pin[27] = nDRAM_S4B_RAS;
+Pin[28] = nDRAM_S5A_RAS;
+Pin[29] = nDRAM_S6A_RAS;
+Pin[30] = nDRAM_S7A_RAS;
+Pin[31] = nDRAM_S8A_RAS;
+Pin[32] = nDRAM_S5B_RAS;
+Pin[33] = nDRAM_S6B_RAS;
+Pin[35] = nDRAM_S7B_RAS;
+Pin[36] = nDRAM_S8B_RAS;
 
-Pin = nDRAM_CAS0;
-Pin = nDRAM_CAS1;
-Pin = nDRAM_CAS2;
-Pin = nDRAM_CAS3;
-Pin = DRAM_MUX;              // MUX for addess lines going to DRAM (0=ROW, 1=COL)
-Pin = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the CPU.
-Pin = nDRAM_WE;
-Pin = RESET_CONTROL_IN;     // Active high signal to perform a system reset.
+Pin[17] = nDRAM_CAS0;
+Pin[16] = nDRAM_CAS1;
+Pin[14] = nDRAM_CAS2;
+Pin[13] = nDRAM_CAS3;
+Pin[12] = DRAM_MUX;              // MUX for addess lines going to DRAM (0=ROW, 1=COL)
+Pin[10] = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the CPU.
+Pin[9] = nDRAM_WE;
+Pin[83] = RESET_CONTROL_IN;     // Active high signal to perform a system reset.
 
-Pin = UNUSED1;
-Pin = UNUSED2;
+Pin[48] = UNUSED1;
+Pin[47] = UNUSED2;
 
-NODE REFRESH_ACTIVE;
-NODE CPU_CLK_div2;
-NODE CPU_CLK_div4;
-NODE CPU_CLK_div8;
-NODE CPU_CLK_div16;
-NODE nDRAM_ACCESS_RAS;
-NODE REFRESH_COMPLETE;
-NODE REFRESH_REQUESTED;
-NODE DRAM_ACCESS_RAS_RESET1;
-NODE DRAM_ACCESS_RAS_RESET2;
-NODE nREFRESH_RAS;
-NODE nREFRESH_CAS;
-NODE DRAM_ACCESS_MUX;
-NODE nDRAM_ACCESS_CAS;
+PINNODE = REFRESH_ACTIVE;
+PINNODE = CPU_CLK_div2;
+PINNODE = CPU_CLK_div4;
+PINNODE = CPU_CLK_div8;
+PINNODE = CPU_CLK_div16;
+PINNODE = nDRAM_ACCESS_RAS;
+PINNODE = REFRESH_COMPLETE;
+PINNODE = REFRESH_REQUESTED;
+PINNODE = DRAM_ACCESS_RAS_RESET1;
+PINNODE = DRAM_ACCESS_RAS_RESET2;
+PINNODE = nREFRESH_RAS;
+PINNODE = nREFRESH_CAS;
+PINNODE = DRAM_ACCESS_MUX;
+PINNODE = nDRAM_ACCESS_CAS;
 
 
 /* Unused pin defauts */
@@ -432,8 +432,8 @@ DRAM_ACCESS_MUX.ck = !nDRAM_ACCESS_RAS;
 */
 
 
-NODE  [REFRESH_TIMER0..5];
-NODE REFRESH_TIMER_RESET;
+PINNODE =  [REFRESH_TIMER0..5];
+PINNODE = REFRESH_TIMER_RESET;
 
 
 /* 
@@ -511,7 +511,7 @@ REFRESH_ACTIVE.ar = !nSYS_RESET # REFRESH_COMPLETE;
     this machine will go to state 1 exactly 1/2 a CPU cycle after the ACTIVE flag is set.
 */
 
-NODE [REFRESH_STATE_MACHINE0..2];
+PINNODE = [REFRESH_STATE_MACHINE0..2];
 FIELD field_REFRESH_STATE_MACHINE = [REFRESH_STATE_MACHINE0..2];         // a field is used to make it simplier to refer to state machine values
 
 [REFRESH_STATE_MACHINE0..2].ck = !CPU_CLK;
@@ -676,16 +676,16 @@ nDRAM_DATA_EN = !DRAM_REGION_ACCESS;
 nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
 /*
-Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		80/80 	(100%)
-Total Logic cells used 		79/128 	(61%)
+Total dedicated input used:	1/4 	(25%)
+Total I/O pins used		79/80 	(98%)
+Total Logic cells used 		77/128 	(60%)
 Total Flip-Flop used 		24/128 	(18%)
-Total Foldback logic used 	8/128 	(6%)
-Total Nodes+FB/MCells 		87/128 	(67%)
+Total Foldback logic used 	9/128 	(7%)
+Total Nodes+FB/MCells 		86/128 	(67%)
 Total cascade used 		0
 Total input pins 		33
-Total output pins 		49
-Total Pts 			213
+Total output pins 		47
+Total Pts 			210
 */
 
 
