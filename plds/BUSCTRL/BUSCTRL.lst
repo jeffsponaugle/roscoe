@@ -3,7 +3,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 1
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
   1:Name     BUSCTRL;
   2:PartNo   BUSCTRL;
@@ -30,10 +30,10 @@ Created Thu Apr 11 20:18:17 2024
  23:Pin[52,53,54,55,56,57,58,60,61,63,64,65,67,68,69,70] = [CPU_A31..16];
  24:Pin[79,80] = [CPU_SIZ0..1];
  25:Pin[71,72] = [CPU_AA1..0];
- 26:Pin[84] = nCPU_ECS;
- 27:Pin[75] = CPU_RW;
+ 26:Pin[90] = nCPU_ECS;
+ 27:Pin[88] = CPU_RW;
  28:Pin[41] = nCPU_AS;
- 29:Pin[81] = nSYS_RESET_IN;
+ 29:Pin[89] = nSYS_RESET_IN;
  30:Pin[87] = CPU_CLK;
  31:
  32:/* 
@@ -69,7 +69,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 2
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
  54:Pin[7] = bBIGFLASH_CE;
  55:
@@ -137,7 +137,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 3
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 108:PINNODE  0  = CPU_CLK_div16;
 109:PINNODE  0  = nDRAM_ACCESS_RAS;
@@ -200,7 +200,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 4
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 162:   This logic will guarentee the first CPU_CLK edge after reset is a rising edge 
 163:   This makes it possible to have deterministic behaviour on reset startup.
@@ -262,7 +262,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 5
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 216:BA16_LH = !(!CPU_AA0 & CPU_SIZ0 & !CPU_SIZ1);
 217:
@@ -332,7 +332,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 6
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 270:    CPU_AS signal goes low.
 271:
@@ -394,7 +394,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 7
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 324:
 325:        nSRAM_LL_SEL
@@ -459,7 +459,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 8
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 378:*/
 379:nDRAM_ACCESS_RAS.d = 'b'0;
@@ -521,7 +521,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 9
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 432:*/
 433:
@@ -584,7 +584,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 10
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 486:REFRESH_REQUESTED.ck = REFRESH_TIMER_RESET;
 487:REFRESH_REQUESTED.ar = !nSYS_RESET # REFRESH_COMPLETE;    
@@ -647,7 +647,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 11
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 540:nREFRESH_RAS.ck = CPU_CLK;
 541:nREFRESH_RAS.ap = !nSYS_RESET # !REFRESH_ACTIVE; 
@@ -709,7 +709,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 12
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 594:    -------------------------------------------------
 595:     -------------------------------------------------
@@ -771,7 +771,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 13
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 20:18:17 2024
+Created Thu Apr 11 20:22:43 2024
 
 648:        CAS0 - D7:D0            BA32_UH = Active high flag for the upper MSB 8 bits, located on D7:D0
 649:        CAS1 - D15:D8           BA32_UL = Active high flag for the lower MSB 8 bits, located on D15:D8
@@ -804,16 +804,16 @@ Created Thu Apr 11 20:18:17 2024
 676:nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 677:
 678:/*
-679:Total dedicated input used:     2/4     (50%)
-680:Total I/O pins used             80/80   (100%)
-681:Total Logic cells used          79/128  (61%)
+679:Total dedicated input used:     1/4     (25%)
+680:Total I/O pins used             79/80   (98%)
+681:Total Logic cells used          77/128  (60%)
 682:Total Flip-Flop used            24/128  (18%)
-683:Total Foldback logic used       8/128   (6%)
-684:Total Nodes+FB/MCells           87/128  (67%)
+683:Total Foldback logic used       9/128   (7%)
+684:Total Nodes+FB/MCells           86/128  (67%)
 685:Total cascade used              0
 686:Total input pins                33
-687:Total output pins               49
-688:Total Pts                       213
+687:Total output pins               47
+688:Total Pts                       210
 689:*/
 690:
 691:

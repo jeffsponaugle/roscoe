@@ -53,33 +53,33 @@ Pin = RESET_CONTROL_OUT;
                                                 Internal NODES
     ##########################################################################################
 */
-NODE [INT_ACK_LEVEL2..0];       // a recording of the current interrupt acknowledged from the CPU
-NODE [INT_MSK15..0];            // 16 bit Interrupt Mask.  15=INT7A...0=INT1B
+PINNODE = [INT_ACK_LEVEL2..0];       // a recording of the current interrupt acknowledged from the CPU
+PINNODE =  [INT_MSK15..0];            // 16 bit Interrupt Mask.  15=INT7A...0=INT1B
 
-NODE POWER_CONTROL_STATE;
-NODE INT7A_REQUEST;
-NODE INT6A_REQUEST;
-NODE INT6B_REQUEST;
-NODE INT1B_REQUEST;
-NODE INT_ACK_RESET_PRE;
-NODE INT_ACK_RESET;
+PINNODE =  POWER_CONTROL_STATE;
+PINNODE =  INT7A_REQUEST;
+PINNODE =  INT6A_REQUEST;
+PINNODE =  INT6B_REQUEST;
+PINNODE =  INT1B_REQUEST;
+PINNODE =  INT_ACK_RESET_PRE;
+PINNODE =  INT_ACK_RESET;
 
 // The following NODES are in place to compact the total size of some later fields.  The use of NODES adds a bit of latency
 // but allows the complex expressions to compile and optmize correctly.
-NODE INTL6_REQUEST_PE;
-NODE INTL5_REQUEST_PE;
-NODE INTL4_REQUEST_PE;
-NODE INTL3_REQUEST_PE;
-NODE INTL2_REQUEST_PE;
-NODE INTL1_REQUEST_PE;
-NODE INT5D_REQUEST_PE;
-NODE INT5C_REQUEST_PE;
-NODE INT4C_REQUEST_PE;
-NODE INT6B_REQUEST_PE;
-NODE INT5B_REQUEST_PE;
-NODE INT4B_REQUEST_PE;
-NODE INT3B_REQUEST_PE;
-NODE INT2B_REQUEST_PE;
+PINNODE =  INTL6_REQUEST_PE;
+PINNODE =  INTL5_REQUEST_PE;
+PINNODE =  INTL4_REQUEST_PE;
+PINNODE =  INTL3_REQUEST_PE;
+PINNODE =  INTL2_REQUEST_PE;
+PINNODE =  INTL1_REQUEST_PE;
+PINNODE =  INT5D_REQUEST_PE;
+PINNODE =  INT5C_REQUEST_PE;
+PINNODE =  INT4C_REQUEST_PE;
+PINNODE =  INT6B_REQUEST_PE;
+PINNODE =  INT5B_REQUEST_PE;
+PINNODE =  INT4B_REQUEST_PE;
+PINNODE = INT3B_REQUEST_PE;
+PINNODE = INT2B_REQUEST_PE;
 
 /* 
     Interrupt Mask Register 

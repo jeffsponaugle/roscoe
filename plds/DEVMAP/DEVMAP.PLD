@@ -18,52 +18,55 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 */
 
 // From CPU
-Pin = [CPU_A27..8];
-Pin = CPU_RW;
+Pin[52,53,54,55,56,57,58,60,61,63,64,65,67,68,69,70,71,72,75,76] = [CPU_A27..8];
+Pin[100] = CPU_RW;
 
 // From Bus Controller CPLD
-Pin = nDEV8BITCS;
-Pin = nDEV16BITCS;
-Pin = nDEV32BITCS;
-Pin = CPU_CLK;
-Pin = nSYS_RESET;
+Pin[1] = nDEV8BITCS;
+Pin[2] = nDEV16BITCS;
+Pin[5] = nDEV32BITCS;
+Pin[87] = CPU_CLK;
+Pin[88] = nSYS_RESET;
 
 /* 
                                                 Outputs 
    ##########################################################################################
 */
 
-Pin = SYS_RESET;  // Inverted version of reset, needed for the UART IC.
-Pin = nUART_CSA;
-Pin = nUART_CSB;
-Pin = nDEV_OE;
-Pin = nDEV_WE;
-Pin = nPTC_CS;
-Pin = nIDE1_CSA;
-Pin = nIDE1_CSB;
-Pin = nIDE2_CSA;
-Pin = nIDE2_CSB;
-Pin = nINTCTRL_CS;
-Pin = nRTC_CS;
-Pin = nPOWERCTRL_CS;
-Pin = nSTATUS7SEG_CS;
-Pin = nBOARDLEDS_CS;
-Pin = nVGA_CTRL_CS;
-Pin = nUSB_CS;
-Pin = nNIC_CS;
+Pin[93] = SYS_RESET_POS;  // Inverted version of reset, needed for the UART IC.
+Pin[25] = nUART_CSA;
+Pin[24] = nUART_CSB;
+Pin[28] = nPTC_CS;
+Pin[50] = nIDE1_CSA;
+Pin[49] = nIDE1_CSB;
+Pin[48] = nIDE2_CSA;
+Pin[47] = nIDE2_CSB;
+Pin[46] = nIDE_WR;
+Pin[45] = nIDE_BUFFER_EN1;
+Pin[44] = nIDE_BUFFER_EN2;
 
-Pin = nIDE_WR;
-Pin = nIDE_BUFFER_EN;
-Pin = RTC_A_SEL;
-Pin = RTC_D_SEL;
-Pin = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
+Pin[13] = nINTCTRL_CS;
+Pin[14] = nRTC_CS;
+Pin[23] = nPOWERCTRL_CS;
+Pin[22] = nSTATUS7SEG_CS;
+Pin[21] = nBOARDLEDS_CS;
+Pin[27] = nVGA_CTRL_CS;
+Pin[20] = nUSB_CS;
+Pin[19] = nNIC_CS;
 
-NODE nIDE_WR_DELAY1, nIDE_WR_DELAY2;
+Pin[17] = RTC_A_SEL;
+Pin[16] = RTC_D_SEL;
+Pin[92,99] = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
+
+PINNODE = nIDE_WR_DELAY1, nIDE_WR_DELAY2;
 
 // dummy expression to force the pins to be assigned.
 
-EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & SYS_RESET & nDEV32BITCS & CPU_RW;
+EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & nSYS_RESET & nDEV32BITCS & CPU_RW;
+
 FIELD field_CPU_ADDRESS = [CPU_A27..8];
+
+SYS_RESET_POS = !nSYS_RESET;
 
 /* 8 bit devices */
 
@@ -100,17 +103,18 @@ nNIC_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00010XX] # field_CPU_ADDRESS:['h
       
        */
 
-nIDE_BUFFER_EN = (nIDE1_CSA & nIDE1_CSB & nIDE1_CSA & nIDE1_CSB);
+nIDE_BUFFER_EN1 = (nIDE1_CSA & nIDE1_CSB);
+nIDE_BUFFER_EN2 = (nIDE2_CSA & nIDE2_CSB);
 
 nIDE_WR = CPU_RW # nIDE_WR_DELAY2;
 
 nIDE_WR_DELAY1.d = 'b'1;
 nIDE_WR_DELAY1.ck = CPU_CLK;
-nIDE_WR_DELAY1.ar = nIDE_BUFFER_EN  # !SYS_RESET;
+nIDE_WR_DELAY1.ar = (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2)  # !nSYS_RESET;
 
 nIDE_WR_DELAY2.d = nIDE_WR_DELAY1;
 nIDE_WR_DELAY2.ck = CPU_CLK;
-nIDE_WR_DELAY2.ar = nIDE_BUFFER_EN  # !SYS_RESET;
+nIDE_WR_DELAY2.ar = (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2)  # !nSYS_RESET;
 
 /* 
     RTC Device custom signals 
@@ -124,7 +128,7 @@ nIDE_WR_DELAY2.ar = nIDE_BUFFER_EN  # !SYS_RESET;
 RTC_A_SEL.d = 'b'1;
 RTC_A_SEL.ck = !CPU_CLK;
 RTC_A_SEL.ar = nRTC_CS;    /* nRTC_CS is active low, so it will be high while RTS is not being accesses */
-RTC_D_SEL = !RTS_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, this will be held at one which is off */
+RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, this will be held at one which is off */
 
 
 

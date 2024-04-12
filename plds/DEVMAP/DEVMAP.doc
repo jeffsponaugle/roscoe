@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Wed Apr 03 12:44:43 2024
+Created         Thu Apr 11 22:13:19 2024
 Name            DEVMAP
 Partno          DEVMAP
 Revision        01
@@ -20,7 +20,22 @@ Location        None
 ===============================================================================
 
 EXPANSION_EXTRA1 =>
-    CPU_RW & EXPANSION_EXTRA2 & SYS_RESET & nDEV32BITCS
+    CPU_RW & EXPANSION_EXTRA2 & nDEV32BITCS & nSYS_RESET
+
+RTC_A_SEL.d  =>
+    1 
+
+RTC_A_SEL.ar  =>
+    nRTC_CS
+
+RTC_A_SEL.ck  =>
+    !CPU_CLK
+
+RTC_D_SEL =>
+    !RTC_A_SEL
+
+SYS_RESET_POS =>
+    !nSYS_RESET
 
 field_CPU_ADDRESS =>
     CPU_A27 , CPU_A26 , CPU_A25 , CPU_A24 , CPU_A23 , CPU_A22 , CPU_A21 , 
@@ -142,8 +157,11 @@ nIDE2_CSB =>
   # CPU_A27
   # nDEV16BITCS
 
-nIDE_BUFFER_EN =>
+nIDE_BUFFER_EN1 =>
     nIDE1_CSA & nIDE1_CSB
+
+nIDE_BUFFER_EN2 =>
+    nIDE2_CSA & nIDE2_CSB
 
 nIDE_WR =>
     CPU_RW
@@ -153,8 +171,8 @@ nIDE_WR_DELAY1.d  =>
     1 
 
 nIDE_WR_DELAY1.ar  =>
-    nIDE_BUFFER_EN
-  # !SYS_RESET
+    nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2
+  # !nSYS_RESET
 
 nIDE_WR_DELAY1.ck  =>
     CPU_CLK
@@ -163,8 +181,8 @@ nIDE_WR_DELAY2.d  =>
     nIDE_WR_DELAY1
 
 nIDE_WR_DELAY2.ar  =>
-    nIDE_BUFFER_EN
-  # !SYS_RESET
+    nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2
+  # !nSYS_RESET
 
 nIDE_WR_DELAY2.ck  =>
     CPU_CLK
@@ -404,63 +422,67 @@ Pin Variable                                    Pterms   Max     Min
 Pol   Name              Ext     Pin     Type     Used   Pterms  Level   
 --- --------            ---     ---     ----    ------  ------  -----   
 
-    CPU_A8                      0        V        -       -       -     
-    CPU_A9                      0        V        -       -       -     
-    CPU_A10                     0        V        -       -       -     
-    CPU_A11                     0        V        -       -       -     
-    CPU_A12                     0        V        -       -       -     
-    CPU_A13                     0        V        -       -       -     
-    CPU_A14                     0        V        -       -       -     
-    CPU_A15                     0        V        -       -       -     
-    CPU_A16                     0        V        -       -       -     
-    CPU_A17                     0        V        -       -       -     
-    CPU_A18                     0        V        -       -       -     
-    CPU_A19                     0        V        -       -       -     
-    CPU_A20                     0        V        -       -       -     
-    CPU_A21                     0        V        -       -       -     
-    CPU_A22                     0        V        -       -       -     
-    CPU_A23                     0        V        -       -       -     
-    CPU_A24                     0        V        -       -       -     
-    CPU_A25                     0        V        -       -       -     
-    CPU_A26                     0        V        -       -       -     
-    CPU_A27                     0        V        -       -       -     
-    CPU_CLK                     0        V        -       -       -     
-    CPU_RW                      0        V        -       -       -     
-    EXPANSION_EXTRA1            0        V        1       0       2     
-    EXPANSION_EXTRA2            0        V        -       -       -     
-    SYS_RESET                   0        V        -       -       -     
+    CPU_A8                      76       V        -       -       -     
+    CPU_A9                      75       V        -       -       -     
+    CPU_A10                     72       V        -       -       -     
+    CPU_A11                     71       V        -       -       -     
+    CPU_A12                     70       V        -       -       -     
+    CPU_A13                     69       V        -       -       -     
+    CPU_A14                     68       V        -       -       -     
+    CPU_A15                     67       V        -       -       -     
+    CPU_A16                     65       V        -       -       -     
+    CPU_A17                     64       V        -       -       -     
+    CPU_A18                     63       V        -       -       -     
+    CPU_A19                     61       V        -       -       -     
+    CPU_A20                     60       V        -       -       -     
+    CPU_A21                     58       V        -       -       -     
+    CPU_A22                     57       V        -       -       -     
+    CPU_A23                     56       V        -       -       -     
+    CPU_A24                     55       V        -       -       -     
+    CPU_A25                     54       V        -       -       -     
+    CPU_A26                     53       V        -       -       -     
+    CPU_A27                     52       V        -       -       -     
+    CPU_CLK                     87       V        -       -       -     
+    CPU_RW                      100      V        -       -       -     
+    EXPANSION_EXTRA1            92       V        1       0       2     
+    EXPANSION_EXTRA2            99       V        -       -       -     
+    RTC_A_SEL                   17       V        -       -       -     
+    RTC_A_SEL           d       17       X        1       0       2     
+    RTC_A_SEL           ar      17       X        1       0       1     
+    RTC_A_SEL           ck      17       X        1       0       1     
+    RTC_D_SEL                   16       V        1       0       2     
+    SYS_RESET_POS               93       V        1       0       2     
     field_CPU_ADDRESS           0        F        -       -       -     
-    nBOARDLEDS_CS               0        V        21      0       2     
-    nDEV16BITCS                 0        V        -       -       -     
-    nDEV32BITCS                 0        V        -       -       -     
-    nDEV8BITCS                  0        V        -       -       -     
-    nDEV_OE                     0        V        -       -       -     
-    nDEV_WE                     0        V        -       -       -     
-    nIDE1_CSA                   0        V        21      0       2     
-    nIDE1_CSB                   0        V        21      0       2     
-    nIDE2_CSA                   0        V        21      0       2     
-    nIDE2_CSB                   0        V        21      0       2     
-    nIDE_BUFFER_EN              0        V        1       0       2     
-    nIDE_WR                     0        V        2       0       2     
-    nIDE_WR_DELAY1              101      N        -       -       -     
-    nIDE_WR_DELAY1      d       101      M        1       0       2     
-    nIDE_WR_DELAY1      ar      101      M        2       0       1     
-    nIDE_WR_DELAY1      ck      101      M        1       0       1     
-    nIDE_WR_DELAY2              102      N        -       -       -     
-    nIDE_WR_DELAY2      d       102      M        1       0       2     
-    nIDE_WR_DELAY2      ar      102      M        2       0       1     
-    nIDE_WR_DELAY2      ck      102      M        1       0       1     
-    nINTCTRL_CS                 0        V        21      0       2     
-    nNIC_CS                     0        V        19      0       2     
-    nPOWERCTRL_CS               0        V        21      0       2     
-    nPTC_CS                     0        V        21      0       2     
-    nRTC_CS                     0        V        21      0       2     
-    nSTATUS7SEG_CS              0        V        21      0       2     
-    nSYS_RESET                  0        V        -       -       -     
-    nUART_CSA                   0        V        21      0       2     
-    nUART_CSB                   0        V        21      0       2     
-    nUSB_CS                     0        V        20      0       2     
-    nVGA_CTRL_CS                0        V        20      0       2     
+    nBOARDLEDS_CS               21       V        21      0       2     
+    nDEV16BITCS                 2        V        -       -       -     
+    nDEV32BITCS                 5        V        -       -       -     
+    nDEV8BITCS                  1        V        -       -       -     
+    nIDE1_CSA                   50       V        21      0       2     
+    nIDE1_CSB                   49       V        21      0       2     
+    nIDE2_CSA                   48       V        21      0       2     
+    nIDE2_CSB                   47       V        21      0       2     
+    nIDE_BUFFER_EN1             45       V        1       0       2     
+    nIDE_BUFFER_EN2             44       V        1       0       2     
+    nIDE_WR                     46       V        2       0       2     
+    nIDE_WR_DELAY1              0        N        -       -       -     
+    nIDE_WR_DELAY1      d       0        M        1       0       2     
+    nIDE_WR_DELAY1      ar      0        M        2       0       1     
+    nIDE_WR_DELAY1      ck      0        M        1       0       1     
+    nIDE_WR_DELAY2              0        N        -       -       -     
+    nIDE_WR_DELAY2      d       0        M        1       0       2     
+    nIDE_WR_DELAY2      ar      0        M        2       0       1     
+    nIDE_WR_DELAY2      ck      0        M        1       0       1     
+    nINTCTRL_CS                 13       V        21      0       2     
+    nNIC_CS                     19       V        19      0       2     
+    nPOWERCTRL_CS               23       V        21      0       2     
+    nPTC_CS                     28       V        21      0       2     
+    nRTC_CS                     14       V        21      0       2     
+    nSTATUS7SEG_CS              22       V        21      0       2     
+    nSYS_RESET                  88       V        -       -       -     
+    nUART_CSA                   25       V        21      0       2     
+    nUART_CSB                   24       V        21      0       2     
+    nUSB_CS                     20       V        20      0       2     
+    nVGA_CTRL_CS                27       V        20      0       2     
 
 
 LEGEND    D : default variable         F : field      G : group

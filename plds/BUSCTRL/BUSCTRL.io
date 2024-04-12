@@ -102,14 +102,14 @@ BEGIN
     "CPU_AA1"                                 : INPUT_PIN = 71 ;
     "CPU_AA0"                                 : INPUT_PIN = 72 ;
     "TDO"                                     : INPUT_PIN = 73 ;
-    "CPU_RW"                                  : INPUT_PIN = 75 ;
     "CPU_FC0"                                 : INPUT_PIN = 76 ;
     "CPU_FC1"                                 : INPUT_PIN = 77 ;
     "CPU_FC2"                                 : INPUT_PIN = 78 ;
     "CPU_SIZ0"                                : INPUT_PIN = 79 ;
     "CPU_SIZ1"                                : INPUT_PIN = 80 ;
-    "nSYS_RESET_IN"                           : INPUT_PIN = 81 ;
     "RESET_CONTROL_IN"                        : INPUT_PIN = 83 ;
-    "nCPU_ECS"                                : INPUT_PIN = 84 ;
+    "nCPU_ECS"                                : INPUT_PIN = 90 ;
     "CPU_CLK"                                 : INPUT_PIN = 87 ;
+    "nSYS_RESET_IN"                           : INPUT_PIN = 89 ;
+    "CPU_RW"                                  : INPUT_PIN = 88 ;
 END;

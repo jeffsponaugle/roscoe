@@ -23,10 +23,10 @@ Pin[76,77,78] = [CPU_FC0..2];
 Pin[52,53,54,55,56,57,58,60,61,63,64,65,67,68,69,70] = [CPU_A31..16];
 Pin[79,80] = [CPU_SIZ0..1];
 Pin[71,72] = [CPU_AA1..0];
-Pin[84] = nCPU_ECS;
-Pin[75] = CPU_RW;
+Pin[90] = nCPU_ECS;
+Pin[88] = CPU_RW;
 Pin[41] = nCPU_AS;
-Pin[81] = nSYS_RESET_IN;
+Pin[89] = nSYS_RESET_IN;
 Pin[87] = CPU_CLK;
 
 /* 
@@ -676,8 +676,8 @@ nDRAM_DATA_EN = !DRAM_REGION_ACCESS;
 nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
 /*
-Total dedicated input used:	1/4 	(25%)
-Total I/O pins used		79/80 	(98%)
+Total dedicated input used:	4/4 	(100%)
+Total I/O pins used		76/80 	(95%)
 Total Logic cells used 		77/128 	(60%)
 Total Flip-Flop used 		24/128 	(18%)
 Total Foldback logic used 	9/128 	(7%)

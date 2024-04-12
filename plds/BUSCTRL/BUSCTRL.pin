@@ -99,13 +99,13 @@ CPU_A16					: 70
 CPU_AA1					: 71
 CPU_AA0					: 72
 TDO					: 73
-CPU_RW					: 75
 CPU_FC0					: 76
 CPU_FC1					: 77
 CPU_FC2					: 78
 CPU_SIZ0					: 79
 CPU_SIZ1					: 80
-nSYS_RESET_IN					: 81
 RESET_CONTROL_IN					: 83
-nCPU_ECS					: 84
+nCPU_ECS					: 90
 CPU_CLK					: 87
+nSYS_RESET_IN					: 89
+CPU_RW					: 88

@@ -1,4 +1,4 @@
-Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Thu Apr 11 20:18:20 2024
+Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Thu Apr 11 20:22:46 2024
 
 
 fit1508 C:\BUSCTRL.tt2 -CUPL -dev P1508T100 -JTAG ON
@@ -71,7 +71,10 @@ CPU_CLK assigned to pin  87
 
 Performing input pin pre-assignments ...
 ------------------------------------
+nCPU_ECS assigned to pin  90
 CPU_CLK assigned to pin  87
+nSYS_RESET_IN assigned to pin  89
+CPU_RW assigned to pin  88
 nDRAM_ACCESS_RAS.C equation needs patching.
 DRAM_ACCESS_MUX.AR equation needs patching.
 nDRAM_ACCESS_CAS.AP equation needs patching.
@@ -188,33 +191,30 @@ CPU_A16 is placed at pin 70 (MC 107)
 CPU_AA1 is placed at pin 71 (MC 109)
 CPU_AA0 is placed at pin 72 (MC 110)
 TDO is placed at pin 73 (MC 112)
-CPU_RW is placed at pin 75 (MC 113)
 CPU_FC0 is placed at pin 76 (MC 115)
 CPU_FC1 is placed at pin 77 (MC 117)
 CPU_FC2 is placed at pin 78 (MC 118)
 CPU_SIZ0 is placed at pin 79 (MC 120)
 CPU_SIZ1 is placed at pin 80 (MC 121)
-nSYS_RESET_IN is placed at pin 81 (MC 123)
 RESET_CONTROL_IN is placed at pin 83 (MC 125)
-nCPU_ECS is placed at pin 84 (MC 126)
 
                                                                                              
                     n n n n                                                                  
                     S S S S                                                                  
                     R R R R                                                                  
                     A A A A                                                                  
-                    M M M M                         n       C C                              
-                    _ _ _ _                   C     C       P P C C C                        
-                    U U L L                   P     P       U U P P P                        
-                    H L H L                   U     U       _ _ U U U                        
-                    _ _ _ _                   _     _       S S _ _ _                        
-                    S S S S   G       V       C G   E   V   I I F F F                        
-                    E E E E   N       C       L N   C   C   Z Z C C C                        
-                    L L L L   D       C       K D   S   C   1 0 2 1 0                        
+                    M M M M             n                   C C                              
+                    _ _ _ _             C     C             P P C C C                        
+                    U U L L             P   C P             U U P P P                        
+                    H L H L             U   P U             _ _ U U U                        
+                    _ _ _ _             _   U _             S S _ _ _                        
+                    S S S S   G       V E   _ C G       V   I I F F F                        
+                    E E E E   N       C C   R L N       C   Z Z C C C                        
+                    L L L L   D       C S   W K D       C   1 0 2 1 0                        
                   ------------------------------------------------------                     
                  / 100  98  96  94  92  90  88  86  84  82  80  78  76  \                   
                 /     99  97  95  93  91  89  87  85  83  81  79  77     \                  
-    nDEV8BITCS | 1                                                     75 | CPU_RW           
+    nDEV8BITCS | 1                                                     75 |                  
    nDEV16BITCS | 2                                                     74 | GND              
            VCC | 3                                                     73 | TDO              
            TDI | 4                                                     72 | CPU_AA0          
@@ -270,7 +270,7 @@ Universal-Interconnect-Multiplexer assignments
 ------------------------------------------------
 FanIn assignment for block A [25]
 {
-CPU_A28,CPU_FC1,CPU_AA1,CPU_RW,CPU_SIZ1,CPU_AA0,CPU_SIZ0,CPU_A26,CPU_A24,CPU_FC0,CPU_A25,CPU_A27,CPU_A21,CPU_A30,CPU_A20,CPU_A22,CPU_FC2,CPU_A29,CPU_A31,CPU_A23,
+CPU_A28,CPU_FC1,CPU_AA1,CPU_A21,CPU_SIZ1,CPU_AA0,CPU_SIZ0,CPU_A26,CPU_A24,CPU_FC0,CPU_A25,CPU_A27,CPU_A30,CPU_A20,CPU_A22,CPU_FC2,CPU_A29,CPU_A31,CPU_A23,CPU_RW,
 REFRESH_ACTIVE,REFRESH_COMPLETE,REFRESH_STATE_MACHINE0,
 nCPU_AS,nSYS_RESET,
 }
@@ -278,7 +278,7 @@ Multiplexer assignment for block A
 CPU_A28			(MC8	P)   : MUX 1		Ref (F86p)
 CPU_FC1			(MC13	P)   : MUX 3		Ref (H117p)
 CPU_AA1			(MC16	P)   : MUX 4		Ref (G109p)
-CPU_RW			(MC7	P)   : MUX 5		Ref (H113p)
+CPU_A21			(MC23	P)   : MUX 5		Ref (G99p)
 CPU_SIZ1		(MC17	P)   : MUX 6		Ref (H121p)
 CPU_AA0			(MC18	P)   : MUX 8		Ref (G110p)
 CPU_SIZ0		(MC15	P)   : MUX 9		Ref (H120p)
@@ -289,7 +289,6 @@ CPU_FC0			(MC12	P)   : MUX 13		Ref (H115p)
 REFRESH_ACTIVE		(MC2	FB)  : MUX 15		Ref (C42fb)
 CPU_A25			(MC20	P)   : MUX 16		Ref (F91p)
 CPU_A27			(MC6	P)   : MUX 17		Ref (F88p)
-CPU_A21			(MC23	P)   : MUX 19		Ref (G99p)
 CPU_A30			(MC10	P)   : MUX 21		Ref (F83p)
 CPU_A20			(MC22	P)   : MUX 23		Ref (G101p)
 CPU_A22			(MC24	P)   : MUX 25		Ref (G97p)
@@ -298,28 +297,29 @@ nSYS_RESET		(MC3	P)   : MUX 30		Ref (E78p)
 CPU_A29			(MC9	P)   : MUX 31		Ref (F85p)
 CPU_A31			(MC11	P)   : MUX 33		Ref (F81p)
 CPU_A23			(MC25	P)   : MUX 34		Ref (F94p)
+CPU_RW			(MC7	FB)  : MUX 35		Ref (OE1)
 REFRESH_COMPLETE		(MC4	FB)  : MUX 37		Ref (F95fb)
 REFRESH_STATE_MACHINE0		(MC1	FB)  : MUX 38		Ref (A2fb)
 
 FanIn assignment for block B [25]
 {
-CPU_A30,CPU_A17,CPU_FC1,CPU_RW,CPU_FC2,CPU_AA0,CPU_A16,CPU_A29,CPU_A18,CPU_A27,CPU_SIZ0,CPU_SIZ1,CPU_AA1,CPU_A19,CPU_FC0,CPU_A28,CPU_A31,
+CPU_A28,CPU_A17,CPU_FC1,CPU_A29,CPU_FC2,CPU_AA0,CPU_A16,CPU_A30,CPU_A18,CPU_A27,CPU_SIZ0,CPU_SIZ1,CPU_AA1,CPU_A19,CPU_FC0,CPU_A31,CPU_RW,
 DRAM_ACCESS_MUX.AR,DRAM_ACCESS_RAS_RESET1,
 REFRESH_ACTIVE,
-nCPU_AS,nDRAM_ACCESS_RAS,nSYS_RESET,nDRAM_ACCESS_CAS,nREFRESH_CAS,
+nCPU_AS,nDRAM_ACCESS_RAS,nREFRESH_CAS,nSYS_RESET,nDRAM_ACCESS_CAS,
 }
 Multiplexer assignment for block B
 DRAM_ACCESS_MUX.AR		(MC1	FB)  : MUX 0		Ref (A7fb)
-CPU_A30			(MC13	P)   : MUX 1		Ref (F83p)
+CPU_A28			(MC11	P)   : MUX 1		Ref (F86p)
 CPU_A17			(MC22	P)   : MUX 2		Ref (G105p)
 CPU_FC1			(MC16	P)   : MUX 3		Ref (H117p)
-CPU_RW			(MC10	P)   : MUX 5		Ref (H113p)
+CPU_A29			(MC12	P)   : MUX 5		Ref (F85p)
 CPU_FC2			(MC17	P)   : MUX 7		Ref (H118p)
 CPU_AA0			(MC21	P)   : MUX 8		Ref (G110p)
 REFRESH_ACTIVE		(MC3	FB)  : MUX 9		Ref (C42fb)
 nCPU_AS			(MC8	P)   : MUX 11		Ref (E67p)
 CPU_A16			(MC25	P)   : MUX 12		Ref (G107p)
-CPU_A29			(MC12	P)   : MUX 13		Ref (F85p)
+CPU_A30			(MC13	P)   : MUX 13		Ref (F83p)
 CPU_A18			(MC23	P)   : MUX 15		Ref (G104p)
 CPU_A27			(MC9	P)   : MUX 17		Ref (F88p)
 nDRAM_ACCESS_RAS		(MC5	FB)  : MUX 18		Ref (D52fb)
@@ -328,45 +328,45 @@ CPU_SIZ1		(MC20	P)   : MUX 20		Ref (H121p)
 CPU_AA1			(MC19	P)   : MUX 22		Ref (G109p)
 CPU_A19			(MC24	P)   : MUX 25		Ref (G102p)
 CPU_FC0			(MC15	P)   : MUX 27		Ref (H115p)
-CPU_A28			(MC11	P)   : MUX 29		Ref (F86p)
+nREFRESH_CAS		(MC4	FB)  : MUX 29		Ref (C47fb)
 nSYS_RESET		(MC6	P)   : MUX 30		Ref (E78p)
 nDRAM_ACCESS_CAS		(MC7	FB)  : MUX 31		Ref (F94fb)
 CPU_A31			(MC14	P)   : MUX 33		Ref (F81p)
-nREFRESH_CAS		(MC4	FB)  : MUX 37		Ref (C47fb)
+CPU_RW			(MC10	FB)  : MUX 37		Ref (OE1)
 DRAM_ACCESS_RAS_RESET1		(MC2	FB)  : MUX 39		Ref (B31fb)
 
 FanIn assignment for block C [25]
 {
-CPU_SIZ1,CPU_A27,CPU_AA1,CPU_RW,CPU_AA0,CPU_A26,CPU_A24,CPU_A25,CPU_SIZ0,CPU_CLK_div16,CPU_CLK,
-REFRESH_STATE_MACHINE2,REFRESH_ACTIVE,REFRESH_REQUESTED,REFRESH_COMPLETE,REFRESH_TIMER_RESET,REFRESH_TIMER0,REFRESH_STATE_MACHINE1,REFRESH_STATE_MACHINE0,
+CPU_SIZ0,CPU_SIZ1,CPU_RW,CPU_AA1,CPU_AA0,CPU_A26,CPU_A24,CPU_A25,CPU_CLK,CPU_CLK_div16,CPU_A27,
+REFRESH_TIMER_RESET,REFRESH_ACTIVE,REFRESH_REQUESTED,REFRESH_COMPLETE,REFRESH_STATE_MACHINE2,REFRESH_TIMER0,REFRESH_STATE_MACHINE1,REFRESH_STATE_MACHINE0,
 nDRAM_ACCESS_RAS,nREFRESH_RAS,nCPU_AS,nDRAM_ACCESS_CAS,nREFRESH_CAS,nSYS_RESET,
 }
 Multiplexer assignment for block C
 nDRAM_ACCESS_RAS		(MC9	FB)  : MUX 0		Ref (D52fb)
+CPU_SIZ0		(MC18	P)   : MUX 1		Ref (H120p)
 CPU_SIZ1		(MC20	P)   : MUX 2		Ref (H121p)
-CPU_A27			(MC16	P)   : MUX 3		Ref (F88p)
+CPU_RW			(MC17	FB)  : MUX 3		Ref (OE1)
 CPU_AA1			(MC19	P)   : MUX 4		Ref (G109p)
-CPU_RW			(MC17	P)   : MUX 5		Ref (H113p)
-nREFRESH_RAS		(MC6	FB)  : MUX 7		Ref (C44fb)
+nREFRESH_RAS		(MC6	FB)  : MUX 5		Ref (C44fb)
+REFRESH_TIMER_RESET		(MC14	FB)  : MUX 7		Ref (F96fb)
 CPU_AA0			(MC21	P)   : MUX 8		Ref (G110p)
-REFRESH_STATE_MACHINE2		(MC8	FB)  : MUX 9		Ref (C48fb)
+REFRESH_ACTIVE		(MC5	FB)  : MUX 9		Ref (C42fb)
 CPU_A26			(MC24	P)   : MUX 10		Ref (F89p)
 nCPU_AS			(MC15	P)   : MUX 11		Ref (E67p)
 CPU_A24			(MC22	P)   : MUX 12		Ref (F93p)
 nDRAM_ACCESS_CAS		(MC12	FB)  : MUX 13		Ref (F94fb)
-REFRESH_ACTIVE		(MC5	FB)  : MUX 15		Ref (C42fb)
+nREFRESH_CAS		(MC7	FB)  : MUX 15		Ref (C47fb)
 CPU_A25			(MC23	P)   : MUX 16		Ref (F91p)
-CPU_SIZ0		(MC18	P)   : MUX 19		Ref (H120p)
+CPU_CLK			(MC25	FB)  : MUX 17		Ref (GCLK)
+CPU_CLK_div16		(MC11	FB)  : MUX 19		Ref (F93fb)
+CPU_A27			(MC16	P)   : MUX 21		Ref (F88p)
 REFRESH_REQUESTED		(MC2	FB)  : MUX 22		Ref (C34fb)
 REFRESH_COMPLETE		(MC13	FB)  : MUX 23		Ref (F95fb)
-REFRESH_TIMER_RESET		(MC14	FB)  : MUX 25		Ref (F96fb)
-nREFRESH_CAS		(MC7	FB)  : MUX 29		Ref (C47fb)
+REFRESH_STATE_MACHINE2		(MC8	FB)  : MUX 27		Ref (C48fb)
 nSYS_RESET		(MC10	P)   : MUX 30		Ref (E78p)
 REFRESH_TIMER0		(MC4	FB)  : MUX 34		Ref (C39fb)
 REFRESH_STATE_MACHINE1		(MC3	FB)  : MUX 36		Ref (C36fb)
-CPU_CLK_div16		(MC11	FB)  : MUX 37		Ref (F93fb)
 REFRESH_STATE_MACHINE0		(MC1	FB)  : MUX 38		Ref (A2fb)
-CPU_CLK			(MC25	FB)  : MUX 39		Ref (GCLK)
 
 FanIn assignment for block D [25]
 {
@@ -405,35 +405,35 @@ REFRESH_TIMER1		(MC8	FB)  : MUX 39		Ref (D60fb)
 
 FanIn assignment for block E [24]
 {
-CPU_A28,CPU_A17,CPU_RW,CPU_FC2,CPU_A29,CPU_A18,CPU_A30,CPU_A19,CPU_FC0,CPU_FC1,CPU_A31,CPU_A27,
-RESET_CONTROL_IN,REFRESH_TIMER2,REFRESH_TIMER4,REFRESH_TIMER3,REFRESH_TIMER0,REFRESH_TIMER1,
+CPU_A28,CPU_A17,CPU_A31,CPU_A29,CPU_FC2,CPU_A30,CPU_A18,CPU_FC1,CPU_A19,CPU_FC0,CPU_A27,CPU_RW,
+RESET_CONTROL_IN,REFRESH_TIMER2,REFRESH_TIMER0,REFRESH_TIMER4,REFRESH_TIMER3,REFRESH_TIMER1,
 XXL_182,XXL_181,XXL_183,
 nCPU_AS,nSYS_RESET_IN,nCPU_ECS,
 }
 Multiplexer assignment for block E
 CPU_A28			(MC12	P)   : MUX 1		Ref (F86p)
 CPU_A17			(MC19	P)   : MUX 2		Ref (G105p)
-RESET_CONTROL_IN		(MC23	P)   : MUX 4		Ref (H125p)
-CPU_RW			(MC11	P)   : MUX 5		Ref (H113p)
+CPU_A31			(MC15	P)   : MUX 3		Ref (F81p)
+CPU_A29			(MC13	P)   : MUX 5		Ref (F85p)
 CPU_FC2			(MC18	P)   : MUX 7		Ref (H118p)
+RESET_CONTROL_IN		(MC23	P)   : MUX 8		Ref (H125p)
 REFRESH_TIMER2		(MC8	FB)  : MUX 9		Ref (D63fb)
-REFRESH_TIMER4		(MC5	FB)  : MUX 10		Ref (D50fb)
+REFRESH_TIMER0		(MC4	FB)  : MUX 10		Ref (C39fb)
 nCPU_AS			(MC9	P)   : MUX 11		Ref (E67p)
-CPU_A29			(MC13	P)   : MUX 13		Ref (F85p)
-nSYS_RESET_IN		(MC22	P)   : MUX 14		Ref (H123p)
+CPU_A30			(MC14	P)   : MUX 13		Ref (F83p)
+nSYS_RESET_IN		(MC22	FB)  : MUX 14		Ref (GCLR)
 CPU_A18			(MC20	P)   : MUX 15		Ref (G104p)
-nCPU_ECS		(MC24	P)   : MUX 16		Ref (H126p)
+REFRESH_TIMER4		(MC5	FB)  : MUX 18		Ref (D50fb)
 XXL_182			(MC1	FB)  : MUX 19		Ref (A12fb)
-CPU_A30			(MC14	P)   : MUX 21		Ref (F83p)
+CPU_FC1			(MC17	P)   : MUX 21		Ref (H117p)
 XXL_181			(MC2	FB)  : MUX 23		Ref (A15fb)
 CPU_A19			(MC21	P)   : MUX 25		Ref (G102p)
 CPU_FC0			(MC16	P)   : MUX 27		Ref (H115p)
-CPU_FC1			(MC17	P)   : MUX 31		Ref (H117p)
-CPU_A31			(MC15	P)   : MUX 33		Ref (F81p)
-REFRESH_TIMER3		(MC6	FB)  : MUX 34		Ref (D55fb)
+REFRESH_TIMER3		(MC6	FB)  : MUX 32		Ref (D55fb)
+XXL_183			(MC3	FB)  : MUX 33		Ref (B32fb)
+nCPU_ECS		(MC24	FB)  : MUX 34		Ref (OE2)
 CPU_A27			(MC10	P)   : MUX 35		Ref (F88p)
-REFRESH_TIMER0		(MC4	FB)  : MUX 36		Ref (C39fb)
-XXL_183			(MC3	FB)  : MUX 37		Ref (B32fb)
+CPU_RW			(MC11	FB)  : MUX 37		Ref (OE1)
 REFRESH_TIMER1		(MC7	FB)  : MUX 39		Ref (D60fb)
 
 FanIn assignment for block F [16]
@@ -876,16 +876,16 @@ Pin 70 = CPU_A16; /* MC 107 */
 Pin 71 = CPU_AA1; /* MC 109 */ 
 Pin 72 = CPU_AA0; /* MC 110 */ 
 Pin 73 = TDO; /* MC 112 */ 
-Pin 75 = CPU_RW; /* MC 113 */ 
 Pin 76 = CPU_FC0; /* MC 115 */ 
 Pin 77 = CPU_FC1; /* MC 117 */ 
 Pin 78 = CPU_FC2; /* MC 118 */ 
 Pin 79 = CPU_SIZ0; /* MC 120 */ 
 Pin 80 = CPU_SIZ1; /* MC 121 */ 
-Pin 81 = nSYS_RESET_IN; /* MC 123 */ 
 Pin 83 = RESET_CONTROL_IN; /* MC 125 */ 
-Pin 84 = nCPU_ECS; /* MC 126 */ 
 Pin 87 = CPU_CLK;
+Pin 88 = CPU_RW;
+Pin 89 = nSYS_RESET_IN;
+Pin 90 = nCPU_ECS;
 Pin 92 = nSRAM_BANK1_CE; /* MC 16 */ 
 Pin 93 = nSRAM_BANK2_CE; /* MC 14 */ 
 Pin 94 = nSRAM_BANK3_CE; /* MC 13 */ 
@@ -1064,7 +1064,7 @@ MC109 71   --   CPU_AA1          INPUT  --                            --        
 MC110 72   --   CPU_AA0          INPUT  --                            --           --             0     slow
 MC111 0         --                      --                            --           --             0     slow
 MC112 73   --   TDO              INPUT  --                            --           --             0     slow
-MC113 75   --   CPU_RW           INPUT  --                            --           --             0     slow
+MC113 75        --                      --                            --           --             0     slow
 MC114 0         --                      --                            --           --             0     slow
 MC115 76   --   CPU_FC0          INPUT  --                            --           --             0     slow
 MC116 0         --                      --                            --           --             0     slow
@@ -1074,15 +1074,15 @@ MC119 0         --                      --                            --        
 MC120 79   --   CPU_SIZ0         INPUT  --                            --           --             0     slow
 MC121 80   --   CPU_SIZ1         INPUT  --                            --           --             0     slow
 MC122 0         --                      --                            --           --             0     slow
-MC123 81   --   nSYS_RESET_IN    INPUT  --                            --           --             0     slow
+MC123 81        --                      --                            --           --             0     slow
 MC124 0         --                      --                            --           --             0     slow
 MC125 83   --   RESET_CONTROL_IN INPUT  --                            --           --             0     slow
-MC126 84   --   nCPU_ECS         INPUT  --                            --           --             0     slow
+MC126 84        --                      --                            --           --             0     slow
 MC127 0         --                      --                            --           --             0     slow
 MC128 85        --                      --                            --           --             0     slow
-MC0   90        --                      --                            --           --             0     slow
-MC0   89        --                      --                            --           --             0     slow
-MC0   88        --                      --                            --           --             0     slow
+MC0   90        nCPU_ECS         INPUT  --                            --           --             0     slow
+MC0   89        nSYS_RESET_IN    INPUT  --                            --           --             0     slow
+MC0   88        CPU_RW           INPUT  --                            --           --             0     slow
 MC0   87        CPU_CLK          INPUT  --                            --           --             0     slow
 
 Logic Array Block	Logic Cells	I/O Pins	Foldbacks	TotalPT		FanIN	Cascades
@@ -1093,10 +1093,10 @@ D: LC49	- LC64		16/16(100%)	10/16(62%)	2/16(12%)	44/80(55%)	(25)	0
 E: LC65	- LC80		10/16(62%)	10/16(62%)	1/16(6%)	15/80(18%)	(24)	0
 F: LC81	- LC96		7/16(43%)	10/16(62%)	0/16(0%)	16/80(20%)	(16)	0
 G: LC97	- LC112		0/16(0%)	10/16(62%)	0/16(0%)	0/80(0%)	(0)	0
-H: LC113- LC128		0/16(0%)	9/16(56%)	0/16(0%)	0/80(0%)	(0)	0
+H: LC113- LC128		0/16(0%)	6/16(37%)	0/16(0%)	0/80(0%)	(0)	0
 
-Total dedicated input used:	1/4 	(25%)
-Total I/O pins used		79/80 	(98%)
+Total dedicated input used:	4/4 	(100%)
+Total I/O pins used		76/80 	(95%)
 Total Logic cells used 		77/128 	(60%)
 Total Flip-Flop used 		24/128 	(18%)
 Total Foldback logic used 	9/128 	(7%)
