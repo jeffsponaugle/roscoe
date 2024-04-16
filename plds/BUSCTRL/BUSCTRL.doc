@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Thu Apr 11 20:22:46 2024
+Created         Mon Apr 15 20:03:12 2024
 Name            BUSCTRL
 Partno          BUSCTRL
 Revision        01
@@ -331,13 +331,13 @@ nBFLASH_WE =>
   # CPU_FC0 & CPU_FC1 & CPU_FC2
 
 nBIGFLASH_CE =>
-    CPU_FC0 & CPU_FC1 & CPU_FC2
-  # nCPU_AS
-  # CPU_A31
-  # CPU_A30
-  # CPU_A29
+    !CPU_A27
   # CPU_A28
-  # !CPU_A27
+  # CPU_A29
+  # CPU_A30
+  # CPU_A31
+  # nCPU_AS
+  # CPU_FC0 & CPU_FC1 & CPU_FC2
 
 nCPU_BERR =>
     1 
@@ -817,20 +817,19 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     REFRESH_TIMER_RESET ck      0        M        1       0       1     
     RESET_CONTROL_IN            83       V        -       -       -     
     SRAM_REGION_ACCESS          0        I        3       -       -     
-    UNUSED1                     48       V        1       0       2     
+    UNUSED1                     81       V        1       0       2     
     UNUSED2                     47       V        1       0       2     
     VIDEO_REGION_ACCESS         0        I        3       -       -     
-    bBIGFLASH_CE                7        V        -       -       -     
     field_CPU_ADDRESS           0        F        -       -       -     
     field_REFRESH_STATE_MACHINE        0        F        -       -       -     
     nBFLASH_CE                  37       V        7       0       2     
     nBFLASH_WE                  40       V        8       0       2     
-    nBIGFLASH_CE                0        I        7       -       -     
+    nBIGFLASH_CE                7        V        7       0       2     
     nCPU_AS                     41       V        -       -       -     
     nCPU_BERR                   46       V        1       0       2     
     nCPU_CIIN                   44       V        1       0       2     
     nCPU_DSACK0                 50       V        17      0       2     
-    nCPU_DSACK1                 7        V        4       0       2     
+    nCPU_DSACK1                 48       V        4       0       2     
     nCPU_ECS                    90       V        -       -       -     
     nCPU_HALT                   42       V        1       0       2     
     nCPU_RD                     8        V        1       0       2     

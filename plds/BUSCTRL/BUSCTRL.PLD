@@ -35,7 +35,7 @@ Pin[87] = CPU_CLK;
 */
 
 // To CPU
-Pin[50,7] = [nCPU_DSACK0..1];
+Pin[50,48] = [nCPU_DSACK0..1];
 Pin[44] = nCPU_CIIN;
 Pin[49] = nSYS_RESET;
 Pin[42] = nCPU_HALT;
@@ -51,7 +51,7 @@ Pin[40] = nBFLASH_WE;
 
 // To 64M Flash
 
-Pin[7] = bBIGFLASH_CE;
+Pin[7] = nBIGFLASH_CE;
 
 // To SRAM
 
@@ -98,7 +98,7 @@ Pin[10] = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the 
 Pin[9] = nDRAM_WE;
 Pin[83] = RESET_CONTROL_IN;     // Active high signal to perform a system reset.
 
-Pin[48] = UNUSED1;
+Pin[81] = UNUSED1;
 Pin[47] = UNUSED2;
 
 PINNODE = REFRESH_ACTIVE;
@@ -677,15 +677,15 @@ nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
 /*
 Total dedicated input used:	4/4 	(100%)
-Total I/O pins used		76/80 	(95%)
-Total Logic cells used 		77/128 	(60%)
+Total I/O pins used		77/80 	(96%)
+Total Logic cells used 		78/128 	(60%)
 Total Flip-Flop used 		24/128 	(18%)
 Total Foldback logic used 	9/128 	(7%)
-Total Nodes+FB/MCells 		86/128 	(67%)
+Total Nodes+FB/MCells 		87/128 	(67%)
 Total cascade used 		0
 Total input pins 		33
-Total output pins 		47
-Total Pts 			210
+Total output pins 		48
+Total Pts 			213
 */
 
 
