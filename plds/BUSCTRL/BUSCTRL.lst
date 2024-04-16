@@ -3,7 +3,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 1
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
   1:Name     BUSCTRL;
   2:PartNo   BUSCTRL;
@@ -68,7 +68,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 2
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
  54:// To 64M Flash
 
@@ -137,7 +137,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 3
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 108:PINNODE  0  = CPU_CLK_div2;
 109:PINNODE  0  = CPU_CLK_div4;
@@ -200,7 +200,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 4
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 162:
 163:   This logic will guarentee the first CPU_CLK edge after reset is a rising edge 
@@ -262,7 +262,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 5
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 216:BA16_LL = !CPU_AA0;
 217:BA16_LH = !(!CPU_AA0 & CPU_SIZ0 & !CPU_SIZ1);
@@ -332,7 +332,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 6
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 270:    combination as soon as the above xxxx_REGION_ACCESS variables are active.  That should happen directly after the 
 271:    CPU_AS signal goes low.
@@ -394,7 +394,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 7
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 324:        nSRAM_BANK3_CE -> 0x1020 0000 - 0x102F FFFF  [1MB]
 325:        nSRAM_BANK4_CE -> 0x1030 0000 - 0x103F FFFF  [1MB]
@@ -459,7 +459,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 8
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 378:    signal will go low at the start of the /AS cycle, and go high after two sucsessive falling edges
 379:    of the CPU clock.
@@ -521,7 +521,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 9
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 432:    translates to a refresh cycled needed every 15.6us.
 433:
@@ -584,7 +584,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 10
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 486:
 487:REFRESH_REQUESTED.d = 'b'1;
@@ -606,7 +606,7 @@ Created Tue Apr 16 10:33:06 2024
 503:
 504:*/
 505:
-506:REFRESH_ACTIVE.d = REFRESH_REQUESTED # nCPU_AS # REFRESH_ACTIVE;
+506:REFRESH_ACTIVE.d = (REFRESH_REQUESTED & nCPU_AS) # REFRESH_ACTIVE;
 507:REFRESH_ACTIVE.ck = CPU_CLK;
 508:REFRESH_ACTIVE.ar = !nSYS_RESET # REFRESH_COMPLETE;         
 509:
@@ -647,7 +647,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 11
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 540:
 541:nREFRESH_RAS.d = !(field_REFRESH_STATE_MACHINE:['d'3,'d'4]);
@@ -709,7 +709,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 12
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 594:    -------------------------------------------------
 595:    - 0x8900 0000   SIMM6 Rank A        0x89FF FFFF
@@ -771,7 +771,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: BUSCTRL.pld                      Page 13
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Tue Apr 16 10:33:06 2024
+Created Tue Apr 16 11:11:13 2024
 
 648:        The CAS lines are shared across all of the SIMM slots and ranks.  
 649:
@@ -802,25 +802,28 @@ Created Tue Apr 16 10:33:06 2024
 674:/*
 675:   nDRAM_WE is the DRAM write signal, which is pulled low at the start of a DRAM transaction that also has CPU_RW == 0.   This signal goes to
 676:   all of the SIMM slots, and the RAS/CAS signals select which DRAMs will actually do write operations.
-677:*/
-678:nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
-679:
-680:/*
-681:Total dedicated input used:     4/4     (100%)
-682:Total I/O pins used             77/80   (96%)
-683:Total Logic cells used          78/128  (60%)
-684:Total Flip-Flop used            24/128  (18%)
-685:Total Foldback logic used       9/128   (7%)
-686:Total Nodes+FB/MCells           87/128  (67%)
-687:Total cascade used              0
-688:Total input pins                33
-689:Total output pins               48
-690:Total Pts                       213
-691:*/
-692:
-693:
-694:
+677:
+678:   nDRAM_WE must be high during refresh operations. Since DRAM_REGION_ACCESS is low during refresh, this will be guarenteed.
+679:*/
+680:nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
+681:
+682:/*
+683:
+684:Total dedicated input used:     4/4     (100%)
+685:Total I/O pins used             78/80   (97%)
+686:Total Logic cells used          78/128  (60%)
+687:Total Flip-Flop used            24/128  (18%)
+688:Total Foldback logic used       9/128   (7%)
+689:Total Nodes+FB/MCells           87/128  (67%)
+690:Total cascade used              0
+691:Total input pins                33
+692:Total output pins               49
+693:Total Pts                       215
+694:*/
 695:
+696:
+697:
+698:
 
 
 

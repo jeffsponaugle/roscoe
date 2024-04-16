@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Tue Apr 16 10:33:09 2024
+Created         Tue Apr 16 11:11:17 2024
 Name            BUSCTRL
 Partno          BUSCTRL
 Revision        01
@@ -152,8 +152,7 @@ INTERRUPT_ACK_ACCESS =>
 
 REFRESH_ACTIVE.d  =>
     REFRESH_ACTIVE
-  # REFRESH_REQUESTED
-  # nCPU_AS
+  # REFRESH_REQUESTED & nCPU_AS
 
 REFRESH_ACTIVE.ar  =>
     !nSYS_RESET
@@ -773,7 +772,7 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     FC_CPU_SPACE                0        I        1       -       -     
     INTERRUPT_ACK_ACCESS        0        I        1       -       -     
     REFRESH_ACTIVE              0        N        -       -       -     
-    REFRESH_ACTIVE      d       0        M        3       0       2     
+    REFRESH_ACTIVE      d       0        M        2       0       2     
     REFRESH_ACTIVE      ar      0        M        2       0       1     
     REFRESH_ACTIVE      ck      0        M        1       0       1     
     REFRESH_COMPLETE            0        N        -       -       -     

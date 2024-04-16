@@ -503,7 +503,7 @@ REFRESH_REQUESTED.ar = !nSYS_RESET # REFRESH_COMPLETE;
 
 */
 
-REFRESH_ACTIVE.d = REFRESH_REQUESTED # nCPU_AS # REFRESH_ACTIVE;
+REFRESH_ACTIVE.d = (REFRESH_REQUESTED & nCPU_AS) # REFRESH_ACTIVE;
 REFRESH_ACTIVE.ck = CPU_CLK;
 REFRESH_ACTIVE.ar = !nSYS_RESET # REFRESH_COMPLETE;         
 
@@ -674,6 +674,8 @@ nDRAM_DATA_EN = !DRAM_REGION_ACCESS;
 /*
    nDRAM_WE is the DRAM write signal, which is pulled low at the start of a DRAM transaction that also has CPU_RW == 0.   This signal goes to
    all of the SIMM slots, and the RAS/CAS signals select which DRAMs will actually do write operations.
+
+   nDRAM_WE must be high during refresh operations. Since DRAM_REGION_ACCESS is low during refresh, this will be guarenteed.
 */
 nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
