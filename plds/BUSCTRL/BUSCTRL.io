@@ -13,10 +13,10 @@ BEGIN
     "nSRAM_LL_SEL"                            : OUTPUT_PIN = 97 ;
     "nDRAM_ACCESS_CAS_AP"                     : NODE_NUM = 610 ;
     "nSRAM_BANK4_CE"                          : OUTPUT_PIN = 96 ;
-    "XXL_183"                                 : NODE_NUM = 612 ;
+    "XXL_184"                                 : NODE_NUM = 612 ;
     "nSRAM_BANK3_CE"                          : OUTPUT_PIN = 94 ;
     "nSRAM_BANK2_CE"                          : OUTPUT_PIN = 93 ;
-    "XXL_182"                                 : NODE_NUM = 615 ;
+    "XXL_183"                                 : NODE_NUM = 615 ;
     "nSRAM_BANK1_CE"                          : OUTPUT_PIN = 92 ;
     "nDRAM_CAS2"                              : OUTPUT_PIN = 14 ;
     "nDRAM_CAS3"                              : OUTPUT_PIN = 13 ;
@@ -30,7 +30,7 @@ BEGIN
     "nDEV32BITCS"                             : OUTPUT_PIN = 5 ;
     "DRAM_ACCESS_RAS_RESET1"                  : NODE_NUM = 631 ;
     "TDI"                                     : INPUT_PIN = 4 ;
-    "XXL_184"                                 : NODE_NUM = 632 ;
+    "XXL_185"                                 : NODE_NUM = 632 ;
     "nDRAM_S3B_RAS"                           : OUTPUT_PIN = 25 ;
     "REFRESH_REQUESTED"                       : NODE_NUM = 634 ;
     "nDRAM_S2B_RAS"                           : OUTPUT_PIN = 24 ;
@@ -57,7 +57,7 @@ BEGIN
     "REFRESH_TIMER3"                          : NODE_NUM = 655 ;
     "nDRAM_S5B_RAS"                           : OUTPUT_PIN = 32 ;
     "nDRAM_S8A_RAS"                           : OUTPUT_PIN = 31 ;
-    "XXL_180"                                 : NODE_NUM = 658 ;
+    "XXL_181"                                 : NODE_NUM = 658 ;
     "nDRAM_S7A_RAS"                           : OUTPUT_PIN = 30 ;
     "REFRESH_TIMER1"                          : NODE_NUM = 660 ;
     "nDRAM_S6A_RAS"                           : OUTPUT_PIN = 29 ;
@@ -75,7 +75,7 @@ BEGIN
     "REFRESH_TIMER_RESET"                     : NODE_NUM = 676 ;
     "nCPU_DSACK1"                             : OUTPUT_PIN = 48 ;
     "nSYS_RESET"                              : OUTPUT_PIN = 49 ;
-    "XXL_181"                                 : NODE_NUM = 679 ;
+    "XXL_182"                                 : NODE_NUM = 679 ;
     "nCPU_DSACK0"                             : OUTPUT_PIN = 50 ;
     "CPU_A31"                                 : INPUT_PIN = 52 ;
     "CPU_A30"                                 : INPUT_PIN = 53 ;
@@ -102,6 +102,7 @@ BEGIN
     "CPU_AA1"                                 : INPUT_PIN = 71 ;
     "CPU_AA0"                                 : INPUT_PIN = 72 ;
     "TDO"                                     : INPUT_PIN = 73 ;
+    "n3V_DATA_EN"                             : OUTPUT_PIN = 75 ;
     "CPU_FC0"                                 : INPUT_PIN = 76 ;
     "CPU_FC1"                                 : INPUT_PIN = 77 ;
     "CPU_FC2"                                 : INPUT_PIN = 78 ;

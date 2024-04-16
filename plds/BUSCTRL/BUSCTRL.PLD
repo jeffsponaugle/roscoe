@@ -12,6 +12,8 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
+PROPERTY ATMEL {open_collector=n3V_DATA_EN};
+
 
 /* NOTE:  Active low values are designated with a starting n. */
 
@@ -97,6 +99,7 @@ Pin[12] = DRAM_MUX;              // MUX for addess lines going to DRAM (0=ROW, 1
 Pin[10] = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the CPU.
 Pin[9] = nDRAM_WE;
 Pin[83] = RESET_CONTROL_IN;     // Active high signal to perform a system reset.
+Pin[75] = n3V_DATA_EN;
 
 Pin[81] = UNUSED1;
 Pin[47] = UNUSED2;
@@ -303,6 +306,7 @@ nBFLASH_WE = !BOOTFLASH_REGION_ACCESS # CPU_RW;
 */
 
 nBIGFLASH_CE = !BIGFLASH_REGION_ACCESS;
+n3V_DATA_EN = !BIGFLASH_REGION_ACCESS;
 
 
 /*
