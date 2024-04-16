@@ -102,13 +102,12 @@ Pin[83] = RESET_CONTROL_IN;     // Active high signal to perform a system reset.
 Pin[75] = n3V_DATA_EN;
 
 Pin[81] = UNUSED1;
-Pin[47] = UNUSED2;
+Pin[47] = CPU_CLK_div16;
 
 PINNODE = REFRESH_ACTIVE;
 PINNODE = CPU_CLK_div2;
 PINNODE = CPU_CLK_div4;
 PINNODE = CPU_CLK_div8;
-PINNODE = CPU_CLK_div16;
 PINNODE = nDRAM_ACCESS_RAS;
 PINNODE = REFRESH_COMPLETE;
 PINNODE = REFRESH_REQUESTED;
@@ -128,8 +127,7 @@ nCPU_RD = !CPU_RW;
 nCPU_CIIN = 'b'1;
 
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
-UNUSED1 = CPU_A19 & CPU_A18 & CPU_A17;
-UNUSED2 = !nCPU_ECS;
+UNUSED1 = CPU_A19 & CPU_A18 & CPU_A17 & !nCPU_ECS; 
 
 
 /* 
@@ -680,16 +678,17 @@ nDRAM_DATA_EN = !DRAM_REGION_ACCESS;
 nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
 /*
+
 Total dedicated input used:	4/4 	(100%)
-Total I/O pins used		77/80 	(96%)
+Total I/O pins used		78/80 	(97%)
 Total Logic cells used 		78/128 	(60%)
 Total Flip-Flop used 		24/128 	(18%)
 Total Foldback logic used 	9/128 	(7%)
 Total Nodes+FB/MCells 		87/128 	(67%)
 Total cascade used 		0
 Total input pins 		33
-Total output pins 		48
-Total Pts 			213
+Total output pins 		49
+Total Pts 			215
 */
 
 

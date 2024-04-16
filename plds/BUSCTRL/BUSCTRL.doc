@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Mon Apr 15 21:54:56 2024
+Created         Tue Apr 16 10:33:09 2024
 Name            BUSCTRL
 Partno          BUSCTRL
 Revision        01
@@ -294,10 +294,7 @@ SRAM_REGION_ACCESS =>
   # CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 UNUSED1 =>
-    CPU_A17 & CPU_A18 & CPU_A19
-
-UNUSED2 =>
-    !nCPU_ECS
+    CPU_A17 & CPU_A18 & CPU_A19 & !nCPU_ECS
 
 VIDEO_REGION_ACCESS =>
     CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
@@ -747,9 +744,9 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     CPU_CLK_div8                0        N        -       -       -     
     CPU_CLK_div8        d       0        M        1       0       2     
     CPU_CLK_div8        ck      0        M        1       0       1     
-    CPU_CLK_div16               0        N        -       -       -     
-    CPU_CLK_div16       d       0        M        1       0       2     
-    CPU_CLK_div16       ck      0        M        1       0       1     
+    CPU_CLK_div16               47       V        -       -       -     
+    CPU_CLK_div16       d       47       X        1       0       2     
+    CPU_CLK_div16       ck      47       X        1       0       1     
     CPU_FC0                     76       V        -       -       -     
     CPU_FC1                     77       V        -       -       -     
     CPU_FC2                     78       V        -       -       -     
@@ -827,7 +824,6 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     RESET_CONTROL_IN            83       V        -       -       -     
     SRAM_REGION_ACCESS          0        I        3       -       -     
     UNUSED1                     81       V        1       0       2     
-    UNUSED2                     47       V        1       0       2     
     VIDEO_REGION_ACCESS         0        I        3       -       -     
     field_CPU_ADDRESS           0        F        -       -       -     
     field_REFRESH_STATE_MACHINE        0        F        -       -       -     

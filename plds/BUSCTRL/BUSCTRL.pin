@@ -10,10 +10,10 @@ nSRAM_LH_SEL					: 98
 nSRAM_LL_SEL					: 97
 nDRAM_ACCESS_CAS_AP					: 610
 nSRAM_BANK4_CE					: 96
-XXL_184					: 612
+XXL_202					: 612
 nSRAM_BANK3_CE					: 94
 nSRAM_BANK2_CE					: 93
-XXL_183					: 615
+XXL_201					: 615
 nSRAM_BANK1_CE					: 92
 nDRAM_CAS2					: 14
 nDRAM_CAS3					: 13
@@ -27,7 +27,7 @@ nINT_ACK_CYCLE					: 6
 nDEV32BITCS					: 5
 DRAM_ACCESS_RAS_RESET1					: 631
 TDI					: 4
-XXL_185					: 632
+XXL_203					: 632
 nDRAM_S3B_RAS					: 25
 REFRESH_REQUESTED					: 634
 nDRAM_S2B_RAS					: 24
@@ -54,7 +54,7 @@ nDRAM_S6B_RAS					: 33
 REFRESH_TIMER3					: 655
 nDRAM_S5B_RAS					: 32
 nDRAM_S8A_RAS					: 31
-XXL_181					: 658
+XXL_199					: 658
 nDRAM_S7A_RAS					: 30
 REFRESH_TIMER1					: 660
 nDRAM_S6A_RAS					: 29
@@ -67,12 +67,12 @@ nCPU_HALT					: 42
 nCPU_CIIN					: 44
 nCPU_STERM					: 45
 nCPU_BERR					: 46
-CPU_CLK_div16					: 674
-UNUSED2					: 47
+CPU_CLK_div8					: 674
+CPU_CLK_div16					: 47
 REFRESH_TIMER_RESET					: 676
 nCPU_DSACK1					: 48
 nSYS_RESET					: 49
-XXL_182					: 679
+XXL_200					: 679
 nCPU_DSACK0					: 50
 CPU_A31					: 52
 CPU_A30					: 53
@@ -81,7 +81,6 @@ CPU_A28					: 55
 CPU_A27					: 56
 CPU_A26					: 57
 CPU_A25					: 58
-CPU_CLK_div8					: 692
 CPU_A24					: 60
 CPU_CLK_div4					: 693
 CPU_A23					: 61
