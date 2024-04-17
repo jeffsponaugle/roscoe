@@ -3,7 +3,7 @@ LISTING FOR LOGIC DESCRIPTION FILE: DEVMAP.pld                       Page 1
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 22:13:18 2024
+Created Wed Apr 17 11:40:26 2024
 
   1:Name     DEVMAP;
   2:PartNo   DEVMAP;
@@ -34,146 +34,171 @@ Created Thu Apr 11 22:13:18 2024
  25:Pin[1] = nDEV8BITCS;
  26:Pin[2] = nDEV16BITCS;
  27:Pin[5] = nDEV32BITCS;
- 28:Pin[87] = CPU_CLK;
- 29:Pin[88] = nSYS_RESET;
- 30:
- 31:/* 
- 32:                                                Outputs 
- 33:   ##########################################################################################
- 34:*/
- 35:
- 36:Pin[93] = SYS_RESET_POS;  // Inverted version of reset, needed for the UART IC.
+ 28:
+ 29:Pin[87] = CPU_CLK;
+ 30:Pin[88] = nSYS_RESET;
+ 31:
+ 32:/* 
+ 33:                                                Outputs 
+ 34:   ##########################################################################################
+ 35:*/
+ 36:
+ 37:Pin[29] = nEXP_DEV8BITCS;
+ 38:Pin[30] = nEXP_DEV16BITCS;
+ 39:Pin[31] = nEXP_DEV32BITCS;
+ 40:Pin[32] = nEXP_DEV_WAIT;
+ 41:
+ 42:
+ 43:Pin[6] = nDEV_WAIT;
+ 44:Pin[93] = SYS_RESET_POS;  // Inverted version of reset, needed for the UART IC.
 
- 37:Pin[25] = nUART_CSA;
- 38:Pin[24] = nUART_CSB;
- 39:Pin[28] = nPTC_CS;
- 40:Pin[50] = nIDE1_CSA;
- 41:Pin[49] = nIDE1_CSB;
- 42:Pin[48] = nIDE2_CSA;
- 43:Pin[47] = nIDE2_CSB;
- 44:Pin[46] = nIDE_WR;
- 45:Pin[45] = nIDE_BUFFER_EN1;
- 46:Pin[44] = nIDE_BUFFER_EN2;
- 47:
- 48:Pin[13] = nINTCTRL_CS;
- 49:Pin[14] = nRTC_CS;
- 50:Pin[23] = nPOWERCTRL_CS;
- 51:Pin[22] = nSTATUS7SEG_CS;
- 52:Pin[21] = nBOARDLEDS_CS;
- 53:Pin[27] = nVGA_CTRL_CS;
+ 45:Pin[25] = nUART_CSA;
+ 46:Pin[24] = nUART_CSB;
+ 47:Pin[28] = nPTC_CS;
+ 48:Pin[50] = nIDE1_CSA;
+ 49:Pin[49] = nIDE1_CSB;
+ 50:Pin[48] = nIDE2_CSA;
+ 51:Pin[47] = nIDE2_CSB;
+ 52:Pin[46] = nIDE_WR;
+ 53:Pin[45] = nIDE_BUFFER_EN1;
 
 LISTING FOR LOGIC DESCRIPTION FILE: DEVMAP.pld                       Page 2
 
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 22:13:18 2024
+Created Wed Apr 17 11:40:26 2024
 
- 54:Pin[20] = nUSB_CS;
- 55:Pin[19] = nNIC_CS;
- 56:
- 57:Pin[17] = RTC_A_SEL;
- 58:Pin[16] = RTC_D_SEL;
- 59:Pin[92,99] = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
- 60:
- 61:PINNODE  0  = nIDE_WR_DELAY1, nIDE_WR_DELAY2;
- 62:
- 63:// dummy expression to force the pins to be assigned.
-
+ 54:Pin[44] = nIDE_BUFFER_EN2;
+ 55:
+ 56:Pin[13] = nINTCTRL_CS;
+ 57:Pin[14] = nRTC_CS;
+ 58:Pin[23] = nPOWERCTRL_CS;
+ 59:Pin[22] = nSTATUS7SEG_CS;
+ 60:Pin[21] = nBOARDLEDS_CS;
+ 61:Pin[27] = nVGA_CTRL_CS;
+ 62:Pin[20] = nUSB_CS;
+ 63:Pin[19] = nNIC_CS;
  64:
- 65:EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & nSYS_RESET & nDEV32BITCS & CPU_RW;
- 66:
- 67:FIELD field_CPU_ADDRESS = [CPU_A27..8];
+ 65:Pin[17] = RTC_A_SEL;
+ 66:Pin[16] = RTC_D_SEL;
+ 67:Pin[92,99] = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
  68:
- 69:SYS_RESET_POS = !nSYS_RESET;
+ 69:PINNODE  0  = nIDE_WR_DELAY1, nIDE_WR_DELAY2;
  70:
- 71:/* 8 bit devices */
+ 71:// dummy expression to force the pins to be assigned.
+
  72:
- 73:nUART_CSA = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
- 74:nUART_CSB = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
- 75:nINTCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00002XX]);
- 76:nRTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00003XX]);
- 77:nPTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
- 78:nPOWERCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
- 79:
- 80:/* 16 bit devices */
- 81:
- 82:nSTATUS7SEG_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
- 83:nBOARDLEDS_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
- 84:nIDE1_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
- 85:nIDE1_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
- 86:nIDE2_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00006XX]);
- 87:nIDE2_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00007XX]);
- 88:nVGA_CTRL_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00008XX] # field_CPU_ADDRESS:['h'00009XX]);
- 89:nUSB_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'0000AXX] # field_CPU_ADDRESS:['h'0000BXX]);
- 90:nNIC_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00010XX] # field_CPU_ADDRESS:['h'00011XX]
- 91:                        # field_CPU_ADDRESS:['h'00012XX] # field_CPU_ADDRESS:['h'00013XX]);
- 92:
- 93:
- 94:/* IDE Device custom signals:
+ 73:EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & nSYS_RESET & nDEV32BITCS & CPU_RW  & nEXP_DEV_WAIT;
+ 74:
+ 75:FIELD field_CPU_ADDRESS = [CPU_A27..8];
+ 76:
+ 77:SYS_RESET_POS = !nSYS_RESET;
+ 78:
+ 79:nDEV_WAIT = 'b'1;       // No Wait States right now for local devices.
+
+ 80:
+ 81:nEXP_DEV8BITCS = nDEV8BITCS;
+ 82:nEXP_DEV16BITCS = nDEV16BITCS;
+ 83:nEXP_DEV32BITCS = nDEV32BITCS;
+ 84:
+ 85:
+ 86:
+ 87:/* 8 bit devices */
+ 88:
+ 89:nUART_CSA = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
+ 90:nUART_CSB = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
+ 91:nINTCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00002XX]);
+ 92:nRTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00003XX]);
+ 93:nPTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
+ 94:nPOWERCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
  95:
- 96:      nIDE_WR signal goes directly to the /WR pin on both IDE interfaces.   This signal is asserted (low) as soon as     
- 97:      the CPU_RW signal goes low, which normally happens write at the start of an /AS cycle.  The IDE_WR_DELAY1 and DELAY2 
- 98:      flip flops are configured such that they both start at 0 when an AS cycle starts.  After 2 CLK_16M cycles the 
- 99:      DELAY2 signal is set to 1, which directly unasserts the IDE /WR pin.  The allows the /WR pin to have an active rising
-100:      edge BEFORE the end of the CPU cpu cycle.  This is critical to allow the IDE interface to latch data, since at the end
-101:      of the cycle the output buffers to the IDE inteface are turned off.  This was a fix from the original design which 
-102:      assumed the rising edge of the write signal would be sufficienctly ahead of the buffers getting turned off. 
-103:      
-104:       */
-105:
-106:nIDE_BUFFER_EN1 = (nIDE1_CSA & nIDE1_CSB);
-107:nIDE_BUFFER_EN2 = (nIDE2_CSA & nIDE2_CSB);
+ 96:/* 16 bit devices */
+ 97:
+ 98:nSTATUS7SEG_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
+ 99:nBOARDLEDS_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
+100:nIDE1_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
+101:nIDE1_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
+102:nIDE2_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00006XX]);
+103:nIDE2_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00007XX]);
+104:nVGA_CTRL_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00008XX] # field_CPU_ADDRESS:['h'00009XX]);
+105:nUSB_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'0000AXX] # field_CPU_ADDRESS:['h'0000BXX]);
+106:nNIC_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00010XX] # field_CPU_ADDRESS:['h'00011XX]
+107:                        # field_CPU_ADDRESS:['h'00012XX] # field_CPU_ADDRESS:['h'00013XX]);
 
 LISTING FOR LOGIC DESCRIPTION FILE: DEVMAP.pld                       Page 3
 
 CUPL(WM): Universal Compiler for Programmable Logic
 Version 5.0a Serial# 60008009
 Copyright (c) 1983, 1998 Logical Devices, Inc.
-Created Thu Apr 11 22:13:18 2024
+Created Wed Apr 17 11:40:26 2024
 
 108:
-109:nIDE_WR = CPU_RW # nIDE_WR_DELAY2;
-110:
-111:nIDE_WR_DELAY1.d = 'b'1;
-112:nIDE_WR_DELAY1.ck = CPU_CLK;
-113:nIDE_WR_DELAY1.ar = (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2)  # !nSYS_RESET;
-114:
-115:nIDE_WR_DELAY2.d = nIDE_WR_DELAY1;
-116:nIDE_WR_DELAY2.ck = CPU_CLK;
-117:nIDE_WR_DELAY2.ar = (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2)  # !nSYS_RESET;
-118:
-119:/* 
-120:    RTC Device custom signals 
+109:
+110:/* IDE Device custom signals:
+111:
+112:      nIDE_WR signal goes directly to the /WR pin on both IDE interfaces.   This signal is asserted (low) as soon as     
+113:      the CPU_RW signal goes low, which normally happens write at the start of an /AS cycle.  The IDE_WR_DELAY1 and DELAY2 
+114:      flip flops are configured such that they both start at 0 when an AS cycle starts.  After 2 CLK_16M cycles the 
+115:      DELAY2 signal is set to 1, which directly unasserts the IDE /WR pin.  The allows the /WR pin to have an active rising
+116:      edge BEFORE the end of the CPU cpu cycle.  This is critical to allow the IDE interface to latch data, since at the end
+117:      of the cycle the output buffers to the IDE inteface are turned off.  This was a fix from the original design which 
+118:      assumed the rising edge of the write signal would be sufficienctly ahead of the buffers getting turned off. 
+119:      
+120:       */
 121:
-122:   RTC_A_SEL is used to change the address/data select lines going to the DS Real Time Clock IC.
-123:   It is also used to drive the DS line on the RTC.  The flip flop is reset while RTS_CS is off 
-124:   (which is tied to /AS), and then increments to 1 on the next falling edge.  It will stay at 1
-125:   until the end of the bus cycle.
-126:*/
-127:
-128:RTC_A_SEL.d = 'b'1;
-129:RTC_A_SEL.ck = !CPU_CLK;
-130:RTC_A_SEL.ar = nRTC_CS;    /* nRTC_CS is active low, so it will be high while RTS is not being accesses */
-131:RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, this will be held at one which is off */
-132:
-133:
+122:nIDE_BUFFER_EN1 = (nIDE1_CSA & nIDE1_CSB);
+123:nIDE_BUFFER_EN2 = (nIDE2_CSA & nIDE2_CSB);
+124:
+125:nIDE_WR = CPU_RW # nIDE_WR_DELAY2;
+126:
+127:nIDE_WR_DELAY1.d = 'b'1;
+128:nIDE_WR_DELAY1.ck = CPU_CLK;
+129:nIDE_WR_DELAY1.ar = (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2)  # !nSYS_RESET;
+130:
+131:nIDE_WR_DELAY2.d = nIDE_WR_DELAY1;
+132:nIDE_WR_DELAY2.ck = CPU_CLK;
+133:nIDE_WR_DELAY2.ar = (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2)  # !nSYS_RESET;
 134:
-135:/*
-136:Total dedicated input used:     1/4     (25%)
-137:Total I/O pins used             48/80   (60%)
-138:Total Logic cells used          20/128  (15%)
-139:Total Flip-Flop used            2/128   (1%)
-140:Total Foldback logic used       1/128   (0%)
-141:Total Nodes+FB/MCells           21/128  (16%)
-142:Total cascade used              0
-143:Total input pins                31
-144:Total output pins               18
-145:Total Pts                       22
-146:
-147:*/
+135:/* 
+136:    RTC Device custom signals 
+137:
+138:   RTC_A_SEL is used to change the address/data select lines going to the DS Real Time Clock IC.
+139:   It is also used to drive the DS line on the RTC.  The flip flop is reset while RTS_CS is off 
+140:   (which is tied to /AS), and then increments to 1 on the next falling edge.  It will stay at 1
+141:   until the end of the bus cycle.
+142:*/
+143:
+144:RTC_A_SEL.d = 'b'1;
+145:RTC_A_SEL.ck = !CPU_CLK;
+146:RTC_A_SEL.ar = nRTC_CS;    /* nRTC_CS is active low, so it will be high while RTS is not being accesses */
+147:RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, this will be held at one which is off */
 148:
 149:
+150:
+151:/*
+152:Total dedicated input used:     1/4     (25%)
+153:Total I/O pins used             48/80   (60%)
+154:Total Logic cells used          20/128  (15%)
+155:Total Flip-Flop used            2/128   (1%)
+156:Total Foldback logic used       1/128   (0%)
+157:Total Nodes+FB/MCells           21/128  (16%)
+158:Total cascade used              0
+159:Total input pins                31
+160:Total output pins               18
+161:Total Pts                       22
+
+LISTING FOR LOGIC DESCRIPTION FILE: DEVMAP.pld                       Page 4
+
+CUPL(WM): Universal Compiler for Programmable Logic
+Version 5.0a Serial# 60008009
+Copyright (c) 1983, 1998 Logical Devices, Inc.
+Created Wed Apr 17 11:40:26 2024
+
+162:
+163:*/
+164:
+165:
 
 
 

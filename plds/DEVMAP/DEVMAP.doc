@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Thu Apr 11 22:13:19 2024
+Created         Wed Apr 17 11:40:28 2024
 Name            DEVMAP
 Partno          DEVMAP
 Revision        01
@@ -20,7 +20,7 @@ Location        None
 ===============================================================================
 
 EXPANSION_EXTRA1 =>
-    CPU_RW & EXPANSION_EXTRA2 & nDEV32BITCS & nSYS_RESET
+    CPU_RW & EXPANSION_EXTRA2 & nDEV32BITCS & nEXP_DEV_WAIT & nSYS_RESET
 
 RTC_A_SEL.d  =>
     1 
@@ -64,6 +64,18 @@ nBOARDLEDS_CS =>
   # CPU_A26
   # CPU_A27
   # nDEV16BITCS
+
+nDEV_WAIT =>
+    1 
+
+nEXP_DEV16BITCS =>
+    nDEV16BITCS
+
+nEXP_DEV32BITCS =>
+    nDEV32BITCS
+
+nEXP_DEV8BITCS =>
+    nDEV8BITCS
 
 nIDE1_CSA =>
     CPU_A8
@@ -457,6 +469,11 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     nDEV16BITCS                 2        V        -       -       -     
     nDEV32BITCS                 5        V        -       -       -     
     nDEV8BITCS                  1        V        -       -       -     
+    nDEV_WAIT                   6        V        1       0       2     
+    nEXP_DEV16BITCS             30       V        1       0       2     
+    nEXP_DEV32BITCS             31       V        1       0       2     
+    nEXP_DEV8BITCS              29       V        1       0       2     
+    nEXP_DEV_WAIT               32       V        -       -       -     
     nIDE1_CSA                   50       V        21      0       2     
     nIDE1_CSB                   49       V        21      0       2     
     nIDE2_CSA                   48       V        21      0       2     

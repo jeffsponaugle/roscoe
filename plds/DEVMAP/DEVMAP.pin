@@ -4,12 +4,13 @@ nDEV8BITCS					: 1
 CPU_RW					: 100
 EXPANSION_EXTRA2					: 99
 nIDE_WR_DELAY1					: 610
-Com_Ctrl_72					: 612
+Com_Ctrl_77					: 612
 SYS_RESET_POS					: 93
 nIDE_WR_DELAY2					: 615
 EXPANSION_EXTRA1					: 92
 nRTC_CS					: 14
 nINTCTRL_CS					: 13
+nDEV_WAIT					: 6
 nDEV32BITCS					: 5
 TDI					: 4
 nUART_CSA					: 25
@@ -22,6 +23,10 @@ nNIC_CS					: 19
 RTC_A_SEL					: 17
 RTC_D_SEL					: 16
 TMS					: 15
+nEXP_DEV_WAIT					: 32
+nEXP_DEV32BITCS					: 31
+nEXP_DEV16BITCS					: 30
+nEXP_DEV8BITCS					: 29
 nPTC_CS					: 28
 nVGA_CTRL_CS					: 27
 nIDE_BUFFER_EN2					: 44

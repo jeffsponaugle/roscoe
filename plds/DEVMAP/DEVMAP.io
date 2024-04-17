@@ -7,12 +7,13 @@ BEGIN
     "CPU_RW"                                  : INPUT_PIN = 100 ;
     "EXPANSION_EXTRA2"                        : INPUT_PIN = 99 ;
     "nIDE_WR_DELAY1"                          : NODE_NUM = 610 ;
-    "Com_Ctrl_72"                             : NODE_NUM = 612 ;
+    "Com_Ctrl_77"                             : NODE_NUM = 612 ;
     "SYS_RESET_POS"                           : OUTPUT_PIN = 93 ;
     "nIDE_WR_DELAY2"                          : NODE_NUM = 615 ;
     "EXPANSION_EXTRA1"                        : OUTPUT_PIN = 92 ;
     "nRTC_CS"                                 : OUTPUT_PIN = 14 ;
     "nINTCTRL_CS"                             : OUTPUT_PIN = 13 ;
+    "nDEV_WAIT"                               : OUTPUT_PIN = 6 ;
     "nDEV32BITCS"                             : INPUT_PIN = 5 ;
     "TDI"                                     : INPUT_PIN = 4 ;
     "nUART_CSA"                               : OUTPUT_PIN = 25 ;
@@ -25,6 +26,10 @@ BEGIN
     "RTC_A_SEL"                               : OUTPUT_PIN = 17 ;
     "RTC_D_SEL"                               : OUTPUT_PIN = 16 ;
     "TMS"                                     : INPUT_PIN = 15 ;
+    "nEXP_DEV_WAIT"                           : INPUT_PIN = 32 ;
+    "nEXP_DEV32BITCS"                         : OUTPUT_PIN = 31 ;
+    "nEXP_DEV16BITCS"                         : OUTPUT_PIN = 30 ;
+    "nEXP_DEV8BITCS"                          : OUTPUT_PIN = 29 ;
     "nPTC_CS"                                 : OUTPUT_PIN = 28 ;
     "nVGA_CTRL_CS"                            : OUTPUT_PIN = 27 ;
     "nIDE_BUFFER_EN2"                         : OUTPUT_PIN = 44 ;

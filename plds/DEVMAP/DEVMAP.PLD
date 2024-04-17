@@ -25,6 +25,7 @@ Pin[100] = CPU_RW;
 Pin[1] = nDEV8BITCS;
 Pin[2] = nDEV16BITCS;
 Pin[5] = nDEV32BITCS;
+
 Pin[87] = CPU_CLK;
 Pin[88] = nSYS_RESET;
 
@@ -33,6 +34,13 @@ Pin[88] = nSYS_RESET;
    ##########################################################################################
 */
 
+Pin[29] = nEXP_DEV8BITCS;
+Pin[30] = nEXP_DEV16BITCS;
+Pin[31] = nEXP_DEV32BITCS;
+Pin[32] = nEXP_DEV_WAIT;
+
+
+Pin[6] = nDEV_WAIT;
 Pin[93] = SYS_RESET_POS;  // Inverted version of reset, needed for the UART IC.
 Pin[25] = nUART_CSA;
 Pin[24] = nUART_CSB;
@@ -62,11 +70,19 @@ PINNODE = nIDE_WR_DELAY1, nIDE_WR_DELAY2;
 
 // dummy expression to force the pins to be assigned.
 
-EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & nSYS_RESET & nDEV32BITCS & CPU_RW;
+EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & nSYS_RESET & nDEV32BITCS & CPU_RW  & nEXP_DEV_WAIT;
 
 FIELD field_CPU_ADDRESS = [CPU_A27..8];
 
 SYS_RESET_POS = !nSYS_RESET;
+
+nDEV_WAIT = 'b'1;       // No Wait States right now for local devices.
+
+nEXP_DEV8BITCS = nDEV8BITCS;
+nEXP_DEV16BITCS = nDEV16BITCS;
+nEXP_DEV32BITCS = nDEV32BITCS;
+
+
 
 /* 8 bit devices */
 
@@ -133,15 +149,14 @@ RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, thi
 
 
 /*
-Total dedicated input used:	1/4 	(25%)
-Total I/O pins used		48/80 	(60%)
-Total Logic cells used 		20/128 	(15%)
-Total Flip-Flop used 		2/128 	(1%)
-Total Foldback logic used 	1/128 	(0%)
-Total Nodes+FB/MCells 		21/128 	(16%)
+Total dedicated input used:	2/4 	(50%)
+Total I/O pins used		56/80 	(70%)
+Total Logic cells used 		29/128 	(22%)
+Total Flip-Flop used 		3/128 	(2%)
+Total Foldback logic used 	0/128 	(0%)
+Total Nodes+FB/MCells 		29/128 	(22%)
 Total cascade used 		0
-Total input pins 		31
-Total output pins 		18
-Total Pts 			22
-
+Total input pins 		32
+Total output pins 		26
+Total Pts 			31
 */

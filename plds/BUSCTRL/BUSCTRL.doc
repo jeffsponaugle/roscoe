@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Tue Apr 16 11:11:17 2024
+Created         Wed Apr 17 10:45:40 2024
 Name            BUSCTRL
 Partno          BUSCTRL
 Revision        01
@@ -293,7 +293,7 @@ SRAM_REGION_ACCESS =>
   # CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_FC2 & !nCPU_AS
 
 UNUSED1 =>
-    CPU_A17 & CPU_A18 & CPU_A19 & !nCPU_ECS
+    CPU_A17 & CPU_A18 & CPU_A19
 
 VIDEO_REGION_ACCESS =>
     CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC0 & !nCPU_AS
@@ -368,11 +368,18 @@ nCPU_DSACK0 =>
   # !CPU_A28 & CPU_A29 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE
   # !CPU_A28 & CPU_A30 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE
   # CPU_A29 & CPU_A30 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE
+  # CPU_A29 & !CPU_A31 & !CPU_FC0 & REFRESH_ACTIVE & !nDEV_WAIT
+  # CPU_A30 & !CPU_A31 & !CPU_FC0 & REFRESH_ACTIVE & !nDEV_WAIT
+  # CPU_A29 & !CPU_A31 & !CPU_FC1 & REFRESH_ACTIVE & !nDEV_WAIT
+  # CPU_A30 & !CPU_A31 & !CPU_FC1 & REFRESH_ACTIVE & !nDEV_WAIT
+  # CPU_A29 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE & !nDEV_WAIT
+  # CPU_A30 & !CPU_A31 & !CPU_FC2 & REFRESH_ACTIVE & !nDEV_WAIT
 
 nCPU_DSACK1 =>
     REFRESH_ACTIVE & nCPU_AS
   # CPU_A29 & !CPU_A31 & REFRESH_ACTIVE
   # CPU_FC0 & CPU_FC1 & CPU_FC2 & REFRESH_ACTIVE
+  # CPU_A30 & !CPU_A31 & REFRESH_ACTIVE & !nDEV_WAIT
   # !CPU_A27 & !CPU_A28 & !CPU_A30 & !CPU_A31 & REFRESH_ACTIVE
 
 nCPU_HALT =>
@@ -833,15 +840,15 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     nCPU_AS                     41       V        -       -       -     
     nCPU_BERR                   46       V        1       0       2     
     nCPU_CIIN                   44       V        1       0       2     
-    nCPU_DSACK0                 50       V        17      0       2     
-    nCPU_DSACK1                 48       V        4       0       2     
-    nCPU_ECS                    90       V        -       -       -     
+    nCPU_DSACK0                 50       V        23      0       2     
+    nCPU_DSACK1                 48       V        5       0       2     
     nCPU_HALT                   42       V        1       0       2     
     nCPU_RD                     8        V        1       0       2     
     nCPU_STERM                  45       V        1       0       2     
     nDEV16BITCS                 2        V        3       0       2     
     nDEV32BITCS                 5        V        3       0       2     
     nDEV8BITCS                  1        V        3       0       2     
+    nDEV_WAIT                   90       V        -       -       -     
     nDRAM_ACCESS_CAS            0        N        -       -       -     
     nDRAM_ACCESS_CAS    d       0        M        1       0       2     
     nDRAM_ACCESS_CAS    ap      0        M        4       0       1     
