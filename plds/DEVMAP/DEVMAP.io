@@ -7,7 +7,7 @@ BEGIN
     "CPU_RW"                                  : INPUT_PIN = 100 ;
     "EXPANSION_EXTRA2"                        : INPUT_PIN = 99 ;
     "nIDE_WR_DELAY1"                          : NODE_NUM = 610 ;
-    "Com_Ctrl_77"                             : NODE_NUM = 612 ;
+    "Com_Ctrl_78"                             : NODE_NUM = 612 ;
     "SYS_RESET_POS"                           : OUTPUT_PIN = 93 ;
     "nIDE_WR_DELAY2"                          : NODE_NUM = 615 ;
     "EXPANSION_EXTRA1"                        : OUTPUT_PIN = 92 ;
@@ -18,14 +18,15 @@ BEGIN
     "TDI"                                     : INPUT_PIN = 4 ;
     "nUART_CSA"                               : OUTPUT_PIN = 25 ;
     "nUART_CSB"                               : OUTPUT_PIN = 24 ;
-    "nPOWERCTRL_CS"                           : OUTPUT_PIN = 23 ;
-    "nSTATUS7SEG_CS"                          : OUTPUT_PIN = 22 ;
+    "nEXP_VMEM_CS"                            : OUTPUT_PIN = 23 ;
+    "nEXP_VIO_CS"                             : OUTPUT_PIN = 22 ;
     "nBOARDLEDS_CS"                           : OUTPUT_PIN = 21 ;
     "nUSB_CS"                                 : OUTPUT_PIN = 20 ;
     "nNIC_CS"                                 : OUTPUT_PIN = 19 ;
     "RTC_A_SEL"                               : OUTPUT_PIN = 17 ;
     "RTC_D_SEL"                               : OUTPUT_PIN = 16 ;
     "TMS"                                     : INPUT_PIN = 15 ;
+    "nEXP_CACHE_CTRL"                         : INPUT_PIN = 33 ;
     "nEXP_DEV_WAIT"                           : INPUT_PIN = 32 ;
     "nEXP_DEV32BITCS"                         : OUTPUT_PIN = 31 ;
     "nEXP_DEV16BITCS"                         : OUTPUT_PIN = 30 ;

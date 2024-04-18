@@ -28,6 +28,7 @@ Pin[5] = nDEV32BITCS;
 
 Pin[87] = CPU_CLK;
 Pin[88] = nSYS_RESET;
+Pin[33] = nEXP_CACHE_CTRL;
 
 /* 
                                                 Outputs 
@@ -55,8 +56,9 @@ Pin[44] = nIDE_BUFFER_EN2;
 
 Pin[13] = nINTCTRL_CS;
 Pin[14] = nRTC_CS;
-Pin[23] = nPOWERCTRL_CS;
-Pin[22] = nSTATUS7SEG_CS;
+Pin[23] = nEXP_VMEM_CS;
+Pin[22] = nEXP_VIO_CS;
+
 Pin[21] = nBOARDLEDS_CS;
 Pin[27] = nVGA_CTRL_CS;
 Pin[20] = nUSB_CS;
@@ -65,12 +67,17 @@ Pin[19] = nNIC_CS;
 Pin[17] = RTC_A_SEL;
 Pin[16] = RTC_D_SEL;
 Pin[92,99] = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
+Pin[96] = nSEVENSEGA_WR;
+Pin[97] = nSEVENSEGB_WR;
+Pin[98] = nSTATUSLED_WR;
+
+
 
 PINNODE = nIDE_WR_DELAY1, nIDE_WR_DELAY2;
 
 // dummy expression to force the pins to be assigned.
 
-EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & nSYS_RESET & nDEV32BITCS & CPU_RW  & nEXP_DEV_WAIT;
+EXPANSION_EXTRA1 = EXPANSION_EXTRA2 & nSYS_RESET & nDEV32BITCS & CPU_RW  & nEXP_DEV_WAIT & nEXP_CACHE_CTRL;
 
 FIELD field_CPU_ADDRESS = [CPU_A27..8];
 
@@ -91,7 +98,8 @@ nUART_CSB = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
 nINTCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00002XX]);
 nRTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00003XX]);
 nPTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00004XX]);
-nPOWERCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
+nEXP_VIO_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00005XX]);
+nEXP_VMEM_CS = 'b'1;
 
 /* 16 bit devices */
 
@@ -158,5 +166,5 @@ Total Nodes+FB/MCells 		29/128 	(22%)
 Total cascade used 		0
 Total input pins 		32
 Total output pins 		26
-Total Pts 			31
+Total Pts 			30
 */

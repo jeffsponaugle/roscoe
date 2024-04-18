@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          f1508isptqfp100  Library DLIB-h-40-2
-Created         Wed Apr 17 11:40:28 2024
+Created         Wed Apr 17 22:06:51 2024
 Name            DEVMAP
 Partno          DEVMAP
 Revision        01
@@ -20,7 +20,8 @@ Location        None
 ===============================================================================
 
 EXPANSION_EXTRA1 =>
-    CPU_RW & EXPANSION_EXTRA2 & nDEV32BITCS & nEXP_DEV_WAIT & nSYS_RESET
+    CPU_RW & EXPANSION_EXTRA2 & nDEV32BITCS & nEXP_CACHE_CTRL & nEXP_DEV_WAIT & 
+      nSYS_RESET
 
 RTC_A_SEL.d  =>
     1 
@@ -76,6 +77,32 @@ nEXP_DEV32BITCS =>
 
 nEXP_DEV8BITCS =>
     nDEV8BITCS
+
+nEXP_VIO_CS =>
+    !CPU_A8
+  # CPU_A9
+  # !CPU_A10
+  # CPU_A11
+  # CPU_A12
+  # CPU_A13
+  # CPU_A14
+  # CPU_A15
+  # CPU_A16
+  # CPU_A17
+  # CPU_A18
+  # CPU_A19
+  # CPU_A20
+  # CPU_A21
+  # CPU_A22
+  # CPU_A23
+  # CPU_A24
+  # CPU_A25
+  # CPU_A26
+  # CPU_A27
+  # nDEV8BITCS
+
+nEXP_VMEM_CS =>
+    1 
 
 nIDE1_CSA =>
     CPU_A8
@@ -243,29 +270,6 @@ nNIC_CS =>
   # CPU_A27
   # nDEV16BITCS
 
-nPOWERCTRL_CS =>
-    !CPU_A8
-  # CPU_A9
-  # !CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
-  # CPU_A27
-  # nDEV8BITCS
-
 nPTC_CS =>
     CPU_A8
   # CPU_A9
@@ -313,27 +317,27 @@ nRTC_CS =>
   # nDEV8BITCS
 
 nSTATUS7SEG_CS =>
-    CPU_A8
-  # CPU_A9
-  # CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV16BITCS
   # CPU_A27
-  # nDEV16BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # CPU_A10
+  # CPU_A9
+  # CPU_A8
 
 nUART_CSA =>
     CPU_A8
@@ -470,10 +474,13 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     nDEV32BITCS                 5        V        -       -       -     
     nDEV8BITCS                  1        V        -       -       -     
     nDEV_WAIT                   6        V        1       0       2     
+    nEXP_CACHE_CTRL             33       V        -       -       -     
     nEXP_DEV16BITCS             30       V        1       0       2     
     nEXP_DEV32BITCS             31       V        1       0       2     
     nEXP_DEV8BITCS              29       V        1       0       2     
     nEXP_DEV_WAIT               32       V        -       -       -     
+    nEXP_VIO_CS                 22       V        21      0       2     
+    nEXP_VMEM_CS                23       V        1       0       2     
     nIDE1_CSA                   50       V        21      0       2     
     nIDE1_CSB                   49       V        21      0       2     
     nIDE2_CSA                   48       V        21      0       2     
@@ -491,10 +498,12 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     nIDE_WR_DELAY2      ck      0        M        1       0       1     
     nINTCTRL_CS                 13       V        21      0       2     
     nNIC_CS                     19       V        19      0       2     
-    nPOWERCTRL_CS               23       V        21      0       2     
     nPTC_CS                     28       V        21      0       2     
     nRTC_CS                     14       V        21      0       2     
-    nSTATUS7SEG_CS              22       V        21      0       2     
+    nSEVENSEGA_WR               96       V        -       -       -     
+    nSEVENSEGB_WR               97       V        -       -       -     
+    nSTATUS7SEG_CS              0        I        21      -       -     
+    nSTATUSLED_WR               98       V        -       -       -     
     nSYS_RESET                  88       V        -       -       -     
     nUART_CSA                   25       V        21      0       2     
     nUART_CSB                   24       V        21      0       2     
