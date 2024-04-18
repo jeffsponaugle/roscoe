@@ -317,7 +317,7 @@ INT1B_REQUEST_PE = !INT1A_REQUEST_PE & INT1B_REQUEST;
       INT2A         2        10100001 (0xA1)      VIDEO
       INT2B         2        10100010 (0xA2)      EXPANSION_I2
       INT1A         1        10010001 (0x91)      RTC
-      INT1B         1        10010010 (0x92)      POWER CONTROLLER
+      INT1B         1        10010010 (0x92)      POWER CONTROLLER ( Postive Level Triggered )
      
       Note that all of the other vectors starting with 1XXXXXXX should be vectored to a spurious interrupt handler.
 
