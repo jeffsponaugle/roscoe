@@ -1,7 +1,7 @@
-Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Wed Apr 17 22:06:51 2024
+Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Sat Apr 20 11:18:02 2024
 
 
-fit1508 C:\DEVMAP.tt2 -CUPL -dev P1508T100 -JTAG ON
+fit1508 C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAP\DEVMAP.tt2 -CUPL -dev P1508T100 -JTAG ON
 
 
 ****** Initial fitting strategy and property ******
@@ -77,12 +77,14 @@ nDEV8BITCS is placed at pin 1 (MC 3)
 CPU_RW is placed at pin 100 (MC 5)
 EXPANSION_EXTRA2 is placed at pin 99 (MC 6)
 nIDE_WR_DELAY1 is placed at feedback node 610 (MC 10)
-Com_Ctrl_78 is placed at feedback node 612 (MC 12)
+Com_Ctrl_79 is placed at feedback node 612 (MC 12)
 SYS_RESET_POS is placed at pin 93 (MC 14)
 nIDE_WR_DELAY2 is placed at feedback node 615 (MC 15)
 EXPANSION_EXTRA1 is placed at pin 92 (MC 16)
 nRTC_CS is placed at pin 14 (MC 17)
 nINTCTRL_CS is placed at pin 13 (MC 19)
+EXP_DM_CPLD2 is placed at pin 8 (MC 25)
+EXP_DM_CPLD1 is placed at pin 7 (MC 27)
 nDEV_WAIT is placed at pin 6 (MC 29)
 nDEV32BITCS is placed at pin 5 (MC 30)
 TDI is placed at pin 4 (MC 32)
@@ -102,7 +104,6 @@ nEXP_DEV32BITCS is placed at pin 31 (MC 57)
 nEXP_DEV16BITCS is placed at pin 30 (MC 59)
 nEXP_DEV8BITCS is placed at pin 29 (MC 61)
 nPTC_CS is placed at pin 28 (MC 62)
-nVGA_CTRL_CS is placed at pin 27 (MC 64)
 nIDE_BUFFER_EN2 is placed at pin 44 (MC 70)
 nIDE_BUFFER_EN1 is placed at pin 45 (MC 72)
 nIDE_WR is placed at pin 46 (MC 73)
@@ -155,8 +156,8 @@ CPU_A8 is placed at pin 76 (MC 115)
            TDI | 4                                                     72 | CPU_A10          
    nDEV32BITCS | 5                                                     71 | CPU_A11          
      nDEV_WAIT | 6                                                     70 | CPU_A12          
-               | 7                                                     69 | CPU_A13          
-               | 8                                                     68 | CPU_A14          
+  EXP_DM_CPLD1 | 7                                                     69 | CPU_A13          
+  EXP_DM_CPLD2 | 8                                                     68 | CPU_A14          
                | 9                                                     67 | CPU_A15          
                | 10                                                    66 | VCC              
            GND | 11                                                    65 | CPU_A16          
@@ -177,18 +178,18 @@ CPU_A8 is placed at pin 76 (MC 115)
                 \     27  29  31  33  35  37  39  41  43  45   47  49    /                  
                  \  26  28  30  32  34  36  38  40  42  44  46  48   50 /                   
                   ------------------------------------------------------                     
-n                   G n n n n n n n V       G V       G n n n n n n                          
-I                   N V P E E E E E C       N C       N I I I I I I                          
-D                   D G T X X X X X C       D C       D D D D D D D                          
-E                     A C P P P P P                     E E E E E E                          
-1                     _ _ _ _ _ _ _                     _ _ _ 2 2 1                          
-_                     C C D D D D C                     B B W _ _ _                          
-C                     T S E E E E A                     U U R C C C                          
-S                     R   V V V V C                     F F   S S S                          
-A                     L   8 1 3 _ H                     F F   B A B                          
-                      _   B 6 2 W E                     E E                                  
-                      C   I B B A _                     R R                                  
-                      S   T I I I C                     _ _                                  
+n                   G   n n n n n n V       G V       G n n n n n n                          
+I                   N   P E E E E E C       N C       N I I I I I I                          
+D                   D   T X X X X X C       D C       D D D D D D D                          
+E                       C P P P P P                     E E E E E E                          
+1                       _ _ _ _ _ _                     _ _ _ 2 2 1                          
+_                       C D D D D C                     B B W _ _ _                          
+C                       S E E E E A                     U U R C C C                          
+S                         V V V V C                     F F   S S S                          
+A                         8 1 3 _ H                     F F   B A B                          
+                          B 6 2 W E                     E E                                  
+                          I B B A _                     R R                                  
+                          T I I I C                     _ _                                  
                           C T T T T                     E E                                  
 
 
@@ -205,14 +206,14 @@ Universal-Interconnect-Multiplexer assignments
 ------------------------------------------------
 FanIn assignment for block A [10]
 {
-Com_Ctrl_78,CPU_RW,
+Com_Ctrl_79,CPU_RW,
 EXPANSION_EXTRA2,
 nDEV32BITCS,nEXP_DEV_WAIT,nIDE_BUFFER_EN1,nIDE_BUFFER_EN2,nEXP_CACHE_CTRL,nSYS_RESET,nIDE_WR_DELAY1,
 }
 Multiplexer assignment for block A
 nDEV32BITCS		(MC6	P)   : MUX 0		Ref (B30p)
 nEXP_DEV_WAIT		(MC9	P)   : MUX 1		Ref (D56p)
-Com_Ctrl_78		(MC2	FB)  : MUX 5		Ref (A12fb)
+Com_Ctrl_79		(MC2	FB)  : MUX 5		Ref (A12fb)
 nIDE_BUFFER_EN1		(MC4	P)   : MUX 7		Ref (E72p)
 CPU_RW			(MC5	P)   : MUX 13		Ref (A5p)
 nIDE_BUFFER_EN2		(MC3	P)   : MUX 17		Ref (E70p)
@@ -346,31 +347,35 @@ nIDE2_CSB		(MC2	P)   : MUX 32		Ref (E75p)
 CPU_A19			(MC17	P)   : MUX 34		Ref (F94p)
 nIDE_WR_DELAY2		(MC1	FB)  : MUX 37		Ref (A15fb)
 
-Creating JEDEC file C:\DEVMAP.jed ...
+Creating JEDEC file C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAP\DEVMAP.jed ...
 
 TQFP100 programmed logic:
 -----------------------------------
+EXP_DM_CPLD1 = 0;
+
+EXP_DM_CPLD2 = 0;
+
 EXPANSION_EXTRA1 = (CPU_RW & EXPANSION_EXTRA2 & nDEV32BITCS & nEXP_CACHE_CTRL & nEXP_DEV_WAIT & nSYS_RESET);
 
 RTC_A_SEL.D = 1;
-
-RTC_D_SEL = !RTC_A_SEL.Q;
-
-nDEV_WAIT = 1;
 
 SYS_RESET_POS = !nSYS_RESET;
 
 !nBOARDLEDS_CS = (CPU_A8 & !CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
 
+RTC_D_SEL = !RTC_A_SEL.Q;
+
+nDEV_WAIT = 1;
+
+nEXP_DEV8BITCS = nDEV8BITCS;
+
+!nEXP_VIO_CS = (CPU_A8 & !CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
+
 nEXP_DEV16BITCS = nDEV16BITCS;
 
 nEXP_DEV32BITCS = nDEV32BITCS;
 
-!nEXP_VIO_CS = (CPU_A8 & !CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
-
 nEXP_VMEM_CS = 1;
-
-nEXP_DEV8BITCS = nDEV8BITCS;
 
 !nIDE1_CSA = (!CPU_A8 & !CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
 
@@ -382,44 +387,42 @@ nEXP_DEV8BITCS = nDEV8BITCS;
 
 !nIDE_WR = (!CPU_RW & !nIDE_WR_DELAY2.Q);
 
-nIDE_WR_DELAY1.D = 1;
-
 nIDE_WR_DELAY2.D = nIDE_WR_DELAY1.Q;
+
+nIDE_WR_DELAY1.D = 1;
 
 !nINTCTRL_CS = (!CPU_A8 & CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
 
-!nNIC_CS = (!CPU_A10 & !CPU_A11 & CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
+!nRTC_CS = (CPU_A8 & CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
 
-!nUART_CSA = (!CPU_A8 & !CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
+!nNIC_CS = (!CPU_A10 & !CPU_A11 & CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
 
 !nPTC_CS = (!CPU_A8 & !CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
 
-!nRTC_CS = (CPU_A8 & CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
+!nUART_CSA = (!CPU_A8 & !CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
 
 !nUART_CSB = (CPU_A8 & !CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
 
 !nUSB_CS = (CPU_A9 & !CPU_A10 & CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
 
-!nVGA_CTRL_CS = (!CPU_A9 & !CPU_A10 & CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
-
 nIDE_BUFFER_EN1 = (nIDE1_CSA & nIDE1_CSB);
 
 nIDE_BUFFER_EN2 = (nIDE2_CSA & nIDE2_CSB);
 
-Com_Ctrl_78 = (!nSYS_RESET
+Com_Ctrl_79 = (!nSYS_RESET
 	# (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2));
 
 RTC_A_SEL.C = !CPU_CLK;
 
 RTC_A_SEL.AR = nRTC_CS;
 
-nIDE_WR_DELAY1.C = CPU_CLK;
-
-nIDE_WR_DELAY1.AR = Com_Ctrl_78;
-
 nIDE_WR_DELAY2.C = CPU_CLK;
 
-nIDE_WR_DELAY2.AR = Com_Ctrl_78;
+nIDE_WR_DELAY2.AR = Com_Ctrl_79;
+
+nIDE_WR_DELAY1.C = CPU_CLK;
+
+nIDE_WR_DELAY1.AR = Com_Ctrl_79;
 
 
 TQFP100 Pin/Node Placement:
@@ -429,6 +432,8 @@ Pin 2  = nDEV16BITCS; /* MC 1 */
 Pin 4  = TDI; /* MC 32 */
 Pin 5  = nDEV32BITCS; /* MC 30 */
 Pin 6  = nDEV_WAIT; /* MC 29 */
+Pin 7  = EXP_DM_CPLD1; /* MC 27 */
+Pin 8  = EXP_DM_CPLD2; /* MC 25 */
 Pin 13 = nINTCTRL_CS; /* MC 19 */ 
 Pin 14 = nRTC_CS; /* MC 17 */ 
 Pin 15 = TMS; /* MC 48 */ 
@@ -441,7 +446,6 @@ Pin 22 = nEXP_VIO_CS; /* MC 38 */
 Pin 23 = nEXP_VMEM_CS; /* MC 37 */ 
 Pin 24 = nUART_CSB; /* MC 35 */ 
 Pin 25 = nUART_CSA; /* MC 33 */ 
-Pin 27 = nVGA_CTRL_CS; /* MC 64 */ 
 Pin 28 = nPTC_CS; /* MC 62 */ 
 Pin 29 = nEXP_DEV8BITCS; /* MC 61 */ 
 Pin 30 = nEXP_DEV16BITCS; /* MC 59 */ 
@@ -484,7 +488,7 @@ Pin 93 = SYS_RESET_POS; /* MC 14 */
 Pin 99 = EXPANSION_EXTRA2; /* MC  6 */
 Pin 100 = CPU_RW; /* MC  5 */
 PINNODE 610 = nIDE_WR_DELAY1; /* MC 10 Feedback */
-PINNODE 612 = Com_Ctrl_78; /* MC 12 Feedback */
+PINNODE 612 = Com_Ctrl_79; /* MC 12 Feedback */
 PINNODE 615 = nIDE_WR_DELAY2; /* MC 15 Feedback */
 
 ** Resource Usage **
@@ -516,7 +520,7 @@ MC8   98        --                      --                    --        --      
 MC9   97        --                      --                    --        --             0     slow
 MC10  0         --                      nIDE_WR_DELAY1 Dg-r-  --        --             1     slow
 MC11  96        --                      --                    --        --             0     slow
-MC12  0         --                      Com_Ctrl_78    C----  --        --             2     slow
+MC12  0         --                      Com_Ctrl_79    C----  --        --             2     slow
 MC13  94        --                      --                    --        --             0     slow
 MC14  93   on   SYS_RESET_POS    C----  --                    --        --             1     slow
 MC15  0         --                      nIDE_WR_DELAY2 Dg-r-  --        --             2     slow
@@ -529,9 +533,9 @@ MC21  12        --                      --                    --        --      
 MC22  10        --                      --                    --        --             0     slow
 MC23  0         --                      --                    --        --             0     slow
 MC24  9         --                      --                    --        --             0     slow
-MC25  8         --                      --                    --        --             0     slow
+MC25  8    on   EXP_DM_CPLD2     C----  --                    --        --             0     slow
 MC26  0         --                      --                    --        --             0     slow
-MC27  7         --                      --                    --        --             0     slow
+MC27  7    on   EXP_DM_CPLD1     C----  --                    --        --             0     slow
 MC28  0         --                      --                    --        --             0     slow
 MC29  6    on   nDEV_WAIT        C----  --                    --        --             0     slow
 MC30  5    --   nDEV32BITCS      INPUT  --                    --        --             0     slow
@@ -568,7 +572,7 @@ MC60  0         --                      --                    --        --      
 MC61  29   on   nEXP_DEV8BITCS   C----  --                    --        --             1     slow
 MC62  28   on   nPTC_CS          C----  --                    --        --             1     slow
 MC63  0         --                      --                    --        --             0     slow
-MC64  27   on   nVGA_CTRL_CS     C----  --                    --        --             1     slow
+MC64  27        --                      --                    --        --             0     slow
 MC65  40        --                      --                    --        --             0     slow
 MC66  0         --                      --                    --        --             0     slow
 MC67  41        --                      --                    --        --             0     slow
@@ -640,25 +644,25 @@ MC0   87        CPU_CLK          INPUT  --                    --        --      
 
 Logic Array Block	Logic Cells	I/O Pins	Foldbacks	TotalPT		FanIN	Cascades
 A: LC1	- LC16		5/16(31%)	6/16(37%)	0/16(0%)	7/80(8%)	(10)	0
-B: LC17	- LC32		3/16(18%)	5/16(31%)	0/16(0%)	2/80(2%)	(21)	0
+B: LC17	- LC32		5/16(31%)	7/16(43%)	0/16(0%)	2/80(2%)	(21)	0
 C: LC33	- LC48		9/16(56%)	10/16(62%)	0/16(0%)	9/80(11%)	(25)	0
-D: LC49	- LC64		5/16(31%)	7/16(43%)	0/16(0%)	5/80(6%)	(23)	0
+D: LC49	- LC64		4/16(25%)	6/16(37%)	0/16(0%)	4/80(5%)	(23)	0
 E: LC65	- LC80		7/16(43%)	7/16(43%)	0/16(0%)	7/80(8%)	(27)	0
 F: LC81	- LC96		0/16(0%)	10/16(62%)	0/16(0%)	0/80(0%)	(0)	0
 G: LC97	- LC112		0/16(0%)	10/16(62%)	0/16(0%)	0/80(0%)	(0)	0
 H: LC113- LC128		0/16(0%)	2/16(12%)	0/16(0%)	0/80(0%)	(0)	0
 
 Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		57/80 	(71%)
-Total Logic cells used 		29/128 	(22%)
+Total I/O pins used		58/80 	(72%)
+Total Logic cells used 		30/128 	(23%)
 Total Flip-Flop used 		3/128 	(2%)
 Total Foldback logic used 	0/128 	(0%)
-Total Nodes+FB/MCells 		29/128 	(22%)
+Total Nodes+FB/MCells 		30/128 	(23%)
 Total cascade used 		0
 Total input pins 		33
-Total output pins 		26
-Total Pts 			30
-Creating pla file C:\DEVMAP.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
+Total output pins 		27
+Total Pts 			29
+Creating pla file C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAP\DEVMAP.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
 
 ----------------  End fitter, Design FITS
 $Device TQFP100 fits 

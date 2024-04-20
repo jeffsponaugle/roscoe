@@ -1,11 +1,11 @@
-{COMPONENT C:\INTCTRL.SYM
+{COMPONENT C:\USERS\JEFF\SRC\ROSCOE\PLDS\INTCTRL\INTCTRL.SYM
 
  {ENVIRONMENT
   {PDIFvrev 3.00}
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Thu Apr 18 08:35:36 2024 "}
+  {DBtime "Sat Apr 20 11:20:57 2024 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -65,18 +65,20 @@
    {P NUSB_TXE {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
    {P NUSB_WR {Pt "I/O"}{Lq 0}{Ploc 360 20}}
    {P NUSB_RD {Pt "I/O"}{Lq 0}{Ploc 360 40}}
-   {P POWER_CO {Pt "I/O"}{Lq 0}{Ploc 360 60}}
-   {P CPU_IPL2 {Pt "I/O"}{Lq 0}{Ploc 360 80}}
-   {P CPU_IPL1 {Pt "I/O"}{Lq 0}{Ploc 360 100}}
-   {P CPU_IPL0 {Pt "I/O"}{Lq 0}{Ploc 360 120}}
-   {P CPU_D7 {Pt "I/O"}{Lq 0}{Ploc 360 140}}
-   {P CPU_D6 {Pt "I/O"}{Lq 0}{Ploc 360 160}}
-   {P CPU_D5 {Pt "I/O"}{Lq 0}{Ploc 360 180}}
-   {P CPU_D4 {Pt "I/O"}{Lq 0}{Ploc 360 200}}
-   {P CPU_D3 {Pt "I/O"}{Lq 0}{Ploc 360 220}}
-   {P CPU_D2 {Pt "I/O"}{Lq 0}{Ploc 360 240}}
-   {P CPU_D1 {Pt "I/O"}{Lq 0}{Ploc 360 260}}
-   {P CPU_D0 {Pt "I/O"}{Lq 0}{Ploc 360 280}}
+   {P EXP_IN1 {Pt "I/O"}{Lq 0}{Ploc 360 60}}
+   {P EXP_IN2 {Pt "I/O"}{Lq 0}{Ploc 360 80}}
+   {P POWER_CO {Pt "I/O"}{Lq 0}{Ploc 360 100}}
+   {P CPU_IPL2 {Pt "I/O"}{Lq 0}{Ploc 360 120}}
+   {P CPU_IPL1 {Pt "I/O"}{Lq 0}{Ploc 360 140}}
+   {P CPU_IPL0 {Pt "I/O"}{Lq 0}{Ploc 360 160}}
+   {P CPU_D7 {Pt "I/O"}{Lq 0}{Ploc 360 180}}
+   {P CPU_D6 {Pt "I/O"}{Lq 0}{Ploc 360 200}}
+   {P CPU_D5 {Pt "I/O"}{Lq 0}{Ploc 360 220}}
+   {P CPU_D4 {Pt "I/O"}{Lq 0}{Ploc 360 240}}
+   {P CPU_D3 {Pt "I/O"}{Lq 0}{Ploc 360 260}}
+   {P CPU_D2 {Pt "I/O"}{Lq 0}{Ploc 360 280}}
+   {P CPU_D1 {Pt "I/O"}{Lq 0}{Ploc 360 300}}
+   {P CPU_D0 {Pt "I/O"}{Lq 0}{Ploc 360 320}}
   }
 
   {PKG
@@ -132,8 +134,10 @@
    {Pnl 340 250}
    {Pnl 340 270}
    {Pnl 340 290}
+   {Pnl 340 310}
+   {Pnl 340 330}
 
-   {Sd A 87 90 1 2 8 9 10 12 13 14 16 19 20 21 24 25 27 29 30 46 56 70 71 72 75 76 88 89 99 100 5 6 45 52 53 54 57 58 60 61 63 64 65 67}
+   {Sd A 87 90 1 2 8 9 10 12 13 14 16 19 20 21 24 25 27 29 30 46 56 70 71 72 75 76 88 89 99 100 5 6 31 32 45 52 53 54 57 58 60 61 63 64 65 67}
   }
 
   {PIC
@@ -186,6 +190,8 @@
    {L 330 240 360 240}
    {L 330 260 360 260}
    {L 330 280 360 280}
+   {L 330 300 360 300}
+   {L 330 320 360 320}
    [Ly "PINNAM"]
    [Tj "LC"]
    {T "CPU_CLK" 140 640}
@@ -221,18 +227,20 @@
    [Tj "RC"]
    {T "NUSB_WR" 320 20}
    {T "NUSB_RD" 320 40}
-   {T "POWER_CO" 320 60}
-   {T "CPU_IPL2" 320 80}
-   {T "CPU_IPL1" 320 100}
-   {T "CPU_IPL0" 320 120}
-   {T "CPU_D7" 320 140}
-   {T "CPU_D6" 320 160}
-   {T "CPU_D5" 320 180}
-   {T "CPU_D4" 320 200}
-   {T "CPU_D3" 320 220}
-   {T "CPU_D2" 320 240}
-   {T "CPU_D1" 320 260}
-   {T "CPU_D0" 320 280}
+   {T "EXP_IN1" 320 60}
+   {T "EXP_IN2" 320 80}
+   {T "POWER_CO" 320 100}
+   {T "CPU_IPL2" 320 120}
+   {T "CPU_IPL1" 320 140}
+   {T "CPU_IPL0" 320 160}
+   {T "CPU_D7" 320 180}
+   {T "CPU_D6" 320 200}
+   {T "CPU_D5" 320 220}
+   {T "CPU_D4" 320 240}
+   {T "CPU_D3" 320 260}
+   {T "CPU_D2" 320 280}
+   {T "CPU_D1" 320 300}
+   {T "CPU_D0" 320 320}
    [Ly "DEVICE"]
    [Tj "CT"]
    {T "F1508ISPTQFP100" 230 -10}
@@ -246,7 +254,7 @@
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\INTCTRL 230 660}
+    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\INTCTRL\INTCTRL 230 660}
    }
   }
  }
@@ -319,6 +327,10 @@
    {N NUSB_WR
    }
    {N NUSB_RD
+   }
+   {N EXP_IN1
+   }
+   {N EXP_IN2
    }
    {N POWER_CO
    }

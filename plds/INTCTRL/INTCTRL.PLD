@@ -62,8 +62,15 @@ Pin[1] = nUSB_DATAACK;
 Pin[99] = nUSB_RXF;
 Pin[100] = nUSB_TXE;
 Pin[56] = nUSB_CS;            // Active low signal from DEV CPLD indicated an 8 bit access to the USB controller.
+
+Pin[31] = EXP_INT_CPLD1;
+Pin[32] = EXP_INT_CPLD2;
+
 Pin = UNUSED1;
 UNUSED1 = CPU_A0 & CPU_A1 & CPU_A2 & CPU_A3;
+EXP_INT_CPLD1 = 'b'0;
+EXP_INT_CPLD2 = 'b'0;
+
 
 
 /* 
@@ -392,14 +399,14 @@ INT_ACK_RESET.ar = !nSYS_RESET;
 
 /*
 Total dedicated input used:	4/4 	(100%)
-Total I/O pins used		44/80 	(55%)
-Total Logic cells used 		63/128 	(49%)
+Total I/O pins used		46/80 	(57%)
+Total Logic cells used 		65/128 	(50%)
 Total Flip-Flop used 		30/128 	(23%)
 Total Foldback logic used 	8/128 	(6%)
-Total Nodes+FB/MCells 		71/128 	(55%)
+Total Nodes+FB/MCells 		73/128 	(57%)
 Total cascade used 		0
 Total input pins 		31
-Total output pins 		17
+Total output pins 		19
 Total Pts 			182
 
 */

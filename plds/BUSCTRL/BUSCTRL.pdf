@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Fri Apr 19 22:26:34 2024 "}
+  {DBtime "Sat Apr 20 11:15:55 2024 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,16 +33,14 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
-   {P CPU_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 840}}
-   {P NDEV_WAI {Pt "INPUT"}{Lq 0}{Ploc 100 820}}
-   {P DRAMUN0 {Pt "INPUT"}{Lq 0}{Ploc 100 780}}
-   {P DRAMUN1 {Pt "INPUT"}{Lq 0}{Ploc 100 760}}
-   {P DRAMUN2 {Pt "INPUT"}{Lq 0}{Ploc 100 740}}
-   {P DRAMUN3 {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
-   {P DRAMUN4 {Pt "INPUT"}{Lq 0}{Ploc 100 700}}
-   {P DRAMUN5 {Pt "INPUT"}{Lq 0}{Ploc 100 680}}
-   {P DRAMUN6 {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
-   {P DRAMUN7 {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
+   {P CPU_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 800}}
+   {P NDEV_WAI {Pt "INPUT"}{Lq 0}{Ploc 100 780}}
+   {P DRAMUN0 {Pt "INPUT"}{Lq 0}{Ploc 100 740}}
+   {P DRAMUN1 {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
+   {P DRAMUN2 {Pt "INPUT"}{Lq 0}{Ploc 100 700}}
+   {P DRAMUN3 {Pt "INPUT"}{Lq 0}{Ploc 100 680}}
+   {P DRAMUN4 {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
+   {P DRAMUN5 {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
    {P NCPU_AS {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
    {P CPU_CL16 {Pt "INPUT"}{Lq 0}{Ploc 100 600}}
    {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
@@ -95,23 +93,25 @@
    {P NDRAM_S2 {Pt "I/O"}{Lq 0}{Ploc 360 380}}
    {P NDRAM_S3 {Pt "I/O"}{Lq 0}{Ploc 360 400}}
    {P NDRAM_S4 {Pt "I/O"}{Lq 0}{Ploc 360 420}}
-   {P NBFLASH_ {Pt "I/O"}{Lq 0}{Ploc 360 440}}
-   {P NBFLASH_ {Pt "I/O"}{Lq 0}{Ploc 360 460}}
-   {P NCPU_HAL {Pt "I/O"}{Lq 0}{Ploc 360 480}}
-   {P NCPU_CII {Pt "I/O"}{Lq 0}{Ploc 360 500}}
-   {P NCPU_STE {Pt "I/O"}{Lq 0}{Ploc 360 520}}
-   {P NCPU_BER {Pt "I/O"}{Lq 0}{Ploc 360 540}}
-   {P NCPU_D1 {Pt "I/O"}{Lq 0}{Ploc 360 560}}
-   {P NCPU_D0 {Pt "I/O"}{Lq 0}{Ploc 360 580}}
-   {P N3V_DATA {Pt "I/O"}{Lq 0}{Ploc 360 600}}
-   {P UNUSED1 {Pt "I/O"}{Lq 0}{Ploc 360 620}}
-   {P NFPU_CS {Pt "I/O"}{Lq 0}{Ploc 360 640}}
-   {P NSRAM_BA {Pt "I/O"}{Lq 0}{Ploc 360 660}}
-   {P NSRAM_BA {Pt "I/O"}{Lq 0}{Ploc 360 680}}
-   {P NSRAM_LL {Pt "I/O"}{Lq 0}{Ploc 360 700}}
-   {P NSRAM_LH {Pt "I/O"}{Lq 0}{Ploc 360 720}}
-   {P NSRAM_UL {Pt "I/O"}{Lq 0}{Ploc 360 740}}
-   {P NSRAM_UH {Pt "I/O"}{Lq 0}{Ploc 360 760}}
+   {P EXP_BC1 {Pt "I/O"}{Lq 0}{Ploc 360 440}}
+   {P EXP_BC2 {Pt "I/O"}{Lq 0}{Ploc 360 460}}
+   {P NBFLASH_ {Pt "I/O"}{Lq 0}{Ploc 360 480}}
+   {P NBFLASH_ {Pt "I/O"}{Lq 0}{Ploc 360 500}}
+   {P NCPU_HAL {Pt "I/O"}{Lq 0}{Ploc 360 520}}
+   {P NCPU_CII {Pt "I/O"}{Lq 0}{Ploc 360 540}}
+   {P NCPU_STE {Pt "I/O"}{Lq 0}{Ploc 360 560}}
+   {P NCPU_BER {Pt "I/O"}{Lq 0}{Ploc 360 580}}
+   {P NCPU_D1 {Pt "I/O"}{Lq 0}{Ploc 360 600}}
+   {P NCPU_D0 {Pt "I/O"}{Lq 0}{Ploc 360 620}}
+   {P N3V_DATA {Pt "I/O"}{Lq 0}{Ploc 360 640}}
+   {P UNUSED1 {Pt "I/O"}{Lq 0}{Ploc 360 660}}
+   {P NFPU_CS {Pt "I/O"}{Lq 0}{Ploc 360 680}}
+   {P NSRAM_BA {Pt "I/O"}{Lq 0}{Ploc 360 700}}
+   {P NSRAM_BA {Pt "I/O"}{Lq 0}{Ploc 360 720}}
+   {P NSRAM_LL {Pt "I/O"}{Lq 0}{Ploc 360 740}}
+   {P NSRAM_LH {Pt "I/O"}{Lq 0}{Ploc 360 760}}
+   {P NSRAM_UL {Pt "I/O"}{Lq 0}{Ploc 360 780}}
+   {P NSRAM_UH {Pt "I/O"}{Lq 0}{Ploc 360 800}}
   }
 
   {PKG
@@ -121,11 +121,9 @@
 
    [Ly "PINNUM"]
    [Ts 15][Tj "RC"]
-   {Pnl 120 850}
-   {Pnl 120 830}
-   [Ts 15][Tj "RC"]
+   {Pnl 120 810}
    {Pnl 120 790}
-   {Pnl 120 770}
+   [Ts 15][Tj "RC"]
    {Pnl 120 750}
    {Pnl 120 730}
    {Pnl 120 710}
@@ -202,20 +200,20 @@
    {Pnl 340 730}
    {Pnl 340 750}
    {Pnl 340 770}
+   {Pnl 340 790}
+   {Pnl 340 810}
 
-   {Sd A 87 90 28 29 30 31 32 33 35 36 41 47 49 52 53 54 55 56 57 58 60 61 63 64 65 67 68 69 70 71 72 76 77 78 79 80 83 88 89 92 93 1 2 5 6 7 8 9 10 12 13 14 16 17 19 20 21 22 23 24 25 27 37 40 42 44 45 46 48 50 75 81 84 94 96 97 98 99 100}
+   {Sd A 87 90 30 31 32 33 35 36 41 47 49 52 53 54 55 56 57 58 60 61 63 64 65 67 68 69 70 71 72 76 77 78 79 80 83 88 89 92 93 1 2 5 6 7 8 9 10 12 13 14 16 17 19 20 21 22 23 24 25 27 28 29 37 40 42 44 45 46 48 50 75 81 84 94 96 97 98 99 100}
   }
 
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
    {R 130 860 330 0}
-   {L 130 840 100 840}
-   {L 130 850 140 840 130 830}
-   {L 130 820 100 820}
-   {L 130 830 140 820 130 810}
+   {L 130 800 100 800}
+   {L 130 810 140 800 130 790}
    {L 130 780 100 780}
-   {L 130 760 100 760}
+   {L 130 790 140 780 130 770}
    {L 130 740 100 740}
    {L 130 720 100 720}
    {L 130 700 100 700}
@@ -291,18 +289,18 @@
    {L 330 720 360 720}
    {L 330 740 360 740}
    {L 330 760 360 760}
+   {L 330 780 360 780}
+   {L 330 800 360 800}
    [Ly "PINNAM"]
    [Tj "LC"]
-   {T "CPU_CLK" 140 840}
-   {T "NDEV_WAI" 140 820}
-   {T "DRAMUN0" 140 780}
-   {T "DRAMUN1" 140 760}
-   {T "DRAMUN2" 140 740}
-   {T "DRAMUN3" 140 720}
-   {T "DRAMUN4" 140 700}
-   {T "DRAMUN5" 140 680}
-   {T "DRAMUN6" 140 660}
-   {T "DRAMUN7" 140 640}
+   {T "CPU_CLK" 140 800}
+   {T "NDEV_WAI" 140 780}
+   {T "DRAMUN0" 140 740}
+   {T "DRAMUN1" 140 720}
+   {T "DRAMUN2" 140 700}
+   {T "DRAMUN3" 140 680}
+   {T "DRAMUN4" 140 660}
+   {T "DRAMUN5" 140 640}
    {T "NCPU_AS" 140 620}
    {T "CPU_CL16" 140 600}
    {T "NSYS_RES" 140 580}
@@ -356,23 +354,25 @@
    {T "NDRAM_S2" 320 380}
    {T "NDRAM_S3" 320 400}
    {T "NDRAM_S4" 320 420}
-   {T "NBFLASH_" 320 440}
-   {T "NBFLASH_" 320 460}
-   {T "NCPU_HAL" 320 480}
-   {T "NCPU_CII" 320 500}
-   {T "NCPU_STE" 320 520}
-   {T "NCPU_BER" 320 540}
-   {T "NCPU_D1" 320 560}
-   {T "NCPU_D0" 320 580}
-   {T "N3V_DATA" 320 600}
-   {T "UNUSED1" 320 620}
-   {T "NFPU_CS" 320 640}
-   {T "NSRAM_BA" 320 660}
-   {T "NSRAM_BA" 320 680}
-   {T "NSRAM_LL" 320 700}
-   {T "NSRAM_LH" 320 720}
-   {T "NSRAM_UL" 320 740}
-   {T "NSRAM_UH" 320 760}
+   {T "EXP_BC1" 320 440}
+   {T "EXP_BC2" 320 460}
+   {T "NBFLASH_" 320 480}
+   {T "NBFLASH_" 320 500}
+   {T "NCPU_HAL" 320 520}
+   {T "NCPU_CII" 320 540}
+   {T "NCPU_STE" 320 560}
+   {T "NCPU_BER" 320 580}
+   {T "NCPU_D1" 320 600}
+   {T "NCPU_D0" 320 620}
+   {T "N3V_DATA" 320 640}
+   {T "UNUSED1" 320 660}
+   {T "NFPU_CS" 320 680}
+   {T "NSRAM_BA" 320 700}
+   {T "NSRAM_BA" 320 720}
+   {T "NSRAM_LL" 320 740}
+   {T "NSRAM_LH" 320 760}
+   {T "NSRAM_UL" 320 780}
+   {T "NSRAM_UH" 320 800}
    [Ly "DEVICE"]
    [Tj "CT"]
    {T "F1508ISPTQFP100" 230 -10}
@@ -411,10 +411,6 @@
    {N DRAMUN4
    }
    {N DRAMUN5
-   }
-   {N DRAMUN6
-   }
-   {N DRAMUN7
    }
    {N NCPU_AS
    }
@@ -519,6 +515,10 @@
    {N NDRAM_S3
    }
    {N NDRAM_S4
+   }
+   {N EXP_BC1
+   }
+   {N EXP_BC2
    }
    {N NBFLASH_
    }

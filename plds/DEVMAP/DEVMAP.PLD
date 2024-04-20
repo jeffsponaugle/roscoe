@@ -72,8 +72,8 @@ Pin[97] = nSEVENSEGB_WR;
 Pin[98] = nSTATUSLED_WR;
 
 Pin[27] = UNUSED2;
-
-
+Pin[7] = EXP_DM_CPLD1;
+Pin[8] = EXP_DM_CPLD2;
 
 PINNODE = nIDE_WR_DELAY1, nIDE_WR_DELAY2;
 
@@ -86,6 +86,9 @@ FIELD field_CPU_ADDRESS = [CPU_A27..8];
 SYS_RESET_POS = !nSYS_RESET;
 
 nDEV_WAIT = 'b'1;       // No Wait States right now for local devices.
+// These are currently unused, reserved for some future use.
+EXP_DM_CPLD1 = 'b'0;
+EXP_DM_CPLD2 = 'b'0;
 
 nEXP_DEV8BITCS = nDEV8BITCS;
 nEXP_DEV16BITCS = nDEV16BITCS;
@@ -159,13 +162,13 @@ RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, thi
 
 /*
 Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		56/80 	(70%)
-Total Logic cells used 		29/128 	(22%)
+Total I/O pins used		58/80 	(72%)
+Total Logic cells used 		30/128 	(23%)
 Total Flip-Flop used 		3/128 	(2%)
 Total Foldback logic used 	0/128 	(0%)
-Total Nodes+FB/MCells 		29/128 	(22%)
+Total Nodes+FB/MCells 		30/128 	(23%)
 Total cascade used 		0
-Total input pins 		32
-Total output pins 		26
-Total Pts 			30
+Total input pins 		33
+Total output pins 		27
+Total Pts 			29
 */

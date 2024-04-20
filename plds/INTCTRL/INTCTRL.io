@@ -1,4 +1,4 @@
-CHIP "C:\INTCTRL"
+CHIP "C:\USERS\JEFF\SRC\ROSCOE\PLDS\INTCTRL\INTCTRL"
 BEGIN
 
     DEVICE = "TQFP100";
@@ -27,7 +27,7 @@ BEGIN
     "INT6A_REQUEST_AR"                        : NODE_NUM = 619 ;
     "INT_ACK_RESET_PRE"                       : NODE_NUM = 620 ;
     "vINT5A"                                  : INPUT_PIN = 12 ;
-    "Com_Ctrl_254"                            : NODE_NUM = 621 ;
+    "Com_Ctrl_256"                            : NODE_NUM = 621 ;
     "vINT6B"                                  : INPUT_PIN = 10 ;
     "INT_ACK_LEVEL2"                          : NODE_NUM = 622 ;
     "INT_ACK_LEVEL0"                          : NODE_NUM = 623 ;
@@ -47,30 +47,34 @@ BEGIN
     "vINT3B"                                  : INPUT_PIN = 24 ;
     "vINT4C"                                  : INPUT_PIN = 21 ;
     "vINT4B"                                  : INPUT_PIN = 20 ;
-    "INTL6_REQUEST_PE"                        : NODE_NUM = 642 ;
+    "INTL6_REQUEST_PE"                        : NODE_NUM = 641 ;
+    "INTL1_REQUEST_PE"                        : NODE_NUM = 642 ;
     "vINT4A"                                  : INPUT_PIN = 19 ;
-    "INTL1_REQUEST_PE"                        : NODE_NUM = 643 ;
-    "INTL3_REQUEST_PE"                        : NODE_NUM = 644 ;
+    "INTL3_REQUEST_PE"                        : NODE_NUM = 643 ;
+    "XXL_260"                                 : NODE_NUM = 644 ;
     "vINT5D"                                  : INPUT_PIN = 16 ;
-    "XXL_256"                                 : NODE_NUM = 646 ;
-    "XXL_258"                                 : NODE_NUM = 647 ;
+    "XXL_259"                                 : NODE_NUM = 646 ;
+    "XXL_261"                                 : NODE_NUM = 647 ;
     "TMS"                                     : INPUT_PIN = 15 ;
-    "XXL_257"                                 : NODE_NUM = 648 ;
+    "XXL_258"                                 : NODE_NUM = 648 ;
+    "INT_ACK_RESET"                           : NODE_NUM = 655 ;
+    "EXP_INT_CPLD2"                           : OUTPUT_PIN = 32 ;
+    "EXP_INT_CPLD1"                           : OUTPUT_PIN = 31 ;
+    "INT5C_REQUEST_PE"                        : NODE_NUM = 658 ;
     "vINT1B"                                  : INPUT_PIN = 30 ;
     "INT5B_REQUEST_PE"                        : NODE_NUM = 659 ;
-    "INT5C_REQUEST_PE"                        : NODE_NUM = 660 ;
+    "INT4B_REQUEST_PE"                        : NODE_NUM = 660 ;
     "vINT1A"                                  : INPUT_PIN = 29 ;
     "INTL2_REQUEST_PE"                        : NODE_NUM = 661 ;
-    "INTL5_REQUEST_PE"                        : NODE_NUM = 663 ;
+    "INTL4_REQUEST_PE"                        : NODE_NUM = 663 ;
     "vINT2B"                                  : INPUT_PIN = 27 ;
-    "XXL_259"                                 : NODE_NUM = 664 ;
-    "INT4B_REQUEST_PE"                        : NODE_NUM = 668 ;
-    "INT_ACK_RESET"                           : NODE_NUM = 671 ;
+    "INTL5_REQUEST_PE"                        : NODE_NUM = 664 ;
+    "INT6B_REQUEST"                           : NODE_NUM = 671 ;
     "POWER_CONTROL_OUT"                       : OUTPUT_PIN = 45 ;
     "RESET_CONTROL_OUT"                       : OUTPUT_PIN = 46 ;
-    "INT1B_REQUEST"                           : NODE_NUM = 674 ;
-    "INT6A_REQUEST"                           : NODE_NUM = 676 ;
-    "INTL4_REQUEST_PE"                        : NODE_NUM = 679 ;
+    "INT7A_REQUEST"                           : NODE_NUM = 674 ;
+    "INT1B_REQUEST"                           : NODE_NUM = 676 ;
+    "INT6A_REQUEST"                           : NODE_NUM = 679 ;
     "CPU_IPL2"                                : OUTPUT_PIN = 52 ;
     "CPU_IPL1"                                : OUTPUT_PIN = 53 ;
     "CPU_IPL0"                                : OUTPUT_PIN = 54 ;
@@ -80,7 +84,6 @@ BEGIN
     "CPU_D5"                                  : OUTPUT_PIN = 60 ;
     "CPU_D4"                                  : OUTPUT_PIN = 61 ;
     "TCK"                                     : INPUT_PIN = 62 ;
-    "INT7A_REQUEST"                           : NODE_NUM = 696 ;
     "CPU_D3"                                  : OUTPUT_PIN = 63 ;
     "CPU_D2"                                  : OUTPUT_PIN = 64 ;
     "CPU_D1"                                  : OUTPUT_PIN = 65 ;
@@ -91,7 +94,6 @@ BEGIN
     "TDO"                                     : INPUT_PIN = 73 ;
     "CPU_A1"                                  : INPUT_PIN = 75 ;
     "CPU_A0"                                  : INPUT_PIN = 76 ;
-    "INT6B_REQUEST"                           : NODE_NUM = 727 ;
     "nINT_ACK_CYCLE"                          : INPUT_PIN = 90 ;
     "CPU_CLK"                                 : INPUT_PIN = 87 ;
     "nINTCTRL_CS"                             : INPUT_PIN = 89 ;

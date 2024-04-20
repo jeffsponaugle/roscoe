@@ -97,8 +97,9 @@ Pin[36] = nDRAM_S8B_RAS;
 */
 
 // Mark these pins as unused
-Pin[28,29,30,31,32,33,35,36] = [DRAMUNUSED0..7];
-
+Pin[30,31,32,33,35,36] = [DRAMUNUSED0..5];
+Pin[28] = EXP_BC_CPLD1;
+Pin[29] = EXP_BC_CPLD2;
 Pin[17] = nDRAM_CAS0;
 Pin[16] = nDRAM_CAS1;
 Pin[14] = nDRAM_CAS2;
@@ -133,6 +134,8 @@ nCPU_BERR = 'b'1;
 nCPU_STERM = 'b'1;
 nCPU_RD = !CPU_RW;
 nCPU_CIIN = 'b'1;
+EXP_BC_CPLD1 = 'b'0;
+EXP_BC_CPLD2 = 'b'0;
 
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
 UNUSED1 = CPU_A19 & CPU_A18 & CPU_A17; 
@@ -705,15 +708,15 @@ nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 /*
 
 Total dedicated input used:	4/4 	(100%)
-Total I/O pins used		70/80 	(87%)
-Total Logic cells used 		70/128 	(54%)
-Total Flip-Flop used 		24/128 	(18%)
-Total Foldback logic used 	9/128 	(7%)
-Total Nodes+FB/MCells 		79/128 	(61%)
+Total I/O pins used		73/80 	(91%)
+Total Logic cells used 		74/128 	(57%)
+Total Flip-Flop used 		25/128 	(19%)
+Total Foldback logic used 	10/128 	(7%)
+Total Nodes+FB/MCells 		84/128 	(65%)
 Total cascade used 		0
 Total input pins 		33
-Total output pins 		41
-Total Pts 			204
+Total output pins 		44
+Total Pts 			209
 */
 
 

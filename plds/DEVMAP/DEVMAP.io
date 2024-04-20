@@ -1,4 +1,4 @@
-CHIP "C:\DEVMAP"
+CHIP "C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAP\DEVMAP"
 BEGIN
 
     DEVICE = "TQFP100";
@@ -7,12 +7,14 @@ BEGIN
     "CPU_RW"                                  : INPUT_PIN = 100 ;
     "EXPANSION_EXTRA2"                        : INPUT_PIN = 99 ;
     "nIDE_WR_DELAY1"                          : NODE_NUM = 610 ;
-    "Com_Ctrl_78"                             : NODE_NUM = 612 ;
+    "Com_Ctrl_79"                             : NODE_NUM = 612 ;
     "SYS_RESET_POS"                           : OUTPUT_PIN = 93 ;
     "nIDE_WR_DELAY2"                          : NODE_NUM = 615 ;
     "EXPANSION_EXTRA1"                        : OUTPUT_PIN = 92 ;
     "nRTC_CS"                                 : OUTPUT_PIN = 14 ;
     "nINTCTRL_CS"                             : OUTPUT_PIN = 13 ;
+    "EXP_DM_CPLD2"                            : OUTPUT_PIN = 8 ;
+    "EXP_DM_CPLD1"                            : OUTPUT_PIN = 7 ;
     "nDEV_WAIT"                               : OUTPUT_PIN = 6 ;
     "nDEV32BITCS"                             : INPUT_PIN = 5 ;
     "TDI"                                     : INPUT_PIN = 4 ;
@@ -32,7 +34,6 @@ BEGIN
     "nEXP_DEV16BITCS"                         : OUTPUT_PIN = 30 ;
     "nEXP_DEV8BITCS"                          : OUTPUT_PIN = 29 ;
     "nPTC_CS"                                 : OUTPUT_PIN = 28 ;
-    "nVGA_CTRL_CS"                            : OUTPUT_PIN = 27 ;
     "nIDE_BUFFER_EN2"                         : OUTPUT_PIN = 44 ;
     "nIDE_BUFFER_EN1"                         : OUTPUT_PIN = 45 ;
     "nIDE_WR"                                 : OUTPUT_PIN = 46 ;
