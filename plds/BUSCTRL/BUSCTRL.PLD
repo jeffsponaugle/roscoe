@@ -43,6 +43,7 @@ Pin[49] = nSYS_RESET;
 Pin[42] = nCPU_HALT;
 Pin[46] = nCPU_BERR;
 Pin[45] = nCPU_STERM;
+Pin[84] = nFPU_CS;
 
 // To Devices
 Pin[8] = nCPU_RD;       // An inverted version of the CPU_RW line, used to /OE pins on memory and devices.
@@ -370,6 +371,16 @@ nDEV8BITCS = DEV8BIT_REGION_ACCESS;
 nDEV16BITCS = DEV16BIT_REGION_ACCESS;
 nDEV32BITCS = DEV32BIT_REGION_ACCESS;
 
+PINNODE = CPU_CLK_AS_DELAY;
+CPU_CLK_AS_DELAY.d = 'b'1;
+CPU_CLK_AS_DELAY.ck = !CPU_CLK;
+CPU_CLK_AS_DELAY.ar = !nSYS_RESET # !nCPU_AS;
+
+nFPU_CS = !(
+            (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & !CPU_CLK)
+          # (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & !nCPU_AS)
+          # (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & CPU_CLK_AS_DELAY)
+          );
 /* 
     DRAM Access Logic:
 
