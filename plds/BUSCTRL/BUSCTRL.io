@@ -1,4 +1,4 @@
-CHIP "C:\BUSCTRL"
+CHIP "C:\USERS\JEFF\SRC\ROSCOE\PLDS\BUSCTRL\BUSCTRL"
 BEGIN
 
     DEVICE = "TQFP100";
@@ -47,33 +47,25 @@ BEGIN
     "REFRESH_ACTIVE"                          : NODE_NUM = 648 ;
     "nBFLASH_CE"                              : OUTPUT_PIN = 37 ;
     "REFRESH_TIMER4"                          : NODE_NUM = 650 ;
-    "nDRAM_S8B_RAS"                           : OUTPUT_PIN = 36 ;
-    "nDRAM_ACCESS_RAS"                        : NODE_NUM = 652 ;
-    "nDRAM_S7B_RAS"                           : OUTPUT_PIN = 35 ;
-    "nDRAM_S6B_RAS"                           : OUTPUT_PIN = 33 ;
-    "REFRESH_TIMER3"                          : NODE_NUM = 655 ;
-    "nDRAM_S5B_RAS"                           : OUTPUT_PIN = 32 ;
-    "nDRAM_S8A_RAS"                           : OUTPUT_PIN = 31 ;
-    "REFRESH_TIMER1"                          : NODE_NUM = 658 ;
-    "nDRAM_S7A_RAS"                           : OUTPUT_PIN = 30 ;
-    "XXL_201"                                 : NODE_NUM = 660 ;
-    "nDRAM_S6A_RAS"                           : OUTPUT_PIN = 29 ;
-    "nDRAM_S5A_RAS"                           : OUTPUT_PIN = 28 ;
+    "REFRESH_TIMER3"                          : NODE_NUM = 652 ;
+    "REFRESH_TIMER1"                          : NODE_NUM = 655 ;
+    "XXL_192"                                 : NODE_NUM = 658 ;
+    "XXL_191"                                 : NODE_NUM = 660 ;
+    "nDRAM_ACCESS_RAS"                        : NODE_NUM = 662 ;
     "REFRESH_TIMER2"                          : NODE_NUM = 663 ;
     "nDRAM_S4B_RAS"                           : OUTPUT_PIN = 27 ;
     "nBFLASH_WE"                              : OUTPUT_PIN = 40 ;
     "nCPU_AS"                                 : INPUT_PIN = 41 ;
     "nCPU_HALT"                               : OUTPUT_PIN = 42 ;
     "nCPU_CIIN"                               : OUTPUT_PIN = 44 ;
-    "CPU_CLK_div4"                            : NODE_NUM = 671 ;
     "nCPU_STERM"                              : OUTPUT_PIN = 45 ;
     "nCPU_BERR"                               : OUTPUT_PIN = 46 ;
-    "CPU_CLK_div8"                            : NODE_NUM = 674 ;
+    "CPU_CLK_div4"                            : NODE_NUM = 674 ;
     "CPU_CLK_div16"                           : OUTPUT_PIN = 47 ;
-    "XXL_203"                                 : NODE_NUM = 676 ;
+    "CPU_CLK_div8"                            : NODE_NUM = 676 ;
     "nCPU_DSACK1"                             : OUTPUT_PIN = 48 ;
     "nSYS_RESET"                              : OUTPUT_PIN = 49 ;
-    "XXL_202"                                 : NODE_NUM = 679 ;
+    "XXL_193"                                 : NODE_NUM = 679 ;
     "nCPU_DSACK0"                             : OUTPUT_PIN = 50 ;
     "CPU_A31"                                 : INPUT_PIN = 52 ;
     "CPU_A30"                                 : INPUT_PIN = 53 ;
@@ -88,9 +80,9 @@ BEGIN
     "REFRESH_COMPLETE"                        : NODE_NUM = 693 ;
     "CPU_A23"                                 : INPUT_PIN = 61 ;
     "REFRESH_TIMER_RESET"                     : NODE_NUM = 694 ;
-    "XXL_199"                                 : NODE_NUM = 695 ;
+    "XXL_189"                                 : NODE_NUM = 695 ;
     "TCK"                                     : INPUT_PIN = 62 ;
-    "XXL_200"                                 : NODE_NUM = 696 ;
+    "XXL_190"                                 : NODE_NUM = 696 ;
     "CPU_A22"                                 : INPUT_PIN = 63 ;
     "CPU_A21"                                 : INPUT_PIN = 64 ;
     "CPU_A20"                                 : INPUT_PIN = 65 ;

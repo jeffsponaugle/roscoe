@@ -12,7 +12,7 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
-PROPERTY ATMEL {open_collector=n3V_DATA_EN};
+PROPERTY ATMEL {open_collector=n3V_DATA_EN, nCPU_DSACK0, nCPU_DSACK1};
 
 
 /* NOTE:  Active low values are designated with a starting n. */
@@ -83,6 +83,8 @@ Pin[23] = nDRAM_S1B_RAS;
 Pin[24] = nDRAM_S2B_RAS;
 Pin[25] = nDRAM_S3B_RAS;
 Pin[27] = nDRAM_S4B_RAS;
+
+/*
 Pin[28] = nDRAM_S5A_RAS;
 Pin[29] = nDRAM_S6A_RAS;
 Pin[30] = nDRAM_S7A_RAS;
@@ -91,6 +93,10 @@ Pin[32] = nDRAM_S5B_RAS;
 Pin[33] = nDRAM_S6B_RAS;
 Pin[35] = nDRAM_S7B_RAS;
 Pin[36] = nDRAM_S8B_RAS;
+*/
+
+// Mark these pins as unused
+Pin[28,29,30,31,32,33,35,36] = [DRAMUNUSED0..7];
 
 Pin[17] = nDRAM_CAS0;
 Pin[16] = nDRAM_CAS1;
@@ -98,7 +104,7 @@ Pin[14] = nDRAM_CAS2;
 Pin[13] = nDRAM_CAS3;
 Pin[12] = DRAM_MUX;              // MUX for addess lines going to DRAM (0=ROW, 1=COL)
 Pin[10] = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the CPU.
-Pin[9] = nDRAM_WE;
+Pin[9]  = nDRAM_WE;
 Pin[83] = RESET_CONTROL_IN;     // Active high signal to perform a system reset.
 Pin[75] = n3V_DATA_EN;
 
@@ -633,6 +639,9 @@ nDRAM_S2B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X5XXXXXX])) & nREFRE
 nDRAM_S3B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X6XXXXXX])) & nREFRESH_RAS;
 nDRAM_S4B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X7XXXXXX])) & nREFRESH_RAS;
 
+/*
+ We are only supporting 4 SIMM sockets on this first PCB. 
+
 nDRAM_S5A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X8XXXXXX])) & nREFRESH_RAS;
 nDRAM_S6A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X9XXXXXX])) & nREFRESH_RAS;
 nDRAM_S7A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XAXXXXXX])) & nREFRESH_RAS; 
@@ -642,6 +651,8 @@ nDRAM_S5B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XCXXXXXX])) & nREFRE
 nDRAM_S6B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XDXXXXXX])) & nREFRESH_RAS;
 nDRAM_S7B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XEXXXXXX])) & nREFRESH_RAS;
 nDRAM_S8B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XFXXXXXX])) & nREFRESH_RAS;
+
+*/
 
 
 
@@ -683,15 +694,15 @@ nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 /*
 
 Total dedicated input used:	4/4 	(100%)
-Total I/O pins used		78/80 	(97%)
-Total Logic cells used 		78/128 	(60%)
+Total I/O pins used		70/80 	(87%)
+Total Logic cells used 		70/128 	(54%)
 Total Flip-Flop used 		24/128 	(18%)
 Total Foldback logic used 	9/128 	(7%)
-Total Nodes+FB/MCells 		87/128 	(67%)
+Total Nodes+FB/MCells 		79/128 	(61%)
 Total cascade used 		0
 Total input pins 		33
-Total output pins 		49
-Total Pts 			220
+Total output pins 		41
+Total Pts 			204
 */
 
 
