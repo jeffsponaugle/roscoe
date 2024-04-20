@@ -85,19 +85,8 @@ Pin[24] = nDRAM_S2B_RAS;
 Pin[25] = nDRAM_S3B_RAS;
 Pin[27] = nDRAM_S4B_RAS;
 
-/*
-Pin[28] = nDRAM_S5A_RAS;
-Pin[29] = nDRAM_S6A_RAS;
-Pin[30] = nDRAM_S7A_RAS;
-Pin[31] = nDRAM_S8A_RAS;
-Pin[32] = nDRAM_S5B_RAS;
-Pin[33] = nDRAM_S6B_RAS;
-Pin[35] = nDRAM_S7B_RAS;
-Pin[36] = nDRAM_S8B_RAS;
-*/
-
 // Mark these pins as unused
-Pin[30,31,32,33,35,36] = [DRAMUNUSED0..5];
+Pin[32,33,35,36] = [TESTP0..3];
 Pin[28] = EXP_BC_CPLD1;
 Pin[29] = EXP_BC_CPLD2;
 Pin[17] = nDRAM_CAS0;
@@ -109,9 +98,12 @@ Pin[10] = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the 
 Pin[9]  = nDRAM_WE;
 Pin[83] = RESET_CONTROL_IN;     // Active high signal to perform a system reset.
 Pin[75] = n3V_DATA_EN;
-
-Pin[81] = UNUSED1;
 Pin[47] = CPU_CLK_div16;
+
+Pin[81] = EXTRA_BC_DM1;
+Pin[85] = EXTRA_BC_DM2;
+Pin[30] = EXTRA_BC_INT1;
+Pin[31] = EXTRA_BC_INT2;
 
 PINNODE = REFRESH_ACTIVE;
 PINNODE = CPU_CLK_div2;
@@ -138,7 +130,8 @@ EXP_BC_CPLD1 = 'b'0;
 EXP_BC_CPLD2 = 'b'0;
 
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
-UNUSED1 = CPU_A19 & CPU_A18 & CPU_A17; 
+TESTP1 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2; 
+TESTP0 = TESTP2 & TESTP3;
 
 
 /* 

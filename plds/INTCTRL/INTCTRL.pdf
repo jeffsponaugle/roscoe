@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Sat Apr 20 11:20:57 2024 "}
+  {DBtime "Sat Apr 20 13:06:47 2024 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,32 +33,39 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
-   {P CPU_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
-   {P NINT_ACK {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
-   {P NUSB_DAT {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
-   {P NUSB_DAT {Pt "INPUT"}{Lq 0}{Ploc 100 560}}
-   {P VINT7A {Pt "INPUT"}{Lq 0}{Ploc 100 540}}
-   {P VINT6A {Pt "INPUT"}{Lq 0}{Ploc 100 520}}
-   {P VINT6B {Pt "INPUT"}{Lq 0}{Ploc 100 500}}
-   {P VINT5A {Pt "INPUT"}{Lq 0}{Ploc 100 480}}
-   {P VINT5B {Pt "INPUT"}{Lq 0}{Ploc 100 460}}
-   {P VINT5C {Pt "INPUT"}{Lq 0}{Ploc 100 440}}
-   {P VINT5D {Pt "INPUT"}{Lq 0}{Ploc 100 420}}
-   {P VINT4A {Pt "INPUT"}{Lq 0}{Ploc 100 400}}
-   {P VINT4B {Pt "INPUT"}{Lq 0}{Ploc 100 380}}
-   {P VINT4C {Pt "INPUT"}{Lq 0}{Ploc 100 360}}
-   {P VINT3B {Pt "INPUT"}{Lq 0}{Ploc 100 340}}
-   {P VINT2A {Pt "INPUT"}{Lq 0}{Ploc 100 320}}
-   {P VINT2B {Pt "INPUT"}{Lq 0}{Ploc 100 300}}
-   {P VINT1A {Pt "INPUT"}{Lq 0}{Ploc 100 280}}
-   {P VINT1B {Pt "INPUT"}{Lq 0}{Ploc 100 260}}
-   {P RESET_CO {Pt "INPUT"}{Lq 0}{Ploc 100 240}}
-   {P NUSB_CS {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
-   {P CPU_RW {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
-   {P CPU_A3 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
-   {P CPU_A2 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
-   {P CPU_A1 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
-   {P CPU_A0 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
+   {P CPU_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 780}}
+   {P NINT_ACK {Pt "INPUT"}{Lq 0}{Ploc 100 760}}
+   {P NUSB_DAT {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
+   {P NUSB_DAT {Pt "INPUT"}{Lq 0}{Ploc 100 700}}
+   {P VINT7A {Pt "INPUT"}{Lq 0}{Ploc 100 680}}
+   {P VINT6A {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
+   {P VINT6B {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
+   {P VINT5A {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
+   {P VINT5B {Pt "INPUT"}{Lq 0}{Ploc 100 600}}
+   {P VINT5C {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
+   {P VINT5D {Pt "INPUT"}{Lq 0}{Ploc 100 560}}
+   {P VINT4A {Pt "INPUT"}{Lq 0}{Ploc 100 540}}
+   {P VINT4B {Pt "INPUT"}{Lq 0}{Ploc 100 520}}
+   {P VINT4C {Pt "INPUT"}{Lq 0}{Ploc 100 500}}
+   {P VINT3B {Pt "INPUT"}{Lq 0}{Ploc 100 480}}
+   {P VINT2A {Pt "INPUT"}{Lq 0}{Ploc 100 460}}
+   {P VINT2B {Pt "INPUT"}{Lq 0}{Ploc 100 440}}
+   {P VINT1A {Pt "INPUT"}{Lq 0}{Ploc 100 420}}
+   {P VINT1B {Pt "INPUT"}{Lq 0}{Ploc 100 400}}
+   {P TESTP0 {Pt "INPUT"}{Lq 0}{Ploc 100 380}}
+   {P TESTP1 {Pt "INPUT"}{Lq 0}{Ploc 100 360}}
+   {P TESTP2 {Pt "INPUT"}{Lq 0}{Ploc 100 340}}
+   {P RESET_CO {Pt "INPUT"}{Lq 0}{Ploc 100 320}}
+   {P NUSB_CS {Pt "INPUT"}{Lq 0}{Ploc 100 300}}
+   {P CPU_RW {Pt "INPUT"}{Lq 0}{Ploc 100 280}}
+   {P CPU_A3 {Pt "INPUT"}{Lq 0}{Ploc 100 260}}
+   {P CPU_A2 {Pt "INPUT"}{Lq 0}{Ploc 100 240}}
+   {P CPU_A1 {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
+   {P CPU_A0 {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
+   {P EXTRA1 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
+   {P EXTRA2 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
+   {P EXTRA_1 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P EXTRA_2 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
    {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
    {P NINTCTRL {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
    {P NUSB_RXF {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
@@ -84,13 +91,20 @@
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 230 670}
+   {Rdl 230 810}
 
    [Ly "PINNUM"]
    [Ts 15][Tj "RC"]
+   {Pnl 120 790}
+   {Pnl 120 770}
+   [Ts 15][Tj "RC"]
+   {Pnl 120 730}
+   {Pnl 120 710}
+   {Pnl 120 690}
+   {Pnl 120 670}
    {Pnl 120 650}
    {Pnl 120 630}
-   [Ts 15][Tj "RC"]
+   {Pnl 120 610}
    {Pnl 120 590}
    {Pnl 120 570}
    {Pnl 120 550}
@@ -137,17 +151,24 @@
    {Pnl 340 310}
    {Pnl 340 330}
 
-   {Sd A 87 90 1 2 8 9 10 12 13 14 16 19 20 21 24 25 27 29 30 46 56 70 71 72 75 76 88 89 99 100 5 6 31 32 45 52 53 54 57 58 60 61 63 64 65 67}
+   {Sd A 87 90 1 2 8 9 10 12 13 14 16 19 20 21 24 25 27 29 30 40 41 42 46 56 70 71 72 75 76 77 78 79 80 88 89 99 100 5 6 31 32 45 52 53 54 57 58 60 61 63 64 65 67}
   }
 
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 660 330 0}
+   {R 130 800 330 0}
+   {L 130 780 100 780}
+   {L 130 790 140 780 130 770}
+   {L 130 760 100 760}
+   {L 130 770 140 760 130 750}
+   {L 130 720 100 720}
+   {L 130 700 100 700}
+   {L 130 680 100 680}
+   {L 130 660 100 660}
    {L 130 640 100 640}
-   {L 130 650 140 640 130 630}
    {L 130 620 100 620}
-   {L 130 630 140 620 130 610}
+   {L 130 600 100 600}
    {L 130 580 100 580}
    {L 130 560 100 560}
    {L 130 540 100 540}
@@ -194,32 +215,39 @@
    {L 330 320 360 320}
    [Ly "PINNAM"]
    [Tj "LC"]
-   {T "CPU_CLK" 140 640}
-   {T "NINT_ACK" 140 620}
-   {T "NUSB_DAT" 140 580}
-   {T "NUSB_DAT" 140 560}
-   {T "VINT7A" 140 540}
-   {T "VINT6A" 140 520}
-   {T "VINT6B" 140 500}
-   {T "VINT5A" 140 480}
-   {T "VINT5B" 140 460}
-   {T "VINT5C" 140 440}
-   {T "VINT5D" 140 420}
-   {T "VINT4A" 140 400}
-   {T "VINT4B" 140 380}
-   {T "VINT4C" 140 360}
-   {T "VINT3B" 140 340}
-   {T "VINT2A" 140 320}
-   {T "VINT2B" 140 300}
-   {T "VINT1A" 140 280}
-   {T "VINT1B" 140 260}
-   {T "RESET_CO" 140 240}
-   {T "NUSB_CS" 140 220}
-   {T "CPU_RW" 140 200}
-   {T "CPU_A3" 140 180}
-   {T "CPU_A2" 140 160}
-   {T "CPU_A1" 140 140}
-   {T "CPU_A0" 140 120}
+   {T "CPU_CLK" 140 780}
+   {T "NINT_ACK" 140 760}
+   {T "NUSB_DAT" 140 720}
+   {T "NUSB_DAT" 140 700}
+   {T "VINT7A" 140 680}
+   {T "VINT6A" 140 660}
+   {T "VINT6B" 140 640}
+   {T "VINT5A" 140 620}
+   {T "VINT5B" 140 600}
+   {T "VINT5C" 140 580}
+   {T "VINT5D" 140 560}
+   {T "VINT4A" 140 540}
+   {T "VINT4B" 140 520}
+   {T "VINT4C" 140 500}
+   {T "VINT3B" 140 480}
+   {T "VINT2A" 140 460}
+   {T "VINT2B" 140 440}
+   {T "VINT1A" 140 420}
+   {T "VINT1B" 140 400}
+   {T "TESTP0" 140 380}
+   {T "TESTP1" 140 360}
+   {T "TESTP2" 140 340}
+   {T "RESET_CO" 140 320}
+   {T "NUSB_CS" 140 300}
+   {T "CPU_RW" 140 280}
+   {T "CPU_A3" 140 260}
+   {T "CPU_A2" 140 240}
+   {T "CPU_A1" 140 220}
+   {T "CPU_A0" 140 200}
+   {T "EXTRA1" 140 180}
+   {T "EXTRA2" 140 160}
+   {T "EXTRA_1" 140 140}
+   {T "EXTRA_2" 140 120}
    {T "NSYS_RES" 140 100}
    {T "NINTCTRL" 140 80}
    {T "NUSB_RXF" 140 60}
@@ -254,7 +282,7 @@
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\INTCTRL\INTCTRL 230 660}
+    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\INTCTRL\INTCTRL 230 800}
    }
   }
  }
@@ -302,6 +330,12 @@
    }
    {N VINT1B
    }
+   {N TESTP0
+   }
+   {N TESTP1
+   }
+   {N TESTP2
+   }
    {N RESET_CO
    }
    {N NUSB_CS
@@ -315,6 +349,14 @@
    {N CPU_A1
    }
    {N CPU_A0
+   }
+   {N EXTRA1
+   }
+   {N EXTRA2
+   }
+   {N EXTRA_1
+   }
+   {N EXTRA_2
    }
    {N NSYS_RES
    }

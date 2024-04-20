@@ -66,8 +66,16 @@ Pin[56] = nUSB_CS;            // Active low signal from DEV CPLD indicated an 8 
 Pin[31] = EXP_INT_CPLD1;
 Pin[32] = EXP_INT_CPLD2;
 
+Pin[77] = EXTRA_DM_INT1;
+Pin[78] = EXTRA_DM_INT2;
+Pin[79] = EXTRA_BC_INT1;
+Pin[80] = EXTRA_BC_INT2;
+Pin[40,41,42] = [TESTP0..2];
+
+
+
 Pin = UNUSED1;
-UNUSED1 = CPU_A0 & CPU_A1 & CPU_A2 & CPU_A3;
+UNUSED1 = EXTRA_DM_INT1 & EXTRA_DM_INT2 & EXTRA_BC_INT1 & EXTRA_BC_INT2 # TESTP0 # TESTP1 # TESTP2 ;
 EXP_INT_CPLD1 = 'b'0;
 EXP_INT_CPLD2 = 'b'0;
 
