@@ -6,10 +6,10 @@ BEGIN
     "nDEV8BITCS"                              : INPUT_PIN = 1 ;
     "CPU_RW"                                  : INPUT_PIN = 100 ;
     "EXPANSION_EXTRA2"                        : OUTPUT_PIN = 99 ;
-    "nIDE_WR_DELAY1"                          : NODE_NUM = 610 ;
-    "Com_Ctrl_85"                             : NODE_NUM = 612 ;
+    "nSTATUSLED_WR"                           : OUTPUT_PIN = 98 ;
+    "nSEVENSEGB_WR"                           : OUTPUT_PIN = 97 ;
+    "nSEVENSEGA_WR"                           : OUTPUT_PIN = 96 ;
     "SYS_RESET_POS"                           : OUTPUT_PIN = 93 ;
-    "nIDE_WR_DELAY2"                          : NODE_NUM = 615 ;
     "EXPANSION_EXTRA1"                        : OUTPUT_PIN = 92 ;
     "nRTC_CS"                                 : OUTPUT_PIN = 14 ;
     "nINTCTRL_CS"                             : OUTPUT_PIN = 13 ;
@@ -17,7 +17,9 @@ BEGIN
     "EXP_DM_CPLD1"                            : OUTPUT_PIN = 7 ;
     "nDEV_WAIT"                               : OUTPUT_PIN = 6 ;
     "nDEV32BITCS"                             : INPUT_PIN = 5 ;
+    "nIDE_WR_DELAY1"                          : NODE_NUM = 631 ;
     "TDI"                                     : INPUT_PIN = 4 ;
+    "nIDE_WR_DELAY2"                          : NODE_NUM = 632 ;
     "nUART_CSA"                               : OUTPUT_PIN = 25 ;
     "nUART_CSB"                               : OUTPUT_PIN = 24 ;
     "nEXP_VMEM_CS"                            : OUTPUT_PIN = 23 ;
@@ -29,7 +31,7 @@ BEGIN
     "RTC_D_SEL"                               : OUTPUT_PIN = 16 ;
     "TMS"                                     : INPUT_PIN = 15 ;
     "TESTP2"                                  : INPUT_PIN = 37 ;
-    "TESTP1"                                  : INPUT_PIN = 36 ;
+    "TESTP1"                                  : OUTPUT_PIN = 36 ;
     "TESTP0"                                  : INPUT_PIN = 35 ;
     "nEXP_CACHE_CTRL"                         : INPUT_PIN = 33 ;
     "nEXP_DEV_WAIT"                           : INPUT_PIN = 32 ;
@@ -55,6 +57,7 @@ BEGIN
     "CPU_A20"                                 : INPUT_PIN = 60 ;
     "CPU_A19"                                 : INPUT_PIN = 61 ;
     "TCK"                                     : INPUT_PIN = 62 ;
+    "Com_Ctrl_88"                             : NODE_NUM = 696 ;
     "CPU_A18"                                 : INPUT_PIN = 63 ;
     "CPU_A17"                                 : INPUT_PIN = 64 ;
     "CPU_A16"                                 : INPUT_PIN = 65 ;

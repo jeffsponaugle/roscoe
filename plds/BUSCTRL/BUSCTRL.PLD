@@ -341,7 +341,7 @@ nSRAM_BANK2_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # C
 nSRAM_BANK3_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # CPU_A20;
 nSRAM_BANK4_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # !CPU_A20; 
 
-// For each of the 4 bank selects, if we are doing a read it will be selected(low), and if we are doing a write
+// For each of the 4 bank selects, if we are doing a read(CPU_RW==1) it will be selected(low), and if we are doing a write
 // it will depend on the value of the BA32_xx functions.  This will enable the correct byte section during a write
 // based on the CPU indicating a BYTE, WORD, and DWORD write as well as the misalignment of that write.
 
@@ -367,15 +367,19 @@ nDEV8BITCS = DEV8BIT_REGION_ACCESS;
 nDEV16BITCS = DEV16BIT_REGION_ACCESS;
 nDEV32BITCS = DEV32BIT_REGION_ACCESS;
 
-PINNODE = CPU_CLK_AS_DELAY;
-CPU_CLK_AS_DELAY.d = 'b'1;
-CPU_CLK_AS_DELAY.ck = !CPU_CLK;
-CPU_CLK_AS_DELAY.ar = !nSYS_RESET # !nCPU_AS;
+PINNODE = CPU_CLK_DELAY1, CPU_CLK_DELAY2;
+CPU_CLK_DELAY1.d = 'b'1;
+CPU_CLK_AS_DELAY1.ck = !CPU_CLK;
+CPU_CLK_AS_DELAY1.ar = !nSYS_RESET # CPU_CLK_DELAY2;
+
+CPU_CLK_DELAY2.d = 'b'1;
+CPU_CLK_DELAY2.ck = CPU_CLK;
+CPU_CLK_DELAY2.ar = !nSYS_RESET # !CPU_CLK_DELAY1;
 
 nFPU_CS = !(
             (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & !CPU_CLK)
           # (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & !nCPU_AS)
-          # (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & CPU_CLK_AS_DELAY)
+          # (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & CPU_CLK_DELAY1)
           );
 /* 
     DRAM Access Logic:
@@ -461,9 +465,6 @@ PINNODE = REFRESH_TIMER_RESET;
    25 MHz       1.56 MHz        24 = 15.26us
    33 MHz       2.06 MHz        31 = 15 us
    40 MHz       2.5 MHz         38 = 15.2 us
-
-
-   If the clock rate is not 32MHz for the core input, this will need to be adjusted.
 
    The REFESH_TIMER_RESET flip flop is used to produce a 1 clock cycle long reset signal once the 
    counter reaches 128 (highest bit set).  The output of that flipflop resets the counter value to 
@@ -661,8 +662,6 @@ nDRAM_S8B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XFXXXXXX])) & nREFRE
 
 */
 
-
-
 /* 
         The CAS lines are shared across all of the SIMM slots and ranks.  
 
@@ -688,6 +687,7 @@ DRAM_MUX = DRAM_ACCESS_MUX;
    nDRAM_DATA_EN is connected to the 74HC245 buffers that go between the DRAM and the CPU.  They are enabled as soon as we start
    a DRAM transaction.  The direction of these buffers it set by CPU_RW, which is connected to the DIR pin on the 245.
 */
+
 nDRAM_DATA_EN = !DRAM_REGION_ACCESS;
 
 /*

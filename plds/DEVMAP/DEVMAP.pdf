@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Sat Apr 20 13:02:56 2024 "}
+  {DBtime "Sat Apr 20 22:39:42 2024 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,46 +33,42 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
-   {P CPU_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 840}}
-   {P NDEV8BIT {Pt "INPUT"}{Lq 0}{Ploc 100 800}}
-   {P NDEV16BI {Pt "INPUT"}{Lq 0}{Ploc 100 780}}
-   {P NDEV32BI {Pt "INPUT"}{Lq 0}{Ploc 100 760}}
-   {P RTC_A_SE {Pt "INPUT"}{Lq 0}{Ploc 100 740}}
-   {P EXTRA1 {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
-   {P EXTRA2 {Pt "INPUT"}{Lq 0}{Ploc 100 700}}
-   {P NEXP_DEV {Pt "INPUT"}{Lq 0}{Ploc 100 680}}
-   {P NEXP_CAC {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
-   {P TESTP0 {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
-   {P TESTP1 {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
-   {P TESTP2 {Pt "INPUT"}{Lq 0}{Ploc 100 600}}
-   {P CPU_A27 {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
-   {P CPU_A26 {Pt "INPUT"}{Lq 0}{Ploc 100 560}}
-   {P CPU_A25 {Pt "INPUT"}{Lq 0}{Ploc 100 540}}
-   {P CPU_A24 {Pt "INPUT"}{Lq 0}{Ploc 100 520}}
-   {P CPU_A23 {Pt "INPUT"}{Lq 0}{Ploc 100 500}}
-   {P CPU_A22 {Pt "INPUT"}{Lq 0}{Ploc 100 480}}
-   {P CPU_A21 {Pt "INPUT"}{Lq 0}{Ploc 100 460}}
-   {P CPU_A20 {Pt "INPUT"}{Lq 0}{Ploc 100 440}}
-   {P CPU_A19 {Pt "INPUT"}{Lq 0}{Ploc 100 420}}
-   {P CPU_A18 {Pt "INPUT"}{Lq 0}{Ploc 100 400}}
-   {P CPU_A17 {Pt "INPUT"}{Lq 0}{Ploc 100 380}}
-   {P CPU_A16 {Pt "INPUT"}{Lq 0}{Ploc 100 360}}
-   {P CPU_A15 {Pt "INPUT"}{Lq 0}{Ploc 100 340}}
-   {P CPU_A14 {Pt "INPUT"}{Lq 0}{Ploc 100 320}}
-   {P CPU_A13 {Pt "INPUT"}{Lq 0}{Ploc 100 300}}
-   {P CPU_A12 {Pt "INPUT"}{Lq 0}{Ploc 100 280}}
-   {P CPU_A11 {Pt "INPUT"}{Lq 0}{Ploc 100 260}}
-   {P CPU_A10 {Pt "INPUT"}{Lq 0}{Ploc 100 240}}
-   {P CPU_A9 {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
-   {P CPU_A8 {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
-   {P EXTRA_1 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
-   {P EXTRA_2 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
-   {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
-   {P EXPANS1 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
-   {P SYS_RESE {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
-   {P NSEVENSE {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
-   {P NSEVENSE {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
-   {P NSTATUSL {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P CPU_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 760}}
+   {P NDEV8BIT {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
+   {P NDEV16BI {Pt "INPUT"}{Lq 0}{Ploc 100 700}}
+   {P NDEV32BI {Pt "INPUT"}{Lq 0}{Ploc 100 680}}
+   {P RTC_A_SE {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
+   {P EXTRA1 {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
+   {P EXTRA2 {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
+   {P NEXP_DEV {Pt "INPUT"}{Lq 0}{Ploc 100 600}}
+   {P NEXP_CAC {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
+   {P TESTP0 {Pt "INPUT"}{Lq 0}{Ploc 100 560}}
+   {P TESTP2 {Pt "INPUT"}{Lq 0}{Ploc 100 540}}
+   {P CPU_A27 {Pt "INPUT"}{Lq 0}{Ploc 100 520}}
+   {P CPU_A26 {Pt "INPUT"}{Lq 0}{Ploc 100 500}}
+   {P CPU_A25 {Pt "INPUT"}{Lq 0}{Ploc 100 480}}
+   {P CPU_A24 {Pt "INPUT"}{Lq 0}{Ploc 100 460}}
+   {P CPU_A23 {Pt "INPUT"}{Lq 0}{Ploc 100 440}}
+   {P CPU_A22 {Pt "INPUT"}{Lq 0}{Ploc 100 420}}
+   {P CPU_A21 {Pt "INPUT"}{Lq 0}{Ploc 100 400}}
+   {P CPU_A20 {Pt "INPUT"}{Lq 0}{Ploc 100 380}}
+   {P CPU_A19 {Pt "INPUT"}{Lq 0}{Ploc 100 360}}
+   {P CPU_A18 {Pt "INPUT"}{Lq 0}{Ploc 100 340}}
+   {P CPU_A17 {Pt "INPUT"}{Lq 0}{Ploc 100 320}}
+   {P CPU_A16 {Pt "INPUT"}{Lq 0}{Ploc 100 300}}
+   {P CPU_A15 {Pt "INPUT"}{Lq 0}{Ploc 100 280}}
+   {P CPU_A14 {Pt "INPUT"}{Lq 0}{Ploc 100 260}}
+   {P CPU_A13 {Pt "INPUT"}{Lq 0}{Ploc 100 240}}
+   {P CPU_A12 {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
+   {P CPU_A11 {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
+   {P CPU_A10 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
+   {P CPU_A9 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
+   {P CPU_A8 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P EXTRA_1 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
+   {P EXTRA_2 {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
+   {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P EXPANS1 {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
+   {P SYS_RESE {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
    {P CPU_RW {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
    {P NDEV_WAI {Pt "I/O"}{Lq 0}{Ploc 360 20}}
    {P EXP_DM1 {Pt "I/O"}{Lq 0}{Ploc 360 40}}
@@ -90,29 +86,29 @@
    {P NEXP_DEV {Pt "I/O"}{Lq 0}{Ploc 360 280}}
    {P NEXP_DEV {Pt "I/O"}{Lq 0}{Ploc 360 300}}
    {P NEXP_DEV {Pt "I/O"}{Lq 0}{Ploc 360 320}}
-   {P NIDE_B2 {Pt "I/O"}{Lq 0}{Ploc 360 340}}
-   {P NIDE_B1 {Pt "I/O"}{Lq 0}{Ploc 360 360}}
-   {P NIDE_WR {Pt "I/O"}{Lq 0}{Ploc 360 380}}
-   {P NIDE2_CS {Pt "I/O"}{Lq 0}{Ploc 360 400}}
+   {P TESTP1 {Pt "I/O"}{Lq 0}{Ploc 360 340}}
+   {P NIDE_B2 {Pt "I/O"}{Lq 0}{Ploc 360 360}}
+   {P NIDE_B1 {Pt "I/O"}{Lq 0}{Ploc 360 380}}
+   {P NIDE_WR {Pt "I/O"}{Lq 0}{Ploc 360 400}}
    {P NIDE2_CS {Pt "I/O"}{Lq 0}{Ploc 360 420}}
-   {P NIDE1_CS {Pt "I/O"}{Lq 0}{Ploc 360 440}}
+   {P NIDE2_CS {Pt "I/O"}{Lq 0}{Ploc 360 440}}
    {P NIDE1_CS {Pt "I/O"}{Lq 0}{Ploc 360 460}}
-   {P EXPANS2 {Pt "I/O"}{Lq 0}{Ploc 360 480}}
+   {P NIDE1_CS {Pt "I/O"}{Lq 0}{Ploc 360 480}}
+   {P NSEVENSE {Pt "I/O"}{Lq 0}{Ploc 360 500}}
+   {P NSEVENSE {Pt "I/O"}{Lq 0}{Ploc 360 520}}
+   {P NSTATUSL {Pt "I/O"}{Lq 0}{Ploc 360 540}}
+   {P EXPANS2 {Pt "I/O"}{Lq 0}{Ploc 360 560}}
   }
 
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 230 870}
+   {Rdl 230 790}
 
    [Ly "PINNUM"]
    [Ts 15][Tj "RC"]
-   {Pnl 120 850}
-   [Ts 15][Tj "RC"]
-   {Pnl 120 810}
-   {Pnl 120 790}
    {Pnl 120 770}
-   {Pnl 120 750}
+   [Ts 15][Tj "RC"]
    {Pnl 120 730}
    {Pnl 120 710}
    {Pnl 120 690}
@@ -174,20 +170,20 @@
    {Pnl 340 450}
    {Pnl 340 470}
    {Pnl 340 490}
+   {Pnl 340 510}
+   {Pnl 340 530}
+   {Pnl 340 550}
+   {Pnl 340 570}
 
-   {Sd A 87 1 2 5 17 21 27 32 33 35 36 37 52 53 54 55 56 57 58 60 61 63 64 65 67 68 69 70 71 72 75 76 83 84 88 92 93 96 97 98 100 6 7 8 13 14 16 19 20 22 23 24 25 28 29 30 31 44 45 46 47 48 49 50 99}
+   {Sd A 87 1 2 5 17 21 27 32 33 35 37 52 53 54 55 56 57 58 60 61 63 64 65 67 68 69 70 71 72 75 76 83 84 88 92 93 100 6 7 8 13 14 16 19 20 22 23 24 25 28 29 30 31 36 44 45 46 47 48 49 50 96 97 98 99}
   }
 
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 860 330 0}
-   {L 130 840 100 840}
-   {L 130 850 140 840 130 830}
-   {L 130 800 100 800}
-   {L 130 780 100 780}
+   {R 130 780 330 0}
    {L 130 760 100 760}
-   {L 130 740 100 740}
+   {L 130 770 140 760 130 750}
    {L 130 720 100 720}
    {L 130 700 100 700}
    {L 130 680 100 680}
@@ -248,48 +244,48 @@
    {L 330 440 360 440}
    {L 330 460 360 460}
    {L 330 480 360 480}
+   {L 330 500 360 500}
+   {L 330 520 360 520}
+   {L 330 540 360 540}
+   {L 330 560 360 560}
    [Ly "PINNAM"]
    [Tj "LC"]
-   {T "CPU_CLK" 140 840}
-   {T "NDEV8BIT" 140 800}
-   {T "NDEV16BI" 140 780}
-   {T "NDEV32BI" 140 760}
-   {T "RTC_A_SE" 140 740}
-   {T "EXTRA1" 140 720}
-   {T "EXTRA2" 140 700}
-   {T "NEXP_DEV" 140 680}
-   {T "NEXP_CAC" 140 660}
-   {T "TESTP0" 140 640}
-   {T "TESTP1" 140 620}
-   {T "TESTP2" 140 600}
-   {T "CPU_A27" 140 580}
-   {T "CPU_A26" 140 560}
-   {T "CPU_A25" 140 540}
-   {T "CPU_A24" 140 520}
-   {T "CPU_A23" 140 500}
-   {T "CPU_A22" 140 480}
-   {T "CPU_A21" 140 460}
-   {T "CPU_A20" 140 440}
-   {T "CPU_A19" 140 420}
-   {T "CPU_A18" 140 400}
-   {T "CPU_A17" 140 380}
-   {T "CPU_A16" 140 360}
-   {T "CPU_A15" 140 340}
-   {T "CPU_A14" 140 320}
-   {T "CPU_A13" 140 300}
-   {T "CPU_A12" 140 280}
-   {T "CPU_A11" 140 260}
-   {T "CPU_A10" 140 240}
-   {T "CPU_A9" 140 220}
-   {T "CPU_A8" 140 200}
-   {T "EXTRA_1" 140 180}
-   {T "EXTRA_2" 140 160}
-   {T "NSYS_RES" 140 140}
-   {T "EXPANS1" 140 120}
-   {T "SYS_RESE" 140 100}
-   {T "NSEVENSE" 140 80}
-   {T "NSEVENSE" 140 60}
-   {T "NSTATUSL" 140 40}
+   {T "CPU_CLK" 140 760}
+   {T "NDEV8BIT" 140 720}
+   {T "NDEV16BI" 140 700}
+   {T "NDEV32BI" 140 680}
+   {T "RTC_A_SE" 140 660}
+   {T "EXTRA1" 140 640}
+   {T "EXTRA2" 140 620}
+   {T "NEXP_DEV" 140 600}
+   {T "NEXP_CAC" 140 580}
+   {T "TESTP0" 140 560}
+   {T "TESTP2" 140 540}
+   {T "CPU_A27" 140 520}
+   {T "CPU_A26" 140 500}
+   {T "CPU_A25" 140 480}
+   {T "CPU_A24" 140 460}
+   {T "CPU_A23" 140 440}
+   {T "CPU_A22" 140 420}
+   {T "CPU_A21" 140 400}
+   {T "CPU_A20" 140 380}
+   {T "CPU_A19" 140 360}
+   {T "CPU_A18" 140 340}
+   {T "CPU_A17" 140 320}
+   {T "CPU_A16" 140 300}
+   {T "CPU_A15" 140 280}
+   {T "CPU_A14" 140 260}
+   {T "CPU_A13" 140 240}
+   {T "CPU_A12" 140 220}
+   {T "CPU_A11" 140 200}
+   {T "CPU_A10" 140 180}
+   {T "CPU_A9" 140 160}
+   {T "CPU_A8" 140 140}
+   {T "EXTRA_1" 140 120}
+   {T "EXTRA_2" 140 100}
+   {T "NSYS_RES" 140 80}
+   {T "EXPANS1" 140 60}
+   {T "SYS_RESE" 140 40}
    {T "CPU_RW" 140 20}
    [Tj "RC"]
    {T "NDEV_WAI" 320 20}
@@ -308,14 +304,18 @@
    {T "NEXP_DEV" 320 280}
    {T "NEXP_DEV" 320 300}
    {T "NEXP_DEV" 320 320}
-   {T "NIDE_B2" 320 340}
-   {T "NIDE_B1" 320 360}
-   {T "NIDE_WR" 320 380}
-   {T "NIDE2_CS" 320 400}
+   {T "TESTP1" 320 340}
+   {T "NIDE_B2" 320 360}
+   {T "NIDE_B1" 320 380}
+   {T "NIDE_WR" 320 400}
    {T "NIDE2_CS" 320 420}
-   {T "NIDE1_CS" 320 440}
+   {T "NIDE2_CS" 320 440}
    {T "NIDE1_CS" 320 460}
-   {T "EXPANS2" 320 480}
+   {T "NIDE1_CS" 320 480}
+   {T "NSEVENSE" 320 500}
+   {T "NSEVENSE" 320 520}
+   {T "NSTATUSL" 320 540}
+   {T "EXPANS2" 320 560}
    [Ly "DEVICE"]
    [Tj "CT"]
    {T "F1508ISPTQFP100" 230 -10}
@@ -329,7 +329,7 @@
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAP\DEVMAP 230 860}
+    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAP\DEVMAP 230 780}
    }
   }
  }
@@ -358,8 +358,6 @@
    {N NEXP_CAC
    }
    {N TESTP0
-   }
-   {N TESTP1
    }
    {N TESTP2
    }
@@ -413,12 +411,6 @@
    }
    {N SYS_RESE
    }
-   {N NSEVENSE
-   }
-   {N NSEVENSE
-   }
-   {N NSTATUSL
-   }
    {N CPU_RW
    }
    {N NDEV_WAI
@@ -453,6 +445,8 @@
    }
    {N NEXP_DEV
    }
+   {N TESTP1
+   }
    {N NIDE_B2
    }
    {N NIDE_B1
@@ -466,6 +460,12 @@
    {N NIDE1_CS
    }
    {N NIDE1_CS
+   }
+   {N NSEVENSE
+   }
+   {N NSEVENSE
+   }
+   {N NSTATUSL
    }
    {N EXPANS2
    }

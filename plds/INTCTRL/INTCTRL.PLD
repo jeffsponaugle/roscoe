@@ -21,7 +21,7 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 // From CPU
 Pin[71,72,75,76] = [CPU_A3..0];
 Pin[70] = CPU_RW;
-Pin[57,58,60,61,63,64,65,67] = [CPU_D7..0];
+Pin[57,58,60,61,63,64,65,67] = [CPU_D7..0];     // Hooked to D31:D24 since this is an 8 bit device
 
 // From Bus Controller CPLD
 Pin[87] = CPU_CLK;
@@ -37,11 +37,16 @@ Pin[12,13,14,16] = vINT5A, vINT5B,vINT5C,vINT5D;
 Pin[19,20,21] = vINT4A, vINT4B,vINT4C;
 // vINT3A is generated internally from the USB interrupt flags, so it does not need to be exposed externally.
 //Pin[23] = vINT3A;
-
 Pin[24] = vINT3B;
-
 Pin[25,27] = vINT2A, vINT2B;
 Pin[29,30] = vINT1A, vINT1B;
+
+// USB inputs
+Pin[1] = nUSB_DATAACK;
+Pin[99] = nUSB_RXF;
+Pin[100] = nUSB_TXE;
+Pin[56] = nUSB_CS;            // Active low signal from DEV CPLD indicated an 8 bit access to the USB controller.
+
 
 /* 
                                                 Outputs
@@ -57,11 +62,7 @@ Pin[6] = nUSB_RD;
 Pin[5] = nUSB_WR;
 Pin[2] = nUSB_DATAREQ;
 
-// USB inputs
-Pin[1] = nUSB_DATAACK;
-Pin[99] = nUSB_RXF;
-Pin[100] = nUSB_TXE;
-Pin[56] = nUSB_CS;            // Active low signal from DEV CPLD indicated an 8 bit access to the USB controller.
+// Extra pins
 
 Pin[31] = EXP_INT_CPLD1;
 Pin[32] = EXP_INT_CPLD2;

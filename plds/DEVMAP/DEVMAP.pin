@@ -3,10 +3,10 @@ nDEV16BITCS					: 2
 nDEV8BITCS					: 1
 CPU_RW					: 100
 EXPANSION_EXTRA2					: 99
-nIDE_WR_DELAY1					: 610
-Com_Ctrl_85					: 612
+nSTATUSLED_WR					: 98
+nSEVENSEGB_WR					: 97
+nSEVENSEGA_WR					: 96
 SYS_RESET_POS					: 93
-nIDE_WR_DELAY2					: 615
 EXPANSION_EXTRA1					: 92
 nRTC_CS					: 14
 nINTCTRL_CS					: 13
@@ -14,7 +14,9 @@ EXP_DM_CPLD2					: 8
 EXP_DM_CPLD1					: 7
 nDEV_WAIT					: 6
 nDEV32BITCS					: 5
+nIDE_WR_DELAY1					: 631
 TDI					: 4
+nIDE_WR_DELAY2					: 632
 nUART_CSA					: 25
 nUART_CSB					: 24
 nEXP_VMEM_CS					: 23
@@ -52,6 +54,7 @@ CPU_A21					: 58
 CPU_A20					: 60
 CPU_A19					: 61
 TCK					: 62
+Com_Ctrl_88					: 696
 CPU_A18					: 63
 CPU_A17					: 64
 CPU_A16					: 65
