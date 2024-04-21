@@ -131,12 +131,12 @@ nIDE1_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
 nIDE2_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00002XX]);
 nIDE2_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00003XX]);
 nUSB_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00004XX] # field_CPU_ADDRESS:['h'00005XX]);
-nNIC_CS = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00006XX] # field_CPU_ADDRESS:['h'00007XX]
-                        # field_CPU_ADDRESS:['h'00008XX] # field_CPU_ADDRESS:['h'00009XX]);
+
 
 /* 32 bit devices */
 
 nEXP_VMEM_CS = nDEV32BITCS # !(field_CPU_ADDRESS:['h'00XXXXX]);   // 1MB of Video Memory
+nNIC_CS = nDEV32BITCS # !(field_CPU_ADDRESS:['h'0200XXX]);          // 4096B NIC Interface
 
 
 /* IDE Device custom signals:
