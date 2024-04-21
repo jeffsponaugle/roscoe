@@ -148,18 +148,6 @@ nEXP_VMEM_CS =>
   # CPU_A22
   # CPU_A21
   # CPU_A20
-  # CPU_A19
-  # CPU_A18
-  # CPU_A17
-  # CPU_A16
-  # CPU_A15
-  # CPU_A14
-  # CPU_A13
-  # CPU_A12
-  # CPU_A11
-  # CPU_A10
-  # CPU_A9
-  # CPU_A8
 
 nIDE1_CSA =>
     nDEV16BITCS
@@ -180,7 +168,7 @@ nIDE1_CSA =>
   # CPU_A13
   # CPU_A12
   # CPU_A11
-  # !CPU_A10
+  # CPU_A10
   # CPU_A9
   # CPU_A8
 
@@ -203,7 +191,7 @@ nIDE1_CSB =>
   # CPU_A13
   # CPU_A12
   # CPU_A11
-  # !CPU_A10
+  # CPU_A10
   # CPU_A9
   # !CPU_A8
 
@@ -226,7 +214,7 @@ nIDE2_CSA =>
   # CPU_A13
   # CPU_A12
   # CPU_A11
-  # !CPU_A10
+  # CPU_A10
   # !CPU_A9
   # CPU_A8
 
@@ -249,7 +237,7 @@ nIDE2_CSB =>
   # CPU_A13
   # CPU_A12
   # CPU_A11
-  # !CPU_A10
+  # CPU_A10
   # !CPU_A9
   # !CPU_A8
 
@@ -307,14 +295,14 @@ nINTCTRL_CS =>
   # CPU_A8
 
 nNIC_CS =>
-    nDEV16BITCS
+    nDEV32BITCS
   # CPU_A27
   # CPU_A26
   # CPU_A25
   # CPU_A24
   # CPU_A23
   # CPU_A22
-  # CPU_A21
+  # !CPU_A21
   # CPU_A20
   # CPU_A19
   # CPU_A18
@@ -323,9 +311,7 @@ nNIC_CS =>
   # CPU_A15
   # CPU_A14
   # CPU_A13
-  # !CPU_A12
-  # CPU_A11
-  # CPU_A10
+  # CPU_A12
 
 nPTC_CS =>
     nDEV8BITCS
@@ -506,8 +492,8 @@ nUSB_CS =>
   # CPU_A14
   # CPU_A13
   # CPU_A12
-  # !CPU_A11
-  # CPU_A10
-  # !CPU_A9
+  # CPU_A11
+  # !CPU_A10
+  # CPU_A9
 
 %END

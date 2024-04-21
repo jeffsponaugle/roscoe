@@ -182,13 +182,13 @@ RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, thi
 
 /*
 Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		58/80 	(72%)
-Total Logic cells used 		30/128 	(23%)
+Total I/O pins used		67/80 	(83%)
+Total Logic cells used 		34/128 	(26%)
 Total Flip-Flop used 		3/128 	(2%)
 Total Foldback logic used 	0/128 	(0%)
-Total Nodes+FB/MCells 		30/128 	(23%)
+Total Nodes+FB/MCells 		34/128 	(26%)
 Total cascade used 		0
-Total input pins 		33
-Total output pins 		27
-Total Pts 			29
+Total input pins 		38
+Total output pins 		31
+Total Pts 			34
 */
