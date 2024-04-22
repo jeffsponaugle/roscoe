@@ -1,0 +1,262 @@
+Name	 ADDER;
+PartNo   ADDER;
+Date     04/18/2022;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1504ispplcc44;
+
+
+Pin  = [A0..A7];        /* Input bits A */
+/*Pin  = [B0..B4];  */      /* Input bits B */
+Pin  = [S0..S7];        /* SUM output bits S*/
+Pin  = [B0..B7]; 
+
+/* Adder testing.. No carry input, no carry output */
+
+C0 = 'b'0;
+
+P0 = A0 $ B0;
+G0 = A0 & B0;
+S0 = P0 $ C0;
+C1 = G0;
+
+P1 = A1 $ B1;
+G1 = A1 & B1;
+S1 = P1 $ C1;
+C2 = G1 # (P1&C1);
+
+P2 = A2 $ B2;
+G2 = A2 & B2;
+S2 = P2 $ C2;
+C3 = G2 # (P2&C2);
+
+P3 = A3 $ B3;
+G3 = A3 & B3;
+S3 = P3 $ C3;
+C4 = G3 # (P3&C3);
+
+P4 = A4 $ B4;
+G4 = A4 & B4;
+S4 = P4 $ C4;
+C5 = G4 # (P4&C4);
+
+
+
+/*
+P5 = A5 $ B5;
+G5 = A5 & B5;
+S5 = P5 $ C5;
+C6 = G5 # (P5&C5);
+
+P6 = A6 $ B6;
+G6 = A6 & B6;
+S6 = P6 $ C6;
+C7 = G6 # (P6&C6);
+
+P7 = A7 $ B7;
+G7 = A7 & B7;
+S7 = P7 $ C7;
+
+BACKUP NOT COMPRESSED
+
+C0 = 'b'0;
+
+P0 = A0 $ B0;
+G0 = A0 & B0;
+S0 = P0 $ C0;
+C1 = G0 # (P0&C0);
+
+P1 = A1 $ B1;
+G1 = A1 & B1;
+S1 = P1 $ C1;
+C2 = G1 # (P1&C1);
+
+P2 = A2 $ B2;
+G2 = A2 & B2;
+S2 = P2 $ C2;
+C3 = G2 # (P2&C2);
+
+P3 = A3 $ B3;
+G3 = A3 & B3;
+S3 = P3 $ C3;
+C4 = G3 # (P3&C3);
+
+P4 = A4 $ B4;
+G4 = A4 & B4;
+S4 = P4 $ C4;
+
+
+
+*/
+
+
+/*C8 = G7 # (P7&C7);*/
+
+
+
+
+
+
+
+
+/*
+
+4 bit adder, with NO CARRY IN, NO CARRY OUT
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		16/32 	(50%)
+Total Logic cells used 		16/64 	(25%)
+Total Flip-Flop used 		0/64 	(0%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		16/64 	(25%)
+Total cascade used 		0
+Total input pins 		12
+Total output pins 		4
+Total Pts 			72
+
+4 bit adder with CARRY IN AND NO CARRY OUT
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		17/32 	(53%)
+Total Logic cells used 		26/64 	(40%)
+Total Flip-Flop used 		0/64 	(0%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		26/64 	(40%)
+Total cascade used 		0
+Total input pins 		13
+Total output pins 		4
+Total Pts 			126
+
+5 bit adder with NO CARRY IN , NO CARRY OUT
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		19/32 	(59%)
+Total Logic cells used 		35/64 	(54%)
+Total Flip-Flop used 		0/64 	(0%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		35/64 	(54%)
+Total cascade used 		0
+Total input pins 		14
+Total output pins 		5
+Total Pts 			166
+
+
+5 bit adder with CARRY IN , NO CARRY OUT
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		20/32 	(62%)
+Total Logic cells used 		57/64 	(89%)
+Total Flip-Flop used 		0/64 	(0%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		57/64 	(89%)
+Total cascade used 		0
+Total input pins 		15
+Total output pins 		5
+Total Pts 			280
+
+
+5 bit counter with NO CARRY IN,CARRY OUT, Increment by 1;
+
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		14/32 	(43%)
+Total Logic cells used 		5/64 	(7%)
+Total Flip-Flop used 		0/64 	(0%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		5/64 	(7%)
+Total cascade used 		0
+Total input pins 		9
+Total output pins 		5
+Total Pts 			15
+
+
+5 bit counter with NO CARRY IN,CARRY OUT, Add ONE BIT only.
+
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		15/32 	(46%)
+Total Logic cells used 		6/64 	(9%)
+Total Flip-Flop used 		0/64 	(0%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		5/64 	(7%)
+Total cascade used 		1
+Total input pins 		10
+Total output pins 		5
+Total Pts 			20
+
+
+
+5 bit counter with NO CARRY IN, CARRY OUT, Add TWO BITs only.
+
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		16/32 	(50%)
+Total Logic cells used 		9/64 	(14%)
+Total Flip-Flop used 		0/64 	(0%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		5/64 	(7%)
+Total cascade used 		4
+Total input pins 		11
+Total output pins 		5
+Total Pts 			35
+
+5 bit counter with NO CARRY IN, CARRY OUT, Add THREE BITs only.
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		17/32 	(53%)
+Total Logic cells used 		17/64 	(26%)
+Total Flip-Flop used 		0/64 	(0%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		17/64 	(26%)
+Total cascade used 		0
+Total input pins 		12
+Total output pins 		5
+Total Pts 			73
+
+5 bit counter with NO CARRY IN, CARRY OUT, Add FOUR BITs only.
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		18/32 	(56%)
+Total Logic cells used 		26/64 	(40%)
+Total Flip-Flop used 		0/64 	(0%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		26/64 	(40%)
+Total cascade used 		0
+Total input pins 		13
+Total output pins 		5
+Total Pts 			119
+
+
+8 bit counter , increment only
+
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		20/32 	(62%)
+Total Logic cells used 		11/64 	(17%)
+Total Flip-Flop used 		0/64 	(0%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		8/64 	(12%)
+Total cascade used 		3
+Total input pins 		12
+Total output pins 		8
+Total Pts 			36
+
+
+
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
