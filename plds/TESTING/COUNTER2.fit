@@ -1,0 +1,475 @@
+Atmel ATF1504AS Fitter Version 1.8.7.8 ,running Mon Apr 22 15:25:32 2024
+
+
+fit1504 C:\USERS\JEFF\SRC\ROSCOE\PLDS\TESTING\COUNTER2.tt2 -CUPL -dev P1504C44 -JTAG ON
+
+
+****** Initial fitting strategy and property ******
+ Pla_in_file = COUNTER2.tt2
+ Pla_out_file = COUNTER2.tt3
+ Jedec_file = COUNTER2.jed
+ Vector_file = COUNTER2.tmv
+ verilog_file = COUNTER2.vt
+ Time_file = 
+ Log_file = COUNTER2.fit
+ err_file = 
+ Device_name = PLCC44
+ Module_name = 
+ Package_type = PLCC
+ Preassign_file = 
+ Property_file = 
+ Sleep_mode = 
+ Preassignment = 
+ Security_mode = OFF
+ Pin_keep_mode = ON
+ Dedicated_input_clock = 
+ Dedicated_input_reset = 
+ Dedicated_input_oe = 
+ supporter = CUPL
+ optimize = ON
+ Soft_buffer = 
+ Xor_synthesis = OFF
+ Foldback_logic =  on
+ Expander = 
+ Cascade_logic = OFF
+ Dedicated_input = 
+ Output_fast = OFF
+ *******************************
+ Power down pin 1 = OFF
+ Power down pin 2 = OFF
+ power_reset = OFF
+ JTAG = ON
+ TDI pullup = OFF
+ TMS pullup = OFF
+ MC_power = OFF
+ Open_collector = OFF
+ ITD0 = ON
+ ITD1 = ON
+ ITD2 = ON
+ Fast_inlatch = off
+ *******************************
+---------------------------------------------------------
+ Fitter_Pass 1, Preassign = KEEP, LOGIC_DOUBLING : OFF 
+ ... 
+
+Performing global Output Enable pin assignments ...
+
+Performing global pin assignments ...
+--------------------------------------
+
+
+
+Final global control pins assignment (if applicable)...
+-------------------------------------------------------
+CLKIN assigned to pin  43
+
+
+
+Performing input pin pre-assignments ...
+------------------------------------
+CLKIN assigned to pin  43
+
+Attempt to place floating signals ...
+------------------------------------
+Q9 is placed at pin 12 (MC 1)
+Q11 is placed at pin 11 (MC 3)
+Q10 is placed at pin 9 (MC 4)
+Q12 is placed at pin 8 (MC 5)
+TDI is placed at pin 7 (MC 8)
+Q13 is placed at pin 6 (MC 11)
+Q12T is placed at foldback expander node 312 (MC 12)
+Q11T is placed at foldback expander node 313 (MC 13)
+Q14 is placed at pin 5 (MC 14)
+Q10T is placed at foldback expander node 315 (MC 15)
+Q15 is placed at pin 4 (MC 16)
+Q9T is placed at foldback expander node 316 (MC 16)
+Q2 is placed at pin 21 (MC 17)
+Q4 is placed at pin 20 (MC 19)
+Q3 is placed at pin 19 (MC 20)
+Q5 is placed at pin 18 (MC 21)
+Q6 is placed at pin 17 (MC 24)
+Q8 is placed at pin 16 (MC 25)
+Q8T is placed at foldback expander node 326 (MC 26)
+Q7T is placed at foldback expander node 327 (MC 27)
+Q6T is placed at foldback expander node 328 (MC 28)
+Q5T is placed at foldback expander node 329 (MC 29)
+Q7 is placed at pin 14 (MC 30)
+Q4T is placed at foldback expander node 330 (MC 30)
+Q3T is placed at foldback expander node 331 (MC 31)
+TMS is placed at pin 13 (MC 32)
+Q2T is placed at foldback expander node 332 (MC 32)
+INCREMENT is placed at pin 24 (MC 33)
+Q0 is placed at pin 29 (MC 41)
+Q1 is placed at pin 31 (MC 46)
+TCK is placed at pin 32 (MC 48)
+TDO is placed at pin 38 (MC 56)
+
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                      C                          
+                                      L                          
+                  Q  Q  Q  V          K  G                       
+                  1  1  1  C          I  N                       
+                  3  4  5  C          N  D                       
+               ____________________________________              
+              /   6  5  4  3  2  1 44 43 42 41 40  \             
+         TDI |  7                                39 |            
+         Q12 |  8                                38 | TDO        
+         Q10 |  9                                37 |            
+         GND | 10                                36 |            
+         Q11 | 11                                35 | VCC        
+          Q9 | 12            ATF1504             34 |            
+         TMS | 13          44-Lead PLCC          33 |            
+          Q7 | 14                                32 | TCK        
+         VCC | 15                                31 | Q1         
+          Q8 | 16                                30 | GND        
+          Q6 | 17                                29 | Q0         
+             |   18 19 20 21 22 23 24 25 26 27 28   |            
+              \____________________________________/             
+                 Q  Q  Q  Q  G  V  I                             
+                 5  3  4  2  N  C  N                             
+                             D  C  C                             
+                                   R                             
+                                   E                             
+                                   M                             
+                                   E                             
+                                   N                             
+                                   T                             
+
+
+
+VCC = Supply Voltage pin which must be connected to (5.0V or 3.0V)
+
+GND = GND pin which must be connected to ground
+
+TMS,TDI,TDO,TDI = JTAG pins which must reserved for the JTAG interface
+
+NC = Unused I/O pins which must be unconnected on the board
+
+Universal-Interconnect-Multiplexer assignments
+------------------------------------------------
+FanIn assignment for block A [17]
+{
+INCREMENT,
+Q13,Q5,Q1,Q9,Q7,Q11,Q10,Q6,Q12,Q8,Q2,Q14,Q15,Q4,Q0,Q3,
+}
+Multiplexer assignment for block A
+Q13			(MC5	P)   : MUX 0		Ref (A11p)
+Q5			(MC11	P)   : MUX 1		Ref (B21p)
+Q1			(MC16	P)   : MUX 2		Ref (C46p)
+Q9			(MC1	P)   : MUX 3		Ref (A1p)
+Q7			(MC14	P)   : MUX 6		Ref (B30p)
+Q11			(MC2	P)   : MUX 7		Ref (A3p)
+Q10			(MC3	P)   : MUX 9		Ref (A4p)
+Q6			(MC12	P)   : MUX 13		Ref (B24p)
+Q12			(MC4	P)   : MUX 21		Ref (A5p)
+Q8			(MC13	P)   : MUX 22		Ref (B25p)
+INCREMENT		(MC17	P)   : MUX 23		Ref (C33p)
+Q2			(MC8	P)   : MUX 25		Ref (B17p)
+Q14			(MC6	P)   : MUX 28		Ref (A14p)
+Q15			(MC7	P)   : MUX 30		Ref (A16p)
+Q4			(MC9	P)   : MUX 31		Ref (B19p)
+Q0			(MC15	P)   : MUX 32		Ref (C41p)
+Q3			(MC10	P)   : MUX 33		Ref (B20p)
+
+FanIn assignment for block B [10]
+{
+INCREMENT,
+Q5,Q1,Q7,Q6,Q2,Q8,Q4,Q3,Q0,
+}
+Multiplexer assignment for block B
+Q5			(MC4	P)   : MUX 1		Ref (B21p)
+Q1			(MC9	P)   : MUX 2		Ref (C46p)
+Q7			(MC7	P)   : MUX 4		Ref (B30p)
+Q6			(MC5	P)   : MUX 13		Ref (B24p)
+Q2			(MC1	P)   : MUX 21		Ref (B17p)
+Q8			(MC6	P)   : MUX 22		Ref (B25p)
+INCREMENT		(MC10	P)   : MUX 23		Ref (C33p)
+Q4			(MC2	P)   : MUX 31		Ref (B19p)
+Q3			(MC3	P)   : MUX 33		Ref (B20p)
+Q0			(MC8	P)   : MUX 34		Ref (C41p)
+
+FanIn assignment for block C [3]
+{
+INCREMENT,
+Q1,Q0,
+}
+Multiplexer assignment for block C
+Q1			(MC2	P)   : MUX 2		Ref (C46p)
+INCREMENT		(MC3	P)   : MUX 23		Ref (C33p)
+Q0			(MC1	P)   : MUX 32		Ref (C41p)
+
+Creating JEDEC file C:\USERS\JEFF\SRC\ROSCOE\PLDS\TESTING\COUNTER2.jed ...
+
+PLCC44 programmed logic:
+-----------------------------------
+Q0.D = ((!INCREMENT & Q0.Q)
+	# (INCREMENT & !Q0.Q));
+
+Q1.D = ((INCREMENT & Q0.Q & !Q1.Q)
+	# (!INCREMENT & Q1.Q)
+	# (!Q0.Q & Q1.Q));
+
+!Q2T = (Q0.Q & Q1.Q);
+
+Q2.D = ((!INCREMENT & Q2.Q)
+	# (Q2.Q & Q2T)
+	# (INCREMENT & !Q2.Q & Q0.Q & Q1.Q));
+
+!Q3T = (Q2.Q & Q0.Q & Q1.Q);
+
+Q3.D = ((!INCREMENT & Q3.Q)
+	# (Q3.Q & Q3T)
+	# (INCREMENT & !Q3.Q & Q2.Q & Q0.Q & Q1.Q));
+
+!Q4T = (Q3.Q & Q2.Q & Q0.Q & Q1.Q);
+
+Q4.D = ((!INCREMENT & Q4.Q)
+	# (Q4.Q & Q4T)
+	# (INCREMENT & !Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q));
+
+!Q5T = (Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q);
+
+Q5.D = ((!INCREMENT & Q5.Q)
+	# (Q5.Q & Q5T)
+	# (INCREMENT & !Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q));
+
+!Q6T = (Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q);
+
+!Q7T = (Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q);
+
+Q6.D = ((!INCREMENT & Q6.Q)
+	# (Q6.Q & Q6T)
+	# (INCREMENT & !Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q));
+
+Q7.D = ((!INCREMENT & Q7.Q)
+	# (Q7.Q & Q7T)
+	# (INCREMENT & !Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q));
+
+!Q8T = (Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q);
+
+Q8.D = ((!INCREMENT & Q8.Q)
+	# (Q8.Q & Q8T)
+	# (INCREMENT & !Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q));
+
+!Q9T = (Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q);
+
+!Q10T = (Q9.Q & Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q);
+
+Q9.D = ((!INCREMENT & Q9.Q)
+	# (Q9.Q & Q9T)
+	# (INCREMENT & !Q9.Q & Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q));
+
+!Q11T = (Q10.Q & Q9.Q & Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q);
+
+Q10.D = ((!INCREMENT & Q10.Q)
+	# (Q10.Q & Q10T)
+	# (INCREMENT & !Q10.Q & Q9.Q & Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q));
+
+!Q12T = (Q11.Q & Q10.Q & Q9.Q & Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q);
+
+Q11.D = ((!INCREMENT & Q11.Q)
+	# (Q11.Q & Q11T)
+	# (INCREMENT & !Q11.Q & Q10.Q & Q9.Q & Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q));
+
+Q12.D = ((!INCREMENT & Q12.Q)
+	# (Q12.Q & Q12T)
+	# (INCREMENT & !Q12.Q & Q11.Q & Q10.Q & Q9.Q & Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q));
+
+Q15.D = ((Q15.Q & !Q13.Q)
+	# (Q15.Q & !Q12.Q)
+	# (Q15.Q & Q12T)
+	# (Q15.Q & !INCREMENT)
+	# (Q14.Q & !Q15.Q & Q13.Q & Q12.Q & INCREMENT & Q11.Q & Q10.Q & Q9.Q & Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q)
+	# (!Q14.Q & Q15.Q));
+
+Q13.D = ((Q13.Q & Q12T)
+	# (Q13.Q & !INCREMENT)
+	# (Q12.Q & !Q13.Q & INCREMENT & Q11.Q & Q10.Q & Q9.Q & Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q)
+	# (!Q12.Q & Q13.Q));
+
+Q14.D = ((Q14.Q & !Q12.Q)
+	# (Q14.Q & Q12T)
+	# (Q14.Q & !INCREMENT)
+	# (Q13.Q & !Q14.Q & Q12.Q & INCREMENT & Q11.Q & Q10.Q & Q9.Q & Q8.Q & Q7.Q & Q6.Q & Q5.Q & Q4.Q & Q3.Q & Q2.Q & Q0.Q & Q1.Q)
+	# (!Q13.Q & Q14.Q));
+
+Q0.C = CLKIN;
+
+Q1.C = CLKIN;
+
+Q2.C = CLKIN;
+
+Q3.C = CLKIN;
+
+Q4.C = CLKIN;
+
+Q5.C = CLKIN;
+
+Q6.C = CLKIN;
+
+Q7.C = CLKIN;
+
+Q8.C = CLKIN;
+
+Q9.C = CLKIN;
+
+Q10.C = CLKIN;
+
+Q11.C = CLKIN;
+
+Q12.C = CLKIN;
+
+Q15.C = CLKIN;
+
+Q13.C = CLKIN;
+
+Q14.C = CLKIN;
+
+
+PLCC44 Pin/Node Placement:
+------------------------------------
+Pin 4  = Q15; /* MC 16 */
+Pin 5  = Q14; /* MC 14 */
+Pin 6  = Q13; /* MC 11 */
+Pin 7  = TDI; /* MC 8 */
+Pin 8  = Q12; /* MC 5 */
+Pin 9  = Q10; /* MC 4 */
+Pin 11 = Q11; /* MC  3 */
+Pin 12 = Q9; /* MC  1 */
+Pin 13 = TMS; /* MC 32 */ 
+Pin 14 = Q7; /* MC 30 */ 
+Pin 16 = Q8; /* MC 25 */ 
+Pin 17 = Q6; /* MC 24 */ 
+Pin 18 = Q5; /* MC 21 */ 
+Pin 19 = Q3; /* MC 20 */ 
+Pin 20 = Q4; /* MC 19 */ 
+Pin 21 = Q2; /* MC 17 */ 
+Pin 24 = INCREMENT; /* MC 33 */ 
+Pin 29 = Q0; /* MC 41 */ 
+Pin 31 = Q1; /* MC 46 */ 
+Pin 32 = TCK; /* MC 48 */ 
+Pin 38 = TDO; /* MC 56 */ 
+Pin 43 = CLKIN;
+PINNODE 312 = Q12T; /* MC 12 Foldback */
+PINNODE 313 = Q11T; /* MC 13 Foldback */
+PINNODE 315 = Q10T; /* MC 15 Foldback */
+PINNODE 316 = Q9T; /* MC 16 Foldback */
+PINNODE 326 = Q8T; /* MC 26 Foldback */
+PINNODE 327 = Q7T; /* MC 27 Foldback */
+PINNODE 328 = Q6T; /* MC 28 Foldback */
+PINNODE 329 = Q5T; /* MC 29 Foldback */
+PINNODE 330 = Q4T; /* MC 30 Foldback */
+PINNODE 331 = Q3T; /* MC 31 Foldback */
+PINNODE 332 = Q2T; /* MC 32 Foldback */
+
+** Resource Usage **
+
+
+DCERP Field = Summary of Allocations.
+|||||
+|||||_Preset [p,-]       ==  p = PT preset, - No Preset.
+||||
+||||__Reset [g,r,-]      ==  g= Global AR, r = PT reset, - No reset.
+|||
+|||___Clock Enable [e,-] ==  e = Product Term, - always enabled, - none.
+||
+||____Clock [c,g,-],     ==  c = Product term, g = Global term, - No Clock.
+|
+|_____Type [C,D,L,T],    ==  Register type C= combin, D=dff, L=latch, T=tff.
+
+For input only = INPUT.
+
+MCell Pin# Oe   PinDrive  DCERP  FBDrive  DCERP  Foldback  CascadeOut     TotPT output_slew
+MC1   12   on   Q9        Dg---  --              --        --             3     slow
+MC2   0         --               --              --        --             0     slow
+MC3   11   on   Q11       Dg---  --              --        --             3     slow
+MC4   9    on   Q10       Dg---  --              --        --             3     slow
+MC5   8    on   Q12       Dg---  --              --        --             3     slow
+MC6   0         --               --              --        --             0     slow
+MC7   0         --               --              --        --             0     slow
+MC8   7    --   TDI       INPUT  --              --        --             0     slow
+MC9   0         --               --              --        --             0     slow
+MC10  0         --               --              --        --             0     slow
+MC11  6    on   Q13       Dg---  --              --        --             4     slow
+MC12  0         --               --              Q12T      --             1     slow
+MC13  0         --               --              Q11T      --             1     slow
+MC14  5    on   Q14       Dg---  --              NA        --             5     slow
+MC15  0         --               --              Q10T      -> Q15         5     slow
+MC16  4    on   Q15       Dg---  --              Q9T       --             3     slow
+MC17  21   on   Q2        Dg---  --              --        --             3     slow
+MC18  0         --               --              --        --             0     slow
+MC19  20   on   Q4        Dg---  --              --        --             3     slow
+MC20  19   on   Q3        Dg---  --              --        --             3     slow
+MC21  18   on   Q5        Dg---  --              --        --             3     slow
+MC22  0         --               --              --        --             0     slow
+MC23  0         --               --              --        --             0     slow
+MC24  17   on   Q6        Dg---  --              --        --             3     slow
+MC25  16   on   Q8        Dg---  --              --        --             3     slow
+MC26  0         --               --              Q8T       --             1     slow
+MC27  0         --               --              Q7T       --             1     slow
+MC28  0         --               --              Q6T       --             1     slow
+MC29  0         --               --              Q5T       --             1     slow
+MC30  14   on   Q7        Dg---  --              Q4T       --             4     slow
+MC31  0         --               --              Q3T       --             1     slow
+MC32  13   --   TMS       INPUT  --              Q2T       --             1     slow
+MC33  24   --   INCREMENT INPUT  --              --        --             0     slow
+MC34  0         --               --              --        --             0     slow
+MC35  25        --               --              --        --             0     slow
+MC36  26        --               --              --        --             0     slow
+MC37  27        --               --              --        --             0     slow
+MC38  0         --               --              --        --             0     slow
+MC39  0         --               --              --        --             0     slow
+MC40  28        --               --              --        --             0     slow
+MC41  29   on   Q0        Dg---  --              --        --             2     slow
+MC42  0         --               --              --        --             0     slow
+MC43  0         --               --              --        --             0     slow
+MC44  0         --               --              --        --             0     slow
+MC45  0         --               --              --        --             0     slow
+MC46  31   on   Q1        Dg---  --              --        --             3     slow
+MC47  0         --               --              --        --             0     slow
+MC48  32   --   TCK       INPUT  --              --        --             0     slow
+MC49  33        --               --              --        --             0     slow
+MC50  0         --               --              --        --             0     slow
+MC51  34        --               --              --        --             0     slow
+MC52  36        --               --              --        --             0     slow
+MC53  37        --               --              --        --             0     slow
+MC54  0         --               --              --        --             0     slow
+MC55  0         --               --              --        --             0     slow
+MC56  38   --   TDO       INPUT  --              --        --             0     slow
+MC57  39        --               --              --        --             0     slow
+MC58  0         --               --              --        --             0     slow
+MC59  0         --               --              --        --             0     slow
+MC60  0         --               --              --        --             0     slow
+MC61  0         --               --              --        --             0     slow
+MC62  40        --               --              --        --             0     slow
+MC63  0         --               --              --        --             0     slow
+MC64  41        --               --              --        --             0     slow
+MC0   2         --               --              --        --             0     slow
+MC0   1         --               --              --        --             0     slow
+MC0   44        --               --              --        --             0     slow
+MC0   43        CLKIN     INPUT  --              --        --             0     slow
+
+Logic Array Block	Logic Cells	I/O Pins	Foldbacks	TotalPT		FanIN	Cascades
+A: LC1	- LC16		7/16(43%)	8/16(50%)	4/16(25%)	31/80(38%)	(17)	1
+B: LC17	- LC32		7/16(43%)	8/16(50%)	7/16(43%)	28/80(35%)	(10)	0
+C: LC33	- LC48		2/16(12%)	4/16(25%)	0/16(0%)	5/80(6%)	(3)	0
+D: LC49	- LC64		0/16(0%)	1/16(6%)	0/16(0%)	0/80(0%)	(0)	0
+
+Total dedicated input used:	1/4 	(25%)
+Total I/O pins used		21/32 	(65%)
+Total Logic cells used 		17/64 	(26%)
+Total Flip-Flop used 		16/64 	(25%)
+Total Foldback logic used 	11/64 	(17%)
+Total Nodes+FB/MCells 		27/64 	(42%)
+Total cascade used 		1
+Total input pins 		6
+Total output pins 		16
+Total Pts 			64
+Creating pla file C:\USERS\JEFF\SRC\ROSCOE\PLDS\TESTING\COUNTER2.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
+
+----------------  End fitter, Design FITS
+$Device PLCC44 fits 
+FIT1504 completed in 0.00 seconds

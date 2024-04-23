@@ -1,0 +1,23 @@
+CHIP "C:\USERS\JEFF\SRC\ROSCOE\PLDS\TESTING\COUNTER2" ASSIGNED TO AN PLCC44
+Q9					: 12
+Q11					: 11
+Q10					: 9
+Q12					: 8
+TDI					: 7
+Q13					: 6
+Q14					: 5
+Q15					: 4
+Q2					: 21
+Q4					: 20
+Q3					: 19
+Q5					: 18
+Q6					: 17
+Q8					: 16
+Q7					: 14
+TMS					: 13
+INCREMENT					: 24
+Q0					: 29
+Q1					: 31
+TCK					: 32
+TDO					: 38
+CLKIN					: 43

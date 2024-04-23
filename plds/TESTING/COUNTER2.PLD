@@ -12,47 +12,46 @@ Device   f1504ispplcc44;
 Pin  = CLKIN;
 Pin  = Q0,Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15;  
 Pin  = INCREMENT;  /* == 1 to increment */
-Pin  = RESET_TO_OFFSET;
-Pin  = [OFFSET0..5];
+Pinnode = Q2T,Q3T,Q4T,Q5T,Q6T,Q7T,Q8T,Q9T, Q10T,Q11T,Q12T;
 
 Q0.d =  (  (INCREMENT&!Q0) 
         # (!INCREMENT&Q0)
-        ) & !RESET_TO_OFFSET;     
+        );     
 Q0.ck = CLKIN;
 
 Q1.d =  (  (INCREMENT&((Q0&!Q1) # (!Q0&Q1))) 
         # ((!INCREMENT&Q1))
-        ) & !RESET_TO_OFFSET;
+        );
 Q1.ck = CLKIN;
 
 Q2T = Q0&Q1;
 Q2.d =  (  (INCREMENT&((Q2T&!Q2) # (!Q2T&Q2))) 
         # ((!INCREMENT&Q2))
-        ) & !RESET_TO_OFFSET;
+        );
 Q2.ck = CLKIN;
 
 Q3T = Q2T&Q2;
 Q3.d =  ( (INCREMENT&((Q3T&!Q3) # (!Q3T&Q3))) 
         # ((!INCREMENT&Q3))
-        ) & !RESET_TO_OFFSET;
+        );
 Q3.ck = CLKIN;
 
 Q4T = Q3T&Q3;
 Q4.d =  ( (INCREMENT&((Q4T&!Q4) # (!Q4T&Q4))) 
         # ((!INCREMENT&Q4))
-        ) & !RESET_TO_OFFSET;
+        );
 Q4.ck = CLKIN;
 
 Q5T = Q4T&Q4;
 Q5.d =  ( (INCREMENT&((Q5T&!Q5) # (!Q5T&Q5))) 
         # ((!INCREMENT&Q5))
-        ) & !RESET_TO_OFFSET;
+        );
 Q5.ck = CLKIN;
 
 Q6T = Q5T&Q5;
 Q6.d =  ( (INCREMENT&((Q6T&!Q6) # (!Q6T&Q6))) 
         # ((!INCREMENT&Q6))
-        ) & !RESET_TO_OFFSET;
+        );
 Q6.ck = CLKIN;
 
 /*  These addresses have OFFSET on reset. */
@@ -61,94 +60,104 @@ Q7T = Q6T&Q6;
 Q7.d =  (
           ( (INCREMENT&((Q7T&!Q7) # (!Q7T&Q7))) 
             # ((!INCREMENT&Q7))
-          ) & !RESET_TO_OFFSET
-        ) 
-        #
-        (
-            RESET_TO_OFFSET & OFFSET0
-        );
+          ));
 Q7.ck = CLKIN;
 
 Q8T = Q7T&Q7;
 Q8.d =  (
           ( (INCREMENT&((Q8T&!Q8) # (!Q8T&Q8))) 
             # ((!INCREMENT&Q8))
-          ) & !RESET_TO_OFFSET
-        ) 
-        #
-        (
-            RESET_TO_OFFSET & OFFSET1
-        );
+          ));
 Q8.ck = CLKIN;
 
 Q9T = Q8T&Q8;
 Q9.d =  (
           ( (INCREMENT&((Q9T&!Q9) # (!Q9T&Q9))) 
             # ((!INCREMENT&Q9))
-          ) & !RESET_TO_OFFSET
-        ) 
-        #
-        (
-            RESET_TO_OFFSET & OFFSET2
-        );
+          ));
 Q9.ck = CLKIN;
 
 Q10T = Q9T&Q9;
 Q10.d = (
           ( (INCREMENT&((Q10T&!Q10) # (!Q10T&Q10))) 
             # ((!INCREMENT&Q10))
-          ) & !RESET_TO_OFFSET
-        ) 
-        #
-        (
-            RESET_TO_OFFSET & OFFSET3
-        );
+          ));
 Q10.ck = CLKIN;
 
 Q11T = Q10T&Q10;
 Q11.d = (
           ( (INCREMENT&((Q11T&!Q11) # (!Q11T&Q11))) 
             # ((!INCREMENT&Q11))
-          ) & !RESET_TO_OFFSET
-        ) 
-        #
-        (
-            RESET_TO_OFFSET & OFFSET4
-        );
+          ));
 Q11.ck = CLKIN;
 
 Q12T = Q11T&Q11;
 Q12.d = (
           ( (INCREMENT&((Q12T&!Q12) # (!Q12T&Q12))) 
             # ((!INCREMENT&Q12))
-          ) & !RESET_TO_OFFSET
-        ) 
-        #
-        (
-            RESET_TO_OFFSET & OFFSET5
-        );
+          ));
 Q12.ck = CLKIN;
 
 Q13T = Q12T&Q12;
 Q13.d = (  (INCREMENT&((Q13T&!Q13) # (!Q13T&Q13))) 
         # ((!INCREMENT&Q13))
-        ) & !RESET_TO_OFFSET;
+        );
 Q13.ck = CLKIN;
 
 Q14T = Q13T&Q13;
 Q14.d = ( (INCREMENT&((Q14T&!Q14) # (!Q14T&Q14))) 
         # ((!INCREMENT&Q14))
-        ) & !RESET_TO_OFFSET;
+        );
 Q14.ck = CLKIN;
 
 Q15T = Q14T&Q14;
 Q15.d = ( (INCREMENT&((Q15T&!Q15) # (!Q15T&Q15))) 
         # ((!INCREMENT&Q15))
-        ) & !RESET_TO_OFFSET;
+        );
 Q15.ck = CLKIN;
 
 
 /*
+
+16 Bit Counter
+
+Total dedicated input used:	1/4 	(25%)
+Total I/O pins used		21/32 	(65%)
+Total Logic cells used 		40/64 	(62%)
+Total Flip-Flop used 		16/64 	(25%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		40/64 	(62%)
+Total cascade used 		0
+Total input pins 		6
+Total output pins 		16
+Total Pts 			176
+
+
+Pinnode = Q2T,Q3T,Q4T,Q5T,Q6T,Q7T,Q8T,Q9T,Q10T;
+Total dedicated input used:	1/4 	(25%)
+Total I/O pins used		21/32 	(65%)
+Total Logic cells used 		19/64 	(29%)
+Total Flip-Flop used 		16/64 	(25%)
+Total Foldback logic used 	9/64 	(14%)
+Total Nodes+FB/MCells 		25/64 	(39%)
+Total cascade used 		3
+Total input pins 		6
+Total output pins 		16
+Total Pts 			71
+
+Pinnode = Q2T,Q3T,Q4T,Q5T,Q6T,Q7T,Q8T,Q9T, Q10T,Q11T,Q12T,Q13T
+Total dedicated input used:	1/4 	(25%)
+Total I/O pins used		21/32 	(65%)
+Total Logic cells used 		16/64 	(25%)
+Total Flip-Flop used 		16/64 	(25%)
+Total Foldback logic used 	12/64 	(18%)
+Total Nodes+FB/MCells 		28/64 	(43%)
+Total cascade used 		0
+Total input pins 		6
+Total output pins 		16
+Total Pts 			62
+
+
 
 INCREMENT and RESET Implemented
 

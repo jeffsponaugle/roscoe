@@ -1,0 +1,212 @@
+%SIGNAL
+PIN   0 =  CLKIN 
+PIN   0 =  INCREMENT 
+PIN   0 =  Q0 
+PIN   0 =  Q1 
+PIN   0 =  Q10T 
+PIN   0 =  Q11T 
+PIN   0 =  Q12T 
+PIN   0 =  Q2 
+PIN   0 =  Q3 
+PIN   0 =  Q4 
+PIN   0 =  Q5 
+PIN   0 =  Q6 
+PIN   0 =  Q7 
+PIN   0 =  Q8 
+PIN   0 =  Q9 
+PIN   0 =  Q10 
+PIN   0 =  Q11 
+PIN   0 =  Q12 
+PIN   0 =  Q13 
+PIN   0 =  Q14 
+PIN   0 =  Q15 
+PIN   0 =  Q2T 
+PIN   0 =  Q3T 
+PIN   0 =  Q4T 
+PIN   0 =  Q5T 
+PIN   0 =  Q6T 
+PIN   0 =  Q7T 
+PIN   0 =  Q8T 
+PIN   0 =  Q9T 
+%END
+
+%FIELD
+%END
+
+%EQUATION
+Q0.d  =>
+    INCREMENT & !Q0
+  # !INCREMENT & Q0
+
+Q0.ck  =>
+    CLKIN
+
+Q1.d  =>
+    INCREMENT & !Q0 & Q1
+  # INCREMENT & Q0 & !Q1
+  # !INCREMENT & Q1
+
+Q1.ck  =>
+    CLKIN
+
+Q10T =>
+    Q9 & Q9T
+
+Q11T =>
+    Q10T & Q10
+
+Q12T =>
+    Q11T & Q11
+
+Q13T =>
+    Q12T & Q12
+
+Q14T =>
+    Q12T & Q12 & Q13
+
+Q2.d  =>
+    INCREMENT & Q2 & !Q2T
+  # INCREMENT & !Q2 & Q2T
+  # !INCREMENT & Q2
+
+Q2.ck  =>
+    CLKIN
+
+Q3.d  =>
+    INCREMENT & Q3 & !Q3T
+  # INCREMENT & !Q3 & Q3T
+  # !INCREMENT & Q3
+
+Q3.ck  =>
+    CLKIN
+
+Q4.d  =>
+    INCREMENT & Q4 & !Q4T
+  # INCREMENT & !Q4 & Q4T
+  # !INCREMENT & Q4
+
+Q4.ck  =>
+    CLKIN
+
+Q5.d  =>
+    INCREMENT & Q5 & !Q5T
+  # INCREMENT & !Q5 & Q5T
+  # !INCREMENT & Q5
+
+Q5.ck  =>
+    CLKIN
+
+Q6.d  =>
+    INCREMENT & Q6 & !Q6T
+  # INCREMENT & !Q6 & Q6T
+  # !INCREMENT & Q6
+
+Q6.ck  =>
+    CLKIN
+
+Q7.d  =>
+    INCREMENT & Q7 & !Q7T
+  # INCREMENT & !Q7 & Q7T
+  # !INCREMENT & Q7
+
+Q7.ck  =>
+    CLKIN
+
+Q8.d  =>
+    INCREMENT & Q8 & !Q8T
+  # INCREMENT & !Q8 & Q8T
+  # !INCREMENT & Q8
+
+Q8.ck  =>
+    CLKIN
+
+Q9.d  =>
+    INCREMENT & Q9 & !Q9T
+  # INCREMENT & !Q9 & Q9T
+  # !INCREMENT & Q9
+
+Q9.ck  =>
+    CLKIN
+
+Q10.d  =>
+    INCREMENT & !Q10T & Q10
+  # INCREMENT & Q10T & !Q10
+  # !INCREMENT & Q10
+
+Q10.ck  =>
+    CLKIN
+
+Q11.d  =>
+    INCREMENT & !Q11T & Q11
+  # INCREMENT & Q11T & !Q11
+  # !INCREMENT & Q11
+
+Q11.ck  =>
+    CLKIN
+
+Q12.d  =>
+    INCREMENT & !Q12T & Q12
+  # INCREMENT & Q12T & !Q12
+  # !INCREMENT & Q12
+
+Q12.ck  =>
+    CLKIN
+
+Q13.d  =>
+    INCREMENT & Q12T & Q12 & !Q13
+  # INCREMENT & !Q12 & Q13
+  # INCREMENT & !Q12T & Q13
+  # !INCREMENT & Q13
+
+Q13.ck  =>
+    CLKIN
+
+Q14.d  =>
+    INCREMENT & Q12T & Q12 & Q13 & !Q14
+  # INCREMENT & !Q13 & Q14
+  # INCREMENT & !Q12 & Q14
+  # INCREMENT & !Q12T & Q14
+  # !INCREMENT & Q14
+
+Q14.ck  =>
+    CLKIN
+
+Q15.d  =>
+    INCREMENT & Q12T & Q12 & Q13 & Q14 & !Q15
+  # INCREMENT & !Q14 & Q15
+  # INCREMENT & !Q13 & Q15
+  # INCREMENT & !Q12 & Q15
+  # INCREMENT & !Q12T & Q15
+  # !INCREMENT & Q15
+
+Q15.ck  =>
+    CLKIN
+
+Q15T =>
+    Q12T & Q12 & Q13 & Q14
+
+Q2T =>
+    Q0 & Q1
+
+Q3T =>
+    Q2 & Q2T
+
+Q4T =>
+    Q3 & Q3T
+
+Q5T =>
+    Q4 & Q4T
+
+Q6T =>
+    Q5 & Q5T
+
+Q7T =>
+    Q6 & Q6T
+
+Q8T =>
+    Q7 & Q7T
+
+Q9T =>
+    Q8 & Q8T
+
+%END
