@@ -157,20 +157,17 @@ Total input pins 		6
 Total output pins 		16
 Total Pts 			62
 
-
-
-INCREMENT and RESET Implemented
-
+Pinnode = Q2T,Q3T,Q4T,Q5T,Q6T,Q7T,Q8T,Q9T, Q10T,Q11T,Q12T
 Total dedicated input used:	1/4 	(25%)
-Total I/O pins used		22/32 	(68%)
-Total Logic cells used 		40/64 	(62%)
+Total I/O pins used		21/32 	(65%)
+Total Logic cells used 		17/64 	(26%)
 Total Flip-Flop used 		16/64 	(25%)
-Total Foldback logic used 	0/64 	(0%)
-Total Nodes+FB/MCells 		40/64 	(62%)
-Total cascade used 		0
-Total input pins 		7
+Total Foldback logic used 	11/64 	(17%)
+Total Nodes+FB/MCells 		27/64 	(42%)
+Total cascade used 		1
+Total input pins 		6
 Total output pins 		16
-Total Pts 			176
+Total Pts 			64
 
 */
 

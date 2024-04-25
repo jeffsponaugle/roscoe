@@ -1,0 +1,268 @@
+Name	 VIDEOADPT;
+PartNo   VIDEOADPT;
+Date     03/30/2024;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1508isptqfp100;
+
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+
+PROPERTY ATMEL {open_collector=nEXP_DEV_WAIT};
+/* NOTE:  Active low values are designated with a starting n. */
+
+/*  
+               MHz	   Horizontal (in Pixels)	                           Vertical (in Lines)
+Format	Pixel Clock    Active Video   Front_Porch Sync_Pulse  Back_Porch	Active_Video	Front_Porch	Sync_Pulse Back_Porch
+640x480, 60Hz	25.175	640	         16	         -96	      48	         480	         11	        -2	         31
+640x480, 72Hz	31.500	640	         24	         -40	      128	         480	         9	        -3	         2
+
+*/
+
+
+
+/* 
+                                                Inputs
+    ##########################################################################################
+*/
+Pin [0..0] = [EXP_CPU_SIZ0..1];
+Pin  0  = EXP_RW;
+Pin  0  = EXP_VMEM_CS;
+Pin  0  = nEXP_VIO_CS;
+Pin [0..0] = [EXP_A0..3];
+Pin  0  = nEXP_DEV_WAIT;      // Open collector signal that the CPU needs to wait - Goes back to Device CPLD
+Pin  0  = nEXP_DATA_EN;
+Pin  0  = nEXP_SYS_RESET;
+Pin[87] = DOT_CLK;
+
+Pin  0  = CPU_VRAM_OE;
+Pin  0  = VRAM_CE;
+Pin  0  = VRAM_WE;
+Pin  0  = VRAM_OE;
+Pin [0..0] = [VRAM_B0..3];
+
+Pin  0  = nVID_LOW_OE;
+Pin  0  = nVID_HIGH_OE;
+Pin  0  = VID_LATCH;
+Pin [0..0] = [VID_FONTROW0..3];
+
+Pin [0..0] = [CBUS_D0..7];
+Pin [0..0] = [ABUS_D0..7];
+Pin [0..0] = [FBUS_D0..7];
+
+Pin  0  = VGA_RED0,VGA_RED1;
+Pin  0  = VGA_GREEN0,VGA_GREEN1;
+Pin  0  = VGA_BLUE0,VGA_BLUE1;
+Pin  0  = VGA_HSYNC;
+Pin  0  = VGA_VSYNC;
+Pin  0  = VGA_DISPLAY_ACTIVE;
+
+
+/* 
+                                                Outputs 
+   ##########################################################################################
+*/
+
+PINNODE [0..0] = [HSYNC_COUNTER0..9];
+PINNODE [0..0] = [VSYNC_COUNTER0..9];    
+PINNODE  0  = VSYNC_CLOCK_A,VSYNC_CLOCK_B;
+
+
+PINNODE [0..0] = [SREG_D0..7];
+
+/*  ________________________________________________________________ */
+/* Shift Register Implementation 
+    SREG_Dx are the storage registers.  D7 is the output.
+    SREG_LOAD is an active high signal to load from SREG_IN the 8 bit value
+    SREG_SHIFT is an active high signal to shift from 0-->7 on clock.   
+    SREG_LOAD overrides SREG_SHIFT.
+    if neither SREG_LOAD or SREG_SHIFT are high the register value stays the same.
+*/
+
+/*
+SREG_D0.d = (SREG_LOAD & SREG_IN0) # (!SREG_LOAD & !SREG_SHIFT & SREG_D0);
+SREG_D1.d = (SREG_LOAD & SREG_IN1) # (!SREG_LOAD & SREG_SHIFT & SREG_D0) # ( !SREG_LOAD & !SREG_SHIFT & SREG_D1 );
+SREG_D2.d = (SREG_LOAD & SREG_IN2) # (!SREG_LOAD & SREG_SHIFT & SREG_D1) # ( !SREG_LOAD & !SREG_SHIFT & SREG_D2 );
+SREG_D3.d = (SREG_LOAD & SREG_IN3) # (!SREG_LOAD & SREG_SHIFT & SREG_D2) # ( !SREG_LOAD & !SREG_SHIFT & SREG_D3 );
+SREG_D4.d = (SREG_LOAD & SREG_IN4) # (!SREG_LOAD & SREG_SHIFT & SREG_D3) # ( !SREG_LOAD & !SREG_SHIFT & SREG_D4 );
+SREG_D5.d = (SREG_LOAD & SREG_IN5) # (!SREG_LOAD & SREG_SHIFT & SREG_D4) # ( !SREG_LOAD & !SREG_SHIFT & SREG_D5 );
+SREG_D6.d = (SREG_LOAD & SREG_IN6) # (!SREG_LOAD & SREG_SHIFT & SREG_D5) # ( !SREG_LOAD & !SREG_SHIFT & SREG_D6 );
+SREG_D7.d = (SREG_LOAD & SREG_IN7) # (!SREG_LOAD & SREG_SHIFT & SREG_D6) # ( !SREG_LOAD & !SREG_SHIFT & SREG_D7 );
+*/
+
+// Needs fixup
+SREG_LOAD_C = 'b'1;
+
+[SREG_D0..7].d = SREG_LOAD_C & [CBUS_D0..7];
+
+SREG_D0.ck = !DOT_CLK;
+SREG_D1.ck = !DOT_CLK;
+SREG_D2.ck = !DOT_CLK;
+SREG_D3.ck = !DOT_CLK;
+SREG_D4.ck = !DOT_CLK;
+SREG_D5.ck = !DOT_CLK;
+SREG_D6.ck = !DOT_CLK;
+SREG_D7.ck = !DOT_CLK;
+
+SREG_D0.ar = !nEXP_SYS_RESET;
+SREG_D1.ar = !nEXP_SYS_RESET;
+SREG_D2.ar = !nEXP_SYS_RESET;
+SREG_D3.ar = !nEXP_SYS_RESET;
+SREG_D4.ar = !nEXP_SYS_RESET;
+SREG_D5.ar = !nEXP_SYS_RESET;
+SREG_D6.ar = !nEXP_SYS_RESET;
+SREG_D7.ar = !nEXP_SYS_RESET;
+
+
+/* For text mode - The lower 4 bits of VSYNC provide to font row */
+VID_FONTROW0 = VSYNC_COUNTER0;
+VID_FONTROW1 = VSYNC_COUNTER1;
+VID_FONTROW2 = VSYNC_COUNTER2;
+VID_FONTROW3 = VSYNC_COUNTER3;
+
+/* Horizontal Sync 10 bit counter, 0-799.  HSYNC_ZERO is used to reset this counter so it loops from 799 back to 0 */
+
+HSYNC_COUNTER0.d = !HSYNC_COUNTER0 & HSYNC_ZERO;
+HSYNC_COUNTER0.ck = DOT_CLK;
+HSYNC_COUNTER0.ar = !nSYS_RESET;
+
+HSYNC_COUNTER1.d = ((HSYNC_COUNTER0&!HSYNC_COUNTER1) # (!HSYNC_COUNTER0&HSYNC_COUNTER1)) & HSYNC_ZERO;
+HSYNC_COUNTER1.ck = DOT_CLK;
+HSYNC_COUNTER1.ar = !nSYS_RESET;
+
+HSYNC_COUNTER2T = HSYNC_COUNTER0&HSYNC_COUNTER1;
+HSYNC_COUNTER2.d = ((HSYNC_COUNTER2T&!HSYNC_COUNTER2) # (!HSYNC_COUNTER2T&HSYNC_COUNTER2)) & HSYNC_ZERO;
+HSYNC_COUNTER2.ck = DOT_CLK;
+HSYNC_COUNTER2.ar = !nSYS_RESET;
+
+HSYNC_COUNTER3T = HSYNC_COUNTER2T&HSYNC_COUNTER2;
+HSYNC_COUNTER3.d = ((HSYNC_COUNTER3T&!HSYNC_COUNTER3) # (!HSYNC_COUNTER3T&HSYNC_COUNTER3)) & HSYNC_ZERO;
+HSYNC_COUNTER3.ck = DOT_CLK;
+HSYNC_COUNTER3.ar = !nSYS_RESET;
+
+HSYNC_COUNTER4T = HSYNC_COUNTER3T&HSYNC_COUNTER3;
+HSYNC_COUNTER4.d = ((HSYNC_COUNTER4T&!HSYNC_COUNTER4) # (!HSYNC_COUNTER4T&HSYNC_COUNTER4)) & HSYNC_ZERO;
+HSYNC_COUNTER4.ck = DOT_CLK;
+HSYNC_COUNTER4.ar = !nSYS_RESET;
+
+HSYNC_COUNTER5T = HSYNC_COUNTER4T&HSYNC_COUNTER4;
+HSYNC_COUNTER5.d = ((HSYNC_COUNTER5T&!HSYNC_COUNTER5) # (!HSYNC_COUNTER5T&HSYNC_COUNTER5)) & HSYNC_ZERO;
+HSYNC_COUNTER5.ck = DOT_CLK;
+HSYNC_COUNTER5.ar = !nSYS_RESET;
+
+HSYNC_COUNTER6T = HSYNC_COUNTER5T&HSYNC_COUNTER5;
+HSYNC_COUNTER6.d = ((HSYNC_COUNTER6T&!HSYNC_COUNTER6) # (!HSYNC_COUNTER6T&HSYNC_COUNTER6)) & HSYNC_ZERO;
+HSYNC_COUNTER6.ck = DOT_CLK;
+HSYNC_COUNTER6.ar = !nSYS_RESET;
+
+HSYNC_COUNTER7T = HSYNC_COUNTER6T&HSYNC_COUNTER6;
+HSYNC_COUNTER7.d = ((HSYNC_COUNTER7T&!HSYNC_COUNTER7) # (!HSYNC_COUNTER7T&HSYNC_COUNTER7)) & HSYNC_ZERO;
+HSYNC_COUNTER7.ck = DOT_CLK;
+HSYNC_COUNTER7.ar = !nSYS_RESET;
+
+HSYNC_COUNTER8T = HSYNC_COUNTER7T&HSYNC_COUNTER7;
+HSYNC_COUNTER8.d = ((HSYNC_COUNTER8T&!HSYNC_COUNTER8) # (!HSYNC_COUNTER8T&HSYNC_COUNTER8)) & HSYNC_ZERO;
+HSYNC_COUNTER8.ck = DOT_CLK;
+HSYNC_COUNTER8.ar = !nSYS_RESET;
+
+HSYNC_COUNTER9T = HSYNC_COUNTER8T&HSYNC_COUNTER8;
+HSYNC_COUNTER9.d = ((HSYNC_COUNTER9T&!HSYNC_COUNTER9) # (!HSYNC_COUNTER9T&HSYNC_COUNTER9)) & HSYNC_ZERO;
+HSYNC_COUNTER9.ck = DOT_CLK;
+HSYNC_COUNTER9.ar = !nSYS_RESET;
+
+FIELD hsync_counter_field = [HSYNC_COUNTER9..0];    // 0-799 counter
+FIELD hsync_counter_3_field = [HSYNC_COUNTER2..0];  // 0-8 counter
+FIELD hsync_counter_4_field = [HSYNC_COUNTER3..0];  // 0-15 counter
+
+/* 
+   HSYNC_ZERO is 0 when we need to loop the counter.  This is Logical AND'ed with the other inputs to each
+   counters .d value, so when we are at the loop location, the next location loaded will be 0.
+   HSYNC_ZERO us normally at 1, and goes to 0 for 1 clock cycle ( CLK25 low to CLK25 low ), and that
+   edge is also used to increment the vertical counters via VSYNC_CLOCK.
+*/
+
+HSYNC_ZERO = !(hsync_counter_field:['d'799]);
+
+/* 
+   The VSYNC_CLOCK signal is used to increment the V_SYNC counter at the end of each horizontal sync row.   
+   The reason for two FFs is to first capture the HSYNC value (on the clock edge opposite of the counter itself changing)
+   followed by a second FF to sync the V_SYNC increment with the rising edge of DOT_CLK.   This allows both the H_SYNC and V_SYNC 
+   counters to be used in logical operations that are clocked on the same clock signal (falling DOT_CLK)
+*/
+
+
+VSYNC_CLOCK_A.d = !HSYNC_ZERO;
+VSYNC_CLOCK_A.ck = !DOT_CLK;
+VSYNC_CLOCK_A.ar = !nSYS_RESET;
+
+VSYNC_CLOCK_B.d = VSYNC_CLOCK_A;
+VSYNC_CLOCK_B.ck = DOT_CLK;
+VSYNC_CLOCK_B.ar = !nSYS_RESET;
+
+/* Vertical Sync 9 bit counter, 0-498.  VSYNC_ZERO is used to reset this counter so it loops from 498 back to 0 */
+
+VSYNC_COUNTER0.d = (!VSYNC_COUNTER0) & VSYNC_ZERO;
+VSYNC_COUNTER0.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER0.ar = !nSYS_RESET;
+
+VSYNC_COUNTER1.d = ((VSYNC_COUNTER0&!VSYNC_COUNTER1) # (!VSYNC_COUNTER0&VSYNC_COUNTER1)) & VSYNC_ZERO;
+VSYNC_COUNTER1.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER1.ar = !nSYS_RESET;
+
+VSYNC_COUNTER2T = VSYNC_COUNTER0&VSYNC_COUNTER1;
+VSYNC_COUNTER2.d = ((VSYNC_COUNTER2T&!VSYNC_COUNTER2) # (!VSYNC_COUNTER2T&VSYNC_COUNTER2)) & VSYNC_ZERO;
+VSYNC_COUNTER2.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER2.ar = !nSYS_RESET;
+
+VSYNC_COUNTER3T = VSYNC_COUNTER2T&VSYNC_COUNTER2;
+VSYNC_COUNTER3.d = ((VSYNC_COUNTER3T&!VSYNC_COUNTER3) # (!VSYNC_COUNTER3T&VSYNC_COUNTER3)) & VSYNC_ZERO;
+VSYNC_COUNTER3.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER3.ar = !nSYS_RESET;
+
+VSYNC_COUNTER4T = VSYNC_COUNTER3T&VSYNC_COUNTER3;
+VSYNC_COUNTER4.d = ((VSYNC_COUNTER4T&!VSYNC_COUNTER4) # (!VSYNC_COUNTER4T&VSYNC_COUNTER4)) & VSYNC_ZERO;
+VSYNC_COUNTER4.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER4.ar = !nSYS_RESET;
+
+VSYNC_COUNTER5T = VSYNC_COUNTER4T&VSYNC_COUNTER4;
+VSYNC_COUNTER5.d = ((VSYNC_COUNTER5T&!VSYNC_COUNTER5) # (!VSYNC_COUNTER5T&VSYNC_COUNTER5)) & VSYNC_ZERO;
+VSYNC_COUNTER5.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER5.ar = !nSYS_RESET;
+
+VSYNC_COUNTER6T = VSYNC_COUNTER5T&VSYNC_COUNTER5;
+VSYNC_COUNTER6.d = ((VSYNC_COUNTER6T&!VSYNC_COUNTER6) # (!VSYNC_COUNTER6T&VSYNC_COUNTER6)) & VSYNC_ZERO;
+VSYNC_COUNTER6.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER6.ar = !nSYS_RESET;
+
+VSYNC_COUNTER7T = VSYNC_COUNTER6T&VSYNC_COUNTER6;
+VSYNC_COUNTER7.d = ((VSYNC_COUNTER7T&!VSYNC_COUNTER7) # (!VSYNC_COUNTER7T&VSYNC_COUNTER7)) & VSYNC_ZERO;
+VSYNC_COUNTER7.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER7.ar = !nSYS_RESET;
+
+VSYNC_COUNTER8T = VSYNC_COUNTER7T&VSYNC_COUNTER7;
+VSYNC_COUNTER8.d = ((VSYNC_COUNTER8T&!VSYNC_COUNTER8) # (!VSYNC_COUNTER8T&VSYNC_COUNTER8)) & VSYNC_ZERO;
+VSYNC_COUNTER8.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER8.ar = !nSYS_RESET;
+
+VSYNC_COUNTER9T = VSYNC_COUNTER8T&VSYNC_COUNTER8;
+VSYNC_COUNTER9.d = ((VSYNC_COUNTER9T&!VSYNC_COUNTER9) # (!VSYNC_COUNTER9T&VSYNC_COUNTER9)) & VSYNC_ZERO;
+VSYNC_COUNTER9.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER9.ar = !nSYS_RESET;
+
+FIELD vsync_counter_field = [VSYNC_COUNTER9..0];
+FIELD vsync_counter_4_field = [VSYNC_COUNTER3..0];
+
+VSYNC_ZERO = !(vsync_counter_field:['d'524]);
+
+VSYNC_DISPLAY_ACTIVE = (vsync_counter_field:[0..'d'479]);
+HSYNC_DISPLAY_ACTIVE = (hsync_counter_field:[8..'d'640]);
+
+VGA_DISPLAY_ACTIVE.d = (HSYNC_DISPLAY_ACTIVE) & (VSYNC_DISPLAY_ACTIVE);
+VGA_DISPLAY_ACTIVE.ck = !DOT_CLK;
+VGA_DISPLAY_ACTIVE.ar = !nSYS_RESET;
+
+

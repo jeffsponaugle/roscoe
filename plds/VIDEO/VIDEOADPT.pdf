@@ -1,0 +1,93 @@
+{COMPONENT C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOADPT.SYM
+
+ {ENVIRONMENT
+  {PDIFvrev 3.00}
+  {Program "CUPL(WM) Version 5.0a"}
+  {DBtype "Schematic"}
+  {DBvrev 1.01}
+  {DBtime "Wed Apr 24 14:45:54 2024 "}
+  {DBunit "MIL"}
+  {DBgrid 10}
+  {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
+          "PINNAM" 6 "PINCON" 4 "REFDES" 2 "ATTR" 6 "SDOT" 1 
+          "DEVICE" 5 "OUTLIN" 5 "ATTR2" 6 "NOTES" 6 "NETNAM" 4 
+          "CMPNAM" 5 "BORDER" 5}
+ }
+
+ {USER
+  {VIEW
+   {Mode SYMB}
+   {Nlst OPEN}
+   {Vw 0 0 2}
+   {Lv 12 2 2 2 0 0 2 2 2 2 0 0 2 1 2 0 0 0 0}
+   {Gs 10 10}
+  }
+ }
+
+ {DISPLAY
+  [Ly "PINNUM"]
+  [Ls "SOLID"][Wd 0]
+  [Ts 15][Tj "LC"][Tr 0][Tm "N"]
+ }
+
+ {SYMBOL
+  {PIN_DEF
+   [Ly "PINCON"]
+   {P DOT_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 1640}}
+  }
+
+  {PKG
+   [Ly "REFDES"]
+   [Ts 25][Tj "CB"][Tr 0][Tm "N"]
+   {Rdl 190 1670}
+
+   [Ly "PINNUM"]
+   [Ts 15][Tj "RC"]
+   {Pnl 120 1650}
+   [Ts 15][Tj "RC"]
+   [Ts 15][Tj "LC"]
+
+   {Sd A 87}
+  }
+
+  {PIC
+   [Ly "GATE"]
+   [Ts 15][Tj "LC"][Tr 0][Tm "N"]
+   {R 130 1660 250 0}
+   {L 130 1640 100 1640}
+   {L 130 1650 140 1640 130 1630}
+   [Ly "PINNAM"]
+   [Tj "LC"]
+   {T "DOT_CLK" 140 1640}
+   [Tj "RC"]
+   [Ly "DEVICE"]
+   [Tj "CT"]
+   {T "F1508ISPTQFP100" 190 -10}
+  }
+
+  {ATR
+   {IN
+    {Org 100 1620}
+    {Ty 255}
+   }
+   {EX
+    [Ly "ATTR2"]
+    [Ts 12][Tj "CT"][Tr 0][Tm "N"]
+    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOADPT 190 1660}
+   }
+  }
+ }
+
+ {DETAIL
+  {ANNOTATE
+  }
+
+  {NET_DEF
+   {N DOT_CLK
+   }
+  }
+
+  {SUBCOMP
+  }
+ }
+}

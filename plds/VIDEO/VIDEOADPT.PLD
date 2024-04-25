@@ -1,0 +1,435 @@
+Name	 VIDEOADPT;
+PartNo   VIDEOADPT;
+Date     03/30/2024;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1508isptqfp100;
+
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+
+//PROPERTY ATMEL {open_collector=nEXP_DEV_WAIT};
+/* NOTE:  Active low values are designated with a starting n. */
+
+/*  
+               MHz	   Horizontal (in Pixels)	                           Vertical (in Lines)
+Format	Pixel Clock    Active Video   Front_Porch Sync_Pulse  Back_Porch	Active_Video	Front_Porch	Sync_Pulse Back_Porch
+640x480, 60Hz	25.175	640	         16	         -96	      48	         480	         11	        -2	         31
+640x480, 72Hz	31.500	640	         24	         -40	      128	         480	         9	        -3	         2
+
+640x480 - Blanking  (0-15)    [16]
+          Video out (16-655) [640]
+          Blanking  (656-671) [16]
+          HSYNC     (672-767) [96]
+          Blanking  (768-799) [32]
+
+*/
+
+
+
+/* 
+                                                Inputs
+    ##########################################################################################
+*/
+Pin = [EXP_CPU_SIZ0..1];
+Pin = EXP_RW;
+Pin = nEXP_VMEM_CS;
+Pin = nEXP_VIO_CS;
+Pin = [EXP_A0..3];
+Pin = nEXP_DEV_WAIT;      // Open collector signal that the CPU needs to wait - Goes back to Device CPLD
+Pin = nEXP_DATA_EN;
+Pin = nSYS_RESET;
+Pin[87] = DOT_CLK;
+
+Pin = CPU_VRAM_OE;
+Pin = VRAM_CE;
+Pin = VRAM_WE;
+Pin = VRAM_OE;
+Pin = [VRAM_B0..3];
+
+Pin = nVID_LOW_OE;
+Pin = nVID_HIGH_OE;
+Pin = VID_LATCH;
+Pin = [VID_FONTROW0..3];
+Pin = [VRAM_A0..A17];
+
+Pin = [CBUS_D0..7];
+Pin = [ABUS_D0..7];
+Pin = [FBUS_D0..7];
+
+Pin = VGA_RED0,VGA_RED1;
+Pin = VGA_GREEN0,VGA_GREEN1;
+Pin = VGA_BLUE0,VGA_BLUE1;
+Pin = VGA_HSYNC;
+Pin = VGA_VSYNC;
+
+Pin = VGA_DISPLAY_ACTIVE;
+Pin = VSYNC_DISPLAY_ACTIVE;
+Pin = HSYNC_DISPLAY_ACTIVE;
+
+/* 
+                                                Outputs 
+   ##########################################################################################
+*/
+
+PINNODE = [HSYNC_COUNTER0..9];
+PINNODE = [VSYNC_COUNTER0..9];    
+PINNODE = VSYNC_CLOCK_A,VSYNC_CLOCK_B;
+PINNODE = VGA_BUSY;
+PINNODE = VMEM_ACCESS_BUSY_START;
+PINNODE = VMEM_ACCESS_BUSY_START_RESET;
+PINNODE = VRAM_READ;
+PINNODE = VRAM_LATCH;
+PINNODE = VRAM_SELECT_WORD0;
+PINNODE = VRAM_SELECT_WORD1;
+PINNODE = VRAM_LATCH_DATA_IN;
+PINNODE = SHIFTER_SHIFT;
+
+PINNODE = [SREG_D0..7];
+
+/*  ________________________________________________________________ */
+/* 
+    Shift Register Implementation 
+    SREG_Dx are the storage registers.  D7 is the output.
+    VRAM_LATCH_DATA is high to force a load into the shift register from the FBUS.
+    SHIFTER_SHIFT is high to for a shift from D0->D7 by one bit, bringing in a 0.
+    IF neither VRAM_LATCH_DATA or SHIFTER_SHIFT is high the SREG will load 0.  That keeps
+    the SREG output at 0 unless there is active display data.
+    SREG_D7 is the shifter output that goes to the VGA drivers.
+  
+*/
+
+SREG_D0.d = (VRAM_LATCH_DATA_IN & FBUS_D0);
+SREG_D1.d = (VRAM_LATCH_DATA_IN & FBUS_D1) # (SHIFTER_SHIFT & SREG_D0 );
+SREG_D2.d = (VRAM_LATCH_DATA_IN & FBUS_D2) # (SHIFTER_SHIFT & SREG_D1 );
+SREG_D3.d = (VRAM_LATCH_DATA_IN & FBUS_D3) # (SHIFTER_SHIFT & SREG_D2 );
+SREG_D4.d = (VRAM_LATCH_DATA_IN & FBUS_D4) # (SHIFTER_SHIFT & SREG_D3 );
+SREG_D5.d = (VRAM_LATCH_DATA_IN & FBUS_D5) # (SHIFTER_SHIFT & SREG_D4 );
+SREG_D6.d = (VRAM_LATCH_DATA_IN & FBUS_D6) # (SHIFTER_SHIFT & SREG_D5 );
+SREG_D7.d = (VRAM_LATCH_DATA_IN & FBUS_D7) # (SHIFTER_SHIFT & SREG_D6 );
+
+SREG_D0.ck = !DOT_CLK;
+SREG_D1.ck = !DOT_CLK;
+SREG_D2.ck = !DOT_CLK;
+SREG_D3.ck = !DOT_CLK;
+SREG_D4.ck = !DOT_CLK;
+SREG_D5.ck = !DOT_CLK;
+SREG_D6.ck = !DOT_CLK;
+SREG_D7.ck = !DOT_CLK;
+
+SREG_D0.ar = !nSYS_RESET;
+SREG_D1.ar = !nSYS_RESET;
+SREG_D2.ar = !nSYS_RESET;
+SREG_D3.ar = !nSYS_RESET;
+SREG_D4.ar = !nSYS_RESET;
+SREG_D5.ar = !nSYS_RESET;
+SREG_D6.ar = !nSYS_RESET;
+SREG_D7.ar = !nSYS_RESET;
+
+
+/* For text mode - The lower 4 bits of VSYNC provide to font row */
+VID_FONTROW0 = VSYNC_COUNTER0;
+VID_FONTROW1 = VSYNC_COUNTER1;
+VID_FONTROW2 = VSYNC_COUNTER2;
+VID_FONTROW3 = VSYNC_COUNTER3;
+
+/* Horizontal Sync 10 bit counter, 0-799.  HSYNC_ZERO is used to reset this counter so it loops from 799 back to 0 */
+
+HSYNC_COUNTER0.d = !HSYNC_COUNTER0 & HSYNC_ZERO;
+HSYNC_COUNTER0.ck = DOT_CLK;
+HSYNC_COUNTER0.ar = !nSYS_RESET;
+
+HSYNC_COUNTER1.d = ((HSYNC_COUNTER0&!HSYNC_COUNTER1) # (!HSYNC_COUNTER0&HSYNC_COUNTER1)) & HSYNC_ZERO;
+HSYNC_COUNTER1.ck = DOT_CLK;
+HSYNC_COUNTER1.ar = !nSYS_RESET;
+
+HSYNC_COUNTER2T = HSYNC_COUNTER0&HSYNC_COUNTER1;
+HSYNC_COUNTER2.d = ((HSYNC_COUNTER2T&!HSYNC_COUNTER2) # (!HSYNC_COUNTER2T&HSYNC_COUNTER2)) & HSYNC_ZERO;
+HSYNC_COUNTER2.ck = DOT_CLK;
+HSYNC_COUNTER2.ar = !nSYS_RESET;
+
+HSYNC_COUNTER3T = HSYNC_COUNTER2T&HSYNC_COUNTER2;
+HSYNC_COUNTER3.d = ((HSYNC_COUNTER3T&!HSYNC_COUNTER3) # (!HSYNC_COUNTER3T&HSYNC_COUNTER3)) & HSYNC_ZERO;
+HSYNC_COUNTER3.ck = DOT_CLK;
+HSYNC_COUNTER3.ar = !nSYS_RESET;
+
+HSYNC_COUNTER4T = HSYNC_COUNTER3T&HSYNC_COUNTER3;
+HSYNC_COUNTER4.d = ((HSYNC_COUNTER4T&!HSYNC_COUNTER4) # (!HSYNC_COUNTER4T&HSYNC_COUNTER4)) & HSYNC_ZERO;
+HSYNC_COUNTER4.ck = DOT_CLK;
+HSYNC_COUNTER4.ar = !nSYS_RESET;
+
+HSYNC_COUNTER5T = HSYNC_COUNTER4T&HSYNC_COUNTER4;
+HSYNC_COUNTER5.d = ((HSYNC_COUNTER5T&!HSYNC_COUNTER5) # (!HSYNC_COUNTER5T&HSYNC_COUNTER5)) & HSYNC_ZERO;
+HSYNC_COUNTER5.ck = DOT_CLK;
+HSYNC_COUNTER5.ar = !nSYS_RESET;
+
+HSYNC_COUNTER6T = HSYNC_COUNTER5T&HSYNC_COUNTER5;
+HSYNC_COUNTER6.d = ((HSYNC_COUNTER6T&!HSYNC_COUNTER6) # (!HSYNC_COUNTER6T&HSYNC_COUNTER6)) & HSYNC_ZERO;
+HSYNC_COUNTER6.ck = DOT_CLK;
+HSYNC_COUNTER6.ar = !nSYS_RESET;
+
+HSYNC_COUNTER7T = HSYNC_COUNTER6T&HSYNC_COUNTER6;
+HSYNC_COUNTER7.d = ((HSYNC_COUNTER7T&!HSYNC_COUNTER7) # (!HSYNC_COUNTER7T&HSYNC_COUNTER7)) & HSYNC_ZERO;
+HSYNC_COUNTER7.ck = DOT_CLK;
+HSYNC_COUNTER7.ar = !nSYS_RESET;
+
+HSYNC_COUNTER8T = HSYNC_COUNTER7T&HSYNC_COUNTER7;
+HSYNC_COUNTER8.d = ((HSYNC_COUNTER8T&!HSYNC_COUNTER8) # (!HSYNC_COUNTER8T&HSYNC_COUNTER8)) & HSYNC_ZERO;
+HSYNC_COUNTER8.ck = DOT_CLK;
+HSYNC_COUNTER8.ar = !nSYS_RESET;
+
+HSYNC_COUNTER9T = HSYNC_COUNTER8T&HSYNC_COUNTER8;
+HSYNC_COUNTER9.d = ((HSYNC_COUNTER9T&!HSYNC_COUNTER9) # (!HSYNC_COUNTER9T&HSYNC_COUNTER9)) & HSYNC_ZERO;
+HSYNC_COUNTER9.ck = DOT_CLK;
+HSYNC_COUNTER9.ar = !nSYS_RESET;
+
+FIELD hsync_counter_field = [HSYNC_COUNTER9..0];    // 0-799 counter
+FIELD hsync_counter_3_field = [HSYNC_COUNTER2..0];  // 0-8 counter
+FIELD hsync_counter_4_field = [HSYNC_COUNTER3..0];  // 0-15 counter
+
+/* 
+   HSYNC_ZERO is 0 when we need to loop the counter.  This is Logical AND'ed with the other inputs to each
+   counters .d value, so when we are at the loop location, the next location loaded will be 0.
+   HSYNC_ZERO us normally at 1, and goes to 0 for 1 clock cycle ( CLK25 low to CLK25 low ), and that
+   edge is also used to increment the vertical counters via VSYNC_CLOCK.
+*/
+
+HSYNC_ZERO = !(hsync_counter_field:['d'799]);
+
+/* 
+   The VSYNC_CLOCK signal is used to increment the V_SYNC counter at the end of each horizontal sync row.   
+   The reason for two FFs is to first capture the HSYNC value (on the clock edge opposite of the counter itself changing)
+   followed by a second FF to sync the V_SYNC increment with the rising edge of DOT_CLK.   This allows both the H_SYNC and V_SYNC 
+   counters to be used in logical operations that are clocked on the same clock signal (falling DOT_CLK)
+*/
+
+
+VSYNC_CLOCK_A.d = !HSYNC_ZERO;
+VSYNC_CLOCK_A.ck = !DOT_CLK;
+VSYNC_CLOCK_A.ar = !nSYS_RESET;
+
+VSYNC_CLOCK_B.d = VSYNC_CLOCK_A;
+VSYNC_CLOCK_B.ck = DOT_CLK;
+VSYNC_CLOCK_B.ar = !nSYS_RESET;
+
+/* Vertical Sync 9 bit counter, 0-498.  VSYNC_ZERO is used to reset this counter so it loops from 498 back to 0 */
+
+VSYNC_COUNTER0.d = (!VSYNC_COUNTER0) & VSYNC_ZERO;
+VSYNC_COUNTER0.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER0.ar = !nSYS_RESET;
+
+VSYNC_COUNTER1.d = ((VSYNC_COUNTER0&!VSYNC_COUNTER1) # (!VSYNC_COUNTER0&VSYNC_COUNTER1)) & VSYNC_ZERO;
+VSYNC_COUNTER1.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER1.ar = !nSYS_RESET;
+
+VSYNC_COUNTER2T = VSYNC_COUNTER0&VSYNC_COUNTER1;
+VSYNC_COUNTER2.d = ((VSYNC_COUNTER2T&!VSYNC_COUNTER2) # (!VSYNC_COUNTER2T&VSYNC_COUNTER2)) & VSYNC_ZERO;
+VSYNC_COUNTER2.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER2.ar = !nSYS_RESET;
+
+VSYNC_COUNTER3T = VSYNC_COUNTER2T&VSYNC_COUNTER2;
+VSYNC_COUNTER3.d = ((VSYNC_COUNTER3T&!VSYNC_COUNTER3) # (!VSYNC_COUNTER3T&VSYNC_COUNTER3)) & VSYNC_ZERO;
+VSYNC_COUNTER3.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER3.ar = !nSYS_RESET;
+
+VSYNC_COUNTER4T = VSYNC_COUNTER3T&VSYNC_COUNTER3;
+VSYNC_COUNTER4.d = ((VSYNC_COUNTER4T&!VSYNC_COUNTER4) # (!VSYNC_COUNTER4T&VSYNC_COUNTER4)) & VSYNC_ZERO;
+VSYNC_COUNTER4.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER4.ar = !nSYS_RESET;
+
+VSYNC_COUNTER5T = VSYNC_COUNTER4T&VSYNC_COUNTER4;
+VSYNC_COUNTER5.d = ((VSYNC_COUNTER5T&!VSYNC_COUNTER5) # (!VSYNC_COUNTER5T&VSYNC_COUNTER5)) & VSYNC_ZERO;
+VSYNC_COUNTER5.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER5.ar = !nSYS_RESET;
+
+VSYNC_COUNTER6T = VSYNC_COUNTER5T&VSYNC_COUNTER5;
+VSYNC_COUNTER6.d = ((VSYNC_COUNTER6T&!VSYNC_COUNTER6) # (!VSYNC_COUNTER6T&VSYNC_COUNTER6)) & VSYNC_ZERO;
+VSYNC_COUNTER6.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER6.ar = !nSYS_RESET;
+
+VSYNC_COUNTER7T = VSYNC_COUNTER6T&VSYNC_COUNTER6;
+VSYNC_COUNTER7.d = ((VSYNC_COUNTER7T&!VSYNC_COUNTER7) # (!VSYNC_COUNTER7T&VSYNC_COUNTER7)) & VSYNC_ZERO;
+VSYNC_COUNTER7.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER7.ar = !nSYS_RESET;
+
+VSYNC_COUNTER8T = VSYNC_COUNTER7T&VSYNC_COUNTER7;
+VSYNC_COUNTER8.d = ((VSYNC_COUNTER8T&!VSYNC_COUNTER8) # (!VSYNC_COUNTER8T&VSYNC_COUNTER8)) & VSYNC_ZERO;
+VSYNC_COUNTER8.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER8.ar = !nSYS_RESET;
+
+VSYNC_COUNTER9T = VSYNC_COUNTER8T&VSYNC_COUNTER8;
+VSYNC_COUNTER9.d = ((VSYNC_COUNTER9T&!VSYNC_COUNTER9) # (!VSYNC_COUNTER9T&VSYNC_COUNTER9)) & VSYNC_ZERO;
+VSYNC_COUNTER9.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER9.ar = !nSYS_RESET;
+
+FIELD vsync_counter_field = [VSYNC_COUNTER9..0];
+FIELD vsync_counter_4_field = [VSYNC_COUNTER3..0];
+
+VSYNC_ZERO = !(vsync_counter_field:['d'524]);
+
+VSYNC_DISPLAY_ACTIVE = (vsync_counter_field:[0..'d'479]);
+HSYNC_DISPLAY_ACTIVE = (hsync_counter_field:[16..'d'656]);
+
+VGA_DISPLAY_ACTIVE.d = (HSYNC_DISPLAY_ACTIVE) & (VSYNC_DISPLAY_ACTIVE);
+VGA_DISPLAY_ACTIVE.ck = !DOT_CLK;
+VGA_DISPLAY_ACTIVE.ar = !nSYS_RESET;
+
+VGA_HSYNC.d = !(hsync_counter_field:['d'672..'d'767]);
+VGA_HSYNC.ck = !DOT_CLK;
+VGA_HSYNC.ap = !nSYS_RESET;
+
+VGA_VSYNC.d = !(vsync_counter_field:['d'490..'d'491]);
+VGA_VSYNC.ck = !DOT_CLK;
+VGA_VSYNC.ar = !nSYS_RESET;
+
+VGA_BUSY.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;
+VGA_BUSY.ck = !DOT_CLK;
+VGA_BUSY.ar = !nSYS_RESET;
+
+/* 
+   VMEM_ACCCESS_BUSY_START records the value of VGA_BUSY at the start of a CPU VMEM access.  If this recorded value is 0 then we know
+   the VGA_BUSY flag was not set at the start of a CPU bus transaction.  As a result we can complete this transaction without any 
+   delay. This is possible because the VGA_BUSY signal is asserted by the video subsection with at least 4 dot clock cycles before a 
+   video access occurs.  This is enough time for any CPU bus transaction to complete.  This arrangement prevents bus cycles from neededing
+   to be aborted mid cycle.
+*/
+
+VMEM_ACCESS_BUSY_START.d = VGA_BUSY;
+VMEM_ACCESS_BUSY_START.ck = !nEXP_VMEM_CS;
+VMEM_ACCESS_BUSY_START.ap = !nSYS_RESET # VMEM_ACCESS_BUSY_START_RESET;
+
+/* 
+   The Reset flip flop below starts out at 0 (in reset).  On the rising edge of VMEM_CS it is set to 1.  That value of 1 will
+   reset the above flipflop to 1 which is the default busy state.  This is done to prevent there from being a race condition.  If the
+   above flip flop is left in the unbusy(0) state there will be a small window between when MEM_CS goes low and the current VGA_BUSY value is
+   lateched.  If that VGA_BUSY is 1, that will create a small glitch in the DEV_WAIT signal.  By keeping the idle state '1' for this
+   flip flop there will never be a condition where AS goes low a bit before this sees the VGA_BUSY flag.
+   
+   The reset flipflop is then reset by the above flip flop, preventing it from holding the above flipflop in reset.
+*/
+VMEM_ACCESS_BUSY_START_RESET.d = 'b'1;
+VMEM_ACCESS_BUSY_START_RESET.ck = nEXP_VMEM_CS;
+VMEM_ACCESS_BUSY_START_RESET.ar = VMEM_ACCESS_BUSY_START;
+
+/* The above flip flops will allow CPU access when VGA_BUSY is not asserted, however if it is asserted at the start we 
+   need to handle that case.   We will keep DEV_WAIT at 0 until the VGA_BUSY signal also goes to 0.
+*/
+
+/* nEXP_DEV_WAIT is the open collector signal we set to 0 to pause a CPU bus operation.
+
+   IF VMEM_CS is low and the BUSY_START is low, we are doing a bus cycle with no wait, so make sure DEV_WAIT is kept high.
+   IF VEMM_CS is low and the VGA_BUSY is high, keep DEV_WAIT low.  As soon as VGA_BUSY goes low DEV_WAIT will go high.
+   If CS is high, keep the DEV_WAIT high
+ */
+
+nEXP_DEV_WAIT =   (!nEXP_VMEM_CS & !VMEM_ACCESS_BUSY_START)    
+                # (!nEXP_VMEM_CS & !VGA_BUSY)
+                # (nEXP_VMEM_CS);
+
+/* 
+    VRAM_READ will enable the address drivers to VRAM as well as enable the VRAM to do a read.  Output from the VRAM will go to 
+    a set of latches that will save all 4 bytes of video memory. 
+*/
+VRAM_READ.d = (hsync_counter_4_field:['d'8,'d'9,'d'10]) & VGA_BUSY;
+VRAM_READ.ck = !DOT_CLK;
+VRAM_READ.ar = !nSYS_RESET; 
+
+/*
+    VRAM_LATCH will latch the data that is being driven from the VRAM into the 4 bytes of VRAM LATCHES.  
+    This signal must happen inside the VRAM_READ signal above.
+*/
+VRAM_LATCH.d = (hsync_counter_4_field:['d'10]) & VGA_BUSY;
+VRAM_LATCH.ck = !DOT_CLK;
+VRAM_LATCH.ar = !nSYS_RESET; 
+
+/*  
+    Once data is on the 4 byte latches, VRAM_SELECT_WORD0 will output the lower word with one byte going to both the FONT 
+    ROM as well as the CBUS input while the second byte goes to the ABUS input.   Data on these inputs can be lateched
+    inside the CPLD
+*/
+
+
+VRAM_SELECT_WORD0.d = (hsync_counter_4_field:['d'13]) & VGA_BUSY;
+VRAM_SELECT_WORD0.ck = !DOT_CLK;
+VRAM_SELECT_WORD0.ar = !nSYS_RESET; 
+
+/*  
+    Once data is on the 4 byte latches, VRAM_SELECT_WORD1 will output the upper word with one byte going to both the FONT 
+    ROM as well as the CBUS input while the second byte goes to the ABUS input.   Data on these inputs can be lateched
+    inside the CPLD
+*/
+
+VRAM_SELECT_WORD1.d = (hsync_counter_4_field:['d'5]) & VGA_BUSY;
+VRAM_SELECT_WORD1.ck = !DOT_CLK;
+VRAM_SELECT_WORD1.ar = !nSYS_RESET; 
+
+/*
+    VRAM_LATCH_DATA_IN will force the latching of data on the FBUS and the ABUS inside the CPLD.  The latches themselves are clocked 
+    on the falling edge of the DOT CLOCK, so this signal needs to be active the cycle before you want the actual latching to happen.
+    We want new pixel data to be latched starting in cycle 0 and 8 [mod 4], so this signal needs to be 1 cycle before that.
+*/
+
+VRAM_LATCH_DATA_IN.d = (hsync_counter_3_field:['d'15,'d'7]) & VGA_BUSY;
+VRAM_LATCH_DATA_IN.ck = !DOT_CLK;
+VRAM_LATCH_DATA_IN.ar = !nSYS_RESET;
+
+/*
+    SHIFTER_SHIFT will trigger the shifter to do a shift operation instead of a latch operation.   The shifter latches themselves 
+    are clocked on the falling edge of the DOT CLOCK, so this signal needs to be active the cycle before you want the actual 
+    shifting to happen. We want new pixel data to be latched starting in cycle 0 and 8 [mod 4], so this signal needs to be 
+    1 cycle before that.
+*/
+
+SHIFTER_SHIFT.d = (hsync_counter_3_field:['d'0..'d'6]) & VGA_BUSY;
+SHIFTER_SHIFT.ck = !DOT_CLK;
+SHIFTER_SHIFT.ar = !nSYS_RESET;
+
+/*
+    If VRAM_READ is asserted, we want to enable to address output to the VRAM using the H and V Counters to select the 
+    correct memory address
+
+*/
+
+[VRAM_A0..A13].oe = VRAM_READ;
+VRAM_A0 = HSYNC_COUNTER4;
+VRAM_A1 = HSYNC_COUNTER5;
+VRAM_A2 = HSYNC_COUNTER6;
+VRAM_A3 = HSYNC_COUNTER7;
+VRAM_A4 = HSYNC_COUNTER8;
+VRAM_A5 = HSYNC_COUNTER9;           // 6 bits - Character COLUMN * 2 (2 characters per word)
+VRAM_A6 = VSYNC_COUNTER4;
+VRAM_A7 = VSYNC_COUNTER5;
+VRAM_A8 = VSYNC_COUNTER6;
+VRAM_A9 = VSYNC_COUNTER7;
+VRAM_A10 = VSYNC_COUNTER8;          // 5 bits - Character ROW
+VRAM_A11 = 'b'0;                   
+VRAM_A12 = 'b'0;
+VRAM_A13 = 'b'0;
+
+// Simple Black and white output
+
+VGA_RED0 = SREG_D7;
+VGA_RED1 = SREG_D7;
+VGA_GREEN0 = SREG_D7;
+VGA_GREEN1 = SREG_D7;
+VGA_BLUE0 = SREG_D7;
+VGA_BLUE1 = SREG_D7;
+
+/*
+Total dedicated input used:	3/4 	(75%)
+Total I/O pins used		42/80 	(52%)
+Total Logic cells used 		79/128 	(61%)
+Total Flip-Flop used 		42/128 	(32%)
+Total Foldback logic used 	1/128 	(0%)
+Total Nodes+FB/MCells 		78/128 	(60%)
+Total cascade used 		2
+Total input pins 		15
+Total output pins 		30
+Total Pts 			238
+*/
+
+
