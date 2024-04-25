@@ -1,0 +1,150 @@
+Name	 VIDEOMEM;
+PartNo   VIDEOMEM;
+Date     03/30/2024;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1504isptqfp44;
+
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+
+Pin = [EXP_CPU_SIZ0..1];
+Pin = EXP_RW;
+Pin = nEXP_VMEM_CS;
+Pin = nEXP_VIO_CS;
+Pin = [EXP_CPU_A0..3];
+Pin = nEXP_DEV_WAIT;      // Open collector signal that the CPU needs to wait - Goes back to Device CPLD
+Pin = nEXP_DATA_EN;
+
+Pin = nCPU_VRAM_OE;
+Pin = nVRAM_CE;
+Pin = nVRAM_WE;
+Pin = nVRAM_OE;
+Pin = [nVRAM_B0..3];
+Pin = nSYS_RESET;
+
+// Signals from the Video CPLD
+Pin = VGA_BUSY;
+Pin = VRAM_READ;
+
+PINNODE = VMEM_ACCESS_BUSY_START, VMEM_ACCESS_BUSY_START_RESET;
+
+
+
+/* 
+   VMEM_ACCCESS_BUSY_START records the value of VGA_BUSY at the start of a CPU VMEM access.  If this recorded value is 0 then we know
+   the VGA_BUSY flag was not set at the start of a CPU bus transaction.  As a result we can complete this transaction without any 
+   delay. This is possible because the VGA_BUSY signal is asserted by the video subsection with at least 4 dot clock cycles before a 
+   video access occurs.  This is enough time for any CPU bus transaction to complete.  This arrangement prevents bus cycles from neededing
+   to be aborted mid cycle.
+*/
+
+VMEM_ACCESS_BUSY_START.d = VGA_BUSY;
+VMEM_ACCESS_BUSY_START.ck = !nEXP_VMEM_CS;
+VMEM_ACCESS_BUSY_START.ap = !nSYS_RESET # VMEM_ACCESS_BUSY_START_RESET;
+
+/* 
+   The Reset flip flop below starts out at 0 (in reset).  On the rising edge of VMEM_CS it is set to 1.  That value of 1 will
+   reset the above flipflop to 1 which is the default busy state.  This is done to prevent there from being a race condition.  If the
+   above flip flop is left in the unbusy(0) state there will be a small window between when MEM_CS goes low and the current VGA_BUSY value is
+   lateched.  If that VGA_BUSY is 1, that will create a small glitch in the DEV_WAIT signal.  By keeping the idle state '1' for this
+   flip flop there will never be a condition where AS goes low a bit before this sees the VGA_BUSY flag.
+   
+   The reset flipflop is then reset by the above flip flop, preventing it from holding the above flipflop in reset.
+*/
+VMEM_ACCESS_BUSY_START_RESET.d = 'b'1;
+VMEM_ACCESS_BUSY_START_RESET.ck = nEXP_VMEM_CS;
+VMEM_ACCESS_BUSY_START_RESET.ar = VMEM_ACCESS_BUSY_START;
+
+/* The above flip flops will allow CPU access when VGA_BUSY is not asserted, however if it is asserted at the start we 
+   need to handle that case.   We will keep DEV_WAIT at 0 until the VGA_BUSY signal also goes to 0.
+*/
+
+PINNODE = CPU_ACCESS_IN_PROGRESS;
+
+CPU_ACCESS_IN_PROGRESS = (!nEXP_VMEM_CS & !VMEM_ACCESS_BUSY_START) # (!nEXP_VMEM_CS & !VGA_BUSY);
+
+/* nEXP_DEV_WAIT is the open collector signal we set to 0 to pause a CPU bus operation.
+
+   IF VMEM_CS is low and the BUSY_START is low, we are doing a bus cycle with no wait, so make sure DEV_WAIT is kept high.
+   IF VEMM_CS is low and the VGA_BUSY is high, keep DEV_WAIT low.  As soon as VGA_BUSY goes low DEV_WAIT will go high.
+   If CS is high, keep the DEV_WAIT high
+ */
+
+nEXP_DEV_WAIT = CPU_ACCESS_IN_PROGRESS
+                # (nEXP_VMEM_CS);
+
+
+
+// If VRAM_READ is 1 or if CPU_ACCESS_IN_PROGRESS is 1, lets enable the Video memory.
+nVRAM_CE = !(VRAM_READ # CPU_ACCESS_IN_PROGRESS);
+nVRAM_OE = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW));
+nVRAM_WE = !(CPU_ACCESS_IN_PROGRESS & !EXP_RW);
+nEXP_DATA_EN = !(CPU_ACCESS_IN_PROGRESS & EXP_RW);      // DATA_EN must be low if this is a READ from the CPU
+
+/* 
+   The individual Bx enables allow access to single byte sections of a 4 byte address.  On read (either CPU or Video card) 
+   these are all 4 enabled.  On Writes, only the secion being written is enabled.
+
+*/
+nVRAM_B0 = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW) # (CPU_ACCESS_IN_PROGRESS & !EXP_RW & BA32_UH )  );
+nVRAM_B1 = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW) # (CPU_ACCESS_IN_PROGRESS & !EXP_RW & BA32_UL )  );
+nVRAM_B2 = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW) # (CPU_ACCESS_IN_PROGRESS & !EXP_RW & BA32_LH )  );
+nVRAM_B3 = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW) # (CPU_ACCESS_IN_PROGRESS & !EXP_RW & BA32_LL )  );
+
+
+/* 
+    Memory Bank Selection Logic:
+
+    During a write operation the CPU will indicate via the SIZE0-1 and A0-1 pins the number of bytes being written
+    and the location of the writes on theh 32 bit databus.  It is possible for the CPU to write to a single byte location 
+    inside of a 32 bit wide memory.  As such we need to have individual control over which part of the data bus is 
+    participating in a write. 
+
+    It is important to note that for cacheable areas of memory (which in our design is all of the SRAM and 
+    DRAM areas) - All read operations are 32 Bus Access, and all read operations must return all 4 bytes based 
+    on the address bus.  This is to guarentee the cache always has the correct full 32 value for an addresss.
+
+    SEE DATASHEET for TABLE
+
+    For 32bit Bus Write Access:
+            BA32_LL = Active high flag for the LSB 8 bits, located on D31:D24
+            BA32_LH = Active high flag for the second LSB 8 bits, located on D23:D16
+            BA32_UL = Active high flag for the lower MSB 8 bits, located on D15:D8
+            BA32_UH = Active high flag for the upper MSB 8 bits, located on D7:D0
+
+
+*/
+
+
+
+BA32_LL = (!EXP_CPU_A0 & !EXP_CPU_A1);
+BA32_LH = !((EXP_CPU_A1 # (!EXP_CPU_A0 & EXP_CPU_SIZ0 & !EXP_CPU_SIZ1)));
+BA32_UL = !(( (!EXP_CPU_A1 & EXP_CPU_SIZ0 & !EXP_CPU_SIZ1) 
+            # (EXP_CPU_A1 & EXP_CPU_A0) 
+            # (!EXP_CPU_A0 & !EXP_CPU_A1 & !EXP_CPU_SIZ0 & EXP_CPU_SIZ1)
+           ));
+BA32_UH = (   (EXP_CPU_A1 & EXP_CPU_SIZ1) 
+            # (!EXP_CPU_SIZ1 & !EXP_CPU_SIZ0) 
+            # (EXP_CPU_A0 & EXP_CPU_SIZ1 & EXP_CPU_SIZ0) 
+            # (EXP_CPU_A0 & EXP_CPU_A1)
+          );
+
+
+/*
+Total dedicated input used:	1/4 	(25%)
+Total I/O pins used		21/32 	(65%)
+Total Logic cells used 		12/64 	(18%)
+Total Flip-Flop used 		2/64 	(3%)
+Total Foldback logic used 	1/64 	(1%)
+Total Nodes+FB/MCells 		13/64 	(20%)
+Total cascade used 		0
+Total input pins 		13
+Total output pins 		9
+Total Pts 			28
+*/
+

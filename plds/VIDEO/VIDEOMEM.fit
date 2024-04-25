@@ -1,0 +1,372 @@
+Atmel ATF1504AS Fitter Version 1.8.7.8 ,running Wed Apr 24 20:58:30 2024
+
+
+fit1504 C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOMEM.tt2 -CUPL -dev P1504T44 -JTAG ON
+
+
+****** Initial fitting strategy and property ******
+ Pla_in_file = VIDEOMEM.tt2
+ Pla_out_file = VIDEOMEM.tt3
+ Jedec_file = VIDEOMEM.jed
+ Vector_file = VIDEOMEM.tmv
+ verilog_file = VIDEOMEM.vt
+ Time_file = 
+ Log_file = VIDEOMEM.fit
+ err_file = 
+ Device_name = TQFP44
+ Module_name = 
+ Package_type = TQFP
+ Preassign_file = 
+ Property_file = 
+ Sleep_mode = 
+ Preassignment = 
+ Security_mode = OFF
+ Pin_keep_mode = ON
+ Dedicated_input_clock = 
+ Dedicated_input_reset = 
+ Dedicated_input_oe = 
+ supporter = CUPL
+ optimize = ON
+ Soft_buffer = 
+ Xor_synthesis = OFF
+ Foldback_logic =  on
+ Expander = 
+ Cascade_logic = OFF
+ Dedicated_input = 
+ Output_fast = OFF
+ *******************************
+ Power down pin 1 = OFF
+ Power down pin 2 = OFF
+ power_reset = OFF
+ JTAG = ON
+ TDI pullup = ON
+ TMS pullup = ON
+ MC_power = OFF
+ Open_collector = OFF
+ ITD0 = ON
+ ITD1 = ON
+ ITD2 = ON
+ Fast_inlatch = off
+ *******************************
+---------------------------------------------------------
+ Fitter_Pass 1, Preassign = KEEP, LOGIC_DOUBLING : OFF 
+ ... 
+
+Performing global Output Enable pin assignments ...
+
+Performing global pin assignments ...
+--------------------------------------
+
+
+
+Final global control pins assignment (if applicable)...
+-------------------------------------------------------
+nEXP_VMEM_CS assigned to pin  37
+
+
+
+Performing input pin pre-assignments ...
+------------------------------------
+nEXP_VMEM_CS assigned to pin  37
+
+Attempt to place floating signals ...
+------------------------------------
+nEXP_DATA_EN is placed at pin 6 (MC 1)
+nEXP_DEV_WAIT is placed at pin 5 (MC 3)
+nVRAM_OE is placed at pin 3 (MC 4)
+nVRAM_B3 is placed at pin 2 (MC 5)
+TDI is placed at pin 1 (MC 8)
+nVRAM_B2 is placed at pin 44 (MC 11)
+VMEM_ACCESS_BUSY_START_RESET is placed at feedback node 612 (MC 12)
+CPU_ACCESS_IN_PROGRESS is placed at feedback node 613 (MC 13)
+nVRAM_B1 is placed at pin 43 (MC 14)
+VMEM_ACCESS_BUSY_START is placed at feedback node 615 (MC 15)
+FB_30 is placed at foldback expander node 315 (MC 15)
+nVRAM_B0 is placed at pin 42 (MC 16)
+VRAM_READ is placed at pin 15 (MC 17)
+EXP_RW is placed at pin 14 (MC 19)
+EXP_CPU_A1 is placed at pin 13 (MC 20)
+EXP_CPU_SIZ1 is placed at pin 12 (MC 21)
+EXP_CPU_SIZ0 is placed at pin 11 (MC 24)
+nVRAM_WE is placed at pin 10 (MC 25)
+nVRAM_CE is placed at pin 8 (MC 30)
+TMS is placed at pin 7 (MC 32)
+EXP_CPU_A0 is placed at pin 18 (MC 33)
+VGA_BUSY is placed at pin 19 (MC 35)
+nSYS_RESET is placed at pin 20 (MC 36)
+TCK is placed at pin 26 (MC 48)
+TDO is placed at pin 32 (MC 56)
+
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                 n  n  n                                         
+                 V  V  V                                         
+                 R  R  R                                         
+                 A  A  A                                         
+                 M  M  M                                         
+                 _  _  _  V              G                       
+                 B  B  B  C              N                       
+                 2  1  0  C              D                       
+               ____________________________________              
+              /  44 43 42 41 40 39 38 37 36 35 34  \             
+         TDI |  1                                33 |            
+    nVRAM_B3 |  2                                32 | TDO        
+    nVRAM_OE |  3                                31 |            
+         GND |  4                                30 |            
+EXP_DEV_WAIT |  5                                29 | VCC        
+nEXP_DATA_EN |  6            ATF1504             28 |            
+         TMS |  7          44-Lead TQFP          27 |            
+    nVRAM_CE |  8                                26 | TCK        
+         VCC |  9                                25 |            
+    nVRAM_WE | 10                                24 | GND        
+EXP_CPU_SIZ0 | 11                                23 |            
+             |   12 13 14 15 16 17 18 19 20 21 22   |            
+              \____________________________________/             
+                 E  E  E  V  G  V  E  V  n                       
+                 X  X  X  R  N  C  X  G  S                       
+                 P  P  P  A  D  C  P  A  Y                       
+                 _  _  _  M        _  _  S                       
+                 C  C  R  _        C  B  _                       
+                 P  P  W  R        P  U  R                       
+                 U  U     E        U  S  E                       
+                 _  _     A        _  Y  S                       
+                 S  A     D        A     E                       
+                 I  1              0     T                       
+                 Z                                               
+                 1                                               
+
+
+
+VCC = Supply Voltage pin which must be connected to (5.0V or 3.0V)
+
+GND = GND pin which must be connected to ground
+
+TMS,TDI,TDO,TDI = JTAG pins which must reserved for the JTAG interface
+
+NC = Unused I/O pins which must be unconnected on the board
+
+Universal-Interconnect-Multiplexer assignments
+------------------------------------------------
+FanIn assignment for block A [12]
+{
+CPU_ACCESS_IN_PROGRESS,
+EXP_CPU_SIZ1,EXP_CPU_SIZ0,EXP_RW,EXP_CPU_A1,EXP_CPU_A0,
+VMEM_ACCESS_BUSY_START_RESET,VRAM_READ,VGA_BUSY,VMEM_ACCESS_BUSY_START,
+nSYS_RESET,nEXP_VMEM_CS,
+}
+Multiplexer assignment for block A
+EXP_CPU_SIZ1		(MC7	P)   : MUX 1		Ref (B21p)
+VMEM_ACCESS_BUSY_START_RESET		(MC1	FB)  : MUX 9		Ref (A12fb)
+EXP_CPU_SIZ0		(MC8	P)   : MUX 15		Ref (B24p)
+VRAM_READ		(MC4	P)   : MUX 21		Ref (B17p)
+EXP_RW			(MC5	P)   : MUX 23		Ref (B19p)
+CPU_ACCESS_IN_PROGRESS		(MC2	FB)  : MUX 25		Ref (A13fb)
+VGA_BUSY		(MC11	P)   : MUX 27		Ref (C35p)
+VMEM_ACCESS_BUSY_START		(MC3	FB)  : MUX 31		Ref (A15fb)
+EXP_CPU_A1		(MC6	P)   : MUX 33		Ref (B20p)
+nSYS_RESET		(MC12	P)   : MUX 35		Ref (C36p)
+EXP_CPU_A0		(MC9	P)   : MUX 37		Ref (C33p)
+nEXP_VMEM_CS		(MC10	FB)  : MUX 39		Ref (GCLK)
+
+FanIn assignment for block B [3]
+{
+CPU_ACCESS_IN_PROGRESS,
+EXP_RW,
+VRAM_READ,
+}
+Multiplexer assignment for block B
+EXP_RW			(MC3	P)   : MUX 23		Ref (B19p)
+VRAM_READ		(MC2	P)   : MUX 25		Ref (B17p)
+CPU_ACCESS_IN_PROGRESS		(MC1	FB)  : MUX 35		Ref (A13fb)
+
+Creating JEDEC file C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOMEM.jed ...
+
+TQFP44 programmed logic:
+-----------------------------------
+VMEM_ACCESS_BUSY_START.D = VGA_BUSY;
+
+CPU_ACCESS_IN_PROGRESS = ((!nEXP_VMEM_CS & !VMEM_ACCESS_BUSY_START.Q)
+	# (!nEXP_VMEM_CS & !VGA_BUSY));
+
+VMEM_ACCESS_BUSY_START_RESET.D = 1;
+
+!nEXP_DATA_EN = (EXP_RW & CPU_ACCESS_IN_PROGRESS);
+
+!nEXP_DEV_WAIT = (!nEXP_VMEM_CS & !CPU_ACCESS_IN_PROGRESS);
+
+nVRAM_B2 = ((!VRAM_READ & !EXP_RW & EXP_CPU_A1)
+	# (!VRAM_READ & !CPU_ACCESS_IN_PROGRESS)
+	# (!VRAM_READ & !EXP_CPU_A0 & EXP_CPU_SIZ0 & !EXP_CPU_SIZ1 & !EXP_RW));
+
+nVRAM_B0 = ((!VRAM_READ & !EXP_CPU_A1 & EXP_CPU_SIZ1 & !EXP_RW & !EXP_CPU_SIZ0)
+	# (!VRAM_READ & !EXP_CPU_A0 & !EXP_CPU_SIZ1 & !EXP_RW & EXP_CPU_SIZ0)
+	# (!VRAM_READ & !EXP_CPU_A1 & !EXP_CPU_SIZ1 & !EXP_RW & EXP_CPU_SIZ0)
+	# (!VRAM_READ & !CPU_ACCESS_IN_PROGRESS)
+	# (!VRAM_READ & !EXP_CPU_A0 & !EXP_CPU_A1 & EXP_CPU_SIZ1 & !EXP_RW));
+
+nVRAM_B1 = ((!VRAM_READ & EXP_CPU_A1 & !EXP_RW & EXP_CPU_A0)
+	# (!VRAM_READ & !EXP_CPU_A1 & !EXP_CPU_SIZ0 & EXP_CPU_SIZ1 & !EXP_RW & !EXP_CPU_A0)
+	# (!VRAM_READ & !CPU_ACCESS_IN_PROGRESS)
+	# (!VRAM_READ & !EXP_CPU_A1 & EXP_CPU_SIZ0 & !EXP_CPU_SIZ1 & !EXP_RW));
+
+nVRAM_B3 = ((!VRAM_READ & !EXP_RW & EXP_CPU_A0)
+	# (!VRAM_READ & !CPU_ACCESS_IN_PROGRESS)
+	# (!VRAM_READ & EXP_CPU_A1 & !EXP_RW));
+
+nVRAM_CE = (!CPU_ACCESS_IN_PROGRESS & !VRAM_READ);
+
+nVRAM_OE = ((!VRAM_READ & !CPU_ACCESS_IN_PROGRESS)
+	# (!VRAM_READ & !EXP_RW));
+
+!nVRAM_WE = (!EXP_RW & CPU_ACCESS_IN_PROGRESS);
+
+!FB_30 = (nSYS_RESET & !VMEM_ACCESS_BUSY_START_RESET.Q);
+
+VMEM_ACCESS_BUSY_START.C = !nEXP_VMEM_CS;
+
+VMEM_ACCESS_BUSY_START.AP = FB_30;
+
+VMEM_ACCESS_BUSY_START_RESET.C = nEXP_VMEM_CS;
+
+VMEM_ACCESS_BUSY_START_RESET.AR = VMEM_ACCESS_BUSY_START.Q;
+
+
+TQFP44 Pin/Node Placement:
+------------------------------------
+Pin 1  = TDI; /* MC 8 */
+Pin 2  = nVRAM_B3; /* MC 5 */
+Pin 3  = nVRAM_OE; /* MC 4 */
+Pin 5  = nEXP_DEV_WAIT; /* MC 3 */
+Pin 6  = nEXP_DATA_EN; /* MC 1 */
+Pin 7  = TMS; /* MC 32 */
+Pin 8  = nVRAM_CE; /* MC 30 */
+Pin 10 = nVRAM_WE; /* MC 25 */ 
+Pin 11 = EXP_CPU_SIZ0; /* MC 24 */ 
+Pin 12 = EXP_CPU_SIZ1; /* MC 21 */ 
+Pin 13 = EXP_CPU_A1; /* MC 20 */ 
+Pin 14 = EXP_RW; /* MC 19 */ 
+Pin 15 = VRAM_READ; /* MC 17 */ 
+Pin 18 = EXP_CPU_A0; /* MC 33 */ 
+Pin 19 = VGA_BUSY; /* MC 35 */ 
+Pin 20 = nSYS_RESET; /* MC 36 */ 
+Pin 26 = TCK; /* MC 48 */ 
+Pin 32 = TDO; /* MC 56 */ 
+Pin 37 = nEXP_VMEM_CS;
+Pin 42 = nVRAM_B0; /* MC 16 */ 
+Pin 43 = nVRAM_B1; /* MC 14 */ 
+Pin 44 = nVRAM_B2; /* MC 11 */ 
+PINNODE 315 = FB_30; /* MC 15 Foldback */
+PINNODE 612 = VMEM_ACCESS_BUSY_START_RESET; /* MC 12 Feedback */
+PINNODE 613 = CPU_ACCESS_IN_PROGRESS; /* MC 13 Feedback */
+PINNODE 615 = VMEM_ACCESS_BUSY_START; /* MC 15 Feedback */
+
+** Resource Usage **
+
+
+DCERP Field = Summary of Allocations.
+|||||
+|||||_Preset [p,-]       ==  p = PT preset, - No Preset.
+||||
+||||__Reset [g,r,-]      ==  g= Global AR, r = PT reset, - No reset.
+|||
+|||___Clock Enable [e,-] ==  e = Product Term, - always enabled, - none.
+||
+||____Clock [c,g,-],     ==  c = Product term, g = Global term, - No Clock.
+|
+|_____Type [C,D,L,T],    ==  Register type C= combin, D=dff, L=latch, T=tff.
+
+For input only = INPUT.
+
+MCell Pin# Oe   PinDrive      DCERP  FBDrive                      DCERP  Foldback  CascadeOut     TotPT output_slew
+MC1   6    on   nEXP_DATA_EN  C----  --                                  --        --             1     slow
+MC2   0         --                   --                                  --        --             0     slow
+MC3   5    on   nEXP_DEV_WAIT C----  --                                  --        --             1     slow
+MC4   3    on   nVRAM_OE      C----  --                                  --        --             2     slow
+MC5   2    on   nVRAM_B3      C----  --                                  --        --             3     slow
+MC6   0         --                   --                                  --        --             0     slow
+MC7   0         --                   --                                  --        --             0     slow
+MC8   1    --   TDI           INPUT  --                                  --        --             0     slow
+MC9   0         --                   --                                  --        --             0     slow
+MC10  0         --                   --                                  --        --             0     slow
+MC11  44   on   nVRAM_B2      C----  --                                  --        --             3     slow
+MC12  0         --                   VMEM_ACCESS_BUSY_START_RESET Dg-r-  --        --             1     slow
+MC13  0         --                   CPU_ACCESS_IN_PROGRESS       C----  --        --             2     slow
+MC14  43   on   nVRAM_B1      C----  --                                  --        --             4     slow
+MC15  0         --                   VMEM_ACCESS_BUSY_START       Dc--p  FB_30     --             4     slow
+MC16  42   on   nVRAM_B0      C----  --                                  NA        --             5     slow
+MC17  15   --   VRAM_READ     INPUT  --                                  --        --             0     slow
+MC18  0         --                   --                                  --        --             0     slow
+MC19  14   --   EXP_RW        INPUT  --                                  --        --             0     slow
+MC20  13   --   EXP_CPU_A1    INPUT  --                                  --        --             0     slow
+MC21  12   --   EXP_CPU_SIZ1  INPUT  --                                  --        --             0     slow
+MC22  0         --                   --                                  --        --             0     slow
+MC23  0         --                   --                                  --        --             0     slow
+MC24  11   --   EXP_CPU_SIZ0  INPUT  --                                  --        --             0     slow
+MC25  10   on   nVRAM_WE      C----  --                                  --        --             1     slow
+MC26  0         --                   --                                  --        --             0     slow
+MC27  0         --                   --                                  --        --             0     slow
+MC28  0         --                   --                                  --        --             0     slow
+MC29  0         --                   --                                  --        --             0     slow
+MC30  8    on   nVRAM_CE      C----  --                                  --        --             1     slow
+MC31  0         --                   --                                  --        --             0     slow
+MC32  7    --   TMS           INPUT  --                                  --        --             0     slow
+MC33  18   --   EXP_CPU_A0    INPUT  --                                  --        --             0     slow
+MC34  0         --                   --                                  --        --             0     slow
+MC35  19   --   VGA_BUSY      INPUT  --                                  --        --             0     slow
+MC36  20   --   nSYS_RESET    INPUT  --                                  --        --             0     slow
+MC37  21        --                   --                                  --        --             0     slow
+MC38  0         --                   --                                  --        --             0     slow
+MC39  0         --                   --                                  --        --             0     slow
+MC40  22        --                   --                                  --        --             0     slow
+MC41  23        --                   --                                  --        --             0     slow
+MC42  0         --                   --                                  --        --             0     slow
+MC43  0         --                   --                                  --        --             0     slow
+MC44  0         --                   --                                  --        --             0     slow
+MC45  0         --                   --                                  --        --             0     slow
+MC46  25        --                   --                                  --        --             0     slow
+MC47  0         --                   --                                  --        --             0     slow
+MC48  26   --   TCK           INPUT  --                                  --        --             0     slow
+MC49  27        --                   --                                  --        --             0     slow
+MC50  0         --                   --                                  --        --             0     slow
+MC51  28        --                   --                                  --        --             0     slow
+MC52  30        --                   --                                  --        --             0     slow
+MC53  31        --                   --                                  --        --             0     slow
+MC54  0         --                   --                                  --        --             0     slow
+MC55  0         --                   --                                  --        --             0     slow
+MC56  32   --   TDO           INPUT  --                                  --        --             0     slow
+MC57  33        --                   --                                  --        --             0     slow
+MC58  0         --                   --                                  --        --             0     slow
+MC59  0         --                   --                                  --        --             0     slow
+MC60  0         --                   --                                  --        --             0     slow
+MC61  0         --                   --                                  --        --             0     slow
+MC62  34        --                   --                                  --        --             0     slow
+MC63  0         --                   --                                  --        --             0     slow
+MC64  35        --                   --                                  --        --             0     slow
+MC0   40        --                   --                                  --        --             0     slow
+MC0   39        --                   --                                  --        --             0     slow
+MC0   38        --                   --                                  --        --             0     slow
+MC0   37        nEXP_VMEM_CS  INPUT  --                                  --        --             0     slow
+
+Logic Array Block	Logic Cells	I/O Pins	Foldbacks	TotalPT		FanIN	Cascades
+A: LC1	- LC16		10/16(62%)	8/16(50%)	1/16(6%)	26/80(32%)	(12)	0
+B: LC17	- LC32		2/16(12%)	8/16(50%)	0/16(0%)	2/80(2%)	(3)	0
+C: LC33	- LC48		0/16(0%)	4/16(25%)	0/16(0%)	0/80(0%)	(0)	0
+D: LC49	- LC64		0/16(0%)	1/16(6%)	0/16(0%)	0/80(0%)	(0)	0
+
+Total dedicated input used:	1/4 	(25%)
+Total I/O pins used		21/32 	(65%)
+Total Logic cells used 		12/64 	(18%)
+Total Flip-Flop used 		2/64 	(3%)
+Total Foldback logic used 	1/64 	(1%)
+Total Nodes+FB/MCells 		13/64 	(20%)
+Total cascade used 		0
+Total input pins 		13
+Total output pins 		9
+Total Pts 			28
+Creating pla file C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOMEM.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
+
+----------------  End fitter, Design FITS
+$Device TQFP44 fits 
+FIT1504 completed in 0.00 seconds

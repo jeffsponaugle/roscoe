@@ -1,11 +1,11 @@
-{COMPONENT C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOADPT.SYM
+{COMPONENT C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOMEM.SYM
 
  {ENVIRONMENT
   {PDIFvrev 3.00}
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Wed Apr 24 20:56:20 2024 "}
+  {DBtime "Wed Apr 24 20:58:30 2024 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,51 +33,40 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
-   {P DOT_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 1240}}
-   {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 1200}}
   }
 
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 190 1270}
+   {Rdl 190 210}
 
    [Ly "PINNUM"]
-   [Ts 15][Tj "RC"]
-   {Pnl 120 1250}
-   [Ts 15][Tj "RC"]
-   {Pnl 120 1210}
    [Ts 15][Tj "LC"]
 
-   {Sd A 87 89}
+   {Sd A}
   }
 
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 1260 250 0}
-   {L 130 1240 100 1240}
-   {L 130 1250 140 1240 130 1230}
-   {L 130 1200 100 1200}
+   {R 130 200 250 0}
    [Ly "PINNAM"]
    [Tj "LC"]
-   {T "DOT_CLK" 140 1240}
-   {T "NSYS_RES" 140 1200}
    [Tj "RC"]
    [Ly "DEVICE"]
    [Tj "CT"]
-   {T "F1508ISPTQFP100" 190 -10}
+   {T "F1504ISPTQFP44" 190 -10}
   }
 
   {ATR
    {IN
-    {Org 100 1200}
+    {Org 100 20}
     {Ty 255}
    }
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOADPT 190 1260}
+    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOMEM 190 200}
    }
   }
  }
@@ -87,10 +76,6 @@
   }
 
   {NET_DEF
-   {N DOT_CLK
-   }
-   {N NSYS_RES
-   }
   }
 
   {SUBCOMP

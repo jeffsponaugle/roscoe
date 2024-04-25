@@ -1,0 +1,34 @@
+#$ TOOL CUPL Atmel 1504 1.8.7.8
+#$ MODULE VIDEOMEM
+#$ JEDECFILE VIDEOMEM
+#$ PINS 18 nEXP_DATA_EN:6 nEXP_DEV_WAIT:5 nVRAM_B0:42 nVRAM_B1:43 nVRAM_B2:44 nVRAM_B3:2 nVRAM_CE:8 nVRAM_OE:3 nVRAM_WE:10 EXP_CPU_A0:18 EXP_CPU_A1:13 EXP_CPU_SIZ0:11 EXP_CPU_SIZ1:12 EXP_RW:14 VGA_BUSY:19 VRAM_READ:15 nEXP_VMEM_CS:37 nSYS_RESET:20 
+#$ NODES 4 CPU_ACCESS_IN_PROGRESS:613 FB_30 VMEM_ACCESS_BUSY_START:615 VMEM_ACCESS_BUSY_START_RESET:612 
+.type fr
+.i 13
+.o 17
+.ilb EXP_CPU_A0 EXP_CPU_A1 EXP_CPU_SIZ0 EXP_CPU_SIZ1 EXP_RW VGA_BUSY VRAM_READ nEXP_VMEM_CS nSYS_RESET VMEM_ACCESS_BUSY_START_RESET.Q VMEM_ACCESS_BUSY_START.Q CPU_ACCESS_IN_PROGRESS FB_30
+.ob nEXP_DATA_EN nEXP_DEV_WAIT nVRAM_B0 nVRAM_B1 nVRAM_B2 nVRAM_B3 nVRAM_CE nVRAM_OE nVRAM_WE VMEM_ACCESS_BUSY_START.D VMEM_ACCESS_BUSY_START.C VMEM_ACCESS_BUSY_START.AP VMEM_ACCESS_BUSY_START_RESET.D VMEM_ACCESS_BUSY_START_RESET.C VMEM_ACCESS_BUSY_START_RESET.AR CPU_ACCESS_IN_PROGRESS FB_30
+.p 22
+-----1-------	~~~~~~~~~1~~~~~~~
+-------0--0--	~~~~~~~~~~~~~~~1~
+-----0-0-----	~~~~~~~~~~~~~~~1~
+-------------	~~~~~~~~~~~~1~~~~
+----1------1-	0~~~~~~~~~~~~~~~~
+-------0---0-	~0~~~~~~~~~~~~~~~
+-1--0-0------	~~~~11~~~~~~~~~~~
+------0----0-	~~111111~~~~~~~~~
+0-100-0------	~~1~1~~~~~~~~~~~~
+-0010-0------	~~1~~~~~~~~~~~~~~
+-0100-0------	~~11~~~~~~~~~~~~~
+00-10-0------	~~1~~~~~~~~~~~~~~
+11--0-0------	~~~1~~~~~~~~~~~~~
+00010-0------	~~~1~~~~~~~~~~~~~
+1---0-0------	~~~~~1~~~~~~~~~~~
+----0-0------	~~~~~~~1~~~~~~~~~
+----0------1-	~~~~~~~~0~~~~~~~~
+--------10---	~~~~~~~~~~~~~~~~1
+-------0-----	~~~~~~~~~~1~~~~~~
+------------0	~~~~~~~~~~~1~~~~~
+-------1-----	~~~~~~~~~~~~~1~~~
+----------1--	~~~~~~~~~~~~~~1~~
+.end

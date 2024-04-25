@@ -7,6 +7,14 @@ PIN   0 =  ABUS_D4
 PIN   0 =  ABUS_D5 
 PIN   0 =  ABUS_D6 
 PIN   0 =  ABUS_D7 
+PIN   0 =  AREG_D0 
+PIN   0 =  AREG_D1 
+PIN   0 =  AREG_D2 
+PIN   0 =  AREG_D3 
+PIN   0 =  AREG_D4 
+PIN   0 =  AREG_D5 
+PIN   0 =  AREG_D6 
+PIN   0 =  AREG_D7 
 PIN   0 =  CBUS_D0 
 PIN   0 =  CBUS_D1 
 PIN   0 =  CBUS_D2 
@@ -15,15 +23,15 @@ PIN   0 =  CBUS_D4
 PIN   0 =  CBUS_D5 
 PIN   0 =  CBUS_D6 
 PIN   0 =  CBUS_D7 
-PIN   0 =  CPU_VRAM_OE 
+PIN   0 =  CREG_D0 
+PIN   0 =  CREG_D1 
+PIN   0 =  CREG_D2 
+PIN   0 =  CREG_D3 
+PIN   0 =  CREG_D4 
+PIN   0 =  CREG_D5 
+PIN   0 =  CREG_D6 
+PIN   0 =  CREG_D7 
 PIN  87 =  DOT_CLK 
-PIN   0 =  EXP_A0 
-PIN   0 =  EXP_A1 
-PIN   0 =  EXP_A2 
-PIN   0 =  EXP_A3 
-PIN   0 =  EXP_CPU_SIZ0 
-PIN   0 =  EXP_CPU_SIZ1 
-PIN   0 =  EXP_RW 
 PIN   0 =  FBUS_D0 
 PIN   0 =  FBUS_D1 
 PIN   0 =  FBUS_D2 
@@ -87,18 +95,11 @@ PIN   0 =  VRAM_A14
 PIN   0 =  VRAM_A15 
 PIN   0 =  VRAM_A16 
 PIN   0 =  VRAM_A17 
-PIN   0 =  VRAM_B0 
-PIN   0 =  VRAM_B1 
-PIN   0 =  VRAM_B2 
-PIN   0 =  VRAM_B3 
-PIN   0 =  VRAM_CE 
 PIN   0 =  VRAM_LATCH 
 PIN   0 =  VRAM_LATCH_DATA_IN 
-PIN   0 =  VRAM_OE 
 PIN   0 =  VRAM_READ 
 PIN   0 =  VRAM_SELECT_WORD0 
 PIN   0 =  VRAM_SELECT_WORD1 
-PIN   0 =  VRAM_WE 
 PIN   0 =  VSYNC_CLOCK_A 
 PIN   0 =  VSYNC_CLOCK_B 
 PIN   0 =  VSYNC_COUNTER0 
@@ -112,11 +113,7 @@ PIN   0 =  VSYNC_COUNTER7
 PIN   0 =  VSYNC_COUNTER8 
 PIN   0 =  VSYNC_COUNTER9 
 PIN   0 =  VSYNC_DISPLAY_ACTIVE 
-PIN   0 =  nEXP_DATA_EN 
-PIN   0 =  nEXP_DEV_WAIT 
-PIN   0 =  nEXP_VIO_CS 
-PIN   0 =  nEXP_VMEM_CS 
-PIN   0 =  nSYS_RESET 
+PIN  89 =  nSYS_RESET 
 PIN   0 =  nVID_HIGH_OE 
 PIN   0 =  nVID_LOW_OE 
 %END
@@ -130,6 +127,158 @@ FIELD vsync_counter_field = VSYNC_COUNTER9,VSYNC_COUNTER8,VSYNC_COUNTER7,VSYNC_C
 %END
 
 %EQUATION
+AREG_D0.d  =>
+    ABUS_D0 & VRAM_LATCH_DATA_IN
+  # AREG_D0 & !VRAM_LATCH_DATA_IN
+
+AREG_D0.ar  =>
+    !nSYS_RESET
+
+AREG_D0.ck  =>
+    !DOT_CLK
+
+AREG_D1.d  =>
+    ABUS_D1 & VRAM_LATCH_DATA_IN
+  # AREG_D1 & !VRAM_LATCH_DATA_IN
+
+AREG_D1.ar  =>
+    !nSYS_RESET
+
+AREG_D1.ck  =>
+    !DOT_CLK
+
+AREG_D2.d  =>
+    ABUS_D2 & VRAM_LATCH_DATA_IN
+  # AREG_D2 & !VRAM_LATCH_DATA_IN
+
+AREG_D2.ar  =>
+    !nSYS_RESET
+
+AREG_D2.ck  =>
+    !DOT_CLK
+
+AREG_D3.d  =>
+    ABUS_D3 & VRAM_LATCH_DATA_IN
+  # AREG_D3 & !VRAM_LATCH_DATA_IN
+
+AREG_D3.ar  =>
+    !nSYS_RESET
+
+AREG_D3.ck  =>
+    !DOT_CLK
+
+AREG_D4.d  =>
+    ABUS_D4 & VRAM_LATCH_DATA_IN
+  # AREG_D4 & !VRAM_LATCH_DATA_IN
+
+AREG_D4.ar  =>
+    !nSYS_RESET
+
+AREG_D4.ck  =>
+    !DOT_CLK
+
+AREG_D5.d  =>
+    ABUS_D5 & VRAM_LATCH_DATA_IN
+  # AREG_D5 & !VRAM_LATCH_DATA_IN
+
+AREG_D5.ar  =>
+    !nSYS_RESET
+
+AREG_D5.ck  =>
+    !DOT_CLK
+
+AREG_D6.d  =>
+    ABUS_D6 & VRAM_LATCH_DATA_IN
+  # AREG_D6 & !VRAM_LATCH_DATA_IN
+
+AREG_D6.ar  =>
+    !nSYS_RESET
+
+AREG_D6.ck  =>
+    !DOT_CLK
+
+AREG_D7.d  =>
+    ABUS_D7 & VRAM_LATCH_DATA_IN
+  # AREG_D7 & !VRAM_LATCH_DATA_IN
+
+AREG_D7.ar  =>
+    !nSYS_RESET
+
+AREG_D7.ck  =>
+    !DOT_CLK
+
+CREG_D0.d  =>
+    CBUS_D0
+
+CREG_D0.ar  =>
+    !nSYS_RESET
+
+CREG_D0.ck  =>
+    !DOT_CLK
+
+CREG_D1.d  =>
+    CBUS_D1
+
+CREG_D1.ar  =>
+    !nSYS_RESET
+
+CREG_D1.ck  =>
+    !DOT_CLK
+
+CREG_D2.d  =>
+    CBUS_D2
+
+CREG_D2.ar  =>
+    !nSYS_RESET
+
+CREG_D2.ck  =>
+    !DOT_CLK
+
+CREG_D3.d  =>
+    CBUS_D3
+
+CREG_D3.ar  =>
+    !nSYS_RESET
+
+CREG_D3.ck  =>
+    !DOT_CLK
+
+CREG_D4.d  =>
+    CBUS_D4
+
+CREG_D4.ar  =>
+    !nSYS_RESET
+
+CREG_D4.ck  =>
+    !DOT_CLK
+
+CREG_D5.d  =>
+    CBUS_D5
+
+CREG_D5.ar  =>
+    !nSYS_RESET
+
+CREG_D5.ck  =>
+    !DOT_CLK
+
+CREG_D6.d  =>
+    CBUS_D6
+
+CREG_D6.ar  =>
+    !nSYS_RESET
+
+CREG_D6.ck  =>
+    !DOT_CLK
+
+CREG_D7.d  =>
+    CBUS_D7
+
+CREG_D7.ar  =>
+    !nSYS_RESET
+
+CREG_D7.ck  =>
+    !DOT_CLK
+
 HSYNC_COUNTER0.d  =>
     !HSYNC_COUNTER0
 
@@ -430,10 +579,14 @@ SREG_D7.ck  =>
     !DOT_CLK
 
 VGA_BLUE0 =>
-    SREG_D7
+    AREG_D4 & !AREG_D6 & SREG_D7
+  # AREG_D6 & !SREG_D7
+  # !AREG_D4 & AREG_D6
 
 VGA_BLUE1 =>
-    SREG_D7
+    AREG_D5 & !AREG_D6 & SREG_D7
+  # AREG_D6 & !SREG_D7
+  # !AREG_D5 & AREG_D6
 
 VGA_BUSY.d  =>
     !HSYNC_COUNTER7 & !HSYNC_COUNTER8 & HSYNC_COUNTER9 & VSYNC_DISPLAY_ACTIVE
@@ -455,10 +608,14 @@ VGA_DISPLAY_ACTIVE.ck  =>
     !DOT_CLK
 
 VGA_GREEN0 =>
-    SREG_D7
+    AREG_D2 & !AREG_D6 & SREG_D7
+  # AREG_D6 & !SREG_D7
+  # !AREG_D2 & AREG_D6
 
 VGA_GREEN1 =>
-    SREG_D7
+    AREG_D3 & !AREG_D6 & SREG_D7
+  # AREG_D6 & !SREG_D7
+  # !AREG_D3 & AREG_D6
 
 VGA_HSYNC.d  =>
     !HSYNC_COUNTER9
@@ -473,10 +630,14 @@ VGA_HSYNC.ck  =>
     !DOT_CLK
 
 VGA_RED0 =>
-    SREG_D7
+    AREG_D0 & !AREG_D6 & SREG_D7
+  # AREG_D6 & !SREG_D7
+  # !AREG_D0 & AREG_D6
 
 VGA_RED1 =>
-    SREG_D7
+    AREG_D1 & !AREG_D6 & SREG_D7
+  # AREG_D6 & !SREG_D7
+  # !AREG_D1 & AREG_D6
 
 VGA_VSYNC.d  =>
     VSYNC_COUNTER9
@@ -507,24 +668,8 @@ VID_FONTROW2 =>
 VID_FONTROW3 =>
     VSYNC_COUNTER3
 
-VMEM_ACCESS_BUSY_START.d  =>
-    VGA_BUSY
-
-VMEM_ACCESS_BUSY_START.ap  =>
-    !nSYS_RESET
-  # VMEM_ACCESS_BUSY_START_RESET
-
-VMEM_ACCESS_BUSY_START.ck  =>
-    !nEXP_VMEM_CS
-
-VMEM_ACCESS_BUSY_START_RESET.d  =>
-    1 
-
-VMEM_ACCESS_BUSY_START_RESET.ar  =>
-    VMEM_ACCESS_BUSY_START
-
-VMEM_ACCESS_BUSY_START_RESET.ck  =>
-    nEXP_VMEM_CS
+VID_LATCH =>
+    VRAM_LATCH
 
 VRAM_A0 =>
     HSYNC_COUNTER4
@@ -920,9 +1065,10 @@ VSYNC_ZERO =>
   # VSYNC_COUNTER1
   # VSYNC_COUNTER0
 
-nEXP_DEV_WAIT =>
-    !VMEM_ACCESS_BUSY_START & !nEXP_VMEM_CS
-  # !VGA_BUSY & !nEXP_VMEM_CS
-  # nEXP_VMEM_CS
+nVID_HIGH_OE =>
+    VRAM_SELECT_WORD1
+
+nVID_LOW_OE =>
+    VRAM_SELECT_WORD0
 
 %END

@@ -35,21 +35,9 @@ Format	Pixel Clock    Active Video   Front_Porch Sync_Pulse  Back_Porch	Active_V
                                                 Inputs
     ##########################################################################################
 */
-Pin = [EXP_CPU_SIZ0..1];
-Pin = EXP_RW;
-Pin = nEXP_VMEM_CS;
-Pin = nEXP_VIO_CS;
-Pin = [EXP_A0..3];
-Pin = nEXP_DEV_WAIT;      // Open collector signal that the CPU needs to wait - Goes back to Device CPLD
-Pin = nEXP_DATA_EN;
-Pin = nSYS_RESET;
-Pin[87] = DOT_CLK;
 
-Pin = CPU_VRAM_OE;
-Pin = VRAM_CE;
-Pin = VRAM_WE;
-Pin = VRAM_OE;
-Pin = [VRAM_B0..3];
+Pin[89] = nSYS_RESET;
+Pin[87] = DOT_CLK;
 
 Pin = nVID_LOW_OE;
 Pin = nVID_HIGH_OE;
@@ -67,22 +55,25 @@ Pin = VGA_BLUE0,VGA_BLUE1;
 Pin = VGA_HSYNC;
 Pin = VGA_VSYNC;
 
-Pin = VGA_DISPLAY_ACTIVE;
-Pin = VSYNC_DISPLAY_ACTIVE;
-Pin = HSYNC_DISPLAY_ACTIVE;
+Pin = VRAM_READ;
+Pin = VGA_BUSY;
+
 
 /* 
                                                 Outputs 
    ##########################################################################################
 */
 
+PINNODE = VGA_DISPLAY_ACTIVE;
+PINNODE = VSYNC_DISPLAY_ACTIVE;
+PINNODE = HSYNC_DISPLAY_ACTIVE;
 PINNODE = [HSYNC_COUNTER0..9];
 PINNODE = [VSYNC_COUNTER0..9];    
 PINNODE = VSYNC_CLOCK_A,VSYNC_CLOCK_B;
-PINNODE = VGA_BUSY;
+
 PINNODE = VMEM_ACCESS_BUSY_START;
 PINNODE = VMEM_ACCESS_BUSY_START_RESET;
-PINNODE = VRAM_READ;
+
 PINNODE = VRAM_LATCH;
 PINNODE = VRAM_SELECT_WORD0;
 PINNODE = VRAM_SELECT_WORD1;
@@ -90,6 +81,9 @@ PINNODE = VRAM_LATCH_DATA_IN;
 PINNODE = SHIFTER_SHIFT;
 
 PINNODE = [SREG_D0..7];
+PINNODE = [AREG_D0..7];     // Register to store the attribute bits for a given character.
+PINNODE = [CREG_D0..7];     // Register to store the character bits for a given character, for graphics mode only
+
 
 /*  ________________________________________________________________ */
 /* 
@@ -112,23 +106,32 @@ SREG_D5.d = (VRAM_LATCH_DATA_IN & FBUS_D5) # (SHIFTER_SHIFT & SREG_D4 );
 SREG_D6.d = (VRAM_LATCH_DATA_IN & FBUS_D6) # (SHIFTER_SHIFT & SREG_D5 );
 SREG_D7.d = (VRAM_LATCH_DATA_IN & FBUS_D7) # (SHIFTER_SHIFT & SREG_D6 );
 
-SREG_D0.ck = !DOT_CLK;
-SREG_D1.ck = !DOT_CLK;
-SREG_D2.ck = !DOT_CLK;
-SREG_D3.ck = !DOT_CLK;
-SREG_D4.ck = !DOT_CLK;
-SREG_D5.ck = !DOT_CLK;
-SREG_D6.ck = !DOT_CLK;
-SREG_D7.ck = !DOT_CLK;
+[SREG_D0..7].ck = !DOT_CLK;
+[SREG_D0..7].ar = !nSYS_RESET;
 
-SREG_D0.ar = !nSYS_RESET;
-SREG_D1.ar = !nSYS_RESET;
-SREG_D2.ar = !nSYS_RESET;
-SREG_D3.ar = !nSYS_RESET;
-SREG_D4.ar = !nSYS_RESET;
-SREG_D5.ar = !nSYS_RESET;
-SREG_D6.ar = !nSYS_RESET;
-SREG_D7.ar = !nSYS_RESET;
+/* AREG is a register for holding the attribute byte for the current character being displayed.  It is latched at the same time
+   as SREG above, and other wise hold the same value.
+
+   The Format of the Attribute Byte is:
+
+   bit 7        ALPHA   
+   bit 6        INVERSE
+   bit 5        BLUE1
+   bit 4        BLUE0
+   bit 3        GREEN2
+   bit 2        GREEN0
+   bit 1        RED1
+   bit 0        RED0
+   
+*/
+
+[AREG_D0..7].d = (VRAM_LATCH_DATA_IN & [ABUS_D0..7]) # (!VRAM_LATCH_DATA_IN & [AREG_D0..7]);
+[AREG_D0..7].ck = !DOT_CLK;
+[AREG_D0..7].ar = !nSYS_RESET;
+
+[CREG_D0..7].d = [CBUS_D0..7];
+[CREG_D0..7].ck = !DOT_CLK;
+[CREG_D0..7].ar = !nSYS_RESET;
 
 
 /* For text mode - The lower 4 bits of VSYNC provide to font row */
@@ -290,45 +293,7 @@ VGA_BUSY.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;
 VGA_BUSY.ck = !DOT_CLK;
 VGA_BUSY.ar = !nSYS_RESET;
 
-/* 
-   VMEM_ACCCESS_BUSY_START records the value of VGA_BUSY at the start of a CPU VMEM access.  If this recorded value is 0 then we know
-   the VGA_BUSY flag was not set at the start of a CPU bus transaction.  As a result we can complete this transaction without any 
-   delay. This is possible because the VGA_BUSY signal is asserted by the video subsection with at least 4 dot clock cycles before a 
-   video access occurs.  This is enough time for any CPU bus transaction to complete.  This arrangement prevents bus cycles from neededing
-   to be aborted mid cycle.
-*/
 
-VMEM_ACCESS_BUSY_START.d = VGA_BUSY;
-VMEM_ACCESS_BUSY_START.ck = !nEXP_VMEM_CS;
-VMEM_ACCESS_BUSY_START.ap = !nSYS_RESET # VMEM_ACCESS_BUSY_START_RESET;
-
-/* 
-   The Reset flip flop below starts out at 0 (in reset).  On the rising edge of VMEM_CS it is set to 1.  That value of 1 will
-   reset the above flipflop to 1 which is the default busy state.  This is done to prevent there from being a race condition.  If the
-   above flip flop is left in the unbusy(0) state there will be a small window between when MEM_CS goes low and the current VGA_BUSY value is
-   lateched.  If that VGA_BUSY is 1, that will create a small glitch in the DEV_WAIT signal.  By keeping the idle state '1' for this
-   flip flop there will never be a condition where AS goes low a bit before this sees the VGA_BUSY flag.
-   
-   The reset flipflop is then reset by the above flip flop, preventing it from holding the above flipflop in reset.
-*/
-VMEM_ACCESS_BUSY_START_RESET.d = 'b'1;
-VMEM_ACCESS_BUSY_START_RESET.ck = nEXP_VMEM_CS;
-VMEM_ACCESS_BUSY_START_RESET.ar = VMEM_ACCESS_BUSY_START;
-
-/* The above flip flops will allow CPU access when VGA_BUSY is not asserted, however if it is asserted at the start we 
-   need to handle that case.   We will keep DEV_WAIT at 0 until the VGA_BUSY signal also goes to 0.
-*/
-
-/* nEXP_DEV_WAIT is the open collector signal we set to 0 to pause a CPU bus operation.
-
-   IF VMEM_CS is low and the BUSY_START is low, we are doing a bus cycle with no wait, so make sure DEV_WAIT is kept high.
-   IF VEMM_CS is low and the VGA_BUSY is high, keep DEV_WAIT low.  As soon as VGA_BUSY goes low DEV_WAIT will go high.
-   If CS is high, keep the DEV_WAIT high
- */
-
-nEXP_DEV_WAIT =   (!nEXP_VMEM_CS & !VMEM_ACCESS_BUSY_START)    
-                # (!nEXP_VMEM_CS & !VGA_BUSY)
-                # (nEXP_VMEM_CS);
 
 /* 
     VRAM_READ will enable the address drivers to VRAM as well as enable the VRAM to do a read.  Output from the VRAM will go to 
@@ -410,26 +375,37 @@ VRAM_A11 = 'b'0;
 VRAM_A12 = 'b'0;
 VRAM_A13 = 'b'0;
 
-// Simple Black and white output
+// Everything needed to read from video memory, latch into the 4 latches, and output at the correct time.
 
-VGA_RED0 = SREG_D7;
-VGA_RED1 = SREG_D7;
-VGA_GREEN0 = SREG_D7;
-VGA_GREEN1 = SREG_D7;
-VGA_BLUE0 = SREG_D7;
-VGA_BLUE1 = SREG_D7;
+/* VID_LATCH will save Video RAM output into 4 latches */
+
+VID_LATCH = VRAM_LATCH;
+nVID_LOW_OE = VRAM_SELECT_WORD0;        // Output the lower word to both the font rom as well as the attribute input (ABUS_Dx)
+nVID_HIGH_OE = VRAM_SELECT_WORD1;
+
+
+// Color output of a single pixed based on D7 in the shift register.
+
+VGA_RED0 = (SREG_D7 & AREG_D0) $ AREG_D6;
+VGA_RED1 = (SREG_D7 & AREG_D1) $ AREG_D6;
+VGA_GREEN0 = (SREG_D7 & AREG_D2) $ AREG_D6;
+VGA_GREEN1 = (SREG_D7 & AREG_D3) $ AREG_D6;
+VGA_BLUE0 = (SREG_D7 & AREG_D4) $ AREG_D6;
+VGA_BLUE1 = (SREG_D7 & AREG_D5) $ AREG_D6;
+
+
 
 /*
-Total dedicated input used:	3/4 	(75%)
-Total I/O pins used		42/80 	(52%)
-Total Logic cells used 		79/128 	(61%)
-Total Flip-Flop used 		42/128 	(32%)
-Total Foldback logic used 	1/128 	(0%)
-Total Nodes+FB/MCells 		78/128 	(60%)
-Total cascade used 		2
-Total input pins 		15
-Total output pins 		30
-Total Pts 			238
+Total dedicated input used:	2/4 	(50%)
+Total I/O pins used		59/80 	(73%)
+Total Logic cells used 		95/128 	(74%)
+Total Flip-Flop used 		56/128 	(43%)
+Total Foldback logic used 	0/128 	(0%)
+Total Nodes+FB/MCells 		95/128 	(74%)
+Total cascade used 		0
+Total input pins 		30
+Total output pins 		31
+Total Pts 			289
 */
 
 
