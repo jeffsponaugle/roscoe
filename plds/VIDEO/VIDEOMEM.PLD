@@ -19,6 +19,7 @@ Pin = nEXP_VIO_CS;
 Pin = [EXP_CPU_A0..3];
 Pin = nEXP_DEV_WAIT;      // Open collector signal that the CPU needs to wait - Goes back to Device CPLD
 Pin = nEXP_DATA_EN;
+Pin = [EXP_CPU_D0..7];      // Data bus (D24:D31) for 8 bit writes from CPU for configuration.
 
 Pin = nCPU_VRAM_OE;
 Pin = nVRAM_CE;
@@ -28,31 +29,35 @@ Pin = [nVRAM_B0..3];
 Pin = nSYS_RESET;
 
 // Signals from the Video CPLD
-Pin = VGA_BUSY;
+Pin = VRAM_BUSY;
 Pin = VRAM_READ;
+Pin = GRAPHICS_MODE;        // 0 = TEXT, 1 = GRAPHICS
 
 PINNODE = VMEM_ACCESS_BUSY_START, VMEM_ACCESS_BUSY_START_RESET;
 
+GRAPHICS_MODE.d = EXP_CPU_D0;
+GRAPHICS_MODE.ck = nEXP_VIO_CS # !EXP_CPU_A0 # !EXP_CPU_A0;
+GRAPHICS_MODE.ar = !nSYS_RESET;
 
 
 /* 
-   VMEM_ACCCESS_BUSY_START records the value of VGA_BUSY at the start of a CPU VMEM access.  If this recorded value is 0 then we know
-   the VGA_BUSY flag was not set at the start of a CPU bus transaction.  As a result we can complete this transaction without any 
-   delay. This is possible because the VGA_BUSY signal is asserted by the video subsection with at least 4 dot clock cycles before a 
+   VMEM_ACCCESS_BUSY_START records the value of VRAM_BUSY at the start of a CPU VMEM access.  If this recorded value is 0 then we know
+   the VRAM_BUSY flag was not set at the start of a CPU bus transaction.  As a result we can complete this transaction without any 
+   delay. This is possible because the VRAM_BUSY signal is asserted by the video subsection with at least 4 dot clock cycles before a 
    video access occurs.  This is enough time for any CPU bus transaction to complete.  This arrangement prevents bus cycles from neededing
    to be aborted mid cycle.
 */
 
-VMEM_ACCESS_BUSY_START.d = VGA_BUSY;
+VMEM_ACCESS_BUSY_START.d = VRAM_BUSY;
 VMEM_ACCESS_BUSY_START.ck = !nEXP_VMEM_CS;
 VMEM_ACCESS_BUSY_START.ap = !nSYS_RESET # VMEM_ACCESS_BUSY_START_RESET;
 
 /* 
    The Reset flip flop below starts out at 0 (in reset).  On the rising edge of VMEM_CS it is set to 1.  That value of 1 will
    reset the above flipflop to 1 which is the default busy state.  This is done to prevent there from being a race condition.  If the
-   above flip flop is left in the unbusy(0) state there will be a small window between when MEM_CS goes low and the current VGA_BUSY value is
-   lateched.  If that VGA_BUSY is 1, that will create a small glitch in the DEV_WAIT signal.  By keeping the idle state '1' for this
-   flip flop there will never be a condition where AS goes low a bit before this sees the VGA_BUSY flag.
+   above flip flop is left in the unbusy(0) state there will be a small window between when MEM_CS goes low and the current VRAM_BUSY value is
+   lateched.  If that VRAM_BUSY is 1, that will create a small glitch in the DEV_WAIT signal.  By keeping the idle state '1' for this
+   flip flop there will never be a condition where AS goes low a bit before this sees the VRAM_BUSY flag.
    
    The reset flipflop is then reset by the above flip flop, preventing it from holding the above flipflop in reset.
 */
@@ -60,18 +65,18 @@ VMEM_ACCESS_BUSY_START_RESET.d = 'b'1;
 VMEM_ACCESS_BUSY_START_RESET.ck = nEXP_VMEM_CS;
 VMEM_ACCESS_BUSY_START_RESET.ar = VMEM_ACCESS_BUSY_START;
 
-/* The above flip flops will allow CPU access when VGA_BUSY is not asserted, however if it is asserted at the start we 
-   need to handle that case.   We will keep DEV_WAIT at 0 until the VGA_BUSY signal also goes to 0.
+/* The above flip flops will allow CPU access when VRAM_BUSY is not asserted, however if it is asserted at the start we 
+   need to handle that case.   We will keep DEV_WAIT at 0 until the VRAM_BUSY signal also goes to 0.
 */
 
 PINNODE = CPU_ACCESS_IN_PROGRESS;
 
-CPU_ACCESS_IN_PROGRESS = (!nEXP_VMEM_CS & !VMEM_ACCESS_BUSY_START) # (!nEXP_VMEM_CS & !VGA_BUSY);
+CPU_ACCESS_IN_PROGRESS = (!nEXP_VMEM_CS & !VMEM_ACCESS_BUSY_START) # (!nEXP_VMEM_CS & !VRAM_BUSY);
 
 /* nEXP_DEV_WAIT is the open collector signal we set to 0 to pause a CPU bus operation.
 
    IF VMEM_CS is low and the BUSY_START is low, we are doing a bus cycle with no wait, so make sure DEV_WAIT is kept high.
-   IF VEMM_CS is low and the VGA_BUSY is high, keep DEV_WAIT low.  As soon as VGA_BUSY goes low DEV_WAIT will go high.
+   IF VEMM_CS is low and the VRAM_BUSY is high, keep DEV_WAIT low.  As soon as VRAM_BUSY goes low DEV_WAIT will go high.
    If CS is high, keep the DEV_WAIT high
  */
 
@@ -133,6 +138,8 @@ BA32_UH = (   (EXP_CPU_A1 & EXP_CPU_SIZ1)
             # (EXP_CPU_A0 & EXP_CPU_SIZ1 & EXP_CPU_SIZ0) 
             # (EXP_CPU_A0 & EXP_CPU_A1)
           );
+
+
 
 
 /*

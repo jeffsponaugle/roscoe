@@ -39,24 +39,29 @@ Format	Pixel Clock    Active Video   Front_Porch Sync_Pulse  Back_Porch	Active_V
 Pin[89] = nSYS_RESET;
 Pin[87] = DOT_CLK;
 
-Pin = nVID_LOW_OE;
-Pin = nVID_HIGH_OE;
-Pin = VID_LATCH;
+Pin = VRAM_SELECT_WORD0;
+Pin = VRAM_SELECT_WORD1;
+Pin = VRAM_LATCH;
 Pin = [VID_FONTROW0..3];
-Pin = [VRAM_A0..A17];
 
+// Signals from/to the Video RAM and the video latches
+Pin = [VRAM_A0..A17];
 Pin = [CBUS_D0..7];
 Pin = [ABUS_D0..7];
 Pin = [FBUS_D0..7];
 
+// VGA output signals
 Pin = VGA_RED0,VGA_RED1;
 Pin = VGA_GREEN0,VGA_GREEN1;
 Pin = VGA_BLUE0,VGA_BLUE1;
 Pin = VGA_HSYNC;
 Pin = VGA_VSYNC;
 
+
+// Pins to the memory controller CPLD
 Pin = VRAM_READ;
-Pin = VGA_BUSY;
+Pin = VRAM_BUSY;
+Pin = GRAPHICS_MODE;  // 0 = TEXT MODE, 1 = GRAPHICS MODE
 
 
 /* 
@@ -74,9 +79,6 @@ PINNODE = VSYNC_CLOCK_A,VSYNC_CLOCK_B;
 PINNODE = VMEM_ACCESS_BUSY_START;
 PINNODE = VMEM_ACCESS_BUSY_START_RESET;
 
-PINNODE = VRAM_LATCH;
-PINNODE = VRAM_SELECT_WORD0;
-PINNODE = VRAM_SELECT_WORD1;
 PINNODE = VRAM_LATCH_DATA_IN;
 PINNODE = SHIFTER_SHIFT;
 
@@ -129,7 +131,7 @@ SREG_D7.d = (VRAM_LATCH_DATA_IN & FBUS_D7) # (SHIFTER_SHIFT & SREG_D6 );
 [AREG_D0..7].ck = !DOT_CLK;
 [AREG_D0..7].ar = !nSYS_RESET;
 
-[CREG_D0..7].d = [CBUS_D0..7];
+[CREG_D0..7].d = (VRAM_LATCH_DATA_IN & [CBUS_D0..7]) # (!VRAM_LATCH_DATA_IN & [CREG_D0..7]);
 [CREG_D0..7].ck = !DOT_CLK;
 [CREG_D0..7].ar = !nSYS_RESET;
 
@@ -275,31 +277,29 @@ FIELD vsync_counter_4_field = [VSYNC_COUNTER3..0];
 VSYNC_ZERO = !(vsync_counter_field:['d'524]);
 
 VSYNC_DISPLAY_ACTIVE = (vsync_counter_field:[0..'d'479]);
-HSYNC_DISPLAY_ACTIVE = (hsync_counter_field:[16..'d'656]);
+HSYNC_DISPLAY_ACTIVE = (!GRAPHICS_MODE) & (hsync_counter_field:[16..'d'656]);
 
 VGA_DISPLAY_ACTIVE.d = (HSYNC_DISPLAY_ACTIVE) & (VSYNC_DISPLAY_ACTIVE);
 VGA_DISPLAY_ACTIVE.ck = !DOT_CLK;
 VGA_DISPLAY_ACTIVE.ar = !nSYS_RESET;
 
-VGA_HSYNC.d = !(hsync_counter_field:['d'672..'d'767]);
+VGA_HSYNC.d = !((!GRAPHICS_MODE) & (hsync_counter_field:['d'672..'d'767]));
 VGA_HSYNC.ck = !DOT_CLK;
 VGA_HSYNC.ap = !nSYS_RESET;
 
-VGA_VSYNC.d = !(vsync_counter_field:['d'490..'d'491]);
+VGA_VSYNC.d = !((!GRAPHICS_MODE) & (vsync_counter_field:['d'490..'d'491]));
 VGA_VSYNC.ck = !DOT_CLK;
 VGA_VSYNC.ar = !nSYS_RESET;
 
-VGA_BUSY.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;
-VGA_BUSY.ck = !DOT_CLK;
-VGA_BUSY.ar = !nSYS_RESET;
-
-
+VRAM_BUSY.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;
+VRAM_BUSY.ck = !DOT_CLK;
+VRAM_BUSY.ar = !nSYS_RESET;
 
 /* 
     VRAM_READ will enable the address drivers to VRAM as well as enable the VRAM to do a read.  Output from the VRAM will go to 
     a set of latches that will save all 4 bytes of video memory. 
 */
-VRAM_READ.d = (hsync_counter_4_field:['d'8,'d'9,'d'10]) & VGA_BUSY;
+VRAM_READ.d = ( (!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'8,'d'9,'d'10]) & VRAM_BUSY));
 VRAM_READ.ck = !DOT_CLK;
 VRAM_READ.ar = !nSYS_RESET; 
 
@@ -307,38 +307,40 @@ VRAM_READ.ar = !nSYS_RESET;
     VRAM_LATCH will latch the data that is being driven from the VRAM into the 4 bytes of VRAM LATCHES.  
     This signal must happen inside the VRAM_READ signal above.
 */
-VRAM_LATCH.d = (hsync_counter_4_field:['d'10]) & VGA_BUSY;
+VRAM_LATCH.d = ((!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'10]) & VRAM_BUSY));
 VRAM_LATCH.ck = !DOT_CLK;
 VRAM_LATCH.ar = !nSYS_RESET; 
 
 /*  
     Once data is on the 4 byte latches, VRAM_SELECT_WORD0 will output the lower word with one byte going to both the FONT 
     ROM as well as the CBUS input while the second byte goes to the ABUS input.   Data on these inputs can be lateched
-    inside the CPLD
+    inside the CPLD.
+    In TEXT MODE: We want the WORD0 turned on cycle 13, used in cycle 0-7.
 */
 
 
-VRAM_SELECT_WORD0.d = (hsync_counter_4_field:['d'13]) & VGA_BUSY;
+VRAM_SELECT_WORD0.d = ( (!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'13]) & VRAM_BUSY));
 VRAM_SELECT_WORD0.ck = !DOT_CLK;
 VRAM_SELECT_WORD0.ar = !nSYS_RESET; 
 
 /*  
     Once data is on the 4 byte latches, VRAM_SELECT_WORD1 will output the upper word with one byte going to both the FONT 
     ROM as well as the CBUS input while the second byte goes to the ABUS input.   Data on these inputs can be lateched
-    inside the CPLD
+    inside the CPLD.
+    In TEXT MODE: We want the WORD1 turned on in cycle 5, used in cycle 8-15.
 */
 
-VRAM_SELECT_WORD1.d = (hsync_counter_4_field:['d'5]) & VGA_BUSY;
+VRAM_SELECT_WORD1.d = ( (!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'5]) & VRAM_BUSY));
 VRAM_SELECT_WORD1.ck = !DOT_CLK;
 VRAM_SELECT_WORD1.ar = !nSYS_RESET; 
 
 /*
     VRAM_LATCH_DATA_IN will force the latching of data on the FBUS and the ABUS inside the CPLD.  The latches themselves are clocked 
     on the falling edge of the DOT CLOCK, so this signal needs to be active the cycle before you want the actual latching to happen.
-    We want new pixel data to be latched starting in cycle 0 and 8 [mod 4], so this signal needs to be 1 cycle before that.
+    In TEXT MODE: We want new pixel data to be latched starting in cycle 0 and 8 [mod 4], so this signal needs to be 1 cycle before that.
 */
 
-VRAM_LATCH_DATA_IN.d = (hsync_counter_3_field:['d'15,'d'7]) & VGA_BUSY;
+VRAM_LATCH_DATA_IN.d = ( (!GRAPHICS_MODE) & ((hsync_counter_3_field:['d'15,'d'7]) & VRAM_BUSY));
 VRAM_LATCH_DATA_IN.ck = !DOT_CLK;
 VRAM_LATCH_DATA_IN.ar = !nSYS_RESET;
 
@@ -349,7 +351,7 @@ VRAM_LATCH_DATA_IN.ar = !nSYS_RESET;
     1 cycle before that.
 */
 
-SHIFTER_SHIFT.d = (hsync_counter_3_field:['d'0..'d'6]) & VGA_BUSY;
+SHIFTER_SHIFT.d = (hsync_counter_3_field:['d'0..'d'6]) & VRAM_BUSY;
 SHIFTER_SHIFT.ck = !DOT_CLK;
 SHIFTER_SHIFT.ar = !nSYS_RESET;
 
@@ -374,15 +376,6 @@ VRAM_A10 = VSYNC_COUNTER8;          // 5 bits - Character ROW
 VRAM_A11 = 'b'0;                   
 VRAM_A12 = 'b'0;
 VRAM_A13 = 'b'0;
-
-// Everything needed to read from video memory, latch into the 4 latches, and output at the correct time.
-
-/* VID_LATCH will save Video RAM output into 4 latches */
-
-VID_LATCH = VRAM_LATCH;
-nVID_LOW_OE = VRAM_SELECT_WORD0;        // Output the lower word to both the font rom as well as the attribute input (ABUS_Dx)
-nVID_HIGH_OE = VRAM_SELECT_WORD1;
-
 
 // Color output of a single pixed based on D7 in the shift register.
 

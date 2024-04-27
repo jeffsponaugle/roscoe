@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Wed Apr 24 20:56:20 2024 "}
+  {DBtime "Thu Apr 25 09:40:32 2024 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,20 +33,20 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
-   {P DOT_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 1240}}
-   {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 1200}}
+   {P DOT_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 1260}}
+   {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 1220}}
   }
 
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 190 1270}
+   {Rdl 190 1290}
 
    [Ly "PINNUM"]
    [Ts 15][Tj "RC"]
-   {Pnl 120 1250}
+   {Pnl 120 1270}
    [Ts 15][Tj "RC"]
-   {Pnl 120 1210}
+   {Pnl 120 1230}
    [Ts 15][Tj "LC"]
 
    {Sd A 87 89}
@@ -55,14 +55,14 @@
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 1260 250 0}
-   {L 130 1240 100 1240}
-   {L 130 1250 140 1240 130 1230}
-   {L 130 1200 100 1200}
+   {R 130 1280 250 0}
+   {L 130 1260 100 1260}
+   {L 130 1270 140 1260 130 1250}
+   {L 130 1220 100 1220}
    [Ly "PINNAM"]
    [Tj "LC"]
-   {T "DOT_CLK" 140 1240}
-   {T "NSYS_RES" 140 1200}
+   {T "DOT_CLK" 140 1260}
+   {T "NSYS_RES" 140 1220}
    [Tj "RC"]
    [Ly "DEVICE"]
    [Tj "CT"]
@@ -71,13 +71,13 @@
 
   {ATR
    {IN
-    {Org 100 1200}
+    {Org 100 1220}
     {Ty 255}
    }
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOADPT 190 1260}
+    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VIDEOADPT 190 1280}
    }
   }
  }

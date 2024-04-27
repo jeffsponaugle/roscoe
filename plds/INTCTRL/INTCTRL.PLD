@@ -122,6 +122,24 @@ PINNODE =  USB_TXE_INT_MASK;
     Byte Write to high,then low. 
     1=Enable Interrupt, 0=Disable Interrupt
     RESETs to all 0
+
+    0x30000200  bit 7    INT 7
+                bit 6    INT 6A
+                bit 5    INT 6B
+                bit 4    INT 5A
+                bit 3    INT 5B
+                bit 2    INT 5C
+                bit 1    INT 5D
+                bit 0    INT 4A
+
+    0x30000201  bit 7    INT 4B
+                bit 6    INT 4C
+                bit 5    INT 3A
+                bit 4    INT 3B
+                bit 3    INT 2A
+                bit 1    INT 2B
+                bit 0    INT 1A
+                
 */
 
 [INT_MSK15..8].ck = nINTCTRL_CS # CPU_RW # CPU_A0 # CPU_A1 # CPU_A2 # CPU_A3;               // An 8 bit write to 0x3000 0200
@@ -232,7 +250,7 @@ INT6B_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT6B_REQUEST_PE & field_INT_A
 
 INT5A_REQUEST = !vINT5A & INT_MSK12;        // INT5A comes from the NIC.  Active low signal.
 INT5B_REQUEST = !vINT5B & INT_MSK11;        // INT5B comes from the IDE #1 interfaces.  Active low signal
-INT5C_REQUEST = !vINT5B & INT_MSK10;        // INT5C comes from the IDE #2 interfaces.  Active low signal
+INT5C_REQUEST = !vINT5C & INT_MSK10;        // INT5C comes from the IDE #2 interfaces.  Active low signal
 INT5D_REQUEST = !vINT5D & INT_MSK9;         // INT5D in an expansion interrupt (undefined)  Make active low, with pullup
 INT4A_REQUEST = vINT4A & INT_MSK8;          // INT4A is UART1.  The 2550 UARTs are active high interrupts
 INT4B_REQUEST = vINT4B & INT_MSK7;          // INT4B is UART2.  The 2550 UARTs are active high interrupts
