@@ -63,6 +63,10 @@ Pin = VRAM_READ;
 Pin = VRAM_BUSY;
 Pin = GRAPHICS_MODE;  // 0 = TEXT MODE, 1 = GRAPHICS MODE
 
+/* 
+   TEXT MODE is 80x25, but 256byte of memory per row (2 bytes/char, so 160 usable bytes and the remaining unused.)
+
+   GRAPHICS MODE is 640x480 - 4BPP IRGB (Intensity, Red, Green, Blue)  DWORD=8 pixels, so 80 DWORDS used, 128 DWORD allocated per ROW   
 
 /* 
                                                 Outputs 
@@ -390,15 +394,15 @@ VGA_BLUE1 = (SREG_D7 & AREG_D5) $ AREG_D6;
 
 /*
 Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		59/80 	(73%)
+Total I/O pins used		60/80 	(75%)
 Total Logic cells used 		95/128 	(74%)
 Total Flip-Flop used 		56/128 	(43%)
 Total Foldback logic used 	0/128 	(0%)
 Total Nodes+FB/MCells 		95/128 	(74%)
 Total cascade used 		0
-Total input pins 		30
+Total input pins 		31
 Total output pins 		31
-Total Pts 			289
+Total Pts 			297
 */
 
 
