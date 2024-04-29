@@ -21,11 +21,20 @@ Format	Pixel Clock    Active Video   Front_Porch Sync_Pulse  Back_Porch	Active_V
 640x480, 60Hz	25.175	640	         16	         -96	      48	         480	         11	        -2	         31
 640x480, 72Hz	31.500	640	         24	         -40	      128	         480	         9	        -3	         2
 
-640x480 - Blanking  (0-15)    [16]
-          Video out (16-655) [640]
-          Blanking  (656-671) [16]
-          HSYNC     (672-767) [96]
+            Horizontal                              Vertical
+640x480 - Blanking  (0-15)    [16]              Video out (0-479)   [480]
+ TEXT     Video out (16-655) [640]              Blanking (480-490)  [11]
+          Blanking  (656-671) [16]              VSYNC (491-492)     [2]
+          HSYNC     (672-767) [96]              Blanking (493-524)  [31]
           Blanking  (768-799) [32]
+
+4BPP, 16 color
+            Horizontal                              Vertical
+640x480 - Blanking  (0-7)      [8]              Video out (0-479)   [480]
+GRAPHICS  Video out (8-647)  [640]              Blanking (480-490)  [11]
+          Blanking  (648-663) [16]              VSYNC (491-492)     [2]
+          HSYNC     (664-759) [96]              Blanking (493-524)  [31]
+          Blanking  (760-799) [40]
 
 */
 
@@ -38,6 +47,7 @@ Format	Pixel Clock    Active Video   Front_Porch Sync_Pulse  Back_Porch	Active_V
 
 Pin[89] = nSYS_RESET;
 Pin[87] = DOT_CLK;
+Pin = DOT_CLK2;             // Secondary DOT Clock
 
 Pin = VRAM_SELECT_WORD0;
 Pin = VRAM_SELECT_WORD1;
@@ -86,7 +96,7 @@ PINNODE = VMEM_ACCESS_BUSY_START_RESET;
 PINNODE = VRAM_LATCH_DATA_IN;
 PINNODE = SHIFTER_SHIFT;
 
-PINNODE = [SREG_D0..7];
+PINNODE = [SREG_D0..7];     // Shift Register
 PINNODE = [AREG_D0..7];     // Register to store the attribute bits for a given character.
 PINNODE = [CREG_D0..7];     // Register to store the character bits for a given character, for graphics mode only
 
@@ -303,7 +313,19 @@ VRAM_BUSY.ar = !nSYS_RESET;
     VRAM_READ will enable the address drivers to VRAM as well as enable the VRAM to do a read.  Output from the VRAM will go to 
     a set of latches that will save all 4 bytes of video memory. 
 */
-VRAM_READ.d = ( (!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'8,'d'9,'d'10]) & VRAM_BUSY));
+VRAM_READ.d = ( (!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'8,'d'9,'d'10]) & VRAM_BUSY))
+            # ( GRAPHICS_MODE & ((hsync_counter_3_field:['d'4,'d'5,'d'6]) & VRAM_BUSY));
+
+            /*
+            VRAM_READ.D = ((!GRAPHICS_MODE & !HSYNC_COUNTER2.Q & HSYNC_COUNTER3.Q & VRAM_BUSY.Q & !HSYNC_COUNTER1.Q)
+	                     # (!GRAPHICS_MODE & !HSYNC_COUNTER2.Q & HSYNC_COUNTER3.Q & VRAM_BUSY.Q & !HSYNC_COUNTER0.Q));
+
+            VRAM_READ.D = ((!GRAPHICS_MODE & !HSYNC_COUNTER2.Q & VRAM_BUSY.Q & HSYNC_COUNTER3.Q & !HSYNC_COUNTER1.Q)
+	                     # (GRAPHICS_MODE & HSYNC_COUNTER2.Q & VRAM_BUSY.Q & !HSYNC_COUNTER0.Q)
+	                     # (GRAPHICS_MODE & HSYNC_COUNTER2.Q & VRAM_BUSY.Q & !HSYNC_COUNTER1.Q)
+	                     # (!GRAPHICS_MODE & !HSYNC_COUNTER2.Q & VRAM_BUSY.Q & !HSYNC_COUNTER0.Q & HSYNC_COUNTER3.Q));
+    */
+
 VRAM_READ.ck = !DOT_CLK;
 VRAM_READ.ar = !nSYS_RESET; 
 
@@ -311,7 +333,8 @@ VRAM_READ.ar = !nSYS_RESET;
     VRAM_LATCH will latch the data that is being driven from the VRAM into the 4 bytes of VRAM LATCHES.  
     This signal must happen inside the VRAM_READ signal above.
 */
-VRAM_LATCH.d = ((!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'10]) & VRAM_BUSY));
+VRAM_LATCH.d = ((!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'10]) & VRAM_BUSY))
+            #  ( GRAPHICS_MODE & ((hsync_counter_3_field:['d'6]) & VRAM_BUSY)) ;
 VRAM_LATCH.ck = !DOT_CLK;
 VRAM_LATCH.ar = !nSYS_RESET; 
 
@@ -323,7 +346,8 @@ VRAM_LATCH.ar = !nSYS_RESET;
 */
 
 
-VRAM_SELECT_WORD0.d = ( (!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'13]) & VRAM_BUSY));
+VRAM_SELECT_WORD0.d = ( (!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'13]) & VRAM_BUSY))
+                    # ( GRAPHICS_MODE & ((hsync_counter_3_field:['d'6]) & VRAM_BUSY) );
 VRAM_SELECT_WORD0.ck = !DOT_CLK;
 VRAM_SELECT_WORD0.ar = !nSYS_RESET; 
 
@@ -334,7 +358,8 @@ VRAM_SELECT_WORD0.ar = !nSYS_RESET;
     In TEXT MODE: We want the WORD1 turned on in cycle 5, used in cycle 8-15.
 */
 
-VRAM_SELECT_WORD1.d = ( (!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'5]) & VRAM_BUSY));
+VRAM_SELECT_WORD1.d = ( (!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'5]) & VRAM_BUSY))
+                    # ( GRAPHICS_MODE & ((hsync_counter_3_field:['d'2]) & VRAM_BUSY) );
 VRAM_SELECT_WORD1.ck = !DOT_CLK;
 VRAM_SELECT_WORD1.ar = !nSYS_RESET; 
 
@@ -344,7 +369,8 @@ VRAM_SELECT_WORD1.ar = !nSYS_RESET;
     In TEXT MODE: We want new pixel data to be latched starting in cycle 0 and 8 [mod 4], so this signal needs to be 1 cycle before that.
 */
 
-VRAM_LATCH_DATA_IN.d = ( (!GRAPHICS_MODE) & ((hsync_counter_3_field:['d'15,'d'7]) & VRAM_BUSY));
+VRAM_LATCH_DATA_IN.d = ( (!GRAPHICS_MODE) & ((hsync_counter_4_field:['d'15,'d'7]) & VRAM_BUSY))
+                     # ( GRAPHICS_MODE & ((hsync_counter_3_field:['d'3,'d'7]) & VRAM_BUSY) );
 VRAM_LATCH_DATA_IN.ck = !DOT_CLK;
 VRAM_LATCH_DATA_IN.ar = !nSYS_RESET;
 
@@ -359,6 +385,14 @@ SHIFTER_SHIFT.d = (hsync_counter_3_field:['d'0..'d'6]) & VRAM_BUSY;
 SHIFTER_SHIFT.ck = !DOT_CLK;
 SHIFTER_SHIFT.ar = !nSYS_RESET;
 
+
+/* SPIX selects each of the 4 different pixels */
+
+SP0 = (hsync_counter_3_field:['d'0]);
+SP1 = (hsync_counter_3_field:['d'1]);
+SP2 = (hsync_counter_3_field:['d'2]);
+SP3 = (hsync_counter_3_field:['d'3]);
+
 /*
     If VRAM_READ is asserted, we want to enable to address output to the VRAM using the H and V Counters to select the 
     correct memory address
@@ -366,43 +400,68 @@ SHIFTER_SHIFT.ar = !nSYS_RESET;
 */
 
 [VRAM_A0..A13].oe = VRAM_READ;
-VRAM_A0 = HSYNC_COUNTER4;
-VRAM_A1 = HSYNC_COUNTER5;
-VRAM_A2 = HSYNC_COUNTER6;
-VRAM_A3 = HSYNC_COUNTER7;
-VRAM_A4 = HSYNC_COUNTER8;
-VRAM_A5 = HSYNC_COUNTER9;           // 6 bits - Character COLUMN * 2 (2 characters per word)
-VRAM_A6 = VSYNC_COUNTER4;
-VRAM_A7 = VSYNC_COUNTER5;
-VRAM_A8 = VSYNC_COUNTER6;
-VRAM_A9 = VSYNC_COUNTER7;
-VRAM_A10 = VSYNC_COUNTER8;          // 5 bits - Character ROW
-VRAM_A11 = 'b'0;                   
-VRAM_A12 = 'b'0;
-VRAM_A13 = 'b'0;
+VRAM_A0 = ((!GRAPHICS_MODE) & HSYNC_COUNTER4)
+        # ( GRAPHICS_MODE & HSYNC_COUNTER3);
+VRAM_A1 = ((!GRAPHICS_MODE) & HSYNC_COUNTER5)
+        # ( GRAPHICS_MODE & HSYNC_COUNTER4);
+VRAM_A2 = ((!GRAPHICS_MODE) & HSYNC_COUNTER6)
+        # ( GRAPHICS_MODE & HSYNC_COUNTER5);
+VRAM_A3 = ((!GRAPHICS_MODE) & HSYNC_COUNTER7)
+        # ( GRAPHICS_MODE & HSYNC_COUNTER6);
+VRAM_A4 = ((!GRAPHICS_MODE) & HSYNC_COUNTER8)
+        # ( GRAPHICS_MODE & HSYNC_COUNTER7);
+VRAM_A5 = ((!GRAPHICS_MODE) & HSYNC_COUNTER9)
+        # ( GRAPHICS_MODE & HSYNC_COUNTER8);           // 6 bits - Character COLUMN * 2 (2 characters per word)
+VRAM_A6 = ((!GRAPHICS_MODE) & VSYNC_COUNTER4)
+        # ( GRAPHICS_MODE & HSYNC_COUNTER9);
+VRAM_A7 = ((!GRAPHICS_MODE) & VSYNC_COUNTER5)
+        # ( GRAPHICS_MODE & VSYNC_COUNTER0);
+VRAM_A8 = ((!GRAPHICS_MODE) & VSYNC_COUNTER6)
+        # ( GRAPHICS_MODE & VSYNC_COUNTER1);
+VRAM_A9 = ((!GRAPHICS_MODE) & VSYNC_COUNTER7)
+        # ( GRAPHICS_MODE & VSYNC_COUNTER2);
+VRAM_A10 = ((!GRAPHICS_MODE) & VSYNC_COUNTER8)
+         # ( GRAPHICS_MODE & VSYNC_COUNTER3);          // 5 bits - Character ROW
+VRAM_A11 = ( GRAPHICS_MODE & VSYNC_COUNTER4);
+VRAM_A12 = ( GRAPHICS_MODE & VSYNC_COUNTER5);
+VRAM_A13 = ( GRAPHICS_MODE & VSYNC_COUNTER6);
+VRAM_A14 = ( GRAPHICS_MODE & VSYNC_COUNTER7);
+VRAM_A15 = ( GRAPHICS_MODE & VSYNC_COUNTER8);
 
 // Color output of a single pixed based on D7 in the shift register.
+VGA_INTENSITY = (SP0&CBUS_D7 # SP1&CBUS_D3 # SP2&ABUS_D7 # SP3&ABUS_D3);
 
-VGA_RED0 = (SREG_D7 & AREG_D0) $ AREG_D6;
-VGA_RED1 = (SREG_D7 & AREG_D1) $ AREG_D6;
-VGA_GREEN0 = (SREG_D7 & AREG_D2) $ AREG_D6;
-VGA_GREEN1 = (SREG_D7 & AREG_D3) $ AREG_D6;
-VGA_BLUE0 = (SREG_D7 & AREG_D4) $ AREG_D6;
-VGA_BLUE1 = (SREG_D7 & AREG_D5) $ AREG_D6;
+VGA_RED0 = ( (!GRAPHICS_MODE) & ((SREG_D7 & AREG_D0) $ AREG_D6) )
+        #  ( GRAPHICS_MODE & (SP0&CBUS_D6 # SP1&CBUS_D2 # SP2&ABUS_D6 # SP3&ABUS_D2));
+
+VGA_RED1 = ( (!GRAPHICS_MODE) & ((SREG_D7 & AREG_D1) $ AREG_D6) )
+        #  ( GRAPHICS_MODE & VGA_RED0 & VGA_INTENSITY);
+
+VGA_GREEN0 = ( (!GRAPHICS_MODE) & ((SREG_D7 & AREG_D2) $ AREG_D6) )
+        #  ( GRAPHICS_MODE & (SP0&CBUS_D5 # SP1&CBUS_D1 # SP2&ABUS_D5 # SP3&ABUS_D1));
+
+VGA_GREEN1 = ( (!GRAPHICS_MODE) & ((SREG_D7 & AREG_D3) $ AREG_D6) )
+        #  ( GRAPHICS_MODE & VGA_GREEN0 & VGA_INTENSITY);
+
+VGA_BLUE0 = ( (!GRAPHICS_MODE) & ((SREG_D7 & AREG_D4) $ AREG_D6) )
+        #  ( GRAPHICS_MODE & (SP0&CBUS_D4 # SP1&CBUS_D0 # SP2&ABUS_D4 # SP3&ABUS_D0));
+
+VGA_BLUE1 = ( (!GRAPHICS_MODE) & ((SREG_D7 & AREG_D5) $ AREG_D6) )
+        #  ( GRAPHICS_MODE & VGA_BLUE0 & VGA_INTENSITY);
 
 
 
 /*
 Total dedicated input used:	2/4 	(50%)
 Total I/O pins used		60/80 	(75%)
-Total Logic cells used 		95/128 	(74%)
+Total Logic cells used 		101/128 	(78%)
 Total Flip-Flop used 		56/128 	(43%)
 Total Foldback logic used 	0/128 	(0%)
-Total Nodes+FB/MCells 		95/128 	(74%)
+Total Nodes+FB/MCells 		101/128 	(78%)
 Total cascade used 		0
 Total input pins 		31
 Total output pins 		31
-Total Pts 			297
+Total Pts 			333
 */
 
 
