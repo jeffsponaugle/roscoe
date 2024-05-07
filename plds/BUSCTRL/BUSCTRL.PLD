@@ -130,8 +130,8 @@ EXP_BC_CPLD1 = 'b'0;
 EXP_BC_CPLD2 = 'b'0;
 
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
-TESTP1 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2; 
-TESTP0 = TESTP2 & TESTP3;
+//TESTP1 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2; 
+//TESTP0 = TESTP2 & TESTP3;
 
 
 /* 
@@ -298,8 +298,10 @@ nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCE
 
 /* Boot Flash signaling */
 
+
 nBFLASH_CE = !BOOTFLASH_REGION_ACCESS;
 nBFLASH_WE = !BOOTFLASH_REGION_ACCESS # CPU_RW;
+
 
 /* 
     64MB Flash signaling.  The 64MB FLASH does not support 8 bit reads/writes.  This does not effect reads as extra data on 
@@ -367,10 +369,11 @@ nDEV8BITCS = !DEV8BIT_REGION_ACCESS;
 nDEV16BITCS = !DEV16BIT_REGION_ACCESS;
 nDEV32BITCS = !DEV32BIT_REGION_ACCESS;
 
+
 PINNODE = CPU_CLK_DELAY1, CPU_CLK_DELAY2;
 CPU_CLK_DELAY1.d = 'b'1;
-CPU_CLK_AS_DELAY1.ck = !CPU_CLK;
-CPU_CLK_AS_DELAY1.ar = !nSYS_RESET # CPU_CLK_DELAY2;
+CPU_CLK_DELAY1.ck = !CPU_CLK;
+CPU_CLK_DELAY1.ar = !nSYS_RESET # CPU_CLK_DELAY2;
 
 CPU_CLK_DELAY2.d = 'b'1;
 CPU_CLK_DELAY2.ck = CPU_CLK;
@@ -701,15 +704,15 @@ nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 /*
 
 Total dedicated input used:	4/4 	(100%)
-Total I/O pins used		73/80 	(91%)
+Total I/O pins used		72/80 	(90%)
 Total Logic cells used 		74/128 	(57%)
-Total Flip-Flop used 		25/128 	(19%)
-Total Foldback logic used 	10/128 	(7%)
-Total Nodes+FB/MCells 		84/128 	(65%)
+Total Flip-Flop used 		26/128 	(20%)
+Total Foldback logic used 	11/128 	(8%)
+Total Nodes+FB/MCells 		85/128 	(66%)
 Total cascade used 		0
 Total input pins 		33
-Total output pins 		44
-Total Pts 			209
+Total output pins 		43
+Total Pts 			211
 */
 
 

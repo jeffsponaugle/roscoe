@@ -1,4 +1,4 @@
-Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Sun Apr 21 13:54:20 2024
+Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Thu May 02 13:38:59 2024
 
 
 fit1508 C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAP\DEVMAP.tt2 -CUPL -dev P1508T100 -JTAG ON
