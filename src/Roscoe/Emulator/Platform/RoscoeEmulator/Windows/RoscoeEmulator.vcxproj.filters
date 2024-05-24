@@ -1,0 +1,1781 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Arch">
+      <UniqueIdentifier>{ab46ef49-2edd-4edc-ad88-25f95b1679c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OS">
+      <UniqueIdentifier>{69b8c039-09e9-4db0-a41b-0cc638e56c3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{555bb37a-ffba-43e0-bac5-028ed2318603}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arch\Windows">
+      <UniqueIdentifier>{175373f6-3c29-4bbe-b0c4-05cfc22896d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OS\Windows">
+      <UniqueIdentifier>{89481ac5-187b-478c-a0a5-753e6783fe7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared">
+      <UniqueIdentifier>{640e7abe-39e9-4d87-acfe-240753cb2003}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\Windows">
+      <UniqueIdentifier>{526751d9-0c36-4682-8987-6a6224b5bdb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\zlib">
+      <UniqueIdentifier>{bb273b7e-af92-4c3f-9441-1991490db733}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\SHA256">
+      <UniqueIdentifier>{912cd3fa-5920-4588-97fe-4795ad8b1f1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\Sound">
+      <UniqueIdentifier>{1a7e84c2-c8c7-425d-840f-00fb80dce857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2">
+      <UniqueIdentifier>{676b41f5-5a6b-4a08-9655-91cd5c044df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\devel">
+      <UniqueIdentifier>{2c60b97a-9fd5-4d6c-8822-bc4f6be6342d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\include">
+      <UniqueIdentifier>{8dfa2d97-e00e-45ab-94a9-8180a83c1e38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\include\dlg">
+      <UniqueIdentifier>{00d345f5-fc5f-41c7-8dc4-806567f29227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\include\freetype">
+      <UniqueIdentifier>{f0e82540-b58f-434c-85ec-f18d9b7cd4d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\include\freetype\config">
+      <UniqueIdentifier>{159f9d41-5054-4a31-b804-30f69899d7ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\include\freetype\freetype">
+      <UniqueIdentifier>{aa7ce960-46f7-4ff8-be33-f0df5b4a3adf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\include\freetype\freetype\services">
+      <UniqueIdentifier>{23e528fe-47fa-4ee2-a0d5-14371965aa74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src">
+      <UniqueIdentifier>{c6bd4a96-78c9-4a32-bbc2-0e0e0006c59c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\autofit">
+      <UniqueIdentifier>{5d08b41f-7c27-48c2-80b2-bd87718d8b91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\base">
+      <UniqueIdentifier>{fc7684c6-1452-4ee1-9502-1623344cc651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\bdf">
+      <UniqueIdentifier>{ce0a80b2-1f8b-4f69-ac3b-73c69e6cb15a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\cache">
+      <UniqueIdentifier>{b4876756-a5f2-418e-9a71-e5fca4fdfe53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\cff">
+      <UniqueIdentifier>{181c9447-f822-4760-9d79-bb2687302f82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\cid">
+      <UniqueIdentifier>{dfc93599-928a-4d82-8d19-90526f4959ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\gxvalid">
+      <UniqueIdentifier>{72a58c5b-c58f-4a45-a0e2-93cfa6dc5e11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\dlg">
+      <UniqueIdentifier>{6d5da0b1-b99c-47fc-8c7f-476affa3a253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\lzw">
+      <UniqueIdentifier>{86b3b50b-1c51-406d-8ca0-dfe195cad2b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\otvalid">
+      <UniqueIdentifier>{d80fdefd-40da-440d-8e9a-556f17460851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\pcf">
+      <UniqueIdentifier>{636acbfe-74b3-4a3d-8723-283e167aab62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\pfr">
+      <UniqueIdentifier>{3b9fa16f-dbfc-46c9-bc5c-1debb8fb24ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\psaux">
+      <UniqueIdentifier>{4e728257-e785-4b5b-8ae9-07240be520c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\pshinter">
+      <UniqueIdentifier>{7504f1c6-0ce1-4e08-b508-fca09f2ee508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\psnames">
+      <UniqueIdentifier>{f84b62a6-769c-436d-8384-2322544e64fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\raster">
+      <UniqueIdentifier>{7236f42d-bacc-4bba-a6d7-5643b18bb847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\sdf">
+      <UniqueIdentifier>{bba69be3-f985-4ebf-bc85-890b4be0e21f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\sfnt">
+      <UniqueIdentifier>{bdf76994-6767-4e59-bfc6-a4db21180231}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\smooth">
+      <UniqueIdentifier>{ffff1690-124d-4b66-81db-e2037b83d221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\truetype">
+      <UniqueIdentifier>{6a0619a2-1e2e-488e-95cc-6ceec7c8d51e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\type1">
+      <UniqueIdentifier>{0a459c01-6dd0-4a50-971b-7cc0f2b519e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\type47">
+      <UniqueIdentifier>{261ef125-ad15-4f66-b1ad-0cdaa0c0156c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\winfonts">
+      <UniqueIdentifier>{49d6caaa-d0d1-4af7-bc55-8f53765f457b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\freetype2\src\gzip">
+      <UniqueIdentifier>{8c7f4bdd-d75c-465f-8e72-f364037c0b6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\Graphics">
+      <UniqueIdentifier>{37b05fe1-bab0-4baa-902d-fb85d69bffd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\TwoFish">
+      <UniqueIdentifier>{7ff66a0f-793b-48a8-a3ed-cb2c7431fde5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\libpng">
+      <UniqueIdentifier>{a01cd9b2-03fd-44ba-bf18-586ab1a601bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\RoscoeEmulator">
+      <UniqueIdentifier>{81810f63-d9d8-4446-963f-c71867900f76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\RoscoeEmulator\Windows">
+      <UniqueIdentifier>{0fda7d83-d773-48fa-b35e-3cf6f16e4876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\RoscoeEmulator\Windows\Version">
+      <UniqueIdentifier>{dc623fa9-5af1-4e4b-a05a-ff43e6ed1490}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\68030">
+      <UniqueIdentifier>{11653a52-d458-4be0-863e-0af1c2230135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\68030\softfloat">
+      <UniqueIdentifier>{27416987-66f5-4b94-8693-921b7134368a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Arch\Windows\WindowsArch.h">
+      <Filter>Arch\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OS\OS.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OS\OSPort.h">
+      <Filter>OS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OS\Windows\OSWindows.h">
+      <Filter>OS\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Version.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Windows\WindowsTools.h">
+      <Filter>Shared\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Platform.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Timer.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\UtilTask.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\SysEvent.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\crc32.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\deflate.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\gzguts.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\inffast.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\inffixed.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\inflate.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\inftrees.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\trees.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\zconf.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\zlib.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\zlib\zutil.h">
+      <Filter>Shared\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\CmdLine.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\SHA256\sha256.h">
+      <Filter>Shared\SHA256</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Sound\Sound.h">
+      <Filter>Shared\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Sound\SoundWav.h">
+      <Filter>Shared\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OS\Windows\WindowsSound.h">
+      <Filter>OS\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\devel\ft2build.h">
+      <Filter>Shared\freetype2\devel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\devel\ftoption.h">
+      <Filter>Shared\freetype2\devel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\ft2build.h">
+      <Filter>Shared\freetype2\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\dlg\dlg.h">
+      <Filter>Shared\freetype2\include\dlg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\dlg\output.h">
+      <Filter>Shared\freetype2\include\dlg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\freetype.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftadvanc.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftbbox.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftbdf.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftbitmap.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftbzip2.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftcache.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftchapters.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftcid.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftcolor.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftdriver.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\fterrdef.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\fterrors.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftfntfmt.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftgasp.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftglyph.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftgxval.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftgzip.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftimage.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftincrem.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftlcdfil.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftlist.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftlogging.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftlzw.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftmac.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftmm.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftmodapi.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftmoderr.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftotval.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftoutln.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftparams.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftpfr.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftrender.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftsizes.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftsnames.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftstroke.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftsynth.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftsystem.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\fttrigon.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\fttypes.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftwinfnt.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\t1tables.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ttnameid.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\tttables.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\tttags.h">
+      <Filter>Shared\freetype2\include\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\ftconfig.h">
+      <Filter>Shared\freetype2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\ftheader.h">
+      <Filter>Shared\freetype2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\ftmodule.h">
+      <Filter>Shared\freetype2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\ftoption.h">
+      <Filter>Shared\freetype2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\ftstdlib.h">
+      <Filter>Shared\freetype2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\integer-types.h">
+      <Filter>Shared\freetype2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\mac-support.h">
+      <Filter>Shared\freetype2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\public-macros.h">
+      <Filter>Shared\freetype2\include\freetype\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\autohint.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\cffotypes.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\cfftypes.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\compiler-macros.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftcalc.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftdebug.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftdrv.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftgloadr.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\fthash.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftmemory.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftobjs.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftpsprop.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftrfork.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftserv.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftstream.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\fttrace.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftvalid.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\psaux.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\pshints.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\sfnt.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\t1types.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\tttypes.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\wofftypes.h">
+      <Filter>Shared\freetype2\include\freetype\freetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svbdf.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svcfftl.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svcid.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svfntfmt.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svgldict.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svgxval.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svkern.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svmetric.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svmm.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svotval.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svpfr.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svpostnm.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svprop.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svpscmap.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svpsinfo.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svsfnt.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svttcmap.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svtteng.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svttglyf.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svwinfnt.h">
+      <Filter>Shared\freetype2\include\freetype\freetype\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftccache.h">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftccback.h">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcerror.h">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcglyph.h">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcimage.h">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcmanag.h">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcmru.h">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcsbits.h">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffcmap.h">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffdrivr.h">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cfferrs.h">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffgload.h">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffload.h">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffobjs.h">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffparse.h">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cfftoken.h">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\ciderrs.h">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidgload.h">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidload.h">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidobjs.h">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidparse.h">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidriver.h">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidtoken.h">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvalid.h">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvcommn.h">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxverror.h">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvfeat.h">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmod.h">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort.h">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx.h">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\lzw\ftzopen.h">
+      <Filter>Shared\freetype2\src\lzw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\otvalid\otvalid.h">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\otvalid\otvcommn.h">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\otvalid\otverror.h">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\otvalid\otvgpos.h">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\otvalid\otvmod.h">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pcf\pcf.h">
+      <Filter>Shared\freetype2\src\pcf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pcf\pcfdrivr.h">
+      <Filter>Shared\freetype2\src\pcf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pcf\pcferror.h">
+      <Filter>Shared\freetype2\src\pcf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pcf\pcfread.h">
+      <Filter>Shared\freetype2\src\pcf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pcf\pcfutil.h">
+      <Filter>Shared\freetype2\src\pcf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrcmap.h">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrdrivr.h">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrerror.h">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrgload.h">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrload.h">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrobjs.h">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrsbit.h">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrtypes.h">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\afmparse.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\cffdecode.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psarrst.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psauxerr.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psauxmod.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psblues.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psconv.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\pserror.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psfixed.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psfont.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psft.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psglue.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\pshints.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psintrp.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psobjs.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psread.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psstack.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\pstypes.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\t1cmap.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\t1decode.h">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pshinter\pshalgo.h">
+      <Filter>Shared\freetype2\src\pshinter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pshinter\pshglob.h">
+      <Filter>Shared\freetype2\src\pshinter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pshinter\pshmod.h">
+      <Filter>Shared\freetype2\src\pshinter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pshinter\pshnterr.h">
+      <Filter>Shared\freetype2\src\pshinter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pshinter\pshrec.h">
+      <Filter>Shared\freetype2\src\pshinter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psnames\psmodule.h">
+      <Filter>Shared\freetype2\src\psnames</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psnames\psnamerr.h">
+      <Filter>Shared\freetype2\src\psnames</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psnames\pstables.h">
+      <Filter>Shared\freetype2\src\psnames</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\raster\ftmisc.h">
+      <Filter>Shared\freetype2\src\raster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\raster\ftraster.h">
+      <Filter>Shared\freetype2\src\raster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\raster\ftrend1.h">
+      <Filter>Shared\freetype2\src\raster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\raster\rasterrs.h">
+      <Filter>Shared\freetype2\src\raster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sdf\ftsdf.h">
+      <Filter>Shared\freetype2\src\sdf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sdf\ftsdfcommon.h">
+      <Filter>Shared\freetype2\src\sdf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sdf\ftsdferrs.h">
+      <Filter>Shared\freetype2\src\sdf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sdf\ftsdfrend.h">
+      <Filter>Shared\freetype2\src\sdf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\pngshim.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\sfdriver.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\sferrors.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\sfobjs.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\sfwoff.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\sfwoff2.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttbdf.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttcmap.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttcmapc.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttcolr.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttcpal.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttkern.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttload.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttmtx.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttpost.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttsbit.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\woff2tags.h">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\smooth\ftgrays.h">
+      <Filter>Shared\freetype2\src\smooth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\smooth\ftsmerrs.h">
+      <Filter>Shared\freetype2\src\smooth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\smooth\ftsmooth.h">
+      <Filter>Shared\freetype2\src\smooth</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttdriver.h">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\tterrors.h">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttgload.h">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttgxvar.h">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttinterp.h">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttobjs.h">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttpload.h">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttsubpix.h">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1afm.h">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1driver.h">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1errors.h">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1gload.h">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1load.h">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1objs.h">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1parse.h">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1tokens.h">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type42\t42drivr.h">
+      <Filter>Shared\freetype2\src\type47</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type42\t42error.h">
+      <Filter>Shared\freetype2\src\type47</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type42\t42objs.h">
+      <Filter>Shared\freetype2\src\type47</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type42\t42parse.h">
+      <Filter>Shared\freetype2\src\type47</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type42\t42types.h">
+      <Filter>Shared\freetype2\src\type47</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\winfonts\fnterrs.h">
+      <Filter>Shared\freetype2\src\winfonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\freetype2\src\winfonts\winfnt.h">
+      <Filter>Shared\freetype2\src\winfonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\Graphics.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\Window.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\Font.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\Control.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlImage.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlText.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlButton.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlSlider.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlLineInput.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlComboBox.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlListBox.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlHit.h">
+      <Filter>Shared\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\TwoFish\AES.h">
+      <Filter>Shared\TwoFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\TwoFish\Debug.h">
+      <Filter>Shared\TwoFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\TwoFish\Table.h">
+      <Filter>Shared\TwoFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\TwoFish\TwoFishPlatform.h">
+      <Filter>Shared\TwoFish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\HandlePool.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\libpng\png.h">
+      <Filter>Shared\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\libpng\pngconf.h">
+      <Filter>Shared\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\libpng\pngdebug.h">
+      <Filter>Shared\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\libpng\pnginfo.h">
+      <Filter>Shared\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\libpng\pnglibconf.h">
+      <Filter>Shared\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\libpng\pngpriv.h">
+      <Filter>Shared\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\libpng\pngstruct.h">
+      <Filter>Shared\libpng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Shared.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\SharedLog.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\RoscoeEmulator.h">
+      <Filter>Platform\RoscoeEmulator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\SharedMisc.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\68030\m68k.h">
+      <Filter>Shared\68030</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\68030\m68kconf.h">
+      <Filter>Shared\68030</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\68030\m68kcpu.h">
+      <Filter>Shared\68030</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\68030\m68kmmu.h">
+      <Filter>Shared\68030</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\68030\softfloat\softfloat.h">
+      <Filter>Shared\68030\softfloat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\68030\m68kops.h">
+      <Filter>Shared\68030</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Arch\Arch.h">
+      <Filter>Arch</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Arch\Windows\WindowsArch.c">
+      <Filter>Arch\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OS\File.c">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OS\OS.c">
+      <Filter>OS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OS\Windows\FileWindows.c">
+      <Filter>OS\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OS\Windows\OSWindows.c">
+      <Filter>OS\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Windows\WindowsTools.c">
+      <Filter>Shared\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Timer.c">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\UtilTask.c">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\SysEvent.c">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\adler32.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\compress.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\crc32.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\deflate.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\infback.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\inffast.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\inflate.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\inftrees.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\trees.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\uncompr.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\zutil.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\ArcZlibTools.c">
+      <Filter>Shared\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\CmdLine.c">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\SHA256\sha256.c">
+      <Filter>Shared\SHA256</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\SharedVersion.c">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Sound\Sound.c">
+      <Filter>Shared\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Sound\SoundWav.c">
+      <Filter>Shared\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OS\Windows\WindowsSound.c">
+      <Filter>OS\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcbasic.c">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftccache.c">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftccmap.c">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcglyph.c">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcimage.c">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcmanag.c">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcmru.c">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcsbits.c">
+      <Filter>Shared\freetype2\src\cache</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffcmap.c">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffdrivr.c">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffgload.c">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffload.c">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffobjs.c">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffparse.c">
+      <Filter>Shared\freetype2\src\cff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cid\cidgload.c">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cid\cidload.c">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cid\cidobjs.c">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cid\cidparse.c">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cid\cidriver.c">
+      <Filter>Shared\freetype2\src\cid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvbsln.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvcommn.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvfeat.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvjust.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvkern.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvlcar.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmod.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort0.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort1.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort2.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort4.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort5.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx0.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx1.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx2.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx4.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx5.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvopbd.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvprop.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvtrak.c">
+      <Filter>Shared\freetype2\src\gxvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\dlg\dlg.c">
+      <Filter>Shared\freetype2\src\dlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\dlg\dlgwrap.c">
+      <Filter>Shared\freetype2\src\dlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\lzw\ftlzw.c">
+      <Filter>Shared\freetype2\src\lzw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\lzw\ftzopen.c">
+      <Filter>Shared\freetype2\src\lzw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvbase.c">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvcommn.c">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvgdef.c">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvgpos.c">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvgsub.c">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvjstf.c">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvmath.c">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvmod.c">
+      <Filter>Shared\freetype2\src\otvalid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pcf\pcfdrivr.c">
+      <Filter>Shared\freetype2\src\pcf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pcf\pcfread.c">
+      <Filter>Shared\freetype2\src\pcf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pcf\pcfutil.c">
+      <Filter>Shared\freetype2\src\pcf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrcmap.c">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrdrivr.c">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrgload.c">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrload.c">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrobjs.c">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrsbit.c">
+      <Filter>Shared\freetype2\src\pfr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\afmparse.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\cffdecode.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psarrst.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psauxmod.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psblues.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psconv.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\pserror.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psfont.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psft.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\pshints.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psintrp.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psobjs.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psread.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psstack.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\t1cmap.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\t1decode.c">
+      <Filter>Shared\freetype2\src\psaux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pshinter\pshalgo.c">
+      <Filter>Shared\freetype2\src\pshinter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pshinter\pshglob.c">
+      <Filter>Shared\freetype2\src\pshinter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pshinter\pshmod.c">
+      <Filter>Shared\freetype2\src\pshinter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pshinter\pshrec.c">
+      <Filter>Shared\freetype2\src\pshinter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psnames\psmodule.c">
+      <Filter>Shared\freetype2\src\psnames</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\raster\ftraster.c">
+      <Filter>Shared\freetype2\src\raster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\raster\ftrend1.c">
+      <Filter>Shared\freetype2\src\raster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sdf\ftbsdf.c">
+      <Filter>Shared\freetype2\src\sdf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sdf\ftsdf.c">
+      <Filter>Shared\freetype2\src\sdf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sdf\ftsdfcommon.c">
+      <Filter>Shared\freetype2\src\sdf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sdf\ftsdfrend.c">
+      <Filter>Shared\freetype2\src\sdf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\pngshim.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\sfdriver.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\sfobjs.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\sfwoff.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\sfwoff2.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttbdf.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttcmap.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttcolr.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttcpal.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttkern.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttload.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttmtx.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttpost.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttsbit.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\woff2tags.c">
+      <Filter>Shared\freetype2\src\sfnt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\smooth\ftgrays.c">
+      <Filter>Shared\freetype2\src\smooth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\smooth\ftsmooth.c">
+      <Filter>Shared\freetype2\src\smooth</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttdriver.c">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttgload.c">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttgxvar.c">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttinterp.c">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttobjs.c">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttpload.c">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttsubpix.c">
+      <Filter>Shared\freetype2\src\truetype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1afm.c">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1driver.c">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1gload.c">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1load.c">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1objs.c">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1parse.c">
+      <Filter>Shared\freetype2\src\type1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type42\t42drivr.c">
+      <Filter>Shared\freetype2\src\type47</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type42\t42objs.c">
+      <Filter>Shared\freetype2\src\type47</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type42\t42parse.c">
+      <Filter>Shared\freetype2\src\type47</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\winfonts\winfnt.c">
+      <Filter>Shared\freetype2\src\winfonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afshaper.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afranges.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afmodule.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afloader.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\aflatin.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afindic.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afhints.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afglobal.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afdummy.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afcjk.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afblue.c">
+      <Filter>Shared\freetype2\src\autofit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftadvanc.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftwinfnt.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftutil.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\fttype1.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftsystem.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\fttrigon.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftsynth.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftstroke.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftstream.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftrfork.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftsnames.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftpsprop.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftpatent.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftpfr.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftoutln.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftotval.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftobjs.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftmm.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftlcdfil.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftmac.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftinit.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\fthash.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftglyph.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftgxval.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftgloadr.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftfstype.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftgasp.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\fterrors.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftfntfmt.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftdebug.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftdbgmem.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftcid.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftcolor.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftcalc.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftbdf.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftbitmap.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftbbox.c">
+      <Filter>Shared\freetype2\src\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\bdf\bdfdrivr.c">
+      <Filter>Shared\freetype2\src\bdf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\bdf\bdflib.c">
+      <Filter>Shared\freetype2\src\bdf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gzip\ftgzip.c">
+      <Filter>Shared\freetype2\src\gzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\Graphics.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\Window.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\Font.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\Control.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlImage.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlText.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlButton.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlSlider.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlLineInput.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlComboBox.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlListBox.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlHit.c">
+      <Filter>Shared\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\TwoFish\TwoFish.c">
+      <Filter>Shared\TwoFish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\HandlePool.c">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="Build\Version.c">
+      <Filter>Platform\RoscoeEmulator\Windows\Version</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\png.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngerror.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngget.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngmem.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngpread.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngread.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngrio.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngrtran.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngrutil.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngset.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngtest.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngtrans.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngwio.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngwrite.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngwtran.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\libpng\pngwutil.c">
+      <Filter>Shared\libpng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Shared.c">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\SharedLog.c">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="RoscoeEmulatorPlatform.c">
+      <Filter>Platform\RoscoeEmulator\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\RoscoeEmulator.c">
+      <Filter>Platform\RoscoeEmulator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\SharedMisc.c">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\68030\m68k_in.c">
+      <Filter>Shared\68030</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\68030\m68kcpu.c">
+      <Filter>Shared\68030</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\68030\m68kdasm.c">
+      <Filter>Shared\68030</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\68030\m68kfpu.c">
+      <Filter>Shared\68030</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\68030\m68kmake.c">
+      <Filter>Shared\68030</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\68030\softfloat\softfloat.c">
+      <Filter>Shared\68030\softfloat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\68030\m68kops.c">
+      <Filter>Shared\68030</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Shared\TwoFish\Makefile">
+      <Filter>Shared\TwoFish</Filter>
+    </None>
+    <None Include="Version.tmpl">
+      <Filter>Platform\RoscoeEmulator\Windows</Filter>
+    </None>
+    <None Include="..\..\..\Shared\68030\history.txt">
+      <Filter>Shared\68030</Filter>
+    </None>
+    <None Include="..\..\..\Shared\68030\Makefile">
+      <Filter>Shared\68030</Filter>
+    </None>
+    <None Include="..\..\..\Shared\68030\readme.txt">
+      <Filter>Shared\68030</Filter>
+    </None>
+  </ItemGroup>
+</Project>

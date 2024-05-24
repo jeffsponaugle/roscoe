@@ -1,0 +1,28 @@
+#include "Shared/Shared.h"
+#include "Arch/Arch.h"
+#include "Shared/Version.h"
+
+// VERSION.C AUTOMATICALLY GENERATED - DO NOT CHECK IN!!!
+
+// Structure needed so the encrypter app can find the rev #
+const SVersionInfo g_sVersionInfo =
+{
+	VERSION_HEAD,					// Yes compiler, this is OK
+	EIMG_OP,						// It's a library
+	MAJOR_VERSION,					// Major version #
+	MINOR_VERSION,					// Minor version #
+	$WCREV$,						// Build #
+	{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
+	 17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32}, // SHA256 (To be filled in by build utility)
+	0,								// Image size (To be filled in by build utility)
+	ECPU_X86,						// CPU Type
+	ECPUARCH_X64_WINDOWS,			// OS/Architecture
+	0,			// Board ID
+	0,	 			  				// Entry point
+	(UINT64) WinMain,				// Load address for module
+	0,								// Timestamp (filled in by Stamp utility)
+	0,								// Security version
+	NULL,							// Image specific data
+	VERSION_TAIL,					// Yes compiler, this is OK
+	0								// CRC32 Of this structure (To be filled in by build utility)
+};

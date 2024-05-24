@@ -1,0 +1,1 @@
+cc -m32 stamp.c -o stamp ../../Shared/Version.c ../../Shared/zlib/crc32.c -I ../..

@@ -1,0 +1,860 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{534EA92A-F9E7-4E43-9900-CFAFACBD287C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>SM1Emulator</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_NO_DEBUG_HEAP=1;_WIN64;_AMD64_;_DEBUG;_WINDOWS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;MAJOR_VERSION=1;MINOR_VERSION=0;MY_ZCALLOC;UNICODE;_UNICODE;PAHO_MQTT_STATIC</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../..;../..;..;.;..\..\..\shared\openssl\Win64\include;%(AdditionalIncludeDirectories);..\..\..\shared\libpng;..\..\..\shared\zlib;..\..\..\shared\freetype2\include;..\..\..\shared\libsdl\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>comctl32.lib;ws2_32.lib;winmm.lib;Shlwapi.lib;DbgHelp.lib;Rpcrt4.lib;..\..\..\shared\openssl\win64\Debug\libcrypto.lib;..\..\..\shared\openssl\win64\Debug\libssl.lib;crypt32.lib;Setupapi.lib;..\..\..\Shared\libsdl\lib\x64\SDL2.lib;..\..\..\Shared\liblsl\liblsl\build\src\Debug\lsl.lib;opengl32.lib;..\..\..\Shared\Paho\build.paho.windows\src\paho-mqtt3a-static.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalManifestDependencies>"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'"</AdditionalManifestDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>SubWCRev.exe $(ProjectDir)\..\..\.. $(ProjectDir)\Version.tmpl $(ProjectDir)\Build\Version.c</Command>
+      <Message>Generate the Version.c file with the latest project SVN revision</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>..\..\..\Tools\Stamp\Windows\Stamp.exe $(OutDir)$(ProjectName).exe
+copy /Y ..\..\..\Shared\Neurosoft\API\x64\MStimAPI.dll .\x64\debug\*.*
+copy /Y ..\..\..\Shared\Neurosoft\API\x64\NsEzUSB.dll .\x64\debug\*.*
+copy /Y ..\..\..\Shared\liblsl\liblsl\build\src\Debug\lsl*.dll .\x64\debug\*.*</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Stamp project with updated CRC32 and SHA256 values</Message>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>copy $(ProjectDir)\..\..\..\shared\libsdl\lib\x64\sdl2.dll $(OutDir)sdl2.dll</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Copying SDL2.dll to executable directory</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(OutDir)sdl2.dll;%(Outputs)</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_RELEASE;NDEBUG;_NO_DEBUG_HEAP=1;_WIN64;_AMD64_;_WINDOWS;%(PreprocessorDefinitions);_RAMPOOL;_CRT_SECURE_NO_WARNINGS;MAJOR_VERSION=1;MINOR_VERSION=0;MY_ZCALLOC;UNICODE;_UNICODE</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../..;../..;..;.;..\..\..\shared\openssl\Win64\include;%(AdditionalIncludeDirectories);..\..\..\shared\libpng;..\..\..\shared\zlib;..\..\..\shared\freetype2\include;..\..\..\shared\libsdl\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>comctl32.lib;ws2_32.lib;winmm.lib;Shlwapi.lib;DbgHelp.lib;Rpcrt4.lib;..\..\..\shared\openssl\win64\Release\libcrypto.lib;..\..\..\shared\openssl\win64\Release\libssl.lib;crypt32.lib;Setupapi.lib;..\..\..\Shared\libsdl\lib\x64\SDL2.lib;..\..\..\Shared\liblsl\liblsl\build\src\Release\lsl.lib;opengl32.lib;..\..\..\Shared\Paho\build.paho.windows\src\paho-mqtt3a-static.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalManifestDependencies>"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'"</AdditionalManifestDependencies>
+    </Link>
+    <ResourceCompile>
+      <PreprocessorDefinitions>
+      </PreprocessorDefinitions>
+    </ResourceCompile>
+    <PreBuildEvent>
+      <Command>SubWCRev.exe $(ProjectDir)\..\..\.. $(ProjectDir)\Version.tmpl $(ProjectDir)\Build\Version.c</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Generate the Version.c file with the latest project SVN revision</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>..\..\..\Tools\Stamp\Windows\Stamp.exe $(OutDir)$(ProjectName).exe
+copy /Y ..\..\..\Shared\liblsl\liblsl\build\src\Release\lsl*.dll .\x64\Release\*.*</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Stamp project with updated CRC32 and SHA256 values</Message>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>copy $(ProjectDir)\..\..\..\shared\libsdl\lib\x64\sdl2.dll $(OutDir)sdl2.dll</Command>
+      <Message>Copying SDL2.dll to executable directory</Message>
+      <Outputs>$(OutDir)sdl2.dll;%(Outputs)</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Arch\Arch.h" />
+    <ClInclude Include="..\..\..\Arch\Windows\WindowsArch.h" />
+    <ClInclude Include="..\..\..\OS\OS.h" />
+    <ClInclude Include="..\..\..\OS\OSPort.h" />
+    <ClInclude Include="..\..\..\OS\Windows\OSWindows.h" />
+    <ClInclude Include="..\..\..\OS\Windows\WindowsSound.h" />
+    <ClInclude Include="..\..\..\Shared\Admin\AdminClinic.h" />
+    <ClInclude Include="..\..\..\Shared\Admin\AdminPatient.h" />
+    <ClInclude Include="..\..\..\Shared\Admin\AdminUpdate.h" />
+    <ClInclude Include="..\..\..\Shared\Admin\AdminUser.h" />
+    <ClInclude Include="..\..\..\Shared\AppGfx\AppGfxMQTT.h" />
+    <ClInclude Include="..\..\..\Shared\AppGfx\AppGfxUtil.h" />
+    <ClInclude Include="..\..\..\Shared\Atomizer.h" />
+    <ClInclude Include="..\..\..\Shared\ClientServer.h" />
+    <ClInclude Include="..\..\..\Shared\CmdLine.h" />
+    <ClInclude Include="..\..\..\Shared\Connection.h" />
+    <ClInclude Include="..\..\..\Shared\DSP\DSPFilterButterworth.h" />
+    <ClInclude Include="..\..\..\Shared\EEG\EEG.h" />
+    <ClInclude Include="..\..\..\Shared\EEG\EEGCadwellEZ2.h" />
+    <ClInclude Include="..\..\..\Shared\EEG\EEGDevice.h" />
+    <ClInclude Include="..\..\..\Shared\EEG\EEGDeviceFile.h" />
+    <ClInclude Include="..\..\..\Shared\EEG\EEGDeviceLSL.h" />
+    <ClInclude Include="..\..\..\Shared\EEG\EEGDeymed.h" />
+    <ClInclude Include="..\..\..\Shared\EEG\EEGEDF.h" />
+    <ClInclude Include="..\..\..\Shared\FastHeap.h" />
+    <ClInclude Include="..\..\..\Shared\FileType.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\devel\ft2build.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\devel\ftoption.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\dlg\dlg.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\dlg\output.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\ftconfig.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\ftheader.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\ftmodule.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\ftoption.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\ftstdlib.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\integer-types.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\mac-support.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\config\public-macros.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\freetype.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftadvanc.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftbbox.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftbdf.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftbitmap.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftbzip2.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftcache.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftchapters.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftcid.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftcolor.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftdriver.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\fterrdef.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\fterrors.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftfntfmt.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftgasp.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftglyph.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftgxval.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftgzip.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftimage.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftincrem.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftlcdfil.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftlist.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftlogging.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftlzw.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftmac.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftmm.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftmodapi.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftmoderr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftotval.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftoutln.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftparams.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftpfr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftrender.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftsizes.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftsnames.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftstroke.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftsynth.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftsystem.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\fttrigon.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\fttypes.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ftwinfnt.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\autohint.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\cffotypes.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\cfftypes.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\compiler-macros.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftcalc.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftdebug.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftdrv.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftgloadr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\fthash.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftmemory.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftobjs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftpsprop.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftrfork.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftserv.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftstream.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\fttrace.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\ftvalid.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\psaux.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\pshints.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svbdf.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svcfftl.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svcid.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svfntfmt.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svgldict.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svgxval.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svkern.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svmetric.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svmm.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svotval.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svpfr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svpostnm.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svprop.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svpscmap.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svpsinfo.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svsfnt.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svttcmap.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svtteng.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svttglyf.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\services\svwinfnt.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\sfnt.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\t1types.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\tttypes.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\internal\wofftypes.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\t1tables.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\ttnameid.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\tttables.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\freetype\tttags.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\include\ft2build.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftccache.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftccback.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcerror.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcglyph.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcimage.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcmanag.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcmru.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cache\ftcsbits.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffcmap.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffdrivr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cfferrs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffgload.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffload.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffobjs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cffparse.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cff\cfftoken.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\ciderrs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidgload.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidload.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidobjs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidparse.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidriver.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\cid\cidtoken.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvalid.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvcommn.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxverror.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvfeat.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmod.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\lzw\ftzopen.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\otvalid\otvalid.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\otvalid\otvcommn.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\otvalid\otverror.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\otvalid\otvgpos.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\otvalid\otvmod.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pcf\pcf.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pcf\pcfdrivr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pcf\pcferror.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pcf\pcfread.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pcf\pcfutil.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrcmap.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrdrivr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrerror.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrgload.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrload.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrobjs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrsbit.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pfr\pfrtypes.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\afmparse.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\cffdecode.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psarrst.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psauxerr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psauxmod.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psblues.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psconv.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\pserror.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psfixed.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psfont.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psft.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psglue.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\pshints.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psintrp.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psobjs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psread.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\psstack.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\pstypes.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\t1cmap.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psaux\t1decode.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pshinter\pshalgo.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pshinter\pshglob.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pshinter\pshmod.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pshinter\pshnterr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\pshinter\pshrec.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psnames\psmodule.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psnames\psnamerr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\psnames\pstables.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\raster\ftmisc.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\raster\ftraster.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\raster\ftrend1.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\raster\rasterrs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sdf\ftsdf.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sdf\ftsdfcommon.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sdf\ftsdferrs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sdf\ftsdfrend.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\pngshim.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\sfdriver.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\sferrors.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\sfobjs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\sfwoff.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\sfwoff2.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttbdf.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttcmap.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttcmapc.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttcolr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttcpal.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttkern.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttload.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttmtx.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttpost.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\ttsbit.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\sfnt\woff2tags.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\smooth\ftgrays.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\smooth\ftsmerrs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\smooth\ftsmooth.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttdriver.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\tterrors.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttgload.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttgxvar.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttinterp.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttobjs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttpload.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\truetype\ttsubpix.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1afm.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1driver.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1errors.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1gload.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1load.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1objs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1parse.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type1\t1tokens.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type42\t42drivr.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type42\t42error.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type42\t42objs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type42\t42parse.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\type42\t42types.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\winfonts\fnterrs.h" />
+    <ClInclude Include="..\..\..\Shared\freetype2\src\winfonts\winfnt.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\Control.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlButton.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlComboBox.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlHit.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlImage.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlLineInput.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlListBox.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlSlider.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\ControlText.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\Font.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\Graphics.h" />
+    <ClInclude Include="..\..\..\Shared\Graphics\Window.h" />
+    <ClInclude Include="..\..\..\Shared\HandlePool.h" />
+    <ClInclude Include="..\..\..\Shared\Keys\Keys.h" />
+    <ClInclude Include="..\..\..\Shared\Keys\KeysAll.h" />
+    <ClInclude Include="..\..\..\Shared\Keys\KeysStim.h" />
+    <ClInclude Include="..\..\..\Shared\Keys\KeysStimMagPro.h" />
+    <ClInclude Include="..\..\..\Shared\Keys\KeysStimMagStim.h" />
+    <ClInclude Include="..\..\..\Shared\Keys\KeysStimModP.h" />
+    <ClInclude Include="..\..\..\Shared\Keys\KeysStimNeurosoft.h" />
+    <ClInclude Include="..\..\..\Shared\liblsl\liblsl\include\lsl_c.h" />
+    <ClInclude Include="..\..\..\Shared\libpng\png.h" />
+    <ClInclude Include="..\..\..\Shared\libpng\pngconf.h" />
+    <ClInclude Include="..\..\..\Shared\libpng\pngdebug.h" />
+    <ClInclude Include="..\..\..\Shared\libpng\pnginfo.h" />
+    <ClInclude Include="..\..\..\Shared\libpng\pnglibconf.h" />
+    <ClInclude Include="..\..\..\Shared\libpng\pngpriv.h" />
+    <ClInclude Include="..\..\..\Shared\libpng\pngstruct.h" />
+    <ClInclude Include="..\..\..\Shared\MQTT.h" />
+    <ClInclude Include="..\..\..\Shared\Network.h" />
+    <ClInclude Include="..\..\..\Shared\NetworkBSD.h" />
+    <ClInclude Include="..\..\..\Shared\Neurosoft\MStimAPI.h" />
+    <ClInclude Include="..\..\..\Shared\Paho\src\MQTTClient.h" />
+    <ClInclude Include="..\..\..\Shared\Server\SharedServer.h" />
+    <ClInclude Include="..\..\..\Shared\Session.h" />
+    <ClInclude Include="..\..\..\Shared\SHA256\sha256.h" />
+    <ClInclude Include="..\..\..\Shared\Shared.h" />
+    <ClInclude Include="..\..\..\Shared\SharedClinic.h" />
+    <ClInclude Include="..\..\..\Shared\SharedCmd.h" />
+    <ClInclude Include="..\..\..\Shared\SharedFileStore.h" />
+    <ClInclude Include="..\..\..\Shared\SharedJob.h" />
+    <ClInclude Include="..\..\..\Shared\SharedLog.h" />
+    <ClInclude Include="..\..\..\Shared\SharedMath.h" />
+    <ClInclude Include="..\..\..\Shared\SharedMisc.h" />
+    <ClInclude Include="..\..\..\Shared\SharedNotify.h" />
+    <ClInclude Include="..\..\..\Shared\SharedPatient.h" />
+    <ClInclude Include="..\..\..\Shared\SharedReport.h" />
+    <ClInclude Include="..\..\..\Shared\SharedStrings.h" />
+    <ClInclude Include="..\..\..\Shared\SharedTreatment.h" />
+    <ClInclude Include="..\..\..\Shared\SharedUpdate.h" />
+    <ClInclude Include="..\..\..\Shared\SharedUser.h" />
+    <ClInclude Include="..\..\..\Shared\Sound\Sound.h" />
+    <ClInclude Include="..\..\..\Shared\Sound\SoundWav.h" />
+    <ClInclude Include="..\..\..\Shared\StimServer\StimServer.h" />
+    <ClInclude Include="..\..\..\Shared\SysEvent.h" />
+    <ClInclude Include="..\..\..\Shared\Table.h" />
+    <ClInclude Include="..\..\..\Shared\Timer.h" />
+    <ClInclude Include="..\..\..\Shared\Treatment\treatment.h" />
+    <ClInclude Include="..\..\..\Shared\Treatment\treatmentctrl_service.h" />
+    <ClInclude Include="..\..\..\Shared\Treatment\treatment_types.h" />
+    <ClInclude Include="..\..\..\Shared\TwoFish\AES.h" />
+    <ClInclude Include="..\..\..\Shared\TwoFish\Debug.h" />
+    <ClInclude Include="..\..\..\Shared\TwoFish\Table.h" />
+    <ClInclude Include="..\..\..\Shared\TwoFish\TwoFishPlatform.h" />
+    <ClInclude Include="..\..\..\Shared\types.h" />
+    <ClInclude Include="..\..\..\Shared\UtilTask.h" />
+    <ClInclude Include="..\..\..\Shared\Version.h" />
+    <ClInclude Include="..\..\..\Shared\Wav.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\ClientSharedResources.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UIClinic.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UIEEG.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UIError.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UILogin.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UIMisc.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UIObjects.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UIPassword.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UIPatient.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UIProgress.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UISystem.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UITreatment.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UIUpdate.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\UIUser.h" />
+    <ClInclude Include="..\..\..\Shared\Windows\WindowsTools.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\crc32.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\deflate.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\gzguts.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\inffast.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\inffixed.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\inflate.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\inftrees.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\trees.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\zconf.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\zlib.h" />
+    <ClInclude Include="..\..\..\Shared\zlib\zutil.h" />
+    <ClInclude Include="..\..\Platform.h" />
+    <ClInclude Include="..\StimApp.h" />
+    <ClInclude Include="..\StimAppGfx.h" />
+    <ClInclude Include="..\StimTreatmentGfx.h" />
+    <ClInclude Include="..\StimTreatmentGfxSlim.h" />
+    <ClInclude Include="..\StimTreatmentLog.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="StimAppWindows.h" />
+    <ClInclude Include="StimMainWnd.h" />
+    <ClInclude Include="StimMotorThreshold.h" />
+    <ClInclude Include="StimPatientInfo.h" />
+    <ClInclude Include="StimPatientSelect.h" />
+    <ClInclude Include="StimRegistration.h" />
+    <ClInclude Include="StimTreatmentWindows.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Arch\Windows\WindowsArch.c" />
+    <ClCompile Include="..\..\..\OS\File.c" />
+    <ClCompile Include="..\..\..\OS\OS.c" />
+    <ClCompile Include="..\..\..\OS\Windows\FileWindows.c" />
+    <ClCompile Include="..\..\..\OS\Windows\OSWindows.c" />
+    <ClCompile Include="..\..\..\OS\Windows\WindowsSound.c" />
+    <ClCompile Include="..\..\..\Shared\Admin\AdminClinic.c" />
+    <ClCompile Include="..\..\..\Shared\Admin\AdminPatient.c" />
+    <ClCompile Include="..\..\..\Shared\Admin\AdminUpdate.c" />
+    <ClCompile Include="..\..\..\Shared\Admin\AdminUser.c" />
+    <ClCompile Include="..\..\..\Shared\AppGfx\AppGfxControl.c" />
+    <ClCompile Include="..\..\..\Shared\AppGfx\AppGfxForm.c" />
+    <ClCompile Include="..\..\..\Shared\AppGfx\AppGfxMQTT.c" />
+    <ClCompile Include="..\..\..\Shared\AppGfx\AppGfxUtil.c" />
+    <ClCompile Include="..\..\..\Shared\Atomizer.c" />
+    <ClCompile Include="..\..\..\Shared\ClientServer.c" />
+    <ClCompile Include="..\..\..\Shared\CmdLine.c" />
+    <ClCompile Include="..\..\..\Shared\Connection.c" />
+    <ClCompile Include="..\..\..\Shared\DSP\DSPFilterButterworth.c" />
+    <ClCompile Include="..\..\..\Shared\EEG\EEG.c" />
+    <ClCompile Include="..\..\..\Shared\EEG\EEGCadwellEZ2.c" />
+    <ClCompile Include="..\..\..\Shared\EEG\EEGDevice.c" />
+    <ClCompile Include="..\..\..\Shared\EEG\EEGDeviceFile.c" />
+    <ClCompile Include="..\..\..\Shared\EEG\EEGDeviceLSL.c" />
+    <ClCompile Include="..\..\..\Shared\EEG\EEGDeymed.c" />
+    <ClCompile Include="..\..\..\Shared\EEG\EEGEDF.c" />
+    <ClCompile Include="..\..\..\Shared\FastHeap.c" />
+    <ClCompile Include="..\..\..\Shared\FileType.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afblue.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afcjk.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afdummy.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afglobal.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afhints.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afindic.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\aflatin.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afloader.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afmodule.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afranges.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\autofit\afshaper.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftadvanc.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftbbox.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftbdf.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftbitmap.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftcalc.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftcid.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftcolor.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftdbgmem.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftdebug.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\fterrors.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftfntfmt.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftfstype.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftgasp.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftgloadr.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftglyph.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftgxval.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\fthash.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftinit.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftlcdfil.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftmac.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftmm.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftobjs.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftotval.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftoutln.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftpatent.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftpfr.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftpsprop.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftrfork.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftsnames.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftstream.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftstroke.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftsynth.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftsystem.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\fttrigon.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\fttype1.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftutil.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\base\ftwinfnt.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\bdf\bdfdrivr.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\bdf\bdflib.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcbasic.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftccache.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftccmap.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcglyph.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcimage.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcmanag.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcmru.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cache\ftcsbits.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffcmap.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffdrivr.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffgload.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffload.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffobjs.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cff\cffparse.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cid\cidgload.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cid\cidload.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cid\cidobjs.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cid\cidparse.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\cid\cidriver.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\dlg\dlg.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\dlg\dlgwrap.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvbsln.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvcommn.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvfeat.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvjust.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvkern.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvlcar.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmod.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort0.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort1.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort2.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort4.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmort5.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx0.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx1.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx2.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx4.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvmorx5.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvopbd.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvprop.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gxvalid\gxvtrak.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\gzip\ftgzip.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\lzw\ftlzw.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\lzw\ftzopen.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvbase.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvcommn.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvgdef.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvgpos.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvgsub.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvjstf.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvmath.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\otvalid\otvmod.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pcf\pcfdrivr.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pcf\pcfread.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pcf\pcfutil.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrcmap.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrdrivr.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrgload.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrload.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrobjs.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pfr\pfrsbit.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\afmparse.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\cffdecode.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psarrst.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psauxmod.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psblues.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psconv.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\pserror.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psfont.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psft.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\pshints.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psintrp.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psobjs.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psread.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\psstack.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\t1cmap.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psaux\t1decode.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pshinter\pshalgo.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pshinter\pshglob.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pshinter\pshmod.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\pshinter\pshrec.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\psnames\psmodule.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\raster\ftraster.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\raster\ftrend1.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sdf\ftbsdf.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sdf\ftsdf.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sdf\ftsdfcommon.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sdf\ftsdfrend.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\pngshim.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\sfdriver.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\sfobjs.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\sfwoff.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\sfwoff2.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttbdf.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttcmap.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttcolr.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttcpal.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttkern.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttload.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttmtx.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttpost.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\ttsbit.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\sfnt\woff2tags.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\smooth\ftgrays.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\smooth\ftsmooth.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttdriver.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttgload.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttgxvar.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttinterp.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttobjs.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttpload.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\truetype\ttsubpix.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1afm.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1driver.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1gload.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1load.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1objs.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type1\t1parse.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type42\t42drivr.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type42\t42objs.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\type42\t42parse.c" />
+    <ClCompile Include="..\..\..\Shared\freetype2\src\winfonts\winfnt.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\Control.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlButton.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlComboBox.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlHit.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlImage.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlLineInput.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlListBox.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlSlider.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\ControlText.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\Font.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\Graphics.c" />
+    <ClCompile Include="..\..\..\Shared\Graphics\Window.c" />
+    <ClCompile Include="..\..\..\Shared\HandlePool.c" />
+    <ClCompile Include="..\..\..\Shared\Keys\KeysAll.c" />
+    <ClCompile Include="..\..\..\Shared\Keys\KeysStim.c" />
+    <ClCompile Include="..\..\..\Shared\Keys\KeysStimMagPro.c" />
+    <ClCompile Include="..\..\..\Shared\Keys\KeysStimMagStim.c" />
+    <ClCompile Include="..\..\..\Shared\Keys\KeysStimModP.c" />
+    <ClCompile Include="..\..\..\Shared\Keys\KeysStimNeurosoft.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\png.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngerror.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngget.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngmem.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngpread.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngread.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngrio.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngrtran.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngrutil.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngset.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngtrans.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngwio.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngwrite.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngwtran.c" />
+    <ClCompile Include="..\..\..\Shared\libpng\pngwutil.c" />
+    <ClCompile Include="..\..\..\Shared\MQTT.c" />
+    <ClCompile Include="..\..\..\Shared\Network.c" />
+    <ClCompile Include="..\..\..\Shared\NetworkBSD.c" />
+    <ClCompile Include="..\..\..\Shared\Paho\src\MQTTClient.c" />
+    <ClCompile Include="..\..\..\Shared\Server\SharedServer.c" />
+    <ClCompile Include="..\..\..\Shared\Session.c" />
+    <ClCompile Include="..\..\..\Shared\SHA256\sha256.c" />
+    <ClCompile Include="..\..\..\Shared\Shared.c" />
+    <ClCompile Include="..\..\..\Shared\SharedClinic.c" />
+    <ClCompile Include="..\..\..\Shared\SharedCmd.c" />
+    <ClCompile Include="..\..\..\Shared\SharedFileStore.c" />
+    <ClCompile Include="..\..\..\Shared\SharedJob.c" />
+    <ClCompile Include="..\..\..\Shared\SharedLog.c" />
+    <ClCompile Include="..\..\..\Shared\SharedMath.c" />
+    <ClCompile Include="..\..\..\Shared\SharedMisc.c" />
+    <ClCompile Include="..\..\..\Shared\SharedNotify.c" />
+    <ClCompile Include="..\..\..\Shared\SharedPatient.c" />
+    <ClCompile Include="..\..\..\Shared\SharedReport.c" />
+    <ClCompile Include="..\..\..\Shared\SharedStrings.c" />
+    <ClCompile Include="..\..\..\Shared\SharedTreatment.c" />
+    <ClCompile Include="..\..\..\Shared\SharedUpdate.c" />
+    <ClCompile Include="..\..\..\Shared\SharedUser.c" />
+    <ClCompile Include="..\..\..\Shared\SharedVersion.c" />
+    <ClCompile Include="..\..\..\Shared\Sound\Sound.c" />
+    <ClCompile Include="..\..\..\Shared\Sound\SoundWav.c" />
+    <ClCompile Include="..\..\..\Shared\StimServer\StimServer.c" />
+    <ClCompile Include="..\..\..\Shared\SysEvent.c" />
+    <ClCompile Include="..\..\..\Shared\Table.c" />
+    <ClCompile Include="..\..\..\Shared\Timer.c" />
+    <ClCompile Include="..\..\..\Shared\Treatment\treatmentctrl_service.c" />
+    <ClCompile Include="..\..\..\Shared\TwoFish\TwoFish.c" />
+    <ClCompile Include="..\..\..\Shared\UtilTask.c" />
+    <ClCompile Include="..\..\..\Shared\Wav.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UIClinic.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UIEEG.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UIError.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UILogin.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UIMisc.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UIObjects.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UIPassword.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UIPatient.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UIProgress.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UISystem.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UITreatment.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UIUpdate.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\UIUser.c" />
+    <ClCompile Include="..\..\..\Shared\Windows\WindowsTools.c" />
+    <ClCompile Include="..\..\..\Shared\zlib\adler32.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\ArcZlibTools.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\compress.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\crc32.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\deflate.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\infback.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\inffast.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\inflate.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\inftrees.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\trees.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\uncompr.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\zlib\zutil.c">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MaxSpeed</Optimization>
+      <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</BasicRuntimeChecks>
+    </ClCompile>
+    <ClCompile Include="..\StimApp.c" />
+    <ClCompile Include="..\StimAppGfx.c" />
+    <ClCompile Include="..\StimAppGfxAbout.c" />
+    <ClCompile Include="..\StimAppGfxChangePassword.c" />
+    <ClCompile Include="..\StimAppGfxMessageAlert.c" />
+    <ClCompile Include="..\StimAppGfxMotorThreshold.c" />
+    <ClCompile Include="..\StimAppGfxPatientInfo.c" />
+    <ClCompile Include="..\StimAppGfxProgress.c" />
+    <ClCompile Include="..\StimAppGfxSlim.c" />
+    <ClCompile Include="..\StimTreatmentGfx.c" />
+    <ClCompile Include="..\StimTreatmentGfxSlim.c" />
+    <ClCompile Include="..\StimTreatmentLog.c" />
+    <ClCompile Include="Build\Version.c" />
+    <ClCompile Include="StimAppWindows.c" />
+    <ClCompile Include="StimMainWnd.c" />
+    <ClCompile Include="StimMotorThreshold.c" />
+    <ClCompile Include="StimPatientInfo.c" />
+    <ClCompile Include="StimPatientSelect.c" />
+    <ClCompile Include="StimPlatform.c" />
+    <ClCompile Include="StimRegistration.c" />
+    <ClCompile Include="StimTreatmentWindows.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Docs\ARCBACKUP-1.txt" />
+    <None Include="..\..\..\Docs\ARCSERVE-1.txt" />
+    <None Include="..\..\..\Docs\ARCSERVE-2.txt" />
+    <None Include="..\..\..\Docs\ARCSERVE-3.txt" />
+    <None Include="..\..\..\Docs\notes.txt" />
+    <None Include="Stim.ico" />
+    <None Include="Version.tmpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\..\Shared\Windows\ClientShared.rc" />
+    <ResourceCompile Include="Stim.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

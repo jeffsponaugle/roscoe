@@ -1,0 +1,312 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+	Version="10.0"
+	VendorName="SlickEdit"
+	TemplateName="Other C/C++"
+	WorkingDir=".">
+	<Config
+		Name="Debug"
+		Type="cpp"
+		DebugCallbackName="gdb"
+		OutputFile="%bdRoscoe"
+		CompilerConfigName="Latest Version">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				CaptureOutputWith="ProcessBuffer"
+				OutputExts="*.o"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='cc -c -g %i %defd -o "%bd%n.o" "%f"'/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link">
+				<Exec CmdLine='cc -g -o "%o" %f %libs'/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" build "%w" "%r"'/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" rebuild "%w" "%r"'/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				SaveOption="SaveNone"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				RunFromDir="%rw">
+				<Exec CmdLine='vsdebugio -prog "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				SaveOption="SaveNone"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o"'/>
+			</Target>
+		</Menu>
+	</Config>
+	<Config
+		Name="Release"
+		Type="cpp"
+		DebugCallbackName="gdb"
+		OutputFile="%bdRoscoe"
+		CompilerConfigName="Latest Version">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveCurrent"
+				OutputExts="*.o"
+				RunFromDir="%rw">
+				<Exec CmdLine='cc -c -O %i %defd -o "%bd%n.o" "%f"'/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link">
+				<Exec CmdLine='cc -O -o "%o" %f %libs'/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" build "%w" "%r"'/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" rebuild "%w" "%r"'/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				SaveOption="SaveNone"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				RunFromDir="%rw">
+				<Exec CmdLine='vsdebugio -prog "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				SaveOption="SaveNone"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o"'/>
+			</Target>
+		</Menu>
+	</Config>
+	<Rules Name="Compile">
+		<Rule
+			InputExts="*.s"
+			OutputExts="*.o"
+			LinkObject="1">
+			<Exec CmdLine='as -o "%bd%n.o" "%f"'/>
+		</Rule>
+	</Rules>
+	<Files>
+		<Folder
+			Name="BIOS"
+			Filters=""
+			GUID="{C63E49A7-2350-4D0A-A289-BE5033FBE5AF}">
+			<F N="../../BIOS/BIOS.c"/>
+			<F N="../../BIOS/BIOS.h"/>
+			<F N="../../BIOS/BIOS.ld"/>
+			<F N="../../BIOS/BIOSStartup.s"/>
+			<F N="../../BIOS/BIOSVersion.c"/>
+			<F N="../../BIOS/BIOSVersion.tmpl"/>
+			<F
+				N="../../BIOS/Makefile"
+				Type="Makefile"/>
+			<F N="../../BIOS/OS.h"/>
+		</Folder>
+		<Folder
+			Name="BootLoader"
+			Filters=""
+			GUID="{C21ED945-2F30-486C-9A48-6C764A25C376}">
+			<F N="../../BootLoader/BootLoader.c"/>
+			<F N="../../BootLoader/BootLoader.ld"/>
+			<F N="../../BootLoader/BootLoaderStartup.s"/>
+			<F N="../../BootLoader/BootLoaderVersion.c"/>
+			<F N="../../BootLoader/BootLoaderVersion.tmpl"/>
+			<F
+				N="../../BootLoader/Makefile"
+				Type="Makefile"/>
+		</Folder>
+		<Folder
+			Name="Hardware"
+			Filters=""
+			GUID="{2DBDF921-487A-4B02-A44B-07FB6608DD7A}">
+			<F N="../../Hardware/Roscoe.h"/>
+		</Folder>
+		<Folder
+			Name="Shared"
+			Filters=""
+			GUID="{D36242B5-20B2-478E-BE35-A10B5CA05282}">
+			<Folder
+				Name="FatFS"
+				Filters=""
+				GUID="{7D7685B5-8994-43A5-B482-6617E81F28AF}">
+				<Folder
+					Name="source"
+					Filters=""
+					GUID="{549EF59D-A53C-4931-89BC-DF52B8157543}">
+					<F N="../../Shared/FatFS/source/00history.txt"/>
+					<F N="../../Shared/FatFS/source/00readme.txt"/>
+					<F N="../../Shared/FatFS/source/diskio.c"/>
+					<F N="../../Shared/FatFS/source/diskio.h"/>
+					<F N="../../Shared/FatFS/source/ff.c"/>
+					<F N="../../Shared/FatFS/source/ff.h"/>
+					<F N="../../Shared/FatFS/source/ffconf.h"/>
+					<F N="../../Shared/FatFS/source/ffsystem.c"/>
+					<F N="../../Shared/FatFS/source/ffunicode.c"/>
+				</Folder>
+			</Folder>
+			<Folder
+				Name="zlib"
+				Filters=""
+				GUID="{666703D4-6561-4441-98EB-693B6EDE7FE1}">
+				<F N="../../Shared/zlib/adler32.c"/>
+				<F N="../../Shared/zlib/compress.c"/>
+				<F N="../../Shared/zlib/crc32.c"/>
+				<F N="../../Shared/zlib/crc32.h"/>
+				<F N="../../Shared/zlib/crypt.h"/>
+				<F N="../../Shared/zlib/deflate.c"/>
+				<F N="../../Shared/zlib/deflate.h"/>
+				<F N="../../Shared/zlib/gzclose.c"/>
+				<F N="../../Shared/zlib/gzguts.h"/>
+				<F N="../../Shared/zlib/gzlib.c"/>
+				<F N="../../Shared/zlib/gzread.c"/>
+				<F N="../../Shared/zlib/gzwrite.c"/>
+				<F N="../../Shared/zlib/infback.c"/>
+				<F N="../../Shared/zlib/inffast.c"/>
+				<F N="../../Shared/zlib/inffast.h"/>
+				<F N="../../Shared/zlib/inffixed.h"/>
+				<F N="../../Shared/zlib/inflate.c"/>
+				<F N="../../Shared/zlib/inflate.h"/>
+				<F N="../../Shared/zlib/inftrees.c"/>
+				<F N="../../Shared/zlib/inftrees.h"/>
+				<F N="../../Shared/zlib/ioapi.c"/>
+				<F N="../../Shared/zlib/ioapi.h"/>
+				<F
+					N="../../Shared/zlib/Makefile"
+					Type="Makefile"/>
+				<F N="../../Shared/zlib/trees.c"/>
+				<F N="../../Shared/zlib/trees.h"/>
+				<F N="../../Shared/zlib/uncompr.c"/>
+				<F N="../../Shared/zlib/unzip.c"/>
+				<F N="../../Shared/zlib/unzip.h"/>
+				<F N="../../Shared/zlib/zconf.h"/>
+				<F N="../../Shared/zlib/zlib.h"/>
+				<F N="../../Shared/zlib/zutil.c"/>
+				<F N="../../Shared/zlib/zutil.h"/>
+			</Folder>
+			<F N="../../Shared/16550.c"/>
+			<F N="../../Shared/16550.h"/>
+			<F N="../../Shared/arith64.c"/>
+			<F N="../../Shared/AsmUtils.h"/>
+			<F N="../../Shared/AsmUtils.s"/>
+			<F N="../../Shared/dis68k.c"/>
+			<F N="../../Shared/dis68k.h"/>
+			<F N="../../Shared/DOS.c"/>
+			<F N="../../Shared/DOS.h"/>
+			<F N="../../Shared/elf.c"/>
+			<F N="../../Shared/elf.h"/>
+			<F N="../../Shared/FaultHandler.c"/>
+			<F N="../../Shared/FaultHandler.h"/>
+			<F N="../../Shared/FaultHandlerAsm.s"/>
+			<F N="../../Shared/Flash.c"/>
+			<F N="../../Shared/Flash.h"/>
+			<F N="../../Shared/IDE.c"/>
+			<F N="../../Shared/IDE.h"/>
+			<F N="../../Shared/Interrupt.c"/>
+			<F N="../../Shared/Interrupt.h"/>
+			<F N="../../Shared/lex.c"/>
+			<F N="../../Shared/lex.h"/>
+			<F N="../../Shared/LineInput.c"/>
+			<F N="../../Shared/LineInput.h"/>
+			<F N="../../Shared/LinkerDefines.h"/>
+			<F N="../../Shared/MemTest.c"/>
+			<F N="../../Shared/MemTest.h"/>
+			<F N="../../Shared/Monitor.c"/>
+			<F N="../../Shared/Monitor.h"/>
+			<F N="../../Shared/muldi3.c"/>
+			<F N="../../Shared/ptc.c"/>
+			<F N="../../Shared/ptc.h"/>
+			<F N="../../Shared/rtc.c"/>
+			<F N="../../Shared/rtc.h"/>
+			<F N="../../Shared/sbrk.c"/>
+			<F N="../../Shared/sbrk.h"/>
+			<F N="../../Shared/Shared.c"/>
+			<F N="../../Shared/Shared.h"/>
+			<F N="../../Shared/SharedFlashUpdate.c"/>
+			<F N="../../Shared/SharedFlashUpdate.h"/>
+			<F N="../../Shared/Stream.c"/>
+			<F N="../../Shared/Stream.h"/>
+			<F N="../../Shared/Version.c"/>
+			<F N="../../Shared/Version.h"/>
+			<F N="../../Shared/YModem.c"/>
+			<F N="../../Shared/YModem.h"/>
+		</Folder>
+		<Folder
+			Name="Utils"
+			Filters=""
+			GUID="{7E4892C2-A5D5-4DBE-ACA6-60DF3CB1B99D}">
+			<Folder
+				Name="split"
+				Filters=""
+				GUID="{7DF7A605-CD56-40E9-80B8-A6037EF37095}">
+				<F N="../../Utils/split/split.c"/>
+			</Folder>
+			<Folder
+				Name="stamp"
+				Filters=""
+				GUID="{29A13481-3B38-4051-B8B6-F7C327BC5977}">
+				<F N="../../Utils/stamp/stamp.c"/>
+			</Folder>
+			<Folder
+				Name="ROMTool"
+				Filters=""
+				GUID="{C2890F2D-D292-4482-A64A-AA7DA6D1F1AE}">
+				<F N="../../Utils/ROMTool/lex.c"/>
+				<F N="../../Utils/ROMTool/lex.h"/>
+				<F N="../../Utils/ROMTool/ROMTool.c"/>
+				<F N="../../Utils/ROMTool/types.h"/>
+			</Folder>
+		</Folder>
+		<Folder
+			Name="App"
+			Filters=""
+			GUID="{63E84B23-F1B7-4026-B89C-2B621C6963E2}">
+			<F N="../../App/App.c"/>
+			<F N="../../App/AppStartup.s"/>
+			<F N="../../App/AppVersion.tmpl"/>
+			<F
+				N="../../App/Makefile"
+				Type="Makefile"/>
+		</Folder>
+		<F N="../../todo.txt"/>
+	</Files>
+</Project>

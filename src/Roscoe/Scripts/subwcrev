@@ -1,0 +1,39 @@
+#! /bin/sh
+#
+# Extracts revision from 'svn info', substitutes that into the
+# template file 'Version.tmpl'
+#
+# By Marc A. Frajola
+#
+
+# Set base program name:
+progname=`basename $0`
+
+# Parse command line options (if any)
+errflag=0
+while test $# -gt 0 ; do
+    case $1 in
+	-*)
+	    echo "`basename $0`: Invalid option -- '$1'" 1>&2
+	    errflag=1
+	    ;;
+	*)
+	    break
+	    ;;
+    esac
+    shift
+done
+
+if test \( $errflag -ne 0 \) -o \( $# -lt 0 \) ; then
+    echo "Usage: `basename $0` [template-file] [svn-info-options]" 1>&2
+    exit 1
+fi
+
+# Set TEMPLATE to first non-option argument, otherwise default to Version.tmpl
+TEMPLATE="${1-Version.tmpl}"
+
+# Shift Version.tmpl filename out of $@ (leaving just svn-info-options)
+shift
+
+REV=`svn info $@ | sed -n -e 's/^Revision: \(.*\)$/\1/p'`
+sed -e "s/\\\$WCREV\\\$/$REV/g" $TEMPLATE
