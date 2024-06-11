@@ -175,7 +175,7 @@ nIDE_WR_DELAY2.ar = (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2)  # !nSYS_RESET;
 
 RTC_A_SEL.d = 'b'1;
 RTC_A_SEL.ck = !CPU_CLK;
-RTC_A_SEL.ar = nRTC_CS;    /* nRTC_CS is active low, so it will be high while RTS is not being accesses */
+RTC_A_SEL.ar = nRTC_CS # !nSYS_RESET;    /* nRTC_CS is active low, so it will be high while RTS is not being accesses */
 RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, this will be held at one which is off */
 
 
