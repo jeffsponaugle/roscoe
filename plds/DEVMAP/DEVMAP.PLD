@@ -82,7 +82,7 @@ Pin[35,36,37] = [TESTP0..2];		// These pins are not used and not reserved due to
 
 
 PINNODE = nIDE_WR_DELAY1, nIDE_WR_DELAY2;
-
+PINNODE = nINTCTRL_CS_delay;
 // dummy expression to force the pins to be assigned.
 
 EXPANSION_EXTRA2 = nSYS_RESET & nDEV32BITCS & CPU_RW  & nEXP_DEV_WAIT & nEXP_CACHE_CTRL;
@@ -113,15 +113,21 @@ nEXP_DEV32BITCS = nDEV32BITCS;
 
 /* 8 bit devices */
 
-nUART_CSA = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00000XX]);     // 0x3000 0000 - 0x3000 00FF
-nUART_CSB = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00001XX]);     // 0x3000 0100 - 0x3000 01FF
-nINTCTRL_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00002XX]);   // 0x3000 0200 - 0x3000 02FF
-nRTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00003XX]);       // 0x3000 0300 - 0x3000 03FF
-nPTC_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00004XX]);       // 0x3000 0400 - 0x3000 04FF
+nUART_CSA = nDEV8BITCS #   !(field_CPU_ADDRESS:['h'00000XX]);     // 0x3000 0000 - 0x3000 00FF
+nUART_CSB = nDEV8BITCS #   !(field_CPU_ADDRESS:['h'00001XX]);     // 0x3000 0100 - 0x3000 01FF
+nINTCTRL_CS_pre = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00002XX]);   // 0x3000 0200 - 0x3000 02FF
+nRTC_CS = nDEV8BITCS #     !(field_CPU_ADDRESS:['h'00003XX]);       // 0x3000 0300 - 0x3000 03FF
+nPTC_CS = nDEV8BITCS #     !(field_CPU_ADDRESS:['h'00004XX]);       // 0x3000 0400 - 0x3000 04FF
 nEXP_VIO_CS = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00005XX]);   // 0x3000 0500 - 0x3000 05FF
 nSEVENSEGA_WR = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00006XX]);   // 0x3000 0600 - 0x3000 06FF
 nSEVENSEGB_WR = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00007XX]);   // 0x3000 0700 - 0x3000 07FF
 nSTATUSLED_WR = nDEV8BITCS # !(field_CPU_ADDRESS:['h'00008XX]);   // 0x3000 0800 - 0x3000 08FF
+
+nINTCTRL_CS_delay.d = 'b'1;
+nINTCTRL_CS_delay.ck = !CPU_CLK;
+nINTCTRL_CS_delay.ar = nINTCTRL_CS_pre # CPU_RW;
+
+nINTCTRL_CS = nINTCTRL_CS_pre # nINTCTRL_CS_delay;
 
 
 /* 16 bit devices */

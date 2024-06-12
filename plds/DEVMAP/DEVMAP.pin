@@ -14,9 +14,9 @@ EXP_DM_CPLD2					: 8
 EXP_DM_CPLD1					: 7
 nDEV_WAIT					: 6
 nDEV32BITCS					: 5
-nIDE_WR_DELAY1					: 631
+nINTCTRL_CS_delay					: 631
 TDI					: 4
-nIDE_WR_DELAY2					: 632
+nIDE_WR_DELAY1					: 632
 nUART_CSA					: 25
 nUART_CSB					: 24
 nEXP_VMEM_CS					: 23
@@ -53,8 +53,9 @@ CPU_A22					: 57
 CPU_A21					: 58
 CPU_A20					: 60
 CPU_A19					: 61
+Com_Ctrl_92					: 695
 TCK					: 62
-Com_Ctrl_88					: 696
+nIDE_WR_DELAY2					: 696
 CPU_A18					: 63
 CPU_A17					: 64
 CPU_A16					: 65

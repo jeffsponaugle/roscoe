@@ -17,9 +17,9 @@ BEGIN
     "EXP_DM_CPLD1"                            : OUTPUT_PIN = 7 ;
     "nDEV_WAIT"                               : OUTPUT_PIN = 6 ;
     "nDEV32BITCS"                             : INPUT_PIN = 5 ;
-    "nIDE_WR_DELAY1"                          : NODE_NUM = 631 ;
+    "nINTCTRL_CS_delay"                       : NODE_NUM = 631 ;
     "TDI"                                     : INPUT_PIN = 4 ;
-    "nIDE_WR_DELAY2"                          : NODE_NUM = 632 ;
+    "nIDE_WR_DELAY1"                          : NODE_NUM = 632 ;
     "nUART_CSA"                               : OUTPUT_PIN = 25 ;
     "nUART_CSB"                               : OUTPUT_PIN = 24 ;
     "nEXP_VMEM_CS"                            : OUTPUT_PIN = 23 ;
@@ -56,8 +56,9 @@ BEGIN
     "CPU_A21"                                 : INPUT_PIN = 58 ;
     "CPU_A20"                                 : INPUT_PIN = 60 ;
     "CPU_A19"                                 : INPUT_PIN = 61 ;
+    "Com_Ctrl_92"                             : NODE_NUM = 695 ;
     "TCK"                                     : INPUT_PIN = 62 ;
-    "Com_Ctrl_88"                             : NODE_NUM = 696 ;
+    "nIDE_WR_DELAY2"                          : NODE_NUM = 696 ;
     "CPU_A18"                                 : INPUT_PIN = 63 ;
     "CPU_A17"                                 : INPUT_PIN = 64 ;
     "CPU_A16"                                 : INPUT_PIN = 65 ;
