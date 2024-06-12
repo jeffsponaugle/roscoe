@@ -1,4 +1,4 @@
-Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Wed Jun 12 12:03:04 2024
+Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Wed Jun 12 12:09:17 2024
 
 
 fit1508 C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAP\DEVMAP.tt2 -CUPL -dev P1508T100 -JTAG ON
@@ -90,7 +90,7 @@ nDEV32BITCS is placed at pin 5 (MC 30)
 nINTCTRL_CS_delay is placed at feedback node 631 (MC 31)
 TDI is placed at pin 4 (MC 32)
 nIDE_WR_DELAY1 is placed at feedback node 632 (MC 32)
-FB_93 is placed at foldback expander node 332 (MC 32)
+FB_94 is placed at foldback expander node 332 (MC 32)
 nUART_CSA is placed at pin 25 (MC 33)
 nUART_CSB is placed at pin 24 (MC 35)
 nEXP_VMEM_CS is placed at pin 23 (MC 37)
@@ -101,7 +101,7 @@ nNIC_CS is placed at pin 19 (MC 43)
 RTC_A_SEL is placed at pin 17 (MC 45)
 RTC_D_SEL is placed at pin 16 (MC 46)
 TMS is placed at pin 15 (MC 48)
-FB_94 is placed at foldback expander node 348 (MC 48)
+FB_95 is placed at foldback expander node 348 (MC 48)
 TESTP2 is placed at pin 37 (MC 49)
 TESTP1 is placed at pin 36 (MC 51)
 TESTP0 is placed at pin 35 (MC 53)
@@ -128,7 +128,7 @@ CPU_A22 is placed at pin 57 (MC 89)
 CPU_A21 is placed at pin 58 (MC 91)
 CPU_A20 is placed at pin 60 (MC 93)
 CPU_A19 is placed at pin 61 (MC 94)
-Com_Ctrl_92 is placed at feedback node 695 (MC 95)
+Com_Ctrl_93 is placed at feedback node 695 (MC 95)
 TCK is placed at pin 62 (MC 96)
 nIDE_WR_DELAY2 is placed at feedback node 696 (MC 96)
 CPU_A18 is placed at pin 63 (MC 97)
@@ -216,12 +216,11 @@ NC = Unused I/O pins which must be unconnected on the board
 
 Universal-Interconnect-Multiplexer assignments
 ------------------------------------------------
-FanIn assignment for block A [31]
+FanIn assignment for block A [30]
 {
-CPU_A15,CPU_A27,CPU_A17,CPU_A11,CPU_A16,CPU_A8,CPU_A10,CPU_A9,CPU_RW,CPU_A19,CPU_A14,CPU_A23,CPU_A24,CPU_A22,CPU_A25,CPU_A13,CPU_A18,CPU_A20,CPU_A26,CPU_A12,CPU_A21,
+CPU_A15,CPU_A27,CPU_A17,CPU_A11,CPU_A16,CPU_A8,CPU_A10,CPU_A9,CPU_RW,CPU_A19,CPU_A23,CPU_A24,CPU_A22,CPU_A25,CPU_A13,CPU_A18,CPU_A20,CPU_A26,CPU_A12,CPU_A14,CPU_A21,
 EXTRA_BC_DM1,EXTRA_DM_INT2,EXTRA_BC_DM2,EXTRA_DM_INT1,
-TESTP0,
-nDEV32BITCS,nDEV8BITCS,nEXP_CACHE_CTRL,nEXP_DEV_WAIT,nSYS_RESET,
+nDEV32BITCS,nEXP_DEV_WAIT,nDEV8BITCS,nEXP_CACHE_CTRL,nSYS_RESET,
 }
 Multiplexer assignment for block A
 CPU_A15			(MC8	P)   : MUX 1		Ref (G102p)
@@ -237,7 +236,7 @@ CPU_A9			(MC2	P)   : MUX 11		Ref (H113p)
 EXTRA_DM_INT2		(MC28	P)   : MUX 12		Ref (D64p)
 CPU_RW			(MC22	P)   : MUX 13		Ref (A5p)
 CPU_A19			(MC12	P)   : MUX 14		Ref (F94p)
-CPU_A14			(MC7	P)   : MUX 15		Ref (G104p)
+nEXP_DEV_WAIT		(MC30	P)   : MUX 15		Ref (D56p)
 EXTRA_BC_DM2		(MC26	P)   : MUX 16		Ref (H126p)
 CPU_A23			(MC16	P)   : MUX 17		Ref (F88p)
 CPU_A24			(MC17	P)   : MUX 19		Ref (F86p)
@@ -250,15 +249,14 @@ CPU_A20			(MC13	P)   : MUX 26		Ref (F93p)
 CPU_A26			(MC19	P)   : MUX 27		Ref (F83p)
 CPU_A12			(MC5	P)   : MUX 28		Ref (G107p)
 nDEV8BITCS		(MC21	P)   : MUX 29		Ref (A3p)
-TESTP0			(MC29	P)   : MUX 31		Ref (D53p)
-nEXP_CACHE_CTRL		(MC30	P)   : MUX 33		Ref (D54p)
+CPU_A14			(MC7	P)   : MUX 31		Ref (G104p)
+nEXP_CACHE_CTRL		(MC29	P)   : MUX 33		Ref (D54p)
 CPU_A21			(MC14	P)   : MUX 34		Ref (F91p)
-nEXP_DEV_WAIT		(MC31	P)   : MUX 35		Ref (D56p)
 nSYS_RESET		(MC24	FB)  : MUX 37		Ref (OE1)
 
 FanIn assignment for block B [25]
 {
-CPU_A15,CPU_A27,CPU_A11,CPU_A17,CPU_A12,CPU_A16,CPU_A13,CPU_A8,CPU_A22,CPU_A9,CPU_A19,CPU_A14,CPU_A20,CPU_A23,CPU_A25,CPU_A18,CPU_A10,CPU_A26,CPU_A24,CPU_RW,CPU_A21,CPU_CLK,Com_Ctrl_92,
+CPU_A15,CPU_A27,CPU_A11,CPU_A17,CPU_A12,CPU_A16,CPU_A13,CPU_A8,CPU_A22,CPU_A9,CPU_A19,CPU_A14,CPU_A20,CPU_A23,CPU_A25,CPU_A18,CPU_A10,CPU_A26,CPU_A24,CPU_RW,CPU_A21,CPU_CLK,Com_Ctrl_93,
 nDEV8BITCS,nINTCTRL_CS_delay,
 }
 Multiplexer assignment for block B
@@ -285,7 +283,7 @@ CPU_A24			(MC19	P)   : MUX 29		Ref (F86p)
 CPU_RW			(MC24	P)   : MUX 31		Ref (A5p)
 CPU_A21			(MC16	P)   : MUX 34		Ref (F91p)
 CPU_CLK			(MC25	FB)  : MUX 35		Ref (GCLK)
-Com_Ctrl_92		(MC2	FB)  : MUX 37		Ref (F95fb)
+Com_Ctrl_93		(MC2	FB)  : MUX 37		Ref (F95fb)
 nINTCTRL_CS_delay		(MC1	FB)  : MUX 39		Ref (B31fb)
 
 FanIn assignment for block C [26]
@@ -322,37 +320,38 @@ nDEV16BITCS		(MC26	P)   : MUX 33		Ref (A1p)
 CPU_A23			(MC18	P)   : MUX 35		Ref (F88p)
 nSYS_RESET		(MC25	FB)  : MUX 37		Ref (OE1)
 
-FanIn assignment for block D [24]
+FanIn assignment for block D [25]
 {
-CPU_A15,CPU_A27,CPU_A17,CPU_A11,CPU_A16,CPU_A13,CPU_A8,CPU_A10,CPU_A24,CPU_A25,CPU_A19,CPU_A14,CPU_A23,CPU_A22,CPU_A18,CPU_A20,CPU_A26,CPU_A12,CPU_A9,CPU_A21,
+CPU_A15,CPU_A27,CPU_A17,CPU_A11,CPU_A16,CPU_A13,CPU_A10,CPU_A9,CPU_A8,CPU_A19,CPU_A23,CPU_A24,CPU_A22,CPU_A25,CPU_A18,CPU_A20,CPU_A26,CPU_A12,CPU_A14,CPU_A21,
 TESTP2,
-nDEV32BITCS,nDEV16BITCS,nDEV8BITCS,
+nDEV32BITCS,nINTCTRL_CS,nDEV8BITCS,nDEV16BITCS,
 }
 Multiplexer assignment for block D
-CPU_A15			(MC8	P)   : MUX 1		Ref (G102p)
-CPU_A27			(MC20	P)   : MUX 3		Ref (F81p)
-nDEV32BITCS		(MC22	P)   : MUX 4		Ref (B30p)
-CPU_A17			(MC10	P)   : MUX 5		Ref (G99p)
-CPU_A11			(MC4	P)   : MUX 6		Ref (G109p)
-CPU_A16			(MC9	P)   : MUX 7		Ref (G101p)
-CPU_A13			(MC6	P)   : MUX 8		Ref (G105p)
-CPU_A8			(MC1	P)   : MUX 9		Ref (H115p)
-CPU_A10			(MC3	P)   : MUX 10		Ref (G110p)
-CPU_A24			(MC17	P)   : MUX 11		Ref (F86p)
-CPU_A25			(MC18	P)   : MUX 13		Ref (F85p)
-CPU_A19			(MC12	P)   : MUX 14		Ref (F94p)
-CPU_A14			(MC7	P)   : MUX 15		Ref (G104p)
-CPU_A23			(MC16	P)   : MUX 17		Ref (F88p)
-CPU_A22			(MC15	P)   : MUX 20		Ref (F89p)
-nDEV16BITCS		(MC23	P)   : MUX 21		Ref (A1p)
-TESTP2			(MC24	P)   : MUX 23		Ref (D49p)
-CPU_A18			(MC11	P)   : MUX 25		Ref (G97p)
-CPU_A20			(MC13	P)   : MUX 26		Ref (F93p)
-CPU_A26			(MC19	P)   : MUX 27		Ref (F83p)
-CPU_A12			(MC5	P)   : MUX 28		Ref (G107p)
-nDEV8BITCS		(MC21	P)   : MUX 31		Ref (A3p)
-CPU_A9			(MC2	P)   : MUX 33		Ref (H113p)
-CPU_A21			(MC14	P)   : MUX 34		Ref (F91p)
+CPU_A15			(MC9	P)   : MUX 1		Ref (G102p)
+CPU_A27			(MC21	P)   : MUX 3		Ref (F81p)
+nDEV32BITCS		(MC23	P)   : MUX 4		Ref (B30p)
+CPU_A17			(MC11	P)   : MUX 5		Ref (G99p)
+CPU_A11			(MC5	P)   : MUX 6		Ref (G109p)
+CPU_A16			(MC10	P)   : MUX 7		Ref (G101p)
+CPU_A13			(MC7	P)   : MUX 8		Ref (G105p)
+nINTCTRL_CS		(MC1	P)   : MUX 9		Ref (B19p)
+CPU_A10			(MC4	P)   : MUX 10		Ref (G110p)
+CPU_A9			(MC3	P)   : MUX 11		Ref (H113p)
+CPU_A8			(MC2	P)   : MUX 13		Ref (H115p)
+CPU_A19			(MC13	P)   : MUX 14		Ref (F94p)
+TESTP2			(MC25	P)   : MUX 15		Ref (D49p)
+CPU_A23			(MC17	P)   : MUX 17		Ref (F88p)
+CPU_A24			(MC18	P)   : MUX 19		Ref (F86p)
+CPU_A22			(MC16	P)   : MUX 20		Ref (F89p)
+CPU_A25			(MC19	P)   : MUX 23		Ref (F85p)
+CPU_A18			(MC12	P)   : MUX 25		Ref (G97p)
+CPU_A20			(MC14	P)   : MUX 26		Ref (F93p)
+CPU_A26			(MC20	P)   : MUX 27		Ref (F83p)
+CPU_A12			(MC6	P)   : MUX 28		Ref (G107p)
+nDEV8BITCS		(MC22	P)   : MUX 29		Ref (A3p)
+CPU_A14			(MC8	P)   : MUX 31		Ref (G104p)
+nDEV16BITCS		(MC24	P)   : MUX 33		Ref (A1p)
+CPU_A21			(MC15	P)   : MUX 34		Ref (F91p)
 
 FanIn assignment for block E [27]
 {
@@ -390,12 +389,12 @@ nIDE_WR_DELAY2		(MC5	FB)  : MUX 39		Ref (F96fb)
 
 FanIn assignment for block F [6]
 {
-Com_Ctrl_92,CPU_CLK,
+Com_Ctrl_93,CPU_CLK,
 nIDE_BUFFER_EN1,nIDE_BUFFER_EN2,nIDE_WR_DELAY1,nSYS_RESET,
 }
 Multiplexer assignment for block F
 nIDE_BUFFER_EN1		(MC3	P)   : MUX 7		Ref (E72p)
-Com_Ctrl_92		(MC4	FB)  : MUX 11		Ref (F95fb)
+Com_Ctrl_93		(MC4	FB)  : MUX 11		Ref (F95fb)
 nIDE_BUFFER_EN2		(MC2	P)   : MUX 13		Ref (E70p)
 CPU_CLK			(MC6	FB)  : MUX 17		Ref (GCLK)
 nIDE_WR_DELAY1		(MC1	FB)  : MUX 33		Ref (B32fb)
@@ -409,7 +408,7 @@ EXPANSION_EXTRA2 = (CPU_RW & nDEV32BITCS & nEXP_CACHE_CTRL & nEXP_DEV_WAIT & nSY
 
 EXP_DM_CPLD1 = 0;
 
-EXPANSION_EXTRA1 = (EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_DM_INT1 & EXTRA_DM_INT2 & TESTP0);
+EXPANSION_EXTRA1 = (EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_DM_INT1 & EXTRA_DM_INT2);
 
 SYS_RESET_POS = !nSYS_RESET;
 
@@ -417,13 +416,13 @@ EXP_DM_CPLD2 = 0;
 
 RTC_A_SEL.D = 1;
 
-nEXP_DEV16BITCS = nDEV16BITCS;
+nDEV_WAIT = 1;
 
 RTC_D_SEL = !RTC_A_SEL.Q;
 
-TESTP1 = TESTP2;
+nEXP_DEV16BITCS = nDEV16BITCS;
 
-nDEV_WAIT = 1;
+TESTP1 = TESTP2;
 
 nEXP_DEV8BITCS = nDEV8BITCS;
 
@@ -437,64 +436,66 @@ nEXP_DEV32BITCS = nDEV32BITCS;
 
 !nEXP_VMEM_CS = (!CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV32BITCS);
 
-!nIDE_WR = (!CPU_RW & !nIDE_WR_DELAY2.Q);
+!nIDE2_CSB = (CPU_A8 & CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
 
 !nIDE2_CSA = (!CPU_A8 & CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
 
-!nIDE2_CSB = (CPU_A8 & CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
+!nIDE_WR = (!CPU_RW & !nIDE_WR_DELAY2.Q);
 
 nIDE_WR_DELAY1.D = 1;
 
-nIDE_WR_DELAY2.D = nIDE_WR_DELAY1.Q;
-
-!nPTC_CS = (!CPU_A8 & !CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
-
 !nINTCTRL_CS = (!CPU_A8 & CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS & !nINTCTRL_CS_delay.Q);
+
+nIDE_WR_DELAY2.D = nIDE_WR_DELAY1.Q;
 
 nINTCTRL_CS_delay.D = 1;
 
-!nSEVENSEGB_WR = (CPU_A8 & CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
-
-!nNIC_CS = (!CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV32BITCS);
+!nPTC_CS = (!CPU_A8 & !CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
 
 !nRTC_CS = (CPU_A8 & CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
 
-!nSEVENSEGA_WR = (!CPU_A8 & CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
+!nNIC_CS = (!CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV32BITCS);
 
-!nUART_CSA = (!CPU_A8 & !CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
+!nSEVENSEGB_WR = (CPU_A8 & CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
+
+!nSEVENSEGA_WR = (!CPU_A8 & CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
 
 !nUART_CSB = (CPU_A8 & !CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
 
+!nUSB_CS = (!CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
+
 !nSTATUSLED_WR = (!CPU_A8 & !CPU_A9 & !CPU_A10 & CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
 
-!nUSB_CS = (!CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV16BITCS);
+!nUART_CSA = (!CPU_A8 & !CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !nDEV8BITCS);
+
+TESTP0 = nINTCTRL_CS;
 
 nIDE_BUFFER_EN1 = (nIDE1_CSA & nIDE1_CSB);
 
 nIDE_BUFFER_EN2 = (nIDE2_CSA & nIDE2_CSB);
 
-Com_Ctrl_92 = (!nSYS_RESET
+Com_Ctrl_93 = (!nSYS_RESET
 	# (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2));
 
-!FB_93 = (!CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !CPU_A8 & !CPU_A10 & CPU_A9 & !CPU_RW & !nDEV8BITCS & !CPU_A11);
+!FB_94 = (!CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !CPU_A8 & !CPU_A10 & CPU_A9 & !CPU_RW & !nDEV8BITCS & !CPU_A11);
 
-!FB_94 = (!nRTC_CS & nSYS_RESET);
+!FB_95 = (!nRTC_CS & nSYS_RESET);
 
 RTC_A_SEL.C = !CPU_CLK;
 
-RTC_A_SEL.AR = FB_94;
+RTC_A_SEL.AR = FB_95;
 
 nIDE_WR_DELAY1.C = CPU_CLK;
 
-nIDE_WR_DELAY1.AR = Com_Ctrl_92;
+nIDE_WR_DELAY1.AR = Com_Ctrl_93;
 
 nIDE_WR_DELAY2.C = CPU_CLK;
 
-nIDE_WR_DELAY2.AR = Com_Ctrl_92;
+nIDE_WR_DELAY2.AR = Com_Ctrl_93;
 
 nINTCTRL_CS_delay.C = !CPU_CLK;
 
-nINTCTRL_CS_delay.AR = FB_93;
+nINTCTRL_CS_delay.AR = FB_94;
 
 
 TQFP100 Pin/Node Placement:
@@ -568,11 +569,11 @@ Pin 97 = nSEVENSEGB_WR; /* MC  9 */
 Pin 98 = nSTATUSLED_WR; /* MC  8 */
 Pin 99 = EXPANSION_EXTRA2; /* MC  6 */
 Pin 100 = CPU_RW; /* MC  5 */
-PINNODE 332 = FB_93; /* MC 32 Foldback */
-PINNODE 348 = FB_94; /* MC 48 Foldback */
+PINNODE 332 = FB_94; /* MC 32 Foldback */
+PINNODE 348 = FB_95; /* MC 48 Foldback */
 PINNODE 631 = nINTCTRL_CS_delay; /* MC 31 Feedback */
 PINNODE 632 = nIDE_WR_DELAY1; /* MC 32 Feedback */
-PINNODE 695 = Com_Ctrl_92; /* MC 95 Feedback */
+PINNODE 695 = Com_Ctrl_93; /* MC 95 Feedback */
 PINNODE 696 = nIDE_WR_DELAY2; /* MC 96 Feedback */
 
 ** Resource Usage **
@@ -624,7 +625,7 @@ MC28  0         --                      --                       --        --   
 MC29  6    on   nDEV_WAIT        C----  --                       --        --             0     slow
 MC30  5    --   nDEV32BITCS      INPUT  --                       --        --             0     slow
 MC31  0         --                      nINTCTRL_CS_delay Dg-r-  --        --             1     slow
-MC32  4    --   TDI              INPUT  nIDE_WR_DELAY1    Dc-r-  FB_93     --             3     slow
+MC32  4    --   TDI              INPUT  nIDE_WR_DELAY1    Dc-r-  FB_94     --             3     slow
 MC33  25   on   nUART_CSA        C----  --                       --        --             1     slow
 MC34  0         --                      --                       --        --             0     slow
 MC35  24   on   nUART_CSB        C----  --                       --        --             1     slow
@@ -640,12 +641,12 @@ MC44  0         --                      --                       --        --   
 MC45  17   on   RTC_A_SEL        Dg-r-  --                       --        --             1     slow
 MC46  16   on   RTC_D_SEL        C----  --                       --        --             1     slow
 MC47  0         --                      --                       --        --             0     slow
-MC48  15   --   TMS              INPUT  --                       FB_94     --             1     slow
+MC48  15   --   TMS              INPUT  --                       FB_95     --             1     slow
 MC49  37   --   TESTP2           INPUT  --                       --        --             0     slow
 MC50  0         --                      --                       --        --             0     slow
 MC51  36   on   TESTP1           C----  --                       --        --             1     slow
 MC52  0         --                      --                       --        --             0     slow
-MC53  35   --   TESTP0           INPUT  --                       --        --             0     slow
+MC53  35   on   TESTP0           C----  --                       --        --             1     slow
 MC54  33   --   nEXP_CACHE_CTRL  INPUT  --                       --        --             0     slow
 MC55  0         --                      --                       --        --             0     slow
 MC56  32   --   nEXP_DEV_WAIT    INPUT  --                       --        --             0     slow
@@ -687,7 +688,7 @@ MC91  58   --   CPU_A21          INPUT  --                       --        --   
 MC92  0         --                      --                       --        --             0     slow
 MC93  60   --   CPU_A20          INPUT  --                       --        --             0     slow
 MC94  61   --   CPU_A19          INPUT  --                       --        --             0     slow
-MC95  0         --                      Com_Ctrl_92       C----  --        --             2     slow
+MC95  0         --                      Com_Ctrl_93       C----  --        --             2     slow
 MC96  62   --   TCK              INPUT  nIDE_WR_DELAY2    Dc-r-  --        --             3     slow
 MC97  63   --   CPU_A18          INPUT  --                       --        --             0     slow
 MC98  0         --                      --                       --        --             0     slow
@@ -727,10 +728,10 @@ MC0   88        nSYS_RESET       INPUT  --                       --        --   
 MC0   87        CPU_CLK          INPUT  --                       --        --             0     slow
 
 Logic Array Block	Logic Cells	I/O Pins	Foldbacks	TotalPT		FanIN	Cascades
-A: LC1	- LC16		6/16(37%)	9/16(56%)	0/16(0%)	6/80(7%)	(31)	0
+A: LC1	- LC16		6/16(37%)	9/16(56%)	0/16(0%)	6/80(7%)	(30)	0
 B: LC17	- LC32		7/16(43%)	7/16(43%)	1/16(6%)	6/80(7%)	(25)	0
 C: LC33	- LC48		8/16(50%)	10/16(62%)	1/16(6%)	9/80(11%)	(26)	0
-D: LC49	- LC64		5/16(31%)	10/16(62%)	0/16(0%)	5/80(6%)	(24)	0
+D: LC49	- LC64		6/16(37%)	10/16(62%)	0/16(0%)	6/80(7%)	(25)	0
 E: LC65	- LC80		7/16(43%)	7/16(43%)	0/16(0%)	7/80(8%)	(27)	0
 F: LC81	- LC96		2/16(12%)	10/16(62%)	0/16(0%)	5/80(6%)	(6)	0
 G: LC97	- LC112		0/16(0%)	10/16(62%)	0/16(0%)	0/80(0%)	(0)	0
@@ -738,14 +739,14 @@ H: LC113- LC128		0/16(0%)	4/16(25%)	0/16(0%)	0/80(0%)	(0)	0
 
 Total dedicated input used:	2/4 	(50%)
 Total I/O pins used		67/80 	(83%)
-Total Logic cells used 		35/128 	(27%)
+Total Logic cells used 		36/128 	(28%)
 Total Flip-Flop used 		4/128 	(3%)
 Total Foldback logic used 	2/128 	(1%)
-Total Nodes+FB/MCells 		37/128 	(28%)
+Total Nodes+FB/MCells 		38/128 	(29%)
 Total cascade used 		0
-Total input pins 		38
-Total output pins 		31
-Total Pts 			38
+Total input pins 		37
+Total output pins 		32
+Total Pts 			39
 Creating pla file C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAP\DEVMAP.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
 
 ----------------  End fitter, Design FITS

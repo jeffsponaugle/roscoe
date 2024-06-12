@@ -1,7 +1,7 @@
 #$ TOOL CUPL
 # Berkeley PLA format generated using CUPL(WM) 5.0a
 # Serial#  60008009
-# Created  Tue May 28 20:13:52 2024
+# Created  Wed Jun 12 12:06:37 2024
 #
 #    Name        BUSCTRL
 #    Partno      BUSCTRL
@@ -16,7 +16,7 @@
 #$ PROPERTY ATMEL TDI_PULLUP = ON
 #$ PROPERTY ATMEL TMS_PULLUP = ON
 #$ PROPERTY ATMEL PREASSIGN = KEEP
-#$ PROPERTY ATMEL open_collector = n3V_DATA_EN, nCPU_DSACK0, nCPU_DSACK1
+#$ PROPERTY ATMEL open_collector = n3V_DATA_EN
 #$ MODULE  BUSCTRL
 #$ JEDECFILE  BUSCTRL
 #$ DEVICE  f1508isptqfp100

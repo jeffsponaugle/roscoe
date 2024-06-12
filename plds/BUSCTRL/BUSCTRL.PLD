@@ -12,7 +12,9 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
-PROPERTY ATMEL {open_collector=n3V_DATA_EN, nCPU_DSACK0, nCPU_DSACK1};
+PROPERTY ATMEL {open_collector=n3V_DATA_EN};
+
+// Removed opencollector nCPU_DSACK0, nCPU_DSACK1
 
 
 /* NOTE:  Active low values are designated with a starting n. */

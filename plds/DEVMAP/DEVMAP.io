@@ -32,7 +32,7 @@ BEGIN
     "TMS"                                     : INPUT_PIN = 15 ;
     "TESTP2"                                  : INPUT_PIN = 37 ;
     "TESTP1"                                  : OUTPUT_PIN = 36 ;
-    "TESTP0"                                  : INPUT_PIN = 35 ;
+    "TESTP0"                                  : OUTPUT_PIN = 35 ;
     "nEXP_CACHE_CTRL"                         : INPUT_PIN = 33 ;
     "nEXP_DEV_WAIT"                           : INPUT_PIN = 32 ;
     "nEXP_DEV32BITCS"                         : OUTPUT_PIN = 31 ;
@@ -56,7 +56,7 @@ BEGIN
     "CPU_A21"                                 : INPUT_PIN = 58 ;
     "CPU_A20"                                 : INPUT_PIN = 60 ;
     "CPU_A19"                                 : INPUT_PIN = 61 ;
-    "Com_Ctrl_92"                             : NODE_NUM = 695 ;
+    "Com_Ctrl_93"                             : NODE_NUM = 695 ;
     "TCK"                                     : INPUT_PIN = 62 ;
     "nIDE_WR_DELAY2"                          : NODE_NUM = 696 ;
     "CPU_A18"                                 : INPUT_PIN = 63 ;

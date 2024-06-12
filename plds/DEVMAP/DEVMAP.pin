@@ -53,7 +53,7 @@ CPU_A22					: 57
 CPU_A21					: 58
 CPU_A20					: 60
 CPU_A19					: 61
-Com_Ctrl_92					: 695
+Com_Ctrl_93					: 695
 TCK					: 62
 nIDE_WR_DELAY2					: 696
 CPU_A18					: 63
