@@ -262,6 +262,9 @@ EXP_BC_CPLD1 =>
 EXP_BC_CPLD2 =>
     0 
 
+EXTRA_BC_INT1 =>
+    CPU_RW
+
 FC_CPU_SPACE =>
     CPU_FC0 & CPU_FC1 & CPU_FC2
 

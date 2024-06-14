@@ -130,6 +130,10 @@ nCPU_RD = !CPU_RW;
 nCPU_CIIN = 'b'1;
 EXP_BC_CPLD1 = 'b'0;
 EXP_BC_CPLD2 = 'b'0;
+// Send CPU_RW to the interrupt controller, as this pin was missed in the circuit layout.
+// EXTRA_BC_INT1 in on Pin 30 here, pin 79 in the interrupt controller.
+EXTRA_BC_INT1 = CPU_RW;
+
 
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
 //TESTP1 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2; 

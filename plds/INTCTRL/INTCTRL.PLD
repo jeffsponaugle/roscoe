@@ -20,7 +20,7 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 
 // From CPU
 Pin[71,72,75,76] = [CPU_A3..0];
-Pin[70] = CPU_RW;
+Pin[70] = CPU_RW_NOT_CONNECTED;
 Pin[57,58,60,61,63,64,65,67] = [CPU_D7..0];     // Hooked to D31:D24 since this is an 8 bit device
 
 // From Bus Controller CPLD
@@ -69,14 +69,18 @@ Pin[32] = EXP_INT_CPLD2;
 
 Pin[77] = EXTRA_DM_INT1;
 Pin[78] = EXTRA_DM_INT2;
-Pin[79] = EXTRA_BC_INT1;
+Pin[79] = CPU_RW;
 Pin[80] = EXTRA_BC_INT2;
 Pin[40,41,42] = [TESTP0..2];
+
+TESTP0 = nINT_ACK_CYCLE;
+TESTP1 = CPU_D6.io;
+TESTP2 = nINTCTRL_CS # CPU_RW # !CPU_A0 # CPU_A1 # CPU_A2 # CPU_A3;
 
 
 
 Pin = UNUSED1;
-UNUSED1 = EXTRA_DM_INT1 & EXTRA_DM_INT2 & EXTRA_BC_INT1 & EXTRA_BC_INT2 # TESTP0 # TESTP1 # TESTP2 ;
+UNUSED1 = EXTRA_DM_INT1 & EXTRA_DM_INT2 & EXTRA_BC_INT2;
 EXP_INT_CPLD1 = 'b'0;
 EXP_INT_CPLD2 = 'b'0;
 
@@ -93,12 +97,14 @@ PINNODE =  POWER_CONTROL_STATE;
 PINNODE =  INT7A_REQUEST;
 PINNODE =  INT6A_REQUEST;
 PINNODE =  INT6B_REQUEST;
+PINNODE =  INT1A_REQUEST;
 PINNODE =  INT1B_REQUEST;
 PINNODE =  INT_ACK_RESET_PRE;
 PINNODE =  INT_ACK_RESET;
 
 // The following NODES are in place to compact the total size of some later fields.  The use of NODES adds a bit of latency
 // but allows the complex expressions to compile and optmize correctly.
+
 PINNODE =  INTL6_REQUEST_PE;
 PINNODE =  INTL5_REQUEST_PE;
 PINNODE =  INTL4_REQUEST_PE;
@@ -123,28 +129,31 @@ PINNODE =  USB_TXE_INT_MASK;
     1=Enable Interrupt, 0=Disable Interrupt
     RESETs to all 0
 
-    0x30000200  bit 7    INT 7
-                bit 6    INT 6A
-                bit 5    INT 6B
-                bit 4    INT 5A
-                bit 3    INT 5B
-                bit 2    INT 5C
-                bit 1    INT 5D
-                bit 0    INT 4A
+    0x30000200  bit 7    INT 7          DEBUG (Button)
+                bit 6    INT 6A         PTC #1 (Programmable Timer)
+                bit 5    INT 6B         PTC #2 (Programmable Timer)
+                bit 4    INT 5A         NIC
+                bit 3    INT 5B         IDE 1
+                bit 2    INT 5C         IDE 2
+                bit 1    INT 5D         EXPANSION_I5
+                bit 0    INT 4A         UART 1
 
-    0x30000201  bit 7    INT 4B
-                bit 6    INT 4C
-                bit 5    INT 3A
-                bit 4    INT 3B
-                bit 3    INT 2A
-                bit 1    INT 2B
-                bit 0    INT 1A
+    0x30000201  bit 7    INT 4B         UART 2
+                bit 6    INT 4C         EXPANSION_I4
+                bit 5    INT 3A         USB
+                bit 4    INT 3B         EXPANSION_I3
+                bit 3    INT 2A         VIDEO
+                bit 2    INT 2B         EXPANSION_I2
+                bit 1    INT 1A         RTC
+                bit 0    INT 1B         POWER CONTROLLER
                 
 */
 
 [INT_MSK15..8].ck = nINTCTRL_CS # CPU_RW # CPU_A0 # CPU_A1 # CPU_A2 # CPU_A3;               // An 8 bit write to 0x3000 0200
 [INT_MSK7..0].ck = nINTCTRL_CS # CPU_RW # !CPU_A0 # CPU_A1 # CPU_A2 # CPU_A3;               // An 8 bit write to 0x3000 0201
-[INT_MSK15..0].ar = !nSYS_RESET;
+[INT_MSK15..8].ar = !nSYS_RESET;
+[INT_MSK7..0].ar = !nSYS_RESET;
+
 [INT_MSK15..8].d = [CPU_D7..0].io;
 [INT_MSK7..0].d = [CPU_D7..0].io;
 
@@ -259,7 +268,11 @@ INT3A_REQUEST = !vINT3A & INT_MSK5;         // INT3A comes from the USB interfac
 INT3B_REQUEST = !vINT3B & INT_MSK4;         // INT3B in an expansion interrupt (undefined)  Make active low, with pullup
 INT2A_REQUEST = !vINT2A & INT_MSK3;         // INT2A comed from the Video Interface, Active low signal
 INT2B_REQUEST = !vINT2B & INT_MSK2;         // INT2B is an expansion interrupt (undefined)  Make active low, with pullup
-INT1A_REQUEST = !vINT1A & INT_MSK1;         // INT1A comed from the Video Interface, Active low signal
+
+                                            // INT1A comed from the RTC, Lower edge triggered
+INT1A_REQUEST.d = INT_MSK1;
+INT1A_REQUEST.ck = !vINT1A;
+INT1A_REQUEST.ar = !nSYS_RESET # (INT_ACK_RESET & INT1A_REQUEST_PE & field_INT_ACK_LEVEL:['d'1]); 
    
 INT1B_REQUEST.d = INT_MSK0;                  // INT1B is the power controller interrupt. Rising Edge Triggered.
 INT1B_REQUEST.ck = !vINT1B;
@@ -376,6 +389,7 @@ INT1B_REQUEST_PE = !INT1A_REQUEST_PE & INT1B_REQUEST;
 nUSB_CONFIG_REGISTER_READ = nINTCTRL_CS # !CPU_RW # !CPU_A0 # !CPU_A1 # CPU_A2 # CPU_A3; 
 
 [CPU_D7..0].oe = !nINT_ACK_CYCLE # !nUSB_CONFIG_REGISTER_READ;       // If we are in an Interrupt Ack Cycle or Reg Read, enable the data bus outputs.
+
 
 CPU_D7 = ('b'1 & !nINT_ACK_CYCLE)
        # (nUSB_DATAACK & !nUSB_CONFIG_REGISTER_READ);
