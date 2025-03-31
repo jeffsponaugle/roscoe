@@ -145,14 +145,14 @@ CPU_D3.oe  =>
   # CPU_A0 & CPU_A1 & !CPU_A2 & !CPU_A3 & CPU_RW & !nINTCTRL_CS
 
 CPU_D4 =>
-    INT_ACK_LEVEL0 & !nINT_ACK_CYCLE
+    CPU_A1 & !nINT_ACK_CYCLE
 
 CPU_D4.oe  =>
     !nINT_ACK_CYCLE
   # CPU_A0 & CPU_A1 & !CPU_A2 & !CPU_A3 & CPU_RW & !nINTCTRL_CS
 
 CPU_D5 =>
-    INT_ACK_LEVEL1 & !nINT_ACK_CYCLE
+    CPU_A2 & !nINT_ACK_CYCLE
   # CPU_A0 & CPU_A1 & !CPU_A2 & !CPU_A3 & CPU_RW & !nINTCTRL_CS & nUSB_TXE
 
 CPU_D5.oe  =>
@@ -160,7 +160,7 @@ CPU_D5.oe  =>
   # CPU_A0 & CPU_A1 & !CPU_A2 & !CPU_A3 & CPU_RW & !nINTCTRL_CS
 
 CPU_D6 =>
-    INT_ACK_LEVEL2 & !nINT_ACK_CYCLE
+    CPU_A3 & !nINT_ACK_CYCLE
   # CPU_A0 & CPU_A1 & !CPU_A2 & !CPU_A3 & CPU_RW & !nINTCTRL_CS & nUSB_RXF
 
 CPU_D6.oe  =>
@@ -190,15 +190,8 @@ EXP_INT_CPLD1 =>
 EXP_INT_CPLD2 =>
     0 
 
-INT1A_REQUEST.d  =>
-    INT_MSK1
-
-INT1A_REQUEST.ar  =>
-    !nSYS_RESET
-  # INT1A_REQUEST & INT_ACK_LEVEL0 & !INT_ACK_LEVEL1 & !INT_ACK_LEVEL2 & INT_ACK_RESET
-
-INT1A_REQUEST.ck  =>
-    !vINT1A
+INT1A_REQUEST =>
+    INT_MSK1 & !vINT1A
 
 INT1A_REQUEST_PE =>
     INT1A_REQUEST
@@ -415,7 +408,7 @@ INT_ACK_RESET_PRE.ck  =>
     nINT_ACK_CYCLE
 
 INT_MSK0.d  =>
-    CPU_D0.io 
+    0 
 
 INT_MSK0.ar  =>
     !nSYS_RESET
@@ -443,7 +436,7 @@ INT_MSK1.ck  =>
   # CPU_A3
 
 INT_MSK2.d  =>
-    CPU_D2.io 
+    0 
 
 INT_MSK2.ar  =>
     !nSYS_RESET
@@ -457,7 +450,7 @@ INT_MSK2.ck  =>
   # CPU_A3
 
 INT_MSK3.d  =>
-    CPU_D3.io 
+    0 
 
 INT_MSK3.ar  =>
     !nSYS_RESET
@@ -471,7 +464,7 @@ INT_MSK3.ck  =>
   # CPU_A3
 
 INT_MSK4.d  =>
-    CPU_D4.io 
+    0 
 
 INT_MSK4.ar  =>
     !nSYS_RESET
@@ -485,7 +478,7 @@ INT_MSK4.ck  =>
   # CPU_A3
 
 INT_MSK5.d  =>
-    CPU_D5.io 
+    0 
 
 INT_MSK5.ar  =>
     !nSYS_RESET
@@ -499,7 +492,7 @@ INT_MSK5.ck  =>
   # CPU_A3
 
 INT_MSK6.d  =>
-    CPU_D6.io 
+    0 
 
 INT_MSK6.ar  =>
     !nSYS_RESET
@@ -513,7 +506,7 @@ INT_MSK6.ck  =>
   # CPU_A3
 
 INT_MSK7.d  =>
-    CPU_D7.io 
+    0 
 
 INT_MSK7.ar  =>
     !nSYS_RESET
@@ -527,7 +520,7 @@ INT_MSK7.ck  =>
   # CPU_A3
 
 INT_MSK8.d  =>
-    CPU_D0.io 
+    0 
 
 INT_MSK8.ar  =>
     !nSYS_RESET
@@ -541,7 +534,7 @@ INT_MSK8.ck  =>
   # CPU_A3
 
 INT_MSK9.d  =>
-    CPU_D1.io 
+    0 
 
 INT_MSK9.ar  =>
     !nSYS_RESET
@@ -555,7 +548,7 @@ INT_MSK9.ck  =>
   # CPU_A3
 
 INT_MSK10.d  =>
-    CPU_D2.io 
+    0 
 
 INT_MSK10.ar  =>
     !nSYS_RESET
@@ -569,7 +562,7 @@ INT_MSK10.ck  =>
   # CPU_A3
 
 INT_MSK11.d  =>
-    CPU_D3.io 
+    0 
 
 INT_MSK11.ar  =>
     !nSYS_RESET
@@ -583,7 +576,7 @@ INT_MSK11.ck  =>
   # CPU_A3
 
 INT_MSK12.d  =>
-    CPU_D4.io 
+    0 
 
 INT_MSK12.ar  =>
     !nSYS_RESET
@@ -625,7 +618,7 @@ INT_MSK14.ck  =>
   # CPU_A3
 
 INT_MSK15.d  =>
-    CPU_D7.io 
+    0 
 
 INT_MSK15.ar  =>
     !nSYS_RESET
@@ -676,15 +669,10 @@ TESTP0 =>
     nINT_ACK_CYCLE
 
 TESTP1 =>
-    CPU_D6.io 
+    INT_ACK_RESET
 
 TESTP2 =>
-    !CPU_A0
-  # CPU_A1
-  # CPU_A2
-  # CPU_A3
-  # CPU_RW
-  # nINTCTRL_CS
+    INT1A_REQUEST & INT_ACK_LEVEL0 & !INT_ACK_LEVEL1 & !INT_ACK_LEVEL2 & INT_ACK_RESET
 
 UNUSED1 =>
     EXTRA_BC_INT2 & EXTRA_DM_INT1 & EXTRA_DM_INT2
