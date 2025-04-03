@@ -422,7 +422,7 @@ INT_MSK0.ck  =>
   # CPU_A3
 
 INT_MSK1.d  =>
-    CPU_D1.io 
+    0 
 
 INT_MSK1.ar  =>
     !nSYS_RESET
@@ -590,7 +590,7 @@ INT_MSK12.ck  =>
   # CPU_A3
 
 INT_MSK13.d  =>
-    CPU_D5.io 
+    0 
 
 INT_MSK13.ar  =>
     !nSYS_RESET
@@ -604,7 +604,7 @@ INT_MSK13.ck  =>
   # CPU_A3
 
 INT_MSK14.d  =>
-    CPU_D6.io 
+    0 
 
 INT_MSK14.ar  =>
     !nSYS_RESET
@@ -652,7 +652,7 @@ POWER_CONTROL_STATE.ck  =>
   # CPU_A3
 
 RESET_CONTROL_OUT.d  =>
-    CPU_D1.io 
+    0 
 
 RESET_CONTROL_OUT.ar  =>
     !nSYS_RESET

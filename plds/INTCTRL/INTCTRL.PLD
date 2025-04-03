@@ -163,8 +163,8 @@ PINNODE =  USB_TXE_INT_MASK;
 /* Temporary Interrupt Enable/Disable  */
 
 [INT_MSK15].d = 'b'0;
-[INT_MSK14].d = CPU_D6.io;  // Enable PTC 1
-[INT_MSK13].d = CPU_D5.io;  // Enable PTC 2
+[INT_MSK14].d = 'b'0;  // Enable PTC 1 CPU_D6.io;  /
+[INT_MSK13].d = 'b'0;  // Enable PTC 2 CPU_D5.io; 
 [INT_MSK12].d = 'b'0; 
 [INT_MSK11].d = 'b'0;
 [INT_MSK10].d = 'b'0;
@@ -172,7 +172,7 @@ PINNODE =  USB_TXE_INT_MASK;
 [INT_MSK8].d = 'b'0;
 
 [INT_MSK7..2].d = 'b'0;
-[INT_MSK1].d= CPU_D1.io;    // Enable RTC
+[INT_MSK1].d= 'b'0;    // Enable RTC CPU_D1.io;
 [INT_MSK0].d = 'b'0;
 
 
