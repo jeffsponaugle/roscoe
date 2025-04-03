@@ -1,0 +1,406 @@
+{COMPONENT C:\USERS\JEFF\SRC\ROSCOE\PLDS\INTCTRL\INTCTRL.SYM
+
+ {ENVIRONMENT
+  {PDIFvrev 3.00}
+  {Program "CUPL(WM) Version 5.0a"}
+  {DBtype "Schematic"}
+  {DBvrev 1.01}
+  {DBtime "Mon Mar 31 19:07:10 2025 "}
+  {DBunit "MIL"}
+  {DBgrid 10}
+  {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
+          "PINNAM" 6 "PINCON" 4 "REFDES" 2 "ATTR" 6 "SDOT" 1 
+          "DEVICE" 5 "OUTLIN" 5 "ATTR2" 6 "NOTES" 6 "NETNAM" 4 
+          "CMPNAM" 5 "BORDER" 5}
+ }
+
+ {USER
+  {VIEW
+   {Mode SYMB}
+   {Nlst OPEN}
+   {Vw 0 0 2}
+   {Lv 12 2 2 2 0 0 2 2 2 2 0 0 2 1 2 0 0 0 0}
+   {Gs 10 10}
+  }
+ }
+
+ {DISPLAY
+  [Ly "PINNUM"]
+  [Ls "SOLID"][Wd 0]
+  [Ts 15][Tj "LC"][Tr 0][Tm "N"]
+ }
+
+ {SYMBOL
+  {PIN_DEF
+   [Ly "PINCON"]
+   {P CPU_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
+   {P NINT_ACK {Pt "INPUT"}{Lq 0}{Ploc 100 700}}
+   {P NUSB_DAT {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
+   {P NUSB_DAT {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
+   {P VINT7A {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
+   {P VINT6A {Pt "INPUT"}{Lq 0}{Ploc 100 600}}
+   {P VINT6B {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
+   {P VINT5A {Pt "INPUT"}{Lq 0}{Ploc 100 560}}
+   {P VINT5B {Pt "INPUT"}{Lq 0}{Ploc 100 540}}
+   {P VINT5C {Pt "INPUT"}{Lq 0}{Ploc 100 520}}
+   {P VINT5D {Pt "INPUT"}{Lq 0}{Ploc 100 500}}
+   {P VINT4A {Pt "INPUT"}{Lq 0}{Ploc 100 480}}
+   {P VINT4B {Pt "INPUT"}{Lq 0}{Ploc 100 460}}
+   {P VINT4C {Pt "INPUT"}{Lq 0}{Ploc 100 440}}
+   {P VINT3B {Pt "INPUT"}{Lq 0}{Ploc 100 420}}
+   {P VINT2A {Pt "INPUT"}{Lq 0}{Ploc 100 400}}
+   {P VINT2B {Pt "INPUT"}{Lq 0}{Ploc 100 380}}
+   {P VINT1A {Pt "INPUT"}{Lq 0}{Ploc 100 360}}
+   {P VINT1B {Pt "INPUT"}{Lq 0}{Ploc 100 340}}
+   {P RESET_CO {Pt "INPUT"}{Lq 0}{Ploc 100 320}}
+   {P NUSB_CS {Pt "INPUT"}{Lq 0}{Ploc 100 300}}
+   {P CPU_RW_N {Pt "INPUT"}{Lq 0}{Ploc 100 280}}
+   {P CPU_A3 {Pt "INPUT"}{Lq 0}{Ploc 100 260}}
+   {P CPU_A2 {Pt "INPUT"}{Lq 0}{Ploc 100 240}}
+   {P CPU_A1 {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
+   {P CPU_A0 {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
+   {P EXTRA_1 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
+   {P EXTRA2 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
+   {P CPU_RW {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P EXTRA_2 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
+   {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
+   {P NINTCTRL {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P NUSB_RXF {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
+   {P NUSB_TXE {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P NUSB_WR {Pt "I/O"}{Lq 0}{Ploc 360 20}}
+   {P NUSB_RD {Pt "I/O"}{Lq 0}{Ploc 360 40}}
+   {P EXP_IN1 {Pt "I/O"}{Lq 0}{Ploc 360 60}}
+   {P EXP_IN2 {Pt "I/O"}{Lq 0}{Ploc 360 80}}
+   {P TESTP0 {Pt "I/O"}{Lq 0}{Ploc 360 100}}
+   {P TESTP1 {Pt "I/O"}{Lq 0}{Ploc 360 120}}
+   {P TESTP2 {Pt "I/O"}{Lq 0}{Ploc 360 140}}
+   {P POWER_CO {Pt "I/O"}{Lq 0}{Ploc 360 160}}
+   {P CPU_IPL2 {Pt "I/O"}{Lq 0}{Ploc 360 180}}
+   {P CPU_IPL1 {Pt "I/O"}{Lq 0}{Ploc 360 200}}
+   {P CPU_IPL0 {Pt "I/O"}{Lq 0}{Ploc 360 220}}
+   {P CPU_D7 {Pt "I/O"}{Lq 0}{Ploc 360 240}}
+   {P CPU_D6 {Pt "I/O"}{Lq 0}{Ploc 360 260}}
+   {P CPU_D5 {Pt "I/O"}{Lq 0}{Ploc 360 280}}
+   {P CPU_D4 {Pt "I/O"}{Lq 0}{Ploc 360 300}}
+   {P CPU_D3 {Pt "I/O"}{Lq 0}{Ploc 360 320}}
+   {P CPU_D2 {Pt "I/O"}{Lq 0}{Ploc 360 340}}
+   {P CPU_D1 {Pt "I/O"}{Lq 0}{Ploc 360 360}}
+   {P CPU_D0 {Pt "I/O"}{Lq 0}{Ploc 360 380}}
+  }
+
+  {PKG
+   [Ly "REFDES"]
+   [Ts 25][Tj "CB"][Tr 0][Tm "N"]
+   {Rdl 230 750}
+
+   [Ly "PINNUM"]
+   [Ts 15][Tj "RC"]
+   {Pnl 120 730}
+   {Pnl 120 710}
+   [Ts 15][Tj "RC"]
+   {Pnl 120 670}
+   {Pnl 120 650}
+   {Pnl 120 630}
+   {Pnl 120 610}
+   {Pnl 120 590}
+   {Pnl 120 570}
+   {Pnl 120 550}
+   {Pnl 120 530}
+   {Pnl 120 510}
+   {Pnl 120 490}
+   {Pnl 120 470}
+   {Pnl 120 450}
+   {Pnl 120 430}
+   {Pnl 120 410}
+   {Pnl 120 390}
+   {Pnl 120 370}
+   {Pnl 120 350}
+   {Pnl 120 330}
+   {Pnl 120 310}
+   {Pnl 120 290}
+   {Pnl 120 270}
+   {Pnl 120 250}
+   {Pnl 120 230}
+   {Pnl 120 210}
+   {Pnl 120 190}
+   {Pnl 120 170}
+   {Pnl 120 150}
+   {Pnl 120 130}
+   {Pnl 120 110}
+   {Pnl 120 90}
+   {Pnl 120 70}
+   {Pnl 120 50}
+   [Ts 15][Tj "LC"]
+   {Pnl 340 30}
+   {Pnl 340 50}
+   {Pnl 340 70}
+   {Pnl 340 90}
+   {Pnl 340 110}
+   {Pnl 340 130}
+   {Pnl 340 150}
+   {Pnl 340 170}
+   {Pnl 340 190}
+   {Pnl 340 210}
+   {Pnl 340 230}
+   {Pnl 340 250}
+   {Pnl 340 270}
+   {Pnl 340 290}
+   {Pnl 340 310}
+   {Pnl 340 330}
+   {Pnl 340 350}
+   {Pnl 340 370}
+   {Pnl 340 390}
+
+   {Sd A 87 90 1 2 8 9 10 12 13 14 16 19 20 21 24 25 27 29 30 46 56 70 71 72 75 76 77 78 79 80 88 89 99 100 5 6 31 32 40 41 42 45 52 53 54 57 58 60 61 63 64 65 67}
+  }
+
+  {PIC
+   [Ly "GATE"]
+   [Ts 15][Tj "LC"][Tr 0][Tm "N"]
+   {R 130 740 330 0}
+   {L 130 720 100 720}
+   {L 130 730 140 720 130 710}
+   {L 130 700 100 700}
+   {L 130 710 140 700 130 690}
+   {L 130 660 100 660}
+   {L 130 640 100 640}
+   {L 130 620 100 620}
+   {L 130 600 100 600}
+   {L 130 580 100 580}
+   {L 130 560 100 560}
+   {L 130 540 100 540}
+   {L 130 520 100 520}
+   {L 130 500 100 500}
+   {L 130 480 100 480}
+   {L 130 460 100 460}
+   {L 130 440 100 440}
+   {L 130 420 100 420}
+   {L 130 400 100 400}
+   {L 130 380 100 380}
+   {L 130 360 100 360}
+   {L 130 340 100 340}
+   {L 130 320 100 320}
+   {L 130 300 100 300}
+   {L 130 280 100 280}
+   {L 130 260 100 260}
+   {L 130 240 100 240}
+   {L 130 220 100 220}
+   {L 130 200 100 200}
+   {L 130 180 100 180}
+   {L 130 160 100 160}
+   {L 130 140 100 140}
+   {L 130 120 100 120}
+   {L 130 100 100 100}
+   {L 130 80 100 80}
+   {L 130 60 100 60}
+   {L 130 40 100 40}
+   {L 330 20 360 20}
+   {L 330 40 360 40}
+   {L 330 60 360 60}
+   {L 330 80 360 80}
+   {L 330 100 360 100}
+   {L 330 120 360 120}
+   {L 330 140 360 140}
+   {L 330 160 360 160}
+   {L 330 180 360 180}
+   {L 330 200 360 200}
+   {L 330 220 360 220}
+   {L 330 240 360 240}
+   {L 330 260 360 260}
+   {L 330 280 360 280}
+   {L 330 300 360 300}
+   {L 330 320 360 320}
+   {L 330 340 360 340}
+   {L 330 360 360 360}
+   {L 330 380 360 380}
+   [Ly "PINNAM"]
+   [Tj "LC"]
+   {T "CPU_CLK" 140 720}
+   {T "NINT_ACK" 140 700}
+   {T "NUSB_DAT" 140 660}
+   {T "NUSB_DAT" 140 640}
+   {T "VINT7A" 140 620}
+   {T "VINT6A" 140 600}
+   {T "VINT6B" 140 580}
+   {T "VINT5A" 140 560}
+   {T "VINT5B" 140 540}
+   {T "VINT5C" 140 520}
+   {T "VINT5D" 140 500}
+   {T "VINT4A" 140 480}
+   {T "VINT4B" 140 460}
+   {T "VINT4C" 140 440}
+   {T "VINT3B" 140 420}
+   {T "VINT2A" 140 400}
+   {T "VINT2B" 140 380}
+   {T "VINT1A" 140 360}
+   {T "VINT1B" 140 340}
+   {T "RESET_CO" 140 320}
+   {T "NUSB_CS" 140 300}
+   {T "CPU_RW_N" 140 280}
+   {T "CPU_A3" 140 260}
+   {T "CPU_A2" 140 240}
+   {T "CPU_A1" 140 220}
+   {T "CPU_A0" 140 200}
+   {T "EXTRA_1" 140 180}
+   {T "EXTRA2" 140 160}
+   {T "CPU_RW" 140 140}
+   {T "EXTRA_2" 140 120}
+   {T "NSYS_RES" 140 100}
+   {T "NINTCTRL" 140 80}
+   {T "NUSB_RXF" 140 60}
+   {T "NUSB_TXE" 140 40}
+   [Tj "RC"]
+   {T "NUSB_WR" 320 20}
+   {T "NUSB_RD" 320 40}
+   {T "EXP_IN1" 320 60}
+   {T "EXP_IN2" 320 80}
+   {T "TESTP0" 320 100}
+   {T "TESTP1" 320 120}
+   {T "TESTP2" 320 140}
+   {T "POWER_CO" 320 160}
+   {T "CPU_IPL2" 320 180}
+   {T "CPU_IPL1" 320 200}
+   {T "CPU_IPL0" 320 220}
+   {T "CPU_D7" 320 240}
+   {T "CPU_D6" 320 260}
+   {T "CPU_D5" 320 280}
+   {T "CPU_D4" 320 300}
+   {T "CPU_D3" 320 320}
+   {T "CPU_D2" 320 340}
+   {T "CPU_D1" 320 360}
+   {T "CPU_D0" 320 380}
+   [Ly "DEVICE"]
+   [Tj "CT"]
+   {T "F1508ISPTQFP100" 230 -10}
+  }
+
+  {ATR
+   {IN
+    {Org 100 40}
+    {Ty 255}
+   }
+   {EX
+    [Ly "ATTR2"]
+    [Ts 12][Tj "CT"][Tr 0][Tm "N"]
+    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\INTCTRL\INTCTRL 230 740}
+   }
+  }
+ }
+
+ {DETAIL
+  {ANNOTATE
+  }
+
+  {NET_DEF
+   {N CPU_CLK
+   }
+   {N NINT_ACK
+   }
+   {N NUSB_DAT
+   }
+   {N NUSB_DAT
+   }
+   {N VINT7A
+   }
+   {N VINT6A
+   }
+   {N VINT6B
+   }
+   {N VINT5A
+   }
+   {N VINT5B
+   }
+   {N VINT5C
+   }
+   {N VINT5D
+   }
+   {N VINT4A
+   }
+   {N VINT4B
+   }
+   {N VINT4C
+   }
+   {N VINT3B
+   }
+   {N VINT2A
+   }
+   {N VINT2B
+   }
+   {N VINT1A
+   }
+   {N VINT1B
+   }
+   {N RESET_CO
+   }
+   {N NUSB_CS
+   }
+   {N CPU_RW_N
+   }
+   {N CPU_A3
+   }
+   {N CPU_A2
+   }
+   {N CPU_A1
+   }
+   {N CPU_A0
+   }
+   {N EXTRA_1
+   }
+   {N EXTRA2
+   }
+   {N CPU_RW
+   }
+   {N EXTRA_2
+   }
+   {N NSYS_RES
+   }
+   {N NINTCTRL
+   }
+   {N NUSB_RXF
+   }
+   {N NUSB_TXE
+   }
+   {N NUSB_WR
+   }
+   {N NUSB_RD
+   }
+   {N EXP_IN1
+   }
+   {N EXP_IN2
+   }
+   {N TESTP0
+   }
+   {N TESTP1
+   }
+   {N TESTP2
+   }
+   {N POWER_CO
+   }
+   {N CPU_IPL2
+   }
+   {N CPU_IPL1
+   }
+   {N CPU_IPL0
+   }
+   {N CPU_D7
+   }
+   {N CPU_D6
+   }
+   {N CPU_D5
+   }
+   {N CPU_D4
+   }
+   {N CPU_D3
+   }
+   {N CPU_D2
+   }
+   {N CPU_D1
+   }
+   {N CPU_D0
+   }
+  }
+
+  {SUBCOMP
+  }
+ }
+}

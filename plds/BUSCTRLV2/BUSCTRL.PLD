@@ -1,0 +1,732 @@
+Name	 BUSCTRL;
+PartNo   BUSCTRL;
+Date     03/30/2024;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1508isptqfp100;
+
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+
+PROPERTY ATMEL {open_collector=n3V_DATA_EN};
+
+// Removed opencollector nCPU_DSACK0, nCPU_DSACK1
+
+
+/* NOTE:  Active low values are designated with a starting n. */
+
+/* 
+                                                Inputs
+    ##########################################################################################
+*/
+Pin[76,77,78] = [CPU_FC0..2];
+Pin[52,53,54,55,56,57,58,60,61,63,64,65,67,68,69,70] = [CPU_A31..16];
+Pin[79,80] = [CPU_SIZ0..1];
+Pin[71,72] = [CPU_AA1..0];
+
+Pin[88] = CPU_RW;
+Pin[41] = nCPU_AS;
+Pin[89] = nSYS_RESET_IN;
+Pin[87] = CPU_CLK;
+
+/* 
+                                                Outputs 
+   ##########################################################################################
+*/
+
+// To CPU
+Pin[50,48] = [nCPU_DSACK0..1];
+Pin[44] = nCPU_CIIN;
+Pin[49] = nSYS_RESET;
+Pin[42] = nCPU_HALT;
+Pin[46] = nCPU_BERR;
+Pin[45] = nCPU_STERM;
+Pin[84] = nFPU_CS;
+
+// To Devices
+Pin[8] = nCPU_RD;       // An inverted version of the CPU_RW line, used to /OE pins on memory and devices.
+
+// To Boot Flash
+Pin[37] = nBFLASH_CE;
+Pin[40] = nBFLASH_WE;
+
+// To 64M Flash
+
+Pin[7] = nBIGFLASH_CE;
+
+// To SRAM
+
+Pin[92] = nSRAM_BANK1_CE;
+Pin[93] = nSRAM_BANK2_CE;
+Pin[94] = nSRAM_BANK3_CE;
+Pin[96] = nSRAM_BANK4_CE;
+Pin[97] = nSRAM_LL_SEL;
+Pin[98] = nSRAM_LH_SEL;
+Pin[99] = nSRAM_UL_SEL;
+Pin[100] = nSRAM_UH_SEL;
+
+// To Device Controller
+Pin[1] = nDEV8BITCS;
+Pin[2] = nDEV16BITCS;
+Pin[5] = nDEV32BITCS;
+Pin[6] = nINT_ACK_CYCLE;
+Pin[90] = nDEV_WAIT;
+
+// To DRAM
+
+Pin[19] = nDRAM_S1A_RAS;
+Pin[20] = nDRAM_S2A_RAS;
+Pin[21] = nDRAM_S3A_RAS;
+Pin[22] = nDRAM_S4A_RAS;
+Pin[23] = nDRAM_S1B_RAS;
+Pin[24] = nDRAM_S2B_RAS;
+Pin[25] = nDRAM_S3B_RAS;
+Pin[27] = nDRAM_S4B_RAS;
+
+// Mark these pins as unused
+Pin[32,33,35,36] = [TESTP0..3];
+Pin[28] = EXP_BC_CPLD1;
+Pin[29] = EXP_BC_CPLD2;
+Pin[17] = nDRAM_CAS0;
+Pin[16] = nDRAM_CAS1;
+Pin[14] = nDRAM_CAS2;
+Pin[13] = nDRAM_CAS3;
+Pin[12] = DRAM_MUX;              // MUX for addess lines going to DRAM (0=ROW, 1=COL)
+Pin[10] = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the CPU.
+Pin[9]  = nDRAM_WE;
+Pin[83] = RESET_CONTROL_IN;     // Active high signal to perform a system reset.
+Pin[75] = n3V_DATA_EN;
+Pin[47] = CPU_CLK_div16;
+
+Pin[81] = EXTRA_BC_DM1;
+Pin[85] = EXTRA_BC_DM2;
+Pin[30] = EXTRA_BC_INT1;
+Pin[31] = EXTRA_BC_INT2;
+
+PINNODE = REFRESH_ACTIVE;
+PINNODE = CPU_CLK_div2;
+PINNODE = CPU_CLK_div4;
+PINNODE = CPU_CLK_div8;
+PINNODE = nDRAM_ACCESS_RAS;
+PINNODE = REFRESH_COMPLETE;
+PINNODE = REFRESH_REQUESTED;
+PINNODE = DRAM_ACCESS_RAS_RESET1;
+PINNODE = DRAM_ACCESS_RAS_RESET2;
+PINNODE = nREFRESH_RAS;
+PINNODE = nREFRESH_CAS;
+PINNODE = DRAM_ACCESS_MUX;
+PINNODE = nDRAM_ACCESS_CAS;
+
+
+/* Unused pin defauts */
+nCPU_HALT = 'b'1;
+nCPU_BERR = 'b'1;
+nCPU_STERM = 'b'1;
+nCPU_RD = !CPU_RW;
+nCPU_CIIN = 'b'1;
+EXP_BC_CPLD1 = 'b'0;
+EXP_BC_CPLD2 = 'b'0;
+// Send CPU_RW to the interrupt controller, as this pin was missed in the circuit layout.
+// EXTRA_BC_INT1 in on Pin 30 here, pin 79 in the interrupt controller.
+EXTRA_BC_INT1 = CPU_RW;
+
+
+// UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
+//TESTP1 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2; 
+//TESTP0 = TESTP2 & TESTP3;
+
+TESTP0 = nSYS_RESET_IN;
+TESTP1 = nSYS_RESET;
+
+
+/* 
+    Clock Generation:
+    CPU_CLK is the CPU Clock
+    CPU_CLK is is not held in reset during a SYS_RESET event, so the CPU will have a clock running 
+    all of the time.
+
+    We will also generate some subdivisor clocks to use in the DRAM system.
+*/
+
+
+CPU_CLK_div2.d = !CPU_CLK_div2;     /* [8],10,12.5,16.5,20 Mhz */
+CPU_CLK_div2.ck = CPU_CLK;
+
+CPU_CLK_div4.d = !CPU_CLK_div4;     /* [4],5,6.25,8.25,10 Mhz */
+CPU_CLK_div4.ck = CPU_CLK_div2;
+
+CPU_CLK_div8.d = !CPU_CLK_div8;     /* [2],2.5,3.125,4.125,5 Mhz */
+CPU_CLK_div8.ck = CPU_CLK_div4;
+
+CPU_CLK_div16.d = !CPU_CLK_div16;
+CPU_CLK_div16.ck = CPU_CLK_div8;
+
+
+/* 
+   System Reset Control:
+
+   SYS_RESET_IN is an input signal that comes from a reset controller (POWER_CONTROLLER).  It is an active low signal
+   that indicated a system reset.  When this line goes low the SYS_RESET output will instantly go low.  SYS_RESET will only 
+   come out of reset on the falling edge of the CPU_CLK.
+
+   This logic will guarentee the first CPU_CLK edge after reset is a rising edge 
+   This makes it possible to have deterministic behaviour on reset startup.
+
+   RESET_CONTROL_IN is a signal from the Interrupt Controller that allows a software reset operation. The reset itself will
+   reset the flip flop in the interrupt controller.
+
+*/
+
+nSYS_RESET.d = 'b'1;
+nSYS_RESET.ar = !nSYS_RESET_IN;
+// Temporarily remove the RESET_CONTROL_IN influence on the reset.
+// nSYS_RESET.ar = !nSYS_RESET_IN # RESET_CONTROL_IN;
+nSYS_RESET.ck = !CPU_CLK;
+
+/* 
+    Memory Bank Selection Logic:
+
+    During a write operation the CPU will indicate via the SIZE0-1 and A0-1 pins the number of bytes being written
+    and the location of the writes on theh 32 bit databus.  It is possible for the CPU to write to a single byte location 
+    inside of a 32 bit wide memory.  As such we need to have individual control over which part of the data bus is 
+    participating in a write. 
+
+    It is important to note that for cacheable areas of memory (which in our design is all of the SRAM and 
+    DRAM areas) - All read operations are 32 Bus Access, and all read operations must return all 4 bytes based 
+    on the address bus.  This is to guarentee the cache always has the correct full 32 value for an addresss.
+
+    SEE DATASHEET for TABLE
+
+    For 32bit Bus Write Access:
+            BA32_LL = Active high flag for the LSB 8 bits, located on D31:D24
+            BA32_LH = Active high flag for the second LSB 8 bits, located on D23:D16
+            BA32_UL = Active high flag for the lower MSB 8 bits, located on D15:D8
+            BA32_UH = Active high flag for the upper MSB 8 bits, located on D7:D0
+
+    For 16bit Bus  Write Access:
+            BA16_LL = Active high flag for the LSB 8 bits, located on D31:D24
+            BA16_LH = Active high flag for the MSB 8 bits, located on D23:D16
+
+    For 8bit Bus  Write Access:
+            BA8 = Active high for all accesses, so hard coded to 1, located on D31:24
+
+*/
+
+BA32_LL = (!CPU_AA0 & !CPU_AA1);
+BA32_LH = !((CPU_AA1 # (!CPU_AA0 & CPU_SIZ0 & !CPU_SIZ1)));
+BA32_UL = !(( (!CPU_AA1 & CPU_SIZ0 & !CPU_SIZ1) 
+            # (CPU_AA1 & CPU_AA0) 
+            # (!CPU_AA0 & !CPU_AA1 & !CPU_SIZ0 & CPU_SIZ1)
+           ));
+BA32_UH = (   (CPU_AA1 & CPU_SIZ1) 
+            # (!CPU_SIZ1 & !CPU_SIZ0) 
+            # (CPU_AA0 & CPU_SIZ1 & CPU_SIZ0) 
+            # (CPU_AA0 & CPU_AA1)
+          );
+
+BA16_LL = !CPU_AA0;
+BA16_LH = !(!CPU_AA0 & CPU_SIZ0 & !CPU_SIZ1);
+
+BA8 = 'b'1;
+
+/* FC pins
+
+    The FC pins are used by the CPU to indicate the type of memory access.  
+    We are not using the USER and SUPERVISOR types, so we only need to know if the 
+    access is a CPU_SPACE or not.
+*/
+
+FC_CPU_SPACE = CPU_FC0 & CPU_FC1 & CPU_FC2;
+
+/* 
+    Region selection logic:
+
+    These variables are active high indicators of access to a particular area of memory.
+
+    DRAM_REGION_ACCESS - Any access to the upper 2GB of address space
+    BOOTFLASH_REGION_ACCESS - Any access to 0x0000 0000 to 0x0FFF FFFF
+    SRAM_REGION_ACCESS - Any access to 0x1000 0000 to 0x1FFF FFFF
+    DEV8BIT_REGION_ACCESS - Any access to 0x3000 0000 to 0x3FFF FFFF
+    DEV16BIT_REGION_ACCESS - Any access to 0x4000 0000 to 0x4FFF FFFF
+    DEV32BIT_REGION_ACCESS - Any access to 0x5000 0000 to 0x5FFF FFFF
+    VIDEO_REGION_ACCESS - Any access to 0x6000 0000 to 0x7FFF FFFF
+    INTERRUPT_ACK_ACCESS - Any access in the CPU Space that is also an Interrupt ACK (Determined by A16-A19)
+
+*/
+
+DRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & CPU_A31 & !REFRESH_ACTIVE;                                  // 0x8000 0000 - 0xFFFF FFFF
+BOOTFLASH_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28 & !CPU_A27;  // 0x0000 0000 - 0x07FF FFFF
+BIGFLASH_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28 & CPU_A27;    // 0x0800 0000 - 0x0FFF FFFF
+SRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & CPU_A28;                   // 0x1000 0000 - 0x1FFF FFFF
+DEV8BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 
+                        & CPU_A29 & CPU_A28;                                                                // 0x3000 0000 - 0x3FFF FFFF
+DEV16BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 
+                        & !CPU_A29 & !CPU_A28;                                                              // 0x4000 0000 - 0x4FFF FFFF
+DEV32BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 
+                        & !CPU_A29 & CPU_A28;                                                               // 0x5000 0000 - 0x5FFF FFFF
+VIDEO_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;                              // 0x6000 0000 - 0x7FFF FFFF
+INTERRUPT_ACK_ACCESS =  !nCPU_AS & FC_CPU_SPACE & CPU_A16 & CPU_A17 & CPU_A18 & CPU_A19;
+
+nINT_ACK_CYCLE = !INTERRUPT_ACK_ACCESS;
+
+/*
+    DSACK Generation 
+
+    This logic generates the two DSACK signals back to the CPU.  These 2 signals are used to both indicated the need for 
+    an additional wait state as well as to signal if the bus transfer is going to a device that supports 32 bits, 16 bits,
+    or 8 bits.
+
+    This logic relies on the xxxx_REGION_ACCESS variables above to know which combination of DSACK signals to apply.
+    Since in this initial system both the DRAM and SRAM are 0 WS, the logic will always assert the correct DSACK
+    combination as soon as the above xxxx_REGION_ACCESS variables are active.  That should happen directly after the 
+    CPU_AS signal goes low.
+
+    Transfer Size      DSACK1   DSACK0
+    8 bit               1          0            DEV8BIT,BOOTFLASH,INTACK
+    16 bit              0          1            DEV16BIT,BIGFLASH
+    32 bit              0          0            DEV32BIT,DRAM,SRAM
+
+    Since the xxxx_REGION_ACCESS variables contain nCPU_AS, these DSACK signals will go low shortly after AS, but then 
+    go high when AS returns to high at the end of the cycle.   The address bits are guarenteed to be stable before AS 
+    goes low and held stable until AS goes high.
+
+    The DRAM_REGION_ACCESS flag also includes the REFRESH_ACTIVE flag.  That flag will keep the DRAM_REGION_ACCESS from
+    going high even if the active CPU cycle is a DRAM access.  As a result the DSACK lines will not get asserted and the CPU
+    will insert wait states.  As soon as the REFRESH completes, the REFRESH_ACTIVE flag will go to 0 which will allow 
+    the DRAM_REGION_ACCESS flag to go to 1.  This transistion will start the DRAM access, which will then assert the DSACK 
+    signals ending the wait states the CPU inserted.
+
+    Interrupt Ack Access is set to 8 bits since the INTCTRL (Interrupt controller) is 8 bit.
+
+*/
+
+nCPU_DSACK0 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCESS & nDEV_WAIT) # (DEV8BIT_REGION_ACCESS & nDEV_WAIT) # INTERRUPT_ACK_ACCESS # BOOTFLASH_REGION_ACCESS);
+nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCESS & nDEV_WAIT) # (DEV16BIT_REGION_ACCESS & nDEV_WAIT)  # BIGFLASH_REGION_ACCESS );
+
+/* Boot Flash signaling */
+
+
+nBFLASH_CE = !BOOTFLASH_REGION_ACCESS;
+nBFLASH_WE = !BOOTFLASH_REGION_ACCESS # CPU_RW;
+
+
+/* 
+    64MB Flash signaling.  The 64MB FLASH does not support 8 bit reads/writes.  This does not effect reads as extra data on 
+    reads won't change any state. On writes if the CPU does an 8 bit write or an unaligned write it will write random data
+    to the other 8bit section.  
+*/
+
+nBIGFLASH_CE = !BIGFLASH_REGION_ACCESS;
+n3V_DATA_EN = !BIGFLASH_REGION_ACCESS;
+
+
+/*
+    SRAM signaling
+
+    Control signals for SRAM - 
+
+        There are 4 banks of SRAM, and each bank is 2 IC that are 16 bits wide.  Each IC has a CE, WE, OE, 
+        UB, LB.  Since this SRAM region is cacheable all reads are 32 bits regardless of the internal 
+        operation in the CPU.  Writes however must be controlled by the 8 bit section using the 
+        "Memory Bank Selection Logic" from above.
+
+        Each bank is 1MB of address space.
+
+        nSRAM_BANK1_CE -> 0x1000 0000 - 0x100F FFFF  [1MB]
+        nSRAM_BANK2_CE -> 0x1010 0000 - 0x101F FFFF  [1MB]
+        nSRAM_BANK3_CE -> 0x1020 0000 - 0x102F FFFF  [1MB]
+        nSRAM_BANK4_CE -> 0x1030 0000 - 0x103F FFFF  [1MB]
+
+        nSRAM_LL_SEL
+        nSRAM_LH_SEL
+        nSRAM_UL_SEL
+        nSRAM_UH_SEL
+        nSRAM_OE
+        nSRAM_WE
+*/
+
+nSRAM_BANK1_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # CPU_A21 # CPU_A20;
+nSRAM_BANK2_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # CPU_A21 # !CPU_A20;
+nSRAM_BANK3_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # CPU_A20;
+nSRAM_BANK4_CE = !SRAM_REGION_ACCESS # CPU_A27 # CPU_A26 # CPU_A25 # CPU_A24 # CPU_A23 # CPU_A22 # !CPU_A21 # !CPU_A20; 
+
+// For each of the 4 bank selects, if we are doing a read(CPU_RW==1) it will be selected(low), and if we are doing a write
+// it will depend on the value of the BA32_xx functions.  This will enable the correct byte section during a write
+// based on the CPU indicating a BYTE, WORD, and DWORD write as well as the misalignment of that write.
+
+
+nSRAM_LL_SEL = !(CPU_RW # BA32_LL);
+nSRAM_LH_SEL = !(CPU_RW # BA32_LH);
+nSRAM_UL_SEL = !(CPU_RW # BA32_UL);
+nSRAM_UH_SEL = !(CPU_RW # BA32_UH);
+
+/* 
+    Device Chip Select Logic:
+
+        These chip selects indicate the 8,16, or 32 device region.  All devices in those regions must do transfers
+        of the particular region size.  This chip select can be used in decode logic combined with the lower address 
+        lines to create the actual device chip selects.
+
+        In this first iteration there is no feedback mechinism for the devices to ask for waitstates, but that 
+        will be added later.
+
+*/
+
+nDEV8BITCS = !DEV8BIT_REGION_ACCESS;
+nDEV16BITCS = !DEV16BIT_REGION_ACCESS;
+nDEV32BITCS = !DEV32BIT_REGION_ACCESS;
+
+
+PINNODE = CPU_CLK_DELAY1, CPU_CLK_DELAY2;
+CPU_CLK_DELAY1.d = 'b'1;
+CPU_CLK_DELAY1.ck = !CPU_CLK;
+CPU_CLK_DELAY1.ar = !nSYS_RESET # CPU_CLK_DELAY2;
+
+CPU_CLK_DELAY2.d = 'b'1;
+CPU_CLK_DELAY2.ck = CPU_CLK;
+CPU_CLK_DELAY2.ar = !nSYS_RESET # !CPU_CLK_DELAY1;
+
+nFPU_CS = !(
+            (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & !CPU_CLK)
+          # (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & !nCPU_AS)
+          # (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & CPU_CLK_DELAY1)
+          );
+/* 
+    DRAM Access Logic:
+
+    This logic will allow control of 60ns FPM/EDO DRAM.  This design is configured for 8 single or dual rake 
+    SIMM slots, and in this first iteration configured for 11 bits of row/column address.
+
+*/
+
+/*  
+    This DRAM_ACCESS_RAS flip flop is the master access RAS signal.  It goes low at the start of a 
+    DRAM cycle (as indicated by the DRAM_REGION_ACCESS going high).  It is reset by a RAS_RESET2 flag
+    that is based on two further flip flips that count down two clock cycles.  In this design the RAS
+    signal will go low at the start of the /AS cycle, and go high after two sucsessive falling edges
+    of the CPU clock.
+*/
+nDRAM_ACCESS_RAS.d = 'b'0;
+nDRAM_ACCESS_RAS.ap = DRAM_ACCESS_RAS_RESET2 # !nSYS_RESET;
+nDRAM_ACCESS_RAS.ck = DRAM_REGION_ACCESS;
+
+/* 
+    The two RAS RESET flip flops are held in reset until the DRAM_ACCESS_RAS goes low.   After two 
+    successive CPU_CLK negative edges the DRAM_ACCESS_RAS will be set back to 1 by RESET2.
+*/
+DRAM_ACCESS_RAS_RESET1.d = 'b'1;
+DRAM_ACCESS_RAS_RESET1.ar = nDRAM_ACCESS_RAS # !nSYS_RESET;
+DRAM_ACCESS_RAS_RESET1.ck = !CPU_CLK;
+
+DRAM_ACCESS_RAS_RESET2.d = DRAM_ACCESS_RAS_RESET1;
+DRAM_ACCESS_RAS_RESET2.ar = nDRAM_ACCESS_RAS # !nSYS_RESET;
+DRAM_ACCESS_RAS_RESET2.ck = !CPU_CLK;
+
+/*
+    The CAS signal is generated by using the above RAS_RESET1 signal, which occurs on the first negative clock
+    edge after RAS falls, to start the CAS signal.   This guarentees the CAS signal is after RAS with enough
+    time, and that the CAS to data has enough time as well.  CAS is reset to 1 at the end of the cycle via 
+    the DRAM_REGION_ACCESS signal.
+*/
+
+nDRAM_ACCESS_CAS.d = 'b'0;
+nDRAM_ACCESS_CAS.ap = !DRAM_REGION_ACCESS # !nSYS_RESET;
+nDRAM_ACCESS_CAS.ck = DRAM_ACCESS_RAS_RESET1;
+
+/*
+    The third critical signal for DRAM access is the MUX signal which switches the address lines on the DRAM
+    from the ROW to the COLUMN address.  This much be done after the RAS signal has gone to 0, and before the 
+    CAS signal goes to 0.  There is RAS holdtime requirement of 10ns, and CAS setup requirement if 10ns, and a 
+    MUX propegation delay of at least 7ns.
+
+    The solution is the change the MUX signal based on the DRAM_ACCESS_RAS signal.  As soon as the RAS signal goes low, 
+    the MUX signal will start to change.  The MUX change will be 7.5ns behind the RAS signal, and the MUX itself
+    will take another 7ns to change outputs.  This will give the needed RAS hold time.
+
+    MUX = 0 for ROW address, 1 for COL address.  Reset puts it at 0. 
+*/
+
+DRAM_ACCESS_MUX.d = 'b'1;
+DRAM_ACCESS_MUX.ar = !DRAM_REGION_ACCESS # !nSYS_RESET;
+DRAM_ACCESS_MUX.ck = !nDRAM_ACCESS_RAS;
+
+/* 
+    DRAM Refresh Logic:
+
+    DRAM requires a refresh cycle to keep data stored in the DRAM uncorrupted.  The 72 pin SIMM DRAMS used in this project
+    support a refresh method call CAS_BEFORE_RAS (CBR).  This refresh method only requires that a CBR refresh cycle occur 
+    and does not require the host machine to maintain and increment a row address.  That address counting is done inside the
+    DRAM unit.  Most of the 72 pin DRAMs need a refresh either every 32 or 64ms depending on the number of rows.  This usually
+    translates to a refresh cycled needed every 15.6us.
+
+*/
+
+
+PINNODE =  [REFRESH_TIMER0..5];
+PINNODE = REFRESH_TIMER_RESET;
+
+
+/* 
+   5 bit counter for refresh time. In order to get a 15us cycle, this counter uses the following table:
+
+   CPU          CPU/16          Timer_Reset_Value for 15us
+   16 MHz       1 MHz           15 = 15us
+   20 MHz       1.25 Mhz        19 = 15.2us
+   25 MHz       1.56 MHz        24 = 15.26us
+   33 MHz       2.06 MHz        31 = 15 us
+   40 MHz       2.5 MHz         38 = 15.2 us
+
+   The REFESH_TIMER_RESET flip flop is used to produce a 1 clock cycle long reset signal once the 
+   counter reaches 128 (highest bit set).  The output of that flipflop resets the counter value to 
+   0x08.
+*/
+
+
+/* Create a 5 bit timer */
+REFRESH_TIMER0.d = !REFRESH_TIMER0;
+REFRESH_TIMER1.d = REFRESH_TIMER0 $ REFRESH_TIMER1;
+
+REFRESH_TIMER2.d = ( REFRESH_TIMER2 & !(REFRESH_TIMER1 & REFRESH_TIMER0))
+                 # ( !REFRESH_TIMER2 & (REFRESH_TIMER1 & REFRESH_TIMER0) );
+
+REFRESH_TIMER3.d = ( REFRESH_TIMER3 & !(REFRESH_TIMER2 & REFRESH_TIMER1 & REFRESH_TIMER0))
+                 # ( !REFRESH_TIMER3 & (REFRESH_TIMER2 & REFRESH_TIMER1 & REFRESH_TIMER0) );
+
+REFRESH_TIMER4.d = ( REFRESH_TIMER4 & !(REFRESH_TIMER3 & REFRESH_TIMER2 & REFRESH_TIMER1 & REFRESH_TIMER0))
+                 # ( !REFRESH_TIMER4 & (REFRESH_TIMER3 & REFRESH_TIMER2 & REFRESH_TIMER1 & REFRESH_TIMER0) );
+
+[REFRESH_TIMER0..4].ck = CPU_CLK_div16;
+[REFRESH_TIMER0..4].ar = REFRESH_TIMER_RESET # !nSYS_RESET;
+
+/* REFRESH_TIMER_RESET will pulse for 1 clock cycle when the timer reaches 15 */
+
+REFRESH_TIMER_RESET.d = (REFRESH_TIMER0 & REFRESH_TIMER1 & REFRESH_TIMER2 & REFRESH_TIMER3 & !REFRESH_TIMER4);  // 15
+REFRESH_TIMER_RESET.ck = !CPU_CLK_div8;
+REFRESH_TIMER_RESET.ar = !nSYS_RESET;
+
+/* 
+   When the REFRESH_TIMER_RESET flip flop goes high, we need to do a REFRESH cycle.  We will toggle on a REFRESH_REQUESTED 
+   flag to indicate the need to do a refresh. 
+*/
+
+REFRESH_REQUESTED.d = 'b'1;
+REFRESH_REQUESTED.ck = REFRESH_TIMER_RESET;
+REFRESH_REQUESTED.ar = !nSYS_RESET # REFRESH_COMPLETE;    
+
+/*  
+    Once the refresh requested signal is high, we will wait for an opportunity to start the refresh cycle.  We need to wait 
+    for the bus to be free.  We will accomplsish this by waiting the AS to be high during a rising CPU clocked combined
+    with the REFRESH_REQUESTED also being high.  This will set the REFRESH_ACTIVE flip flip on in the condition that we are 
+    at least 1/2 cycle away from another AS low, which is enough time for the DRAM_REGION_ACTIVE flag to be disabled (to
+    prevent DRAM access during a refresh).
+
+    REFRESH_ACTIVE.d also has REFRESH_ACTIVE as in input, when means once the flip flop goes to 1, it will stay 
+    there until the reset activity happens.
+    
+    This flag is used in the DRAM_REGION_ACTIVE to prevent DRAM access as soon as this flag is active.  That will force the insertion of waitstates
+    by the CPU until the REFRESH is complete and a DRAM transaction can start.
+
+*
+*/
+
+// REFRESH_ACTIVE.d = (REFRESH_REQUESTED & nCPU_AS) # REFRESH_ACTIVE;   DISABLE DRAM REFRESH
+
+REFRESH_ACTIVE.d = 'b'0;
+REFRESH_ACTIVE.ck = CPU_CLK;
+REFRESH_ACTIVE.ar = !nSYS_RESET # REFRESH_COMPLETE;         
+
+/*  When REFRESH_ACTIVE goes high, it is time to do a refresh cycle.  We will use a 3 bit counter to count CPU cycles.
+    This state machine will be held in reset until the REFRESH_ACTIVE flag goes active.  At that point it will start counting 
+    CPU cycles.  Since this state machine is clocked on the falling clock edge, and the ACTIVE signal is clocked on the rising clock edge
+    this machine will go to state 1 exactly 1/2 a CPU cycle after the ACTIVE flag is set.
+*/
+
+PINNODE = [REFRESH_STATE_MACHINE0..2];
+FIELD field_REFRESH_STATE_MACHINE = [REFRESH_STATE_MACHINE0..2];         // a field is used to make it simplier to refer to state machine values
+
+[REFRESH_STATE_MACHINE0..2].ck = !CPU_CLK;
+[REFRESH_STATE_MACHINE0..2].ar = !REFRESH_ACTIVE # REFRESH_COMPLETE # !nSYS_RESET;
+
+REFRESH_STATE_MACHINE0.d = !REFRESH_STATE_MACHINE0;
+REFRESH_STATE_MACHINE1.d = (REFRESH_STATE_MACHINE1 & !REFRESH_STATE_MACHINE0)
+                        #  (!REFRESH_STATE_MACHINE1 & REFRESH_STATE_MACHINE0);
+REFRESH_STATE_MACHINE2.d = (REFRESH_STATE_MACHINE2 & !(REFRESH_STATE_MACHINE0 & REFRESH_STATE_MACHINE1))
+                        #  (!REFRESH_STATE_MACHINE2 & (REFRESH_STATE_MACHINE0 & REFRESH_STATE_MACHINE1));
+
+
+/* From the above state machine we can create the REFRESH CAS and RAS signals.  This state machine will only start running when the
+   REFRESH_ACTIVE flag is set.   State 1 and State 2 are used for the CAS signal being low, and State 3 and State 4 for the RAS signal.
+   Finially, State 5 is used to set a REFRESH_COMPLETE flag, which will be active for one full clock cycle.
+
+   The REFRESH_COMPLETE flag will reset the state machine to zero, as well as reset the 
+
+*/
+
+nREFRESH_CAS.d = !(field_REFRESH_STATE_MACHINE:['d'1,'d'2]);
+nREFRESH_CAS.ck = CPU_CLK;
+nREFRESH_CAS.ap = !nSYS_RESET # !REFRESH_ACTIVE;
+
+nREFRESH_RAS.d = !(field_REFRESH_STATE_MACHINE:['d'3,'d'4]);
+nREFRESH_RAS.ck = CPU_CLK;
+nREFRESH_RAS.ap = !nSYS_RESET # !REFRESH_ACTIVE; 
+
+REFRESH_COMPLETE.d = (field_REFRESH_STATE_MACHINE:['d'5]);
+REFRESH_COMPLETE.ck = CPU_CLK;
+REFRESH_COMPLETE.ar = !nSYS_RESET;
+
+
+/* Actual DRAM signals:
+
+    The actual signals to the DRAM modules need to be built up from three sources - The nDRAM_ACCESS_* signals, the nREFRESH_* signals, and the
+    the memory address being accessed.   The nDRAM_ACCESS_* is guarenteed to not be active at the same time as the nREFRESH_* signals, so they can
+    be directly combined to build the correct RAS and CAS signals.
+
+    The final RAS signals will combine the nDRAM_ACCESS_RAS and nREFRESH_RAS signals.
+
+    Each 72 pin SIMM has 4 RAS signals in 2 groups RAS0/RAS2 and RAS1/RAS3.  Those two groups represent two 'ranks'.   
+    In this design we will map all of the first 'ranks' of each SIMM slot in order, then map the second 'ranks' of each 
+    SIMM.
+
+    For this first iteration we will assume each 'rank' is 16MBs in size.  128MB support will require a few small changes.
+
+    The memory layout:
+
+    -------------------------------------------------
+    - 0x8000 0000   SIMM1 Rank A        0x80FF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8100 0000   SIMM2 Rank A        0x81FF FFFF
+    -------------------------------------------------
+     -------------------------------------------------
+    - 0x8200 0000   SIMM3 Rank A        0x82FF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8300 0000   SIMM4 Rank A        0x83FF FFFF
+    -------------------------------------------------
+      -------------------------------------------------
+    - 0x8400 0000   SIMM1 Rank B        0x84FF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8500 0000   SIMM2 Rank B        0x85FF FFFF
+    -------------------------------------------------
+     -------------------------------------------------
+    - 0x8600 0000   SIMM3 Rank B        0x86FF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8700 0000   SIMM4 Rank B        0x87FF FFFF
+    -------------------------------------------------
+
+  -------------------------------------------------
+    - 0x8800 0000   SIMM5 Rank A        0x88FF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8900 0000   SIMM6 Rank A        0x89FF FFFF
+    -------------------------------------------------
+     -------------------------------------------------
+    - 0x8A00 0000   SIMM7 Rank A        0x8AFF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8B00 0000   SIMM8 Rank A        0x8BFF FFFF
+    -------------------------------------------------
+      -------------------------------------------------
+    - 0x8C00 0000   SIMM5 Rank B        0x8CFF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8D00 0000   SIMM6 Rank B        0x8DFF FFFF
+    -------------------------------------------------
+     -------------------------------------------------
+    - 0x8E00 0000   SIMM7 Rank B        0x8EFF FFFF
+    -------------------------------------------------
+    -------------------------------------------------
+    - 0x8F00 0000   SIMM8 Rank B        0x8FFF FFFF
+    -------------------------------------------------
+
+
+
+
+*/
+
+/* We will use a bit field to make address range comparisons easier to read. */
+
+FIELD field_CPU_ADDRESS = [CPU_A31..20];
+
+nDRAM_S1A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X0XXXXXX])) & nREFRESH_RAS;
+nDRAM_S2A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X1XXXXXX])) & nREFRESH_RAS;
+nDRAM_S3A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X2XXXXXX])) & nREFRESH_RAS; 
+nDRAM_S4A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X3XXXXXX])) & nREFRESH_RAS;
+
+nDRAM_S1B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X4XXXXXX])) & nREFRESH_RAS;
+nDRAM_S2B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X5XXXXXX])) & nREFRESH_RAS;
+nDRAM_S3B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X6XXXXXX])) & nREFRESH_RAS;
+nDRAM_S4B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X7XXXXXX])) & nREFRESH_RAS;
+
+/*
+ We are only supporting 4 SIMM sockets on this first PCB. 
+
+nDRAM_S5A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X8XXXXXX])) & nREFRESH_RAS;
+nDRAM_S6A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'X9XXXXXX])) & nREFRESH_RAS;
+nDRAM_S7A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XAXXXXXX])) & nREFRESH_RAS; 
+nDRAM_S8A_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XBXXXXXX])) & nREFRESH_RAS;
+
+nDRAM_S5B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XCXXXXXX])) & nREFRESH_RAS;
+nDRAM_S6B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XDXXXXXX])) & nREFRESH_RAS;
+nDRAM_S7B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XEXXXXXX])) & nREFRESH_RAS;
+nDRAM_S8B_RAS = (nDRAM_ACCESS_RAS # !(field_CPU_ADDRESS:['h'XFXXXXXX])) & nREFRESH_RAS;
+
+*/
+
+/* 
+        The CAS lines are shared across all of the SIMM slots and ranks.  
+
+        CAS0 - D7:D0            BA32_UH = Active high flag for the upper MSB 8 bits, located on D7:D0
+        CAS1 - D15:D8           BA32_UL = Active high flag for the lower MSB 8 bits, located on D15:D8
+        CAS2 - D23:D16          BA32_LH = Active high flag for the second LSB 8 bits, located on D23:D16
+        CAS3 - D31:D24          BA32_LL = Active high flag for the LSB 8 bits, located on D31:D24
+
+        We will mask the CAS signal based on the BA32 signals during a write operation.  For a read 
+        operation all 4 CAS lines will be active.
+
+
+*/
+
+
+nDRAM_CAS0 = (nDRAM_ACCESS_CAS # (!CPU_RW & !BA32_UH )) & nREFRESH_CAS;
+nDRAM_CAS1 = (nDRAM_ACCESS_CAS # (!CPU_RW & !BA32_UL )) & nREFRESH_CAS;
+nDRAM_CAS2 = (nDRAM_ACCESS_CAS # (!CPU_RW & !BA32_LH )) & nREFRESH_CAS;
+nDRAM_CAS3 = (nDRAM_ACCESS_CAS # (!CPU_RW & !BA32_LL )) & nREFRESH_CAS;
+
+DRAM_MUX = DRAM_ACCESS_MUX;
+/* 
+   nDRAM_DATA_EN is connected to the 74HC245 buffers that go between the DRAM and the CPU.  They are enabled as soon as we start
+   a DRAM transaction.  The direction of these buffers it set by CPU_RW, which is connected to the DIR pin on the 245.
+*/
+
+nDRAM_DATA_EN = !DRAM_REGION_ACCESS;
+
+/*
+   nDRAM_WE is the DRAM write signal, which is pulled low at the start of a DRAM transaction that also has CPU_RW == 0.   This signal goes to
+   all of the SIMM slots, and the RAS/CAS signals select which DRAMs will actually do write operations.
+
+   nDRAM_WE must be high during refresh operations. Since DRAM_REGION_ACCESS is low during refresh, this will be guarenteed.
+*/
+nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
+
+/*
+
+Total dedicated input used:	4/4 	(100%)
+Total I/O pins used		72/80 	(90%)
+Total Logic cells used 		74/128 	(57%)
+Total Flip-Flop used 		26/128 	(20%)
+Total Foldback logic used 	11/128 	(8%)
+Total Nodes+FB/MCells 		85/128 	(66%)
+Total cascade used 		0
+Total input pins 		33
+Total output pins 		43
+Total Pts 			211
+*/
+
+
