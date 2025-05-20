@@ -1,0 +1,111 @@
+Name	 DEVMAP;
+PartNo   DEVMAP;
+Date     03/30/2024;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device    f1504isptqfp44;
+
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+
+/* 
+                                                Inputs
+    ##########################################################################################
+*/
+
+PIN = PTCA_TIMER_RESET;
+PIN = PTCA_CLOCK;
+PIN = PTCA_OUTPUT;
+PIN = nSYS_RESET;
+
+
+PINNODE = [PTCA_TIMER0..11];
+
+/* Create an 11 bit timer */
+
+
+PTCA_F1 = PTCA_TIMER1 & PTCA_TIMER0;
+PTCA_F2 = PTCA_TIMER2 & PTCA_F1;
+PTCA_F3 = PTCA_TIMER3 & PTCA_F2;
+PTCA_F4 = PTCA_TIMER4 & PTCA_F3;
+PTCA_F5 = PTCA_TIMER5 & PTCA_F4;
+PTCA_F6 = PTCA_TIMER6 & PTCA_F5;
+PTCA_F7 = PTCA_TIMER7 & PTCA_F6;
+PTCA_F8 = PTCA_TIMER8 & PTCA_F7;
+PTCA_F9 = PTCA_TIMER9 & PTCA_F8;
+PTCA_F10 = PTCA_TIMER10 & PTCA_F9;
+
+PTCA_TIMER0.d = !PTCA_TIMER0;
+PTCA_TIMER1.d = ( PTCA_TIMER1 $ PTCA_TIMER0 );
+PTCA_TIMER2.d = ( PTCA_TIMER2 & !(PTCA_F1))
+                 # ( !PTCA_TIMER2 & (PTCA_F1) );
+PTCA_TIMER3.d = ( PTCA_TIMER3 & !(PTCA_F2))
+                 # ( !PTCA_TIMER3 & (PTCA_F2) );
+PTCA_TIMER4.d = ( PTCA_TIMER4 & !(PTCA_F3))
+                 # ( !PTCA_TIMER4 & (PTCA_F3) );
+PTCA_TIMER5.d = ( PTCA_TIMER5 & !(PTCA_F4))
+                 # ( !PTCA_TIMER5 & (PTCA_F4) );
+PTCA_TIMER6.d = ( PTCA_TIMER6 & !(PTCA_F5))
+                 # ( !PTCA_TIMER6 & (PTCA_F5) );
+PTCA_TIMER7.d = ( PTCA_TIMER7 & !(PTCA_F6))
+                 # ( !PTCA_TIMER7 & (PTCA_F6) );
+PTCA_TIMER8.d = ( PTCA_TIMER8 & !(PTCA_F7))
+                 # ( !PTCA_TIMER8 & (PTCA_F7) );
+PTCA_TIMER9.d = ( PTCA_TIMER9 & !(PTCA_F8))
+                 # ( !PTCA_TIMER9 & (PTCA_F8) );
+PTCA_TIMER10.d = ( PTCA_TIMER10 & !(PTCA_F9))
+                 # ( !PTCA_TIMER10 & (PTCA_F9) );
+PTCA_TIMER11.d = ( PTCA_TIMER11 & !(PTCA_F10))
+                 # ( !PTCA_TIMER11 & (PTCA_F10) );
+
+
+[PTCA_TIMER0..11].ck = PTCA_CLOCK;
+[PTCA_TIMER0..11].ar = PTCA_TIMER_RESET # !nSYS_RESET;
+
+/*
+
+7 Bits Total
+Total Logic cells used 		10/64 	(15%)
+Total Flip-Flop used 		7/64 	(10%)
+Total Foldback logic used 		1/64 	(1%)
+Total Nodes+FB/MCells 		8/64 	(12%)
+
+8 Bits Total
+Total Logic cells used 		12/64 	(18%)
+Total Flip-Flop used 		8/64 	(12%)
+Total Foldback logic used 	1/64 	(1%)
+Total Nodes+FB/MCells 		9/64 	(14%)
+
+9 Bits Total
+Total Logic cells used 		14/64 	(21%)
+Total Flip-Flop used 		9/64 	(14%)
+Total Foldback logic used 	1/64 	(1%)
+Total Nodes+FB/MCells 		10/64 	(15%)
+
+10 Bits Total
+Total Logic cells used 		17/64 	(26%)
+Total Flip-Flop used 		10/64 	(15%)
+Total Foldback logic used 	2/64 	(3%)
+Total Nodes+FB/MCells 		12/64 	(18%)
+
+11 Bits Total
+Total Logic cells used 		20/64 	(31%)
+Total Flip-Flop used 		11/64 	(17%)
+Total Foldback logic used 	2/64 	(3%)
+Total Nodes+FB/MCells 		13/64 	(20%)
+
+12 Bits Total
+Total Logic cells used 		23/64 	(35%)
+Total Flip-Flop used 		12/64 	(18%)
+Total Foldback logic used 	2/64 	(3%)
+Total Nodes+FB/MCells 		14/64 	(21%)
+
+
+
+
+*/
+

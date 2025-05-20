@@ -12,6 +12,8 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
+//      VERSION 2
+
 
 /* 
                                                 Inputs
@@ -20,7 +22,7 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 
 // From CPU
 Pin[71,72,75,76] = [CPU_A3..0];
-Pin[70] = CPU_RW_NOT_CONNECTED;
+Pin[70] = CPU_RW;
 Pin[57,58,60,61,63,64,65,67] = [CPU_D7..0];     // Hooked to D31:D24 since this is an 8 bit device
 
 // From Bus Controller CPLD
@@ -42,10 +44,7 @@ Pin[25,27] = vINT2A, vINT2B;
 Pin[29,30] = vINT1A, vINT1B;
 
 // USB inputs
-Pin[1] = nUSB_DATAACK;
-Pin[99] = nUSB_RXF;
-Pin[100] = nUSB_TXE;
-Pin[56] = nUSB_CS;            // Active low signal from DEV CPLD indicated an 8 bit access to the USB controller.
+            // Active low signal from DEV CPLD indicated an 8 bit access to the USB controller.
 
 
 /* 
@@ -57,29 +56,29 @@ Pin[52,53,54] = [CPU_IPL2..0];
 Pin[45] = POWER_CONTROL_OUT;
 Pin[46] = RESET_CONTROL_OUT;
 
-// USB outputs
-Pin[6] = nUSB_RD;
-Pin[5] = nUSB_WR;
-Pin[2] = nUSB_DATAREQ;
-
-// Extra pins
-
+// Extra pins going to the expansion connectors.
 Pin[31] = EXP_INT_CPLD1;
 Pin[32] = EXP_INT_CPLD2;
 
-Pin[77] = EXTRA_DM_INT1;
-Pin[78] = EXTRA_DM_INT2;
-Pin[79] = CPU_RW;
-Pin[80] = EXTRA_BC_INT2;
-Pin[40,41,42] = [TESTP0..2];
+// Extra pins going to the other system CPLDs
+Pin[77] = EXTRA_DM_INT1;    // To the Device MAP CPLD
+Pin[78] = EXTRA_DM_INT2;    // To the Device MAP CPLD   
+Pin[79] = EXTRA_BC_INT1;    // To the Bus Control CPLD
+Pin[80] = EXTRA_BC_INT2;    // To the Bus Control CPLD
+
+Pin[40,41,42] = [TESTP0..2];    // To debug/probe pins on the PCB.
 
 PINNODE =  INT_ACK_RESET;
 
+// UNUSED Pins - Assigned and mapped to reserve them.
+Pin[6] = UNUSED1;
+Pin[5] = UNUSED2;
+Pin[2] = UNUSED3;
+Pin[1] = UNUSED4;
+Pin[99] = UNUSED5;
+Pin[100] = UNUSED6;
+Pin[56] = UNUSED7;
 
-
-
-
-Pin = UNUSED1;
 UNUSED1 = EXTRA_DM_INT1 & EXTRA_DM_INT2 & EXTRA_BC_INT2;
 EXP_INT_CPLD1 = 'b'0;
 EXP_INT_CPLD2 = 'b'0;
