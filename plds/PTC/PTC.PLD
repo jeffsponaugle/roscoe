@@ -17,28 +17,132 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
     ##########################################################################################
 */
 
-PIN = PTCA_TIMER_RESET;
-PIN = PTCA_CLOCK;
-PIN = PTCA_OUTPUT;
-PIN = nSYS_RESET;
+/* Generic Pins used by both counters */
 
+PIN = nSYS_RESET;
+PIN = [D0..15];
+PIN = nPTC_CS;
+PIN = nPTC_RW;   /* _RW 0=W, 1=R */
+PIN = nPTC_A2;   /* A2 for read select to read both counters */
+
+/* Pins used by TIMER A */
+
+PIN = PTCA_CLOCK;
+PIN = nINTA_OUT;
+
+/* Pins used by TIMER B */
+
+PIN = PTCB_CLOCK;
+PIN = nINTB_OUT;
+
+
+/* Flip flops used by TIMER A */
 
 PINNODE = [PTCA_TIMER0..11];
+PINNODE = PTCA_MIDCLOCK;
+PINNODE = [TIMERA_RATE2..0];
+PINNODE = PTCA_TIMER_RESET;
 
-/* Create an 11 bit timer */
+/* Flip flops used by TIMER B */
+
+PINNODE = [PTCB_TIMER0..11];
+PINNODE = PTCB_MIDCLOCK;
+PINNODE = [TIMERB_RATE2..0];
+PINNODE = PTCB_TIMER_RESET;
+
+[D0..15].oe = !(nPTC_CS # !nPTC_RW);
+[D0..11] = (!nPTC_A2 & [PTCA_TIMER0..11]) & (nPTC_A2 & [PTCB_TIMER0..11]);
+[D12..15] = 'b'0;
+
+/* Logic to load the TIMERx_RATE0..2 with bits from the data bus.
+   TIMERz_RATE	 = 000 no interrupt
+			 = 001 interrupt on bit 4 high
+   			 = 010 interrupt on bit 5 high
+			 = 011 interrupt on bit 6 high
+			 = 100 interrupt on bit 7 high
+			 = 101 interrupt on bit 8 high
+			 = 110 interrupt on bit 9 high
+			 = 111 interrupt on bit 10 high
+*/
+
+FIELD field_TIMERA_RATE = [TIMERA_RATE2..0];
+FIELD field_TIMERB_RATE = [TIMERB_RATE2..0];
+
+/* Set the interrupt low (low edge triggered) if the TIMERx_RATE = 001 AND PCTx_TIMER4 is also = 1 */
+nINTA_OUT =   !(field_TIMERA_RATE:['b'000] & PTCA_TIMER4)
+            & !(field_TIMERA_RATE:['b'001] & PTCA_TIMER5)
+            & !(field_TIMERA_RATE:['b'010] & PTCA_TIMER6)
+            & !(field_TIMERA_RATE:['b'011] & PTCA_TIMER7)
+            & !(field_TIMERA_RATE:['b'100] & PTCA_TIMER8)
+            & !(field_TIMERA_RATE:['b'101] & PTCA_TIMER9)
+  	        & !(field_TIMERA_RATE:['b'110] & PTCA_TIMER10)
+            & !(field_TIMERA_RATE:['b'111] & PTCA_TIMER11);
+
+nINTB_OUT =   !(field_TIMERB_RATE:['b'000] & PTCB_TIMER4)
+            & !(field_TIMERB_RATE:['b'001] & PTCB_TIMER5)
+            & !(field_TIMERB_RATE:['b'010] & PTCB_TIMER6)
+            & !(field_TIMERB_RATE:['b'011] & PTCB_TIMER7)
+            & !(field_TIMERB_RATE:['b'100] & PTCB_TIMER8)
+            & !(field_TIMERB_RATE:['b'101] & PTCB_TIMER9)
+  	        & !(field_TIMERB_RATE:['b'110] & PTCB_TIMER10)
+            & !(field_TIMERB_RATE:['b'111] & PTCB_TIMER11);
+
+			
+TIMERA_RATE0.d = D0.io;
+TIMERA_RATE1.d = D1.io;
+TIMERA_RATE2.d = D2.io;
+[TIMERA_RATE0..2].ck = (nPTC_CS # nPTC_RW); /* When the chip select goes low, then high, lets latch what is on the databus */
+[TIMERA_RATE0..2].ar = !nSYS_RESET;
+PTCA_TIMER_RESET.d = D3.io;
+PTCA_TIMER_RESET.ck = (nPTC_CS # nPTC_RW);
+PTCA_TIMER_RESET.ar = !nSYS_RESET;
+
+TIMERB_RATE0.d = D4.io;
+TIMERB_RATE1.d = D5.io;
+TIMERB_RATE2.d = D6.io;
+[TIMERB_RATE0..2].ck = (nPTC_CS # nPTC_RW);		/* When the chip select goes low, then high, lets latch what is on the databus */
+[TIMERB_RATE0..2].ar = !nSYS_RESET;
+PTCB_TIMER_RESET.d = D7.io;
+PTCB_TIMER_RESET.ck = (nPTC_CS # nPTC_RW);
+PTCB_TIMER_RESET.ar = !nSYS_RESET;
+
+/* 
+   Create an 12 bit timer TIMER A 
+
+   The counter is composed of 12 bits, with the first 6 bits as a counter, and that counter triggers
+   the second 6 bit counter.  The reason for having two cascaded 6 bit counters is due to resource 
+   constraints in the CPLD.  2 6 bit counters with a cascade uses less logic space compared to a single
+   12 bit counter. 
+
+   The only potential error that could occur is that the counter could change during the middle of a
+   CPU read cycle, and in that case it is possible the value the CPU reads could be incorrect.  There 
+   is a very small windows for that error to occur in since the counter will fully latch to the next value
+   in approx 10ns.
+*/
 
 
-PTCA_F1 = PTCA_TIMER1 & PTCA_TIMER0;
+/* PTCA_FX indicates if the next bit should flip as a result of all of the lower bits being 1 */
+
+PTCA_F1 = PTCA_TIMER1 & PTCA_TIMER0;		/* if ==1, then bit 2 should flip */
 PTCA_F2 = PTCA_TIMER2 & PTCA_F1;
 PTCA_F3 = PTCA_TIMER3 & PTCA_F2;
 PTCA_F4 = PTCA_TIMER4 & PTCA_F3;
 PTCA_F5 = PTCA_TIMER5 & PTCA_F4;
-PTCA_F6 = PTCA_TIMER6 & PTCA_F5;
-PTCA_F7 = PTCA_TIMER7 & PTCA_F6;
+/* There is no F6, since F6 is a restart of a second offset clocked timer */
+PTCA_F7 = PTCA_TIMER7 & PTCA_TIMER6;
 PTCA_F8 = PTCA_TIMER8 & PTCA_F7;
 PTCA_F9 = PTCA_TIMER9 & PTCA_F8;
 PTCA_F10 = PTCA_TIMER10 & PTCA_F9;
 
+/* 
+    This mid clock is used to clock the second half of the counter.  This adds a delay
+    of approximatly 10ns to the upper 6 bits from changing on a lower 6 bit rollover. 
+*/
+PTCA_MIDCLOCK.d = PTCA_F5;
+PTCA_MIDCLOCK.ck = PTCA_CLOCK;
+PTCA_MIDCLOCK.ar =  !PTCA_TIMER_RESET # !nSYS_RESET;
+
+/* Lower Part of Counter */
 PTCA_TIMER0.d = !PTCA_TIMER0;
 PTCA_TIMER1.d = ( PTCA_TIMER1 $ PTCA_TIMER0 );
 PTCA_TIMER2.d = ( PTCA_TIMER2 & !(PTCA_F1))
@@ -49,10 +153,10 @@ PTCA_TIMER4.d = ( PTCA_TIMER4 & !(PTCA_F3))
                  # ( !PTCA_TIMER4 & (PTCA_F3) );
 PTCA_TIMER5.d = ( PTCA_TIMER5 & !(PTCA_F4))
                  # ( !PTCA_TIMER5 & (PTCA_F4) );
-PTCA_TIMER6.d = ( PTCA_TIMER6 & !(PTCA_F5))
-                 # ( !PTCA_TIMER6 & (PTCA_F5) );
-PTCA_TIMER7.d = ( PTCA_TIMER7 & !(PTCA_F6))
-                 # ( !PTCA_TIMER7 & (PTCA_F6) );
+
+/* Upper Part of Counter */
+PTCA_TIMER6.d = !PTCA_TIMER6;
+PTCA_TIMER7.d = ( PTCA_TIMER7 $ PTCA_TIMER6 );
 PTCA_TIMER8.d = ( PTCA_TIMER8 & !(PTCA_F7))
                  # ( !PTCA_TIMER8 & (PTCA_F7) );
 PTCA_TIMER9.d = ( PTCA_TIMER9 & !(PTCA_F8))
@@ -63,8 +167,67 @@ PTCA_TIMER11.d = ( PTCA_TIMER11 & !(PTCA_F10))
                  # ( !PTCA_TIMER11 & (PTCA_F10) );
 
 
-[PTCA_TIMER0..11].ck = PTCA_CLOCK;
-[PTCA_TIMER0..11].ar = PTCA_TIMER_RESET # !nSYS_RESET;
+
+[PTCA_TIMER0..5].ck = PTCA_CLOCK;
+[PTCA_TIMER6..11].ck = PTCA_MIDCLOCK;
+/* if the INT1_OUT pin goes low, lets reset the counter and start counting again to the next interrupt */
+[PTCA_TIMER0..11].ar =! PTCA_TIMER_RESET # !nSYS_RESET # !nINTA_OUT;
+
+
+
+/* Create an 12 bit timer TIMER B */
+
+/* PTCA_FX indicates if the next bit should flip as a result of all of the lower bits being 1 */
+
+PTCB_F1 = PTCB_TIMER1 & PTCB_TIMER0;		/* if ==1, then bit 2 should flip */
+PTCB_F2 = PTCB_TIMER2 & PTCB_F1;
+PTCB_F3 = PTCB_TIMER3 & PTCB_F2;
+PTCB_F4 = PTCB_TIMER4 & PTCB_F3;
+PTCB_F5 = PTCB_TIMER5 & PTCB_F4;
+/* There is no F6, since F6 is a restart of a second offset clocked timer */
+PTCB_F7 = PTCB_TIMER7 & PTCB_TIMER6;
+PTCB_F8 = PTCB_TIMER8 & PTCB_F7;
+PTCB_F9 = PTCB_TIMER9 & PTCB_F8;
+PTCB_F10 = PTCB_TIMER10 & PTCB_F9;
+
+/* This mid clock is used to clock the second half of the counter */
+PTCB_MIDCLOCK.d = PTCB_F5;
+PTCB_MIDCLOCK.ck = PTCB_CLOCK;
+PTCB_MIDCLOCK.ar =  !PTCB_TIMER_RESET # !nSYS_RESET;
+
+/* Lower Part of Counter */
+PTCB_TIMER0.d = !PTCB_TIMER0;
+PTCB_TIMER1.d = ( PTCB_TIMER1 $ PTCB_TIMER0 );
+PTCB_TIMER2.d = ( PTCB_TIMER2 & !(PTCB_F1))
+                 # ( !PTCB_TIMER2 & (PTCB_F1) );
+PTCB_TIMER3.d = ( PTCB_TIMER3 & !(PTCB_F2))
+                 # ( !PTCB_TIMER3 & (PTCB_F2) );
+PTCB_TIMER4.d = ( PTCB_TIMER4 & !(PTCB_F3))
+                 # ( !PTCB_TIMER4 & (PTCB_F3) );
+PTCB_TIMER5.d = ( PTCB_TIMER5 & !(PTCB_F4))
+                 # ( !PTCB_TIMER5 & (PTCB_F4) );
+
+/* Upper Part of Counter */
+PTCB_TIMER6.d = !PTCB_TIMER6;
+PTCB_TIMER7.d = ( PTCB_TIMER7 $ PTCB_TIMER6 );
+PTCB_TIMER8.d = ( PTCB_TIMER8 & !(PTCB_F7))
+                 # ( !PTCB_TIMER8 & (PTCB_F7) );
+PTCB_TIMER9.d = ( PTCB_TIMER9 & !(PTCB_F8))
+                 # ( !PTCB_TIMER9 & (PTCB_F8) );
+PTCB_TIMER10.d = ( PTCB_TIMER10 & !(PTCB_F9))
+                 # ( !PTCB_TIMER10 & (PTCB_F9) );
+PTCB_TIMER11.d = ( PTCB_TIMER11 & !(PTCB_F10))
+                 # ( !PTCB_TIMER11 & (PTCB_F10) );
+
+
+
+[PTCB_TIMER0..5].ck = PTCB_CLOCK;
+[PTCB_TIMER6..11].ck = PTCB_MIDCLOCK;
+/* if the INT1_OUT pin goes low, lets reset the counter and start counting again to the next interrupt */
+[PTCB_TIMER0..11].ar =! PTCB_TIMER_RESET # !nSYS_RESET # !nINTB_OUT;
+
+
+
 
 /*
 
@@ -104,8 +267,78 @@ Total Flip-Flop used 		12/64 	(18%)
 Total Foldback logic used 	2/64 	(3%)
 Total Nodes+FB/MCells 		14/64 	(21%)
 
+12 Bits, Split Clock
+Total Logic cells used 		18/64 	(28%)
+Total Flip-Flop used 		13/64 	(20%)
+Total Foldback logic used 	2/64 	(3%)
+Total Nodes+FB/MCells 		15/64 	(23%)
+
+12 Bit counter, Split clock, with load and int output.
+
+Total dedicated input used:	3/4 	(75%)
+Total I/O pins used		9/32 	(28%)
+Total Logic cells used 		24/64 	(37%)
+Total Flip-Flop used 		17/64 	(26%)
+Total Foldback logic used 	3/64 	(4%)
+Total Nodes+FB/MCells 		21/64 	(32%)
+
+2x 12 Bit counter, Split clock, with load and int output.
+
+Total dedicated input used:	3/4 	(75%)
+Total I/O pins used		15/32 	(46%)
+Total Logic cells used 		48/64 	(75%)
+Total Flip-Flop used 		34/64 	(53%)
+Total Foldback logic used 	7/64 	(10%)
+Total Nodes+FB/MCells 		43/64 	(67%)
+
+
+2x 12 Bit counter, Split clock, with load and int output.
+PLUS Readback of TIMER A/B.
+
+Total dedicated input used:	3/4 	(75%)
+Total I/O pins used		24/32 	(75%)
+Total Logic cells used 		54/64 	(84%)
+Total Flip-Flop used 		34/64 	(53%)
+Total Foldback logic used 	21/64 	(32%)
+Total Nodes+FB/MCells 		75/64 	(117%)
+
+
+
 
 
 
 */
+
+/*   Original Flags for standard counter
+PTCA_F6 = PTCA_TIMER6 & PTCA_F5;
+PTCA_F7 = PTCA_TIMER7 & PTCA_F6;
+PTCA_F8 = PTCA_TIMER8 & PTCA_F7;
+PTCA_F9 = PTCA_TIMER9 & PTCA_F8;
+PTCA_F10 = PTCA_TIMER10 & PTCA_F9;
+
+PTCA_TIMER0.d = !PTCA_TIMER0;
+PTCA_TIMER1.d = ( PTCA_TIMER1 $ PTCA_TIMER0 );
+PTCA_TIMER2.d = ( PTCA_TIMER2 & !(PTCA_F1))
+                 # ( !PTCA_TIMER2 & (PTCA_F1) );
+PTCA_TIMER3.d = ( PTCA_TIMER3 & !(PTCA_F2))
+                 # ( !PTCA_TIMER3 & (PTCA_F2) );
+PTCA_TIMER4.d = ( PTCA_TIMER4 & !(PTCA_F3))
+                 # ( !PTCA_TIMER4 & (PTCA_F3) );
+PTCA_TIMER5.d = ( PTCA_TIMER5 & !(PTCA_F4))
+                 # ( !PTCA_TIMER5 & (PTCA_F4) );
+PTCA_TIMER6.d = ( PTCA_TIMER6 & !(PTCA_F5))
+                 # ( !PTCA_TIMER6 & (PTCA_F5) );
+PTCA_TIMER7.d = ( PTCA_TIMER7 & !(PTCA_F6))
+                 # ( !PTCA_TIMER7 & (PTCA_F6) );
+PTCA_TIMER8.d = ( PTCA_TIMER8 & !(PTCA_F7))
+                 # ( !PTCA_TIMER8 & (PTCA_F7) );
+PTCA_TIMER9.d = ( PTCA_TIMER9 & !(PTCA_F8))
+                 # ( !PTCA_TIMER9 & (PTCA_F8) );
+PTCA_TIMER10.d = ( PTCA_TIMER10 & !(PTCA_F9))
+                 # ( !PTCA_TIMER10 & (PTCA_F9) );
+PTCA_TIMER11.d = ( PTCA_TIMER11 & !(PTCA_F10))
+                 # ( !PTCA_TIMER11 & (PTCA_F10) );
+
+*/
+
 
