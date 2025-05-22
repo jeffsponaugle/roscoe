@@ -19,21 +19,22 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 
 /* Generic Pins used by both counters */
 
-PIN = nSYS_RESET;
-PIN = [D0..15];
-PIN = nPTC_CS;
-PIN = nPTC_RW;   /* _RW 0=W, 1=R */
-PIN = nPTC_A2;   /* A2 for read select to read both counters */
+PIN[39] = nSYS_RESET;
+PIN[2,3,5,6,18,19,20,21,22,23,25,31,33,34,35,44] = [D0..15];
+/* PIN[18,19,20,21,25,22,23,2,6,3,5,44,31,34,35,33] = [D0..15];*/
+PIN[27] = nPTC_CS;
+PIN[15] = nPTC_RW;   /* _RW 0=W, 1=R */
+PIN[14] = nPTC_A2;   /* A2 for read select to read both counters */
 
 /* Pins used by TIMER A */
 
-PIN = PTCA_CLOCK;
-PIN = nINTA_OUT;
+PIN[40] = PTCA_CLOCK;
+PIN[43] = nINTA_OUT;
 
 /* Pins used by TIMER B */
 
-PIN = PTCB_CLOCK;
-PIN = nINTB_OUT;
+PIN[37] = PTCB_CLOCK;
+PIN[42] = nINTB_OUT;
 
 
 /* Flip flops used by TIMER A */
@@ -51,7 +52,7 @@ PINNODE = [TIMERB_RATE2..0];
 PINNODE = PTCB_TIMER_RESET;
 
 [D0..15].oe = !(nPTC_CS # !nPTC_RW);
-[D0..11] = (!nPTC_A2 & [PTCA_TIMER0..11]) & (nPTC_A2 & [PTCB_TIMER0..11]);
+[D0..11] = (!nPTC_A2 & [PTCA_TIMER0..11]) # (nPTC_A2 & [PTCB_TIMER0..11]);
 [D12..15] = 'b'0;
 
 /* Logic to load the TIMERx_RATE0..2 with bits from the data bus.
@@ -171,7 +172,7 @@ PTCA_TIMER11.d = ( PTCA_TIMER11 & !(PTCA_F10))
 [PTCA_TIMER0..5].ck = PTCA_CLOCK;
 [PTCA_TIMER6..11].ck = PTCA_MIDCLOCK;
 /* if the INT1_OUT pin goes low, lets reset the counter and start counting again to the next interrupt */
-[PTCA_TIMER0..11].ar =! PTCA_TIMER_RESET # !nSYS_RESET # !nINTA_OUT;
+[PTCA_TIMER0..11].ar = !PTCA_TIMER_RESET # !nSYS_RESET # !nINTA_OUT;
 
 
 
@@ -231,114 +232,11 @@ PTCB_TIMER11.d = ( PTCB_TIMER11 & !(PTCB_F10))
 
 /*
 
-7 Bits Total
-Total Logic cells used 		10/64 	(15%)
-Total Flip-Flop used 		7/64 	(10%)
-Total Foldback logic used 		1/64 	(1%)
-Total Nodes+FB/MCells 		8/64 	(12%)
-
-8 Bits Total
-Total Logic cells used 		12/64 	(18%)
-Total Flip-Flop used 		8/64 	(12%)
-Total Foldback logic used 	1/64 	(1%)
-Total Nodes+FB/MCells 		9/64 	(14%)
-
-9 Bits Total
-Total Logic cells used 		14/64 	(21%)
-Total Flip-Flop used 		9/64 	(14%)
-Total Foldback logic used 	1/64 	(1%)
-Total Nodes+FB/MCells 		10/64 	(15%)
-
-10 Bits Total
-Total Logic cells used 		17/64 	(26%)
-Total Flip-Flop used 		10/64 	(15%)
-Total Foldback logic used 	2/64 	(3%)
-Total Nodes+FB/MCells 		12/64 	(18%)
-
-11 Bits Total
-Total Logic cells used 		20/64 	(31%)
-Total Flip-Flop used 		11/64 	(17%)
-Total Foldback logic used 	2/64 	(3%)
-Total Nodes+FB/MCells 		13/64 	(20%)
-
-12 Bits Total
-Total Logic cells used 		23/64 	(35%)
-Total Flip-Flop used 		12/64 	(18%)
-Total Foldback logic used 	2/64 	(3%)
-Total Nodes+FB/MCells 		14/64 	(21%)
-
-12 Bits, Split Clock
-Total Logic cells used 		18/64 	(28%)
-Total Flip-Flop used 		13/64 	(20%)
-Total Foldback logic used 	2/64 	(3%)
-Total Nodes+FB/MCells 		15/64 	(23%)
-
-12 Bit counter, Split clock, with load and int output.
-
 Total dedicated input used:	3/4 	(75%)
-Total I/O pins used		9/32 	(28%)
-Total Logic cells used 		24/64 	(37%)
-Total Flip-Flop used 		17/64 	(26%)
-Total Foldback logic used 	3/64 	(4%)
-Total Nodes+FB/MCells 		21/64 	(32%)
-
-2x 12 Bit counter, Split clock, with load and int output.
-
-Total dedicated input used:	3/4 	(75%)
-Total I/O pins used		15/32 	(46%)
-Total Logic cells used 		48/64 	(75%)
+Total I/O pins used		25/32 	(78%)
+Total Logic cells used 		56/64 	(87%)
 Total Flip-Flop used 		34/64 	(53%)
-Total Foldback logic used 	7/64 	(10%)
-Total Nodes+FB/MCells 		43/64 	(67%)
-
-
-2x 12 Bit counter, Split clock, with load and int output.
-PLUS Readback of TIMER A/B.
-
-Total dedicated input used:	3/4 	(75%)
-Total I/O pins used		24/32 	(75%)
-Total Logic cells used 		54/64 	(84%)
-Total Flip-Flop used 		34/64 	(53%)
-Total Foldback logic used 	21/64 	(32%)
-Total Nodes+FB/MCells 		75/64 	(117%)
-
-
-
-
-
+Total Foldback logic used 	15/64 	(23%)
+Total Nodes+FB/MCells 		67/64 	(104%)
 
 */
-
-/*   Original Flags for standard counter
-PTCA_F6 = PTCA_TIMER6 & PTCA_F5;
-PTCA_F7 = PTCA_TIMER7 & PTCA_F6;
-PTCA_F8 = PTCA_TIMER8 & PTCA_F7;
-PTCA_F9 = PTCA_TIMER9 & PTCA_F8;
-PTCA_F10 = PTCA_TIMER10 & PTCA_F9;
-
-PTCA_TIMER0.d = !PTCA_TIMER0;
-PTCA_TIMER1.d = ( PTCA_TIMER1 $ PTCA_TIMER0 );
-PTCA_TIMER2.d = ( PTCA_TIMER2 & !(PTCA_F1))
-                 # ( !PTCA_TIMER2 & (PTCA_F1) );
-PTCA_TIMER3.d = ( PTCA_TIMER3 & !(PTCA_F2))
-                 # ( !PTCA_TIMER3 & (PTCA_F2) );
-PTCA_TIMER4.d = ( PTCA_TIMER4 & !(PTCA_F3))
-                 # ( !PTCA_TIMER4 & (PTCA_F3) );
-PTCA_TIMER5.d = ( PTCA_TIMER5 & !(PTCA_F4))
-                 # ( !PTCA_TIMER5 & (PTCA_F4) );
-PTCA_TIMER6.d = ( PTCA_TIMER6 & !(PTCA_F5))
-                 # ( !PTCA_TIMER6 & (PTCA_F5) );
-PTCA_TIMER7.d = ( PTCA_TIMER7 & !(PTCA_F6))
-                 # ( !PTCA_TIMER7 & (PTCA_F6) );
-PTCA_TIMER8.d = ( PTCA_TIMER8 & !(PTCA_F7))
-                 # ( !PTCA_TIMER8 & (PTCA_F7) );
-PTCA_TIMER9.d = ( PTCA_TIMER9 & !(PTCA_F8))
-                 # ( !PTCA_TIMER9 & (PTCA_F8) );
-PTCA_TIMER10.d = ( PTCA_TIMER10 & !(PTCA_F9))
-                 # ( !PTCA_TIMER10 & (PTCA_F9) );
-PTCA_TIMER11.d = ( PTCA_TIMER11 & !(PTCA_F10))
-                 # ( !PTCA_TIMER11 & (PTCA_F10) );
-
-*/
-
-

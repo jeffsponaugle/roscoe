@@ -1,21 +1,21 @@
 %SIGNAL
-PIN   0 =  D0 
-PIN   0 =  D1 
-PIN   0 =  D2 
-PIN   0 =  D3 
-PIN   0 =  D4 
-PIN   0 =  D5 
-PIN   0 =  D6 
-PIN   0 =  D7 
-PIN   0 =  D8 
-PIN   0 =  D9 
-PIN   0 =  D10 
-PIN   0 =  D11 
-PIN   0 =  D12 
-PIN   0 =  D13 
-PIN   0 =  D14 
-PIN   0 =  D15 
-PIN   0 =  PTCA_CLOCK 
+PIN   2 =  D0 
+PIN   3 =  D1 
+PIN   5 =  D2 
+PIN   6 =  D3 
+PIN  18 =  D4 
+PIN  19 =  D5 
+PIN  20 =  D6 
+PIN  21 =  D7 
+PIN  22 =  D8 
+PIN  23 =  D9 
+PIN  25 =  D10 
+PIN  31 =  D11 
+PIN  33 =  D12 
+PIN  34 =  D13 
+PIN  35 =  D14 
+PIN  44 =  D15 
+PIN  40 =  PTCA_CLOCK 
 PIN   0 =  PTCA_MIDCLOCK 
 PIN   0 =  PTCA_TIMER0 
 PIN   0 =  PTCA_TIMER1 
@@ -30,7 +30,7 @@ PIN   0 =  PTCA_TIMER9
 PIN   0 =  PTCA_TIMER10 
 PIN   0 =  PTCA_TIMER11 
 PIN   0 =  PTCA_TIMER_RESET 
-PIN   0 =  PTCB_CLOCK 
+PIN  37 =  PTCB_CLOCK 
 PIN   0 =  PTCB_MIDCLOCK 
 PIN   0 =  PTCB_TIMER0 
 PIN   0 =  PTCB_TIMER1 
@@ -51,12 +51,12 @@ PIN   0 =  TIMERA_RATE2
 PIN   0 =  TIMERB_RATE0 
 PIN   0 =  TIMERB_RATE1 
 PIN   0 =  TIMERB_RATE2 
-PIN   0 =  nINTA_OUT 
-PIN   0 =  nINTB_OUT 
-PIN   0 =  nPTC_A2 
-PIN   0 =  nPTC_CS 
-PIN   0 =  nPTC_RW 
-PIN   0 =  nSYS_RESET 
+PIN  43 =  nINTA_OUT 
+PIN  42 =  nINTB_OUT 
+PIN  14 =  nPTC_A2 
+PIN  27 =  nPTC_CS 
+PIN  15 =  nPTC_RW 
+PIN  39 =  nSYS_RESET 
 %END
 
 %FIELD
@@ -66,73 +66,85 @@ FIELD field_TIMERB_RATE = TIMERB_RATE2,TIMERB_RATE1,TIMERB_RATE0
 
 %EQUATION
 D0 =>
-    0 
+    PTCB_TIMER0 & nPTC_A2
+  # PTCA_TIMER0 & !nPTC_A2
 
 D0.oe  =>
     !nPTC_CS & nPTC_RW
 
 D1 =>
-    0 
+    PTCB_TIMER1 & nPTC_A2
+  # PTCA_TIMER1 & !nPTC_A2
 
 D1.oe  =>
     !nPTC_CS & nPTC_RW
 
 D2 =>
-    0 
+    PTCB_TIMER2 & nPTC_A2
+  # PTCA_TIMER2 & !nPTC_A2
 
 D2.oe  =>
     !nPTC_CS & nPTC_RW
 
 D3 =>
-    0 
+    PTCB_TIMER3 & nPTC_A2
+  # PTCA_TIMER3 & !nPTC_A2
 
 D3.oe  =>
     !nPTC_CS & nPTC_RW
 
 D4 =>
-    0 
+    PTCB_TIMER4 & nPTC_A2
+  # PTCA_TIMER4 & !nPTC_A2
 
 D4.oe  =>
     !nPTC_CS & nPTC_RW
 
 D5 =>
-    0 
+    PTCB_TIMER5 & nPTC_A2
+  # PTCA_TIMER5 & !nPTC_A2
 
 D5.oe  =>
     !nPTC_CS & nPTC_RW
 
 D6 =>
-    0 
+    PTCB_TIMER6 & nPTC_A2
+  # PTCA_TIMER6 & !nPTC_A2
 
 D6.oe  =>
     !nPTC_CS & nPTC_RW
 
 D7 =>
-    0 
+    PTCB_TIMER7 & nPTC_A2
+  # PTCA_TIMER7 & !nPTC_A2
 
 D7.oe  =>
     !nPTC_CS & nPTC_RW
 
 D8 =>
-    0 
+    PTCB_TIMER8 & nPTC_A2
+  # PTCA_TIMER8 & !nPTC_A2
 
 D8.oe  =>
     !nPTC_CS & nPTC_RW
 
 D9 =>
-    0 
+    PTCB_TIMER9 & nPTC_A2
+  # PTCA_TIMER9 & !nPTC_A2
 
 D9.oe  =>
     !nPTC_CS & nPTC_RW
 
 D10 =>
-    0 
+    PTCB_TIMER10 & nPTC_A2
+  # PTCA_TIMER10 & !nPTC_A2
 
 D10.oe  =>
     !nPTC_CS & nPTC_RW
 
 D11 =>
-    0 
+    PTCB_TIMER11 & nPTC_A2
+  # PTCA_TIMER11 & !nPTC_A2
 
 D11.oe  =>
     !nPTC_CS & nPTC_RW

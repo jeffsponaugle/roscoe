@@ -1,4 +1,4 @@
-Atmel ATF1504AS Fitter Version 1.8.7.8 ,running Wed May 21 15:00:40 2025
+Atmel ATF1504AS Fitter Version 1.8.7.8 ,running Wed May 21 20:25:09 2025
 
 
 fit1504 C:\USERS\JEFF\SRC\ROSCOE\PLDS\PTC\PTC.tt2 -CUPL -dev P1504T44 -JTAG ON
@@ -51,10 +51,6 @@ fit1504 C:\USERS\JEFF\SRC\ROSCOE\PLDS\PTC\PTC.tt2 -CUPL -dev P1504T44 -JTAG ON
 ---------------------------------------------------------
  Fitter_Pass 1, Preassign = KEEP, LOGIC_DOUBLING : OFF 
  ... 
- ## Warning : Grouping fail 
----------------------------------------------------------
- Fitter_Pass 2, Preassign = KEEP, CASCADE_LOGIC : (TRY) 
- ... 
 
 Performing global Output Enable pin assignments ...
 
@@ -79,118 +75,115 @@ nSYS_RESET assigned to pin  39
 
 Attempt to place floating signals ...
 ------------------------------------
-PTCB_MIDCLOCK is placed at feedback node 601 (MC 1)
-FB_321 is placed at foldback expander node 301 (MC 1)
-PTCB_TIMER7 is placed at feedback node 602 (MC 2)
-FB_320 is placed at foldback expander node 302 (MC 2)
-PTCA_MIDCLOCK is placed at feedback node 603 (MC 3)
-XXL_319 is placed at foldback expander node 303 (MC 3)
-PTCA_TIMER3 is placed at feedback node 604 (MC 4)
-XXL_317 is placed at foldback expander node 304 (MC 4)
-PTCB_TIMER4 is placed at feedback node 605 (MC 5)
-XXL_296 is placed at foldback expander node 305 (MC 5)
-PTCA_TIMER7 is placed at feedback node 606 (MC 6)
-XXL_285 is placed at foldback expander node 306 (MC 6)
-PTCA_TIMER8 is placed at feedback node 607 (MC 7)
-XXL_284 is placed at foldback expander node 307 (MC 7)
+D3 is placed at pin 6 (MC 1)
+D2 is placed at pin 5 (MC 3)
+D1 is placed at pin 3 (MC 4)
+D0 is placed at pin 2 (MC 5)
 TDI is placed at pin 1 (MC 8)
-PTCB_TIMER9 is placed at feedback node 608 (MC 8)
-XXL_283 is placed at foldback expander node 308 (MC 8)
-PTCA_TIMER9 is placed at feedback node 609 (MC 9)
-XXL_282 is placed at foldback expander node 309 (MC 9)
-PTCB_TIMER10 is placed at feedback node 610 (MC 10)
-XXL_281 is placed at foldback expander node 310 (MC 10)
-PTCA_TIMER4 is placed at feedback node 611 (MC 11)
-XXL_280 is placed at foldback expander node 311 (MC 11)
-PTCA_TIMER10 is placed at feedback node 612 (MC 12)
-XXL_278 is placed at foldback expander node 312 (MC 12)
-PTCB_TIMER11 is placed at feedback node 613 (MC 13)
-PTCB_TIMER5 is placed at feedback node 614 (MC 14)
-Com_Ctrl_246 is placed at foldback expander node 314 (MC 14)
-PTCA_TIMER11 is placed at feedback node 615 (MC 15)
-PTCA_TIMER5 is placed at feedback node 616 (MC 16)
-Com_Ctrl_245 is placed at foldback expander node 316 (MC 16)
-PTCB_TIMER0 is placed at feedback node 617 (MC 17)
-PTCA_TIMER0 is placed at feedback node 618 (MC 18)
-D12 is placed at pin 14 (MC 19)
-D15 is placed at pin 13 (MC 20)
-D13 is placed at pin 12 (MC 21)
-PTCB_TIMER6 is placed at feedback node 622 (MC 22)
-PTCB_TIMER1 is placed at feedback node 623 (MC 23)
-D14 is placed at pin 11 (MC 24)
-nINTA_OUT is placed at pin 10 (MC 25)
-PTCA_TIMER6 is placed at feedback node 626 (MC 26)
-PTCA_TIMER1 is placed at feedback node 627 (MC 27)
-XXL_297 is placed at foldback expander node 327 (MC 27)
-PTCB_TIMER2 is placed at feedback node 628 (MC 28)
-XXL_295 is placed at foldback expander node 328 (MC 28)
-PTCA_TIMER2 is placed at feedback node 629 (MC 29)
-XXL_294 is placed at foldback expander node 329 (MC 29)
-nINTB_OUT is placed at pin 8 (MC 30)
-XXL_279 is placed at foldback expander node 330 (MC 30)
-PTCB_TIMER3 is placed at feedback node 631 (MC 31)
-Com_Ctrl_246 is placed at foldback expander node 331 (MC 31)
+D15 is placed at pin 44 (MC 11)
+nINTA_OUT is placed at pin 43 (MC 14)
+nINTB_OUT is placed at pin 42 (MC 16)
+nPTC_RW is placed at pin 15 (MC 17)
+PTCA_TIMER7 is placed at feedback node 617 (MC 17)
+PTCA_TIMER8 is placed at feedback node 618 (MC 18)
+nPTC_A2 is placed at pin 14 (MC 19)
+PTCB_TIMER9 is placed at feedback node 619 (MC 19)
+PTCB_TIMER10 is placed at feedback node 620 (MC 20)
+PTCA_TIMER2 is placed at feedback node 621 (MC 21)
+FB_295 is placed at foldback expander node 321 (MC 21)
+PTCA_TIMER9 is placed at feedback node 622 (MC 22)
+XXL_293 is placed at foldback expander node 322 (MC 22)
+PTCA_TIMER4 is placed at feedback node 623 (MC 23)
+XXL_292 is placed at foldback expander node 323 (MC 23)
+PTCA_TIMER3 is placed at feedback node 624 (MC 24)
+XXL_290 is placed at foldback expander node 324 (MC 24)
+PTCB_TIMER8 is placed at feedback node 625 (MC 25)
+XXL_281 is placed at foldback expander node 325 (MC 25)
+PTCA_MIDCLOCK is placed at feedback node 626 (MC 26)
+PTCA_TIMER10 is placed at feedback node 627 (MC 27)
+PTCA_TIMER5 is placed at feedback node 628 (MC 28)
+XXL_280 is placed at foldback expander node 329 (MC 29)
+PTCA_TIMER11 is placed at feedback node 630 (MC 30)
+XXL_278 is placed at foldback expander node 330 (MC 30)
+Com_Ctrl_247 is placed at foldback expander node 331 (MC 31)
 TMS is placed at pin 7 (MC 32)
-PTCB_TIMER8 is placed at feedback node 632 (MC 32)
-Com_Ctrl_245 is placed at foldback expander node 332 (MC 32)
+PTCB_TIMER11 is placed at feedback node 632 (MC 32)
+Com_Ctrl_246 is placed at foldback expander node 332 (MC 32)
 D4 is placed at pin 18 (MC 33)
-TIMERB_RATE2 is placed at feedback node 634 (MC 34)
-D8 is placed at pin 19 (MC 35)
-D7 is placed at pin 20 (MC 36)
-D5 is placed at pin 21 (MC 37)
-TIMERB_RATE0 is placed at feedback node 638 (MC 38)
-TIMERB_RATE1 is placed at feedback node 639 (MC 39)
-D10 is placed at pin 22 (MC 40)
+PTCB_TIMER0 is placed at feedback node 634 (MC 34)
+D5 is placed at pin 19 (MC 35)
+D6 is placed at pin 20 (MC 36)
+D7 is placed at pin 21 (MC 37)
+PTCB_MIDCLOCK is placed at feedback node 638 (MC 38)
+PTCB_TIMER1 is placed at feedback node 639 (MC 39)
+D8 is placed at pin 22 (MC 40)
 D9 is placed at pin 23 (MC 41)
-TIMERA_RATE2 is placed at feedback node 642 (MC 42)
-TIMERA_RATE1 is placed at feedback node 643 (MC 43)
-TIMERA_RATE0 is placed at feedback node 644 (MC 44)
-PTCA_TIMER_RESET is placed at feedback node 645 (MC 45)
-D11 is placed at pin 25 (MC 46)
-PTCB_TIMER_RESET is placed at feedback node 647 (MC 47)
-Com_Ctrl_244 is placed at foldback expander node 347 (MC 47)
+PTCB_TIMER2 is placed at feedback node 642 (MC 42)
+PTCB_TIMER3 is placed at feedback node 643 (MC 43)
+PTCB_TIMER6 is placed at feedback node 644 (MC 44)
+FB_294 is placed at foldback expander node 344 (MC 44)
+PTCB_TIMER4 is placed at feedback node 645 (MC 45)
+XXL_291 is placed at foldback expander node 345 (MC 45)
+D10 is placed at pin 25 (MC 46)
+XXL_279 is placed at foldback expander node 346 (MC 46)
+PTCB_TIMER7 is placed at feedback node 647 (MC 47)
+Com_Ctrl_246 is placed at foldback expander node 347 (MC 47)
 TCK is placed at pin 26 (MC 48)
-XXL_323 is placed at feedback node 648 (MC 48)
+PTCB_TIMER5 is placed at feedback node 648 (MC 48)
 nPTC_CS is placed at pin 27 (MC 49)
-nPTC_RW is placed at pin 28 (MC 51)
-D0 is placed at pin 30 (MC 52)
-D3 is placed at pin 31 (MC 53)
+TIMERB_RATE2 is placed at feedback node 649 (MC 49)
+TIMERB_RATE1 is placed at feedback node 650 (MC 50)
+PTCA_TIMER0 is placed at feedback node 652 (MC 52)
+D11 is placed at pin 31 (MC 53)
+TIMERA_RATE2 is placed at feedback node 654 (MC 54)
+TIMERA_RATE1 is placed at feedback node 655 (MC 55)
 TDO is placed at pin 32 (MC 56)
-D1 is placed at pin 33 (MC 57)
-D6 is placed at pin 34 (MC 62)
-XXL_322 is placed at feedback node 663 (MC 63)
-D2 is placed at pin 35 (MC 64)
+TIMERB_RATE0 is placed at feedback node 656 (MC 56)
+D12 is placed at pin 33 (MC 57)
+TIMERA_RATE0 is placed at feedback node 658 (MC 58)
+PTCA_TIMER_RESET is placed at feedback node 659 (MC 59)
+PTCB_TIMER_RESET is placed at feedback node 660 (MC 60)
+PTCA_TIMER6 is placed at feedback node 661 (MC 61)
+D13 is placed at pin 34 (MC 62)
+PTCA_TIMER1 is placed at feedback node 663 (MC 63)
+Com_Ctrl_247 is placed at foldback expander node 363 (MC 63)
+D14 is placed at pin 35 (MC 64)
+Com_Ctrl_245 is placed at foldback expander node 364 (MC 64)
 
                                                                  
                                                                  
                              P  n     P                          
-                             T  S     T                          
-                             C  Y     C                          
-                             A  S     B                          
-                             _  _     _                          
-                             C  R     C                          
-                             L  E     L                          
-                          V  O  S     O  G                       
-                          C  C  E     C  N  D  D                 
-                          C  K  T     K  D  2  6                 
+                    n  n     T  S     T                          
+                    I  I     C  Y     C                          
+                    N  N     A  S     B                          
+                    T  T     _  _     _                          
+                    A  B     C  R     C                          
+                    _  _     L  E     L                          
+                 D  O  O  V  O  S     O  G  D  D                 
+                 1  U  U  C  C  E     C  N  1  1                 
+                 5  T  T  C  K  T     K  D  4  3                 
                ____________________________________              
               /  44 43 42 41 40 39 38 37 36 35 34  \             
-         TDI |  1                                33 | D1         
-             |  2                                32 | TDO        
-             |  3                                31 | D3         
-         GND |  4                                30 | D0         
-             |  5                                29 | VCC        
-             |  6            ATF1504             28 | nPTC_RW    
+         TDI |  1                                33 | D12        
+          D0 |  2                                32 | TDO        
+          D1 |  3                                31 | D11        
+         GND |  4                                30 |            
+          D2 |  5                                29 | VCC        
+          D3 |  6            ATF1504             28 |            
          TMS |  7          44-Lead TQFP          27 | nPTC_CS    
-   nINTB_OUT |  8                                26 | TCK        
-         VCC |  9                                25 | D11        
-   nINTA_OUT | 10                                24 | GND        
-         D14 | 11                                23 | D9         
+             |  8                                26 | TCK        
+         VCC |  9                                25 | D10        
+             | 10                                24 | GND        
+             | 11                                23 | D9         
              |   12 13 14 15 16 17 18 19 20 21 22   |            
               \____________________________________/             
-                 D  D  D     G  V  D  D  D  D  D                 
-                 1  1  1     N  C  4  8  7  5  1                 
-                 3  5  2     D  C              0                 
+                       n  n  G  V  D  D  D  D  D                 
+                       P  P  N  C  4  5  6  7  8                 
+                       T  T  D  C                                
+                       C  C                                      
+                       _  _                                      
+                       A  R                                      
+                       2  W                                      
 
 
 
@@ -204,156 +197,178 @@ NC = Unused I/O pins which must be unconnected on the board
 
 Universal-Interconnect-Multiplexer assignments
 ------------------------------------------------
-FanIn assignment for block A [31]
+FanIn assignment for block A [33]
 {
-PTCB_TIMER7,PTCA_TIMER2,PTCB_TIMER6,PTCA_TIMER9,PTCB_TIMER8,PTCB_TIMER_RESET,PTCB_MIDCLOCK,PTCB_TIMER10,PTCB_TIMER1,PTCA_TIMER4,PTCB_TIMER3,PTCA_TIMER10,PTCA_MIDCLOCK,PTCA_TIMER_RESET,PTCA_TIMER3,PTCA_TIMER7,PTCB_TIMER5,PTCB_TIMER11,PTCB_TIMER9,PTCB_TIMER2,PTCA_TIMER8,PTCA_TIMER6,PTCB_TIMER0,PTCB_TIMER4,PTCA_TIMER11,PTCA_TIMER1,PTCA_TIMER5,PTCA_TIMER0,
-nINTB_OUT,nSYS_RESET,nINTA_OUT,
+PTCA_TIMER3,PTCB_TIMER4,PTCA_TIMER9,PTCA_TIMER4,PTCB_TIMER11,PTCB_TIMER1,PTCA_TIMER11,PTCA_TIMER2,PTCA_TIMER0,PTCB_TIMER5,PTCB_TIMER7,PTCB_TIMER0,PTCB_TIMER9,PTCB_TIMER2,PTCA_TIMER8,PTCB_TIMER3,PTCA_TIMER7,PTCB_TIMER6,PTCB_TIMER8,PTCA_TIMER10,PTCA_TIMER1,PTCB_TIMER10,PTCA_TIMER5,PTCA_TIMER6,
+TIMERA_RATE0,TIMERB_RATE2,TIMERB_RATE1,TIMERA_RATE1,TIMERB_RATE0,TIMERA_RATE2,
+nPTC_CS,nPTC_RW,nPTC_A2,
 }
 Multiplexer assignment for block A
-PTCB_TIMER7		(MC2	FB)  : MUX 0		Ref (A2fb)
-PTCA_TIMER2		(MC25	FB)  : MUX 1		Ref (B29fb)
-PTCB_TIMER6		(MC19	FB)  : MUX 2		Ref (B22fb)
-PTCA_TIMER9		(MC9	FB)  : MUX 3		Ref (A9fb)
-PTCB_TIMER8		(MC28	FB)  : MUX 5		Ref (B32fb)
-nINTB_OUT		(MC26	P)   : MUX 6		Ref (B30p)
-PTCB_TIMER_RESET		(MC30	FB)  : MUX 7		Ref (C47fb)
-PTCB_MIDCLOCK		(MC1	FB)  : MUX 8		Ref (A1fb)
-PTCB_TIMER10		(MC10	FB)  : MUX 9		Ref (A10fb)
-PTCB_TIMER1		(MC20	FB)  : MUX 10		Ref (B23fb)
-PTCA_TIMER4		(MC11	FB)  : MUX 11		Ref (A11fb)
-PTCB_TIMER3		(MC27	FB)  : MUX 13		Ref (B31fb)
-PTCA_TIMER10		(MC12	FB)  : MUX 15		Ref (A12fb)
-PTCA_MIDCLOCK		(MC3	FB)  : MUX 16		Ref (A3fb)
-PTCA_TIMER_RESET		(MC29	FB)  : MUX 17		Ref (C45fb)
-PTCA_TIMER3		(MC4	FB)  : MUX 18		Ref (A4fb)
-PTCA_TIMER7		(MC6	FB)  : MUX 20		Ref (A6fb)
-PTCB_TIMER5		(MC14	FB)  : MUX 21		Ref (A14fb)
-PTCB_TIMER11		(MC13	FB)  : MUX 23		Ref (A13fb)
-PTCB_TIMER9		(MC8	FB)  : MUX 24		Ref (A8fb)
-PTCB_TIMER2		(MC24	FB)  : MUX 25		Ref (B28fb)
-PTCA_TIMER8		(MC7	FB)  : MUX 26		Ref (A7fb)
-PTCA_TIMER6		(MC22	FB)  : MUX 27		Ref (B26fb)
-PTCB_TIMER0		(MC17	FB)  : MUX 28		Ref (B17fb)
-PTCB_TIMER4		(MC5	FB)  : MUX 30		Ref (A5fb)
-PTCA_TIMER11		(MC15	FB)  : MUX 31		Ref (A15fb)
-nSYS_RESET		(MC31	FB)  : MUX 32		Ref (GCLR)
-PTCA_TIMER1		(MC23	FB)  : MUX 33		Ref (B27fb)
-nINTA_OUT		(MC21	P)   : MUX 34		Ref (B25p)
-PTCA_TIMER5		(MC16	FB)  : MUX 35		Ref (A16fb)
-PTCA_TIMER0		(MC18	FB)  : MUX 38		Ref (B18fb)
+PTCA_TIMER3		(MC8	FB)  : MUX 0		Ref (B24fb)
+PTCB_TIMER4		(MC19	FB)  : MUX 1		Ref (C45fb)
+PTCA_TIMER9		(MC6	FB)  : MUX 2		Ref (B22fb)
+TIMERA_RATE0		(MC28	FB)  : MUX 3		Ref (D58fb)
+PTCA_TIMER4		(MC7	FB)  : MUX 4		Ref (B23fb)
+PTCB_TIMER11		(MC13	FB)  : MUX 5		Ref (B32fb)
+PTCB_TIMER1		(MC15	FB)  : MUX 6		Ref (C39fb)
+PTCA_TIMER11		(MC12	FB)  : MUX 7		Ref (B30fb)
+PTCA_TIMER2		(MC5	FB)  : MUX 8		Ref (B21fb)
+nPTC_CS			(MC33	P)   : MUX 11		Ref (D49p)
+PTCA_TIMER0		(MC24	FB)  : MUX 14		Ref (D52fb)
+PTCB_TIMER5		(MC21	FB)  : MUX 15		Ref (C48fb)
+TIMERB_RATE2		(MC22	FB)  : MUX 16		Ref (D49fb)
+TIMERB_RATE1		(MC23	FB)  : MUX 18		Ref (D50fb)
+PTCB_TIMER7		(MC20	FB)  : MUX 19		Ref (C47fb)
+TIMERA_RATE1		(MC26	FB)  : MUX 20		Ref (D55fb)
+nPTC_RW			(MC31	P)   : MUX 21		Ref (B17p)
+PTCB_TIMER0		(MC14	FB)  : MUX 22		Ref (C34fb)
+nPTC_A2			(MC32	P)   : MUX 23		Ref (B19p)
+PTCB_TIMER9		(MC3	FB)  : MUX 24		Ref (B19fb)
+PTCB_TIMER2		(MC16	FB)  : MUX 25		Ref (C42fb)
+PTCA_TIMER8		(MC2	FB)  : MUX 26		Ref (B18fb)
+PTCB_TIMER3		(MC17	FB)  : MUX 27		Ref (C43fb)
+PTCA_TIMER7		(MC1	FB)  : MUX 28		Ref (B17fb)
+PTCB_TIMER6		(MC18	FB)  : MUX 29		Ref (C44fb)
+PTCB_TIMER8		(MC9	FB)  : MUX 31		Ref (B25fb)
+PTCA_TIMER10		(MC10	FB)  : MUX 33		Ref (B27fb)
+TIMERB_RATE0		(MC27	FB)  : MUX 34		Ref (D56fb)
+PTCA_TIMER1		(MC30	FB)  : MUX 35		Ref (D63fb)
+PTCB_TIMER10		(MC4	FB)  : MUX 36		Ref (B20fb)
+PTCA_TIMER5		(MC11	FB)  : MUX 37		Ref (B28fb)
+TIMERA_RATE2		(MC25	FB)  : MUX 38		Ref (D54fb)
+PTCA_TIMER6		(MC29	FB)  : MUX 39		Ref (D61fb)
 
-FanIn assignment for block B [31]
+FanIn assignment for block B [25]
 {
-PTCB_TIMER7,PTCA_TIMER2,PTCB_TIMER3,PTCB_TIMER8,PTCB_TIMER6,PTCB_TIMER10,PTCB_MIDCLOCK,PTCA_TIMER10,PTCB_TIMER1,PTCA_MIDCLOCK,PTCA_TIMER_RESET,PTCB_TIMER_RESET,PTCB_TIMER0,PTCA_TIMER0,PTCA_TIMER11,PTCA_TIMER1,PTCA_TIMER6,PTCB_TIMER2,
-TIMERB_RATE1,TIMERB_RATE0,TIMERB_RATE2,TIMERA_RATE2,TIMERA_RATE0,TIMERA_RATE1,
-XXL_323,XXL_322,
-nINTB_OUT,nPTC_CS,nPTC_RW,nINTA_OUT,nSYS_RESET,
+PTCB_MIDCLOCK,PTCA_TIMER4,PTCB_TIMER11,PTCA_TIMER9,PTCB_TIMER7,PTCA_TIMER2,PTCB_TIMER_RESET,PTCA_TIMER11,PTCA_TIMER0,PTCA_TIMER_RESET,PTCA_TIMER3,PTCA_TIMER1,PTCA_TIMER8,PTCA_TIMER10,PTCB_TIMER9,PTCA_TIMER5,PTCA_MIDCLOCK,PTCB_TIMER8,PTCA_TIMER7,PTCB_TIMER6,PTCB_TIMER10,PTCA_TIMER6,
+nINTA_OUT,nINTB_OUT,nSYS_RESET,
 }
 Multiplexer assignment for block B
-PTCB_TIMER7		(MC2	FB)  : MUX 0		Ref (A2fb)
-PTCA_TIMER2		(MC15	FB)  : MUX 1		Ref (B29fb)
-PTCB_TIMER3		(MC17	FB)  : MUX 3		Ref (B31fb)
-nINTB_OUT		(MC16	P)   : MUX 4		Ref (B30p)
-PTCB_TIMER8		(MC18	FB)  : MUX 5		Ref (B32fb)
-PTCB_TIMER6		(MC9	FB)  : MUX 6		Ref (B22fb)
-PTCB_TIMER10		(MC4	FB)  : MUX 7		Ref (A10fb)
-PTCB_MIDCLOCK		(MC1	FB)  : MUX 8		Ref (A1fb)
-PTCA_TIMER10		(MC5	FB)  : MUX 9		Ref (A12fb)
-PTCB_TIMER1		(MC10	FB)  : MUX 10		Ref (B23fb)
-nPTC_CS			(MC29	P)   : MUX 11		Ref (D49p)
-nPTC_RW			(MC30	P)   : MUX 13		Ref (D51p)
-TIMERB_RATE1		(MC21	FB)  : MUX 14		Ref (C39fb)
-XXL_323			(MC27	FB)  : MUX 15		Ref (C48fb)
-PTCA_MIDCLOCK		(MC3	FB)  : MUX 16		Ref (A3fb)
-PTCA_TIMER_RESET		(MC25	FB)  : MUX 17		Ref (C45fb)
-TIMERB_RATE0		(MC20	FB)  : MUX 18		Ref (C38fb)
-PTCB_TIMER_RESET		(MC26	FB)  : MUX 19		Ref (C47fb)
-XXL_322			(MC28	FB)  : MUX 21		Ref (D63fb)
-TIMERB_RATE2		(MC19	FB)  : MUX 22		Ref (C34fb)
-PTCB_TIMER0		(MC7	FB)  : MUX 24		Ref (B17fb)
-TIMERA_RATE2		(MC22	FB)  : MUX 25		Ref (C42fb)
-PTCA_TIMER0		(MC8	FB)  : MUX 26		Ref (B18fb)
-TIMERA_RATE0		(MC24	FB)  : MUX 29		Ref (C44fb)
-PTCA_TIMER11		(MC6	FB)  : MUX 31		Ref (A15fb)
-PTCA_TIMER1		(MC13	FB)  : MUX 33		Ref (B27fb)
-nINTA_OUT		(MC11	P)   : MUX 34		Ref (B25p)
-PTCA_TIMER6		(MC12	FB)  : MUX 35		Ref (B26fb)
-PTCB_TIMER2		(MC14	FB)  : MUX 37		Ref (B28fb)
-nSYS_RESET		(MC31	FB)  : MUX 38		Ref (GCLR)
-TIMERA_RATE1		(MC23	FB)  : MUX 39		Ref (C43fb)
+PTCB_MIDCLOCK		(MC17	FB)  : MUX 2		Ref (C38fb)
+PTCA_TIMER4		(MC9	FB)  : MUX 4		Ref (B23fb)
+PTCB_TIMER11		(MC16	FB)  : MUX 5		Ref (B32fb)
+PTCA_TIMER9		(MC8	FB)  : MUX 6		Ref (B22fb)
+PTCB_TIMER7		(MC19	FB)  : MUX 7		Ref (C47fb)
+PTCA_TIMER2		(MC7	FB)  : MUX 8		Ref (B21fb)
+PTCB_TIMER_RESET		(MC22	FB)  : MUX 9		Ref (D60fb)
+PTCA_TIMER11		(MC15	FB)  : MUX 11		Ref (B30fb)
+PTCA_TIMER0		(MC20	FB)  : MUX 14		Ref (D52fb)
+PTCA_TIMER_RESET		(MC21	FB)  : MUX 15		Ref (D59fb)
+PTCA_TIMER3		(MC10	FB)  : MUX 18		Ref (B24fb)
+PTCA_TIMER1		(MC24	FB)  : MUX 21		Ref (D63fb)
+PTCA_TIMER8		(MC4	FB)  : MUX 22		Ref (B18fb)
+PTCA_TIMER10		(MC13	FB)  : MUX 23		Ref (B27fb)
+PTCB_TIMER9		(MC5	FB)  : MUX 24		Ref (B19fb)
+PTCA_TIMER5		(MC14	FB)  : MUX 25		Ref (B28fb)
+PTCA_MIDCLOCK		(MC12	FB)  : MUX 27		Ref (B26fb)
+nINTA_OUT		(MC1	P)   : MUX 28		Ref (A14p)
+nINTB_OUT		(MC2	P)   : MUX 30		Ref (A16p)
+PTCB_TIMER8		(MC11	FB)  : MUX 31		Ref (B25fb)
+nSYS_RESET		(MC25	FB)  : MUX 32		Ref (GCLR)
+PTCA_TIMER7		(MC3	FB)  : MUX 34		Ref (B17fb)
+PTCB_TIMER6		(MC18	FB)  : MUX 35		Ref (C44fb)
+PTCB_TIMER10		(MC6	FB)  : MUX 36		Ref (B20fb)
+PTCA_TIMER6		(MC23	FB)  : MUX 39		Ref (D61fb)
 
-FanIn assignment for block C [18]
+FanIn assignment for block C [25]
 {
-D0,D5,D1,D2,D4,D6,D7,D3,
-PTCB_TIMER8,PTCB_TIMER5,PTCB_TIMER9,PTCB_TIMER11,PTCB_TIMER4,
-TIMERB_RATE0,TIMERB_RATE1,TIMERB_RATE2,
-nPTC_RW,nPTC_CS,
+PTCB_TIMER4,PTCB_MIDCLOCK,PTCA_TIMER4,PTCB_TIMER5,PTCA_TIMER9,PTCB_TIMER_RESET,PTCB_TIMER1,PTCB_TIMER7,PTCB_TIMER0,PTCB_TIMER9,PTCB_TIMER2,PTCA_TIMER8,PTCB_TIMER3,PTCA_TIMER7,PTCB_TIMER6,PTCB_TIMER8,PTCA_TIMER10,PTCB_TIMER10,PTCA_TIMER5,PTCA_TIMER6,
+nPTC_CS,nPTC_RW,nPTC_A2,nINTB_OUT,nSYS_RESET,
 }
 Multiplexer assignment for block C
-D0			(MC12	P)   : MUX 1		Ref (D52p)
-TIMERB_RATE0		(MC10	FB)  : MUX 2		Ref (C38fb)
-D5			(MC9	P)   : MUX 3		Ref (C37p)
-PTCB_TIMER8		(MC5	FB)  : MUX 5		Ref (B32fb)
-TIMERB_RATE1		(MC11	FB)  : MUX 6		Ref (C39fb)
-D1			(MC14	P)   : MUX 8		Ref (D57p)
-nPTC_RW			(MC18	P)   : MUX 9		Ref (D51p)
-nPTC_CS			(MC17	P)   : MUX 17		Ref (D49p)
-PTCB_TIMER5		(MC4	FB)  : MUX 21		Ref (A14fb)
-D2			(MC16	P)   : MUX 22		Ref (D64p)
-D4			(MC6	P)   : MUX 23		Ref (C33p)
-PTCB_TIMER9		(MC2	FB)  : MUX 24		Ref (A8fb)
-PTCB_TIMER11		(MC3	FB)  : MUX 25		Ref (A13fb)
-D6			(MC15	P)   : MUX 26		Ref (D62p)
-PTCB_TIMER4		(MC1	FB)  : MUX 28		Ref (A5fb)
-TIMERB_RATE2		(MC7	FB)  : MUX 32		Ref (C34fb)
-D7			(MC8	P)   : MUX 35		Ref (C36p)
-D3			(MC13	P)   : MUX 37		Ref (D53p)
+PTCB_TIMER4		(MC17	FB)  : MUX 1		Ref (C45fb)
+PTCB_MIDCLOCK		(MC12	FB)  : MUX 2		Ref (C38fb)
+PTCA_TIMER4		(MC7	FB)  : MUX 4		Ref (B23fb)
+PTCB_TIMER5		(MC19	FB)  : MUX 5		Ref (C48fb)
+PTCA_TIMER9		(MC6	FB)  : MUX 6		Ref (B22fb)
+PTCB_TIMER_RESET		(MC20	FB)  : MUX 7		Ref (D60fb)
+PTCB_TIMER1		(MC13	FB)  : MUX 10		Ref (C39fb)
+nPTC_CS			(MC24	P)   : MUX 17		Ref (D49p)
+PTCB_TIMER7		(MC18	FB)  : MUX 19		Ref (C47fb)
+nPTC_RW			(MC22	P)   : MUX 21		Ref (B17p)
+PTCB_TIMER0		(MC11	FB)  : MUX 22		Ref (C34fb)
+nPTC_A2			(MC23	P)   : MUX 23		Ref (B19p)
+PTCB_TIMER9		(MC4	FB)  : MUX 24		Ref (B19fb)
+PTCB_TIMER2		(MC14	FB)  : MUX 25		Ref (C42fb)
+PTCA_TIMER8		(MC3	FB)  : MUX 26		Ref (B18fb)
+PTCB_TIMER3		(MC15	FB)  : MUX 27		Ref (C43fb)
+PTCA_TIMER7		(MC2	FB)  : MUX 28		Ref (B17fb)
+PTCB_TIMER6		(MC16	FB)  : MUX 29		Ref (C44fb)
+nINTB_OUT		(MC1	P)   : MUX 30		Ref (A16p)
+PTCB_TIMER8		(MC8	FB)  : MUX 31		Ref (B25fb)
+nSYS_RESET		(MC25	FB)  : MUX 32		Ref (GCLR)
+PTCA_TIMER10		(MC9	FB)  : MUX 33		Ref (B27fb)
+PTCB_TIMER10		(MC5	FB)  : MUX 36		Ref (B20fb)
+PTCA_TIMER5		(MC10	FB)  : MUX 37		Ref (B28fb)
+PTCA_TIMER6		(MC21	FB)  : MUX 39		Ref (D61fb)
 
-FanIn assignment for block D [10]
+FanIn assignment for block D [20]
 {
-PTCA_TIMER9,PTCA_TIMER4,PTCA_TIMER7,PTCA_TIMER8,PTCA_TIMER5,
-TIMERA_RATE1,TIMERA_RATE2,TIMERA_RATE0,
-nPTC_CS,nPTC_RW,
+D3,D7,D2,D1,D0,D5,D6,D4,
+PTCA_TIMER0,PTCB_TIMER11,PTCA_TIMER11,PTCA_TIMER_RESET,PTCA_MIDCLOCK,PTCA_TIMER6,PTCA_TIMER1,
+nPTC_CS,nPTC_A2,nPTC_RW,nINTA_OUT,nSYS_RESET,
 }
 Multiplexer assignment for block D
-PTCA_TIMER9		(MC3	FB)  : MUX 3		Ref (A9fb)
-nPTC_CS			(MC9	P)   : MUX 11		Ref (D49p)
-nPTC_RW			(MC10	P)   : MUX 13		Ref (D51p)
-PTCA_TIMER4		(MC4	FB)  : MUX 19		Ref (A11fb)
-PTCA_TIMER7		(MC1	FB)  : MUX 20		Ref (A6fb)
-PTCA_TIMER8		(MC2	FB)  : MUX 22		Ref (A7fb)
-TIMERA_RATE1		(MC7	FB)  : MUX 23		Ref (C43fb)
-TIMERA_RATE2		(MC6	FB)  : MUX 25		Ref (C42fb)
-TIMERA_RATE0		(MC8	FB)  : MUX 29		Ref (C44fb)
-PTCA_TIMER5		(MC5	FB)  : MUX 37		Ref (A16fb)
+D3			(MC1	P)   : MUX 1		Ref (A1p)
+PTCA_TIMER0		(MC13	FB)  : MUX 2		Ref (D52fb)
+D7			(MC12	P)   : MUX 3		Ref (C37p)
+PTCB_TIMER11		(MC8	FB)  : MUX 5		Ref (B32fb)
+D2			(MC2	P)   : MUX 7		Ref (A3p)
+D1			(MC3	P)   : MUX 9		Ref (A4p)
+PTCA_TIMER11		(MC7	FB)  : MUX 15		Ref (B30fb)
+nPTC_CS			(MC19	P)   : MUX 17		Ref (D49p)
+PTCA_TIMER_RESET		(MC14	FB)  : MUX 19		Ref (D59fb)
+D0			(MC4	P)   : MUX 21		Ref (A5p)
+nPTC_A2			(MC18	P)   : MUX 23		Ref (B19p)
+nPTC_RW			(MC17	P)   : MUX 25		Ref (B17p)
+D5			(MC10	P)   : MUX 27		Ref (C35p)
+nINTA_OUT		(MC5	P)   : MUX 28		Ref (A14p)
+PTCA_MIDCLOCK		(MC6	FB)  : MUX 31		Ref (B26fb)
+nSYS_RESET		(MC20	FB)  : MUX 32		Ref (GCLR)
+PTCA_TIMER6		(MC15	FB)  : MUX 33		Ref (D61fb)
+D6			(MC11	P)   : MUX 35		Ref (C36p)
+D4			(MC9	P)   : MUX 37		Ref (C33p)
+PTCA_TIMER1		(MC16	FB)  : MUX 39		Ref (D63fb)
 
 Creating JEDEC file C:\USERS\JEFF\SRC\ROSCOE\PLDS\PTC\PTC.jed ...
 
 TQFP44 programmed logic:
 -----------------------------------
-D1 = 0;
+D1 = ((nPTC_A2 & PTCB_TIMER1.Q)
+	# (PTCA_TIMER1.Q & !nPTC_A2));
 
-D0 = 0;
+D0 = ((nPTC_A2 & PTCB_TIMER0.Q)
+	# (PTCA_TIMER0.Q & !nPTC_A2));
 
-D3 = 0;
+D3 = ((nPTC_A2 & PTCB_TIMER3.Q)
+	# (PTCA_TIMER3.Q & !nPTC_A2));
 
-D2 = 0;
+D2 = ((nPTC_A2 & PTCB_TIMER2.Q)
+	# (PTCA_TIMER2.Q & !nPTC_A2));
 
-D4 = 0;
+D4 = ((nPTC_A2 & PTCB_TIMER4.Q)
+	# (PTCA_TIMER4.Q & !nPTC_A2));
 
-D7 = 0;
+D7 = ((nPTC_A2 & PTCB_TIMER7.Q)
+	# (PTCA_TIMER7.Q & !nPTC_A2));
 
-D5 = 0;
+D5 = ((nPTC_A2 & PTCB_TIMER5.Q)
+	# (PTCA_TIMER5.Q & !nPTC_A2));
 
-D6 = 0;
+D6 = ((nPTC_A2 & PTCB_TIMER6.Q)
+	# (PTCA_TIMER6.Q & !nPTC_A2));
 
-D8 = 0;
+D8 = ((nPTC_A2 & PTCB_TIMER8.Q)
+	# (PTCA_TIMER8.Q & !nPTC_A2));
 
-D10 = 0;
+D10 = ((nPTC_A2 & PTCB_TIMER10.Q)
+	# (PTCA_TIMER10.Q & !nPTC_A2));
 
-D9 = 0;
+D9 = ((nPTC_A2 & PTCB_TIMER9.Q)
+	# (PTCA_TIMER9.Q & !nPTC_A2));
 
-D11 = 0;
+D11 = ((nPTC_A2 & PTCB_TIMER11.Q)
+	# (PTCA_TIMER11.Q & !nPTC_A2));
 
 D13 = 0;
 
@@ -361,7 +376,7 @@ D12 = 0;
 
 D14 = 0;
 
-PTCA_MIDCLOCK.D = (PTCA_TIMER5.Q & PTCA_TIMER4.Q & PTCA_TIMER3.Q & PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q);
+PTCA_MIDCLOCK.D = (PTCA_TIMER3.Q & PTCA_TIMER4.Q & PTCA_TIMER5.Q & PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q);
 
 D15 = 0;
 
@@ -370,74 +385,84 @@ PTCA_TIMER0.D = !PTCA_TIMER0.Q;
 PTCA_TIMER1.D = ((!PTCA_TIMER0.Q & PTCA_TIMER1.Q)
 	# (PTCA_TIMER0.Q & !PTCA_TIMER1.Q));
 
-PTCA_TIMER2.D = ((PTCA_TIMER2.Q & XXL_297)
+PTCA_TIMER2.D = ((PTCA_TIMER2.Q & XXL_293)
 	# (!PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q));
 
 PTCA_TIMER3.D = ((!PTCA_TIMER3.Q & PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q)
 	# (PTCA_TIMER3.Q & XXL_281));
 
-PTCA_TIMER5.D = ((!PTCA_TIMER5.Q & PTCA_TIMER4.Q & PTCA_TIMER3.Q & PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q)
-	# (PTCA_TIMER5.Q & XXL_319));
+PTCA_TIMER5.D = ((PTCA_TIMER5.Q & XXL_281)
+	# (!PTCA_TIMER5.Q & PTCA_TIMER3.Q & PTCA_TIMER4.Q & PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q)
+	# (PTCA_TIMER5.Q & !PTCA_TIMER4.Q)
+	# (PTCA_TIMER5.Q & !PTCA_TIMER3.Q));
 
-PTCA_TIMER4.D = ((PTCA_TIMER4.Q & XXL_282)
-	# (!PTCA_TIMER4.Q & PTCA_TIMER3.Q & PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q));
+PTCA_TIMER4.D = ((!PTCA_TIMER4.Q & PTCA_TIMER3.Q & PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q)
+	# (PTCA_TIMER4.Q & !PTCA_TIMER3.Q)
+	# (PTCA_TIMER4.Q & XXL_281));
 
 PTCA_TIMER6.D = !PTCA_TIMER6.Q;
 
 PTCA_TIMER7.D = ((!PTCA_TIMER6.Q & PTCA_TIMER7.Q)
 	# (PTCA_TIMER6.Q & !PTCA_TIMER7.Q));
 
-PTCA_TIMER8.D = ((PTCA_TIMER8.Q & XXL_296)
+PTCA_TIMER8.D = ((PTCA_TIMER8.Q & XXL_292)
 	# (!PTCA_TIMER8.Q & PTCA_TIMER6.Q & PTCA_TIMER7.Q));
 
 PTCA_TIMER9.D = ((!PTCA_TIMER9.Q & PTCA_TIMER8.Q & PTCA_TIMER6.Q & PTCA_TIMER7.Q)
 	# (PTCA_TIMER9.Q & XXL_280));
 
-PTCA_TIMER10.D = ((PTCA_TIMER10.Q & XXL_284)
-	# (!PTCA_TIMER10.Q & PTCA_TIMER9.Q & PTCA_TIMER8.Q & PTCA_TIMER6.Q & PTCA_TIMER7.Q));
+PTCA_TIMER10.D = ((!PTCA_TIMER10.Q & PTCA_TIMER9.Q & PTCA_TIMER8.Q & PTCA_TIMER6.Q & PTCA_TIMER7.Q)
+	# (PTCA_TIMER10.Q & !PTCA_TIMER9.Q)
+	# (PTCA_TIMER10.Q & XXL_280));
 
-PTCA_TIMER11.D = ((PTCA_TIMER11.Q & XXL_284)
-	# (!PTCA_TIMER11.Q & PTCA_TIMER10.Q & PTCA_TIMER9.Q & PTCA_TIMER8.Q & PTCA_TIMER6.Q & PTCA_TIMER7.Q)
-	# (PTCA_TIMER11.Q & !PTCA_TIMER10.Q));
+PTCA_TIMER11.D = ((PTCA_TIMER11.Q & XXL_280)
+	# (!PTCA_TIMER11.Q & PTCA_TIMER9.Q & PTCA_TIMER10.Q & PTCA_TIMER8.Q & PTCA_TIMER6.Q & PTCA_TIMER7.Q)
+	# (PTCA_TIMER11.Q & !PTCA_TIMER10.Q)
+	# (PTCA_TIMER11.Q & !PTCA_TIMER9.Q));
 
 PTCA_TIMER_RESET.D = D3.PIN;
 
 PTCB_TIMER0.D = !PTCB_TIMER0.Q;
 
-PTCB_MIDCLOCK.D = (PTCB_TIMER5.Q & PTCB_TIMER4.Q & PTCB_TIMER3.Q & PTCB_TIMER2.Q & PTCB_TIMER0.Q & PTCB_TIMER1.Q);
+PTCB_MIDCLOCK.D = (PTCB_TIMER3.Q & PTCB_TIMER4.Q & PTCB_TIMER5.Q & PTCB_TIMER2.Q & PTCB_TIMER0.Q & PTCB_TIMER1.Q);
 
 PTCB_TIMER1.D = ((!PTCB_TIMER0.Q & PTCB_TIMER1.Q)
 	# (PTCB_TIMER0.Q & !PTCB_TIMER1.Q));
 
-PTCB_TIMER2.D = ((PTCB_TIMER2.Q & XXL_295)
+PTCB_TIMER2.D = ((PTCB_TIMER2.Q & XXL_291)
 	# (!PTCB_TIMER2.Q & PTCB_TIMER0.Q & PTCB_TIMER1.Q));
 
 PTCB_TIMER3.D = ((!PTCB_TIMER3.Q & PTCB_TIMER2.Q & PTCB_TIMER0.Q & PTCB_TIMER1.Q)
 	# (PTCB_TIMER3.Q & XXL_279));
 
-PTCB_TIMER4.D = ((PTCB_TIMER4.Q & XXL_283)
-	# (!PTCB_TIMER4.Q & PTCB_TIMER3.Q & PTCB_TIMER2.Q & PTCB_TIMER0.Q & PTCB_TIMER1.Q));
+PTCB_TIMER4.D = ((!PTCB_TIMER4.Q & PTCB_TIMER3.Q & PTCB_TIMER2.Q & PTCB_TIMER0.Q & PTCB_TIMER1.Q)
+	# (PTCB_TIMER4.Q & !PTCB_TIMER3.Q)
+	# (PTCB_TIMER4.Q & XXL_279));
 
-PTCB_TIMER5.D = ((!PTCB_TIMER5.Q & PTCB_TIMER4.Q & PTCB_TIMER3.Q & PTCB_TIMER2.Q & PTCB_TIMER0.Q & PTCB_TIMER1.Q)
-	# (PTCB_TIMER5.Q & XXL_317));
+PTCB_TIMER5.D = ((PTCB_TIMER5.Q & XXL_279)
+	# (!PTCB_TIMER5.Q & PTCB_TIMER3.Q & PTCB_TIMER4.Q & PTCB_TIMER2.Q & PTCB_TIMER0.Q & PTCB_TIMER1.Q)
+	# (PTCB_TIMER5.Q & !PTCB_TIMER4.Q)
+	# (PTCB_TIMER5.Q & !PTCB_TIMER3.Q));
 
 PTCB_TIMER6.D = !PTCB_TIMER6.Q;
 
 PTCB_TIMER7.D = ((!PTCB_TIMER6.Q & PTCB_TIMER7.Q)
 	# (PTCB_TIMER6.Q & !PTCB_TIMER7.Q));
 
-PTCB_TIMER8.D = ((PTCB_TIMER8.Q & XXL_294)
+PTCB_TIMER8.D = ((PTCB_TIMER8.Q & XXL_290)
 	# (!PTCB_TIMER8.Q & PTCB_TIMER6.Q & PTCB_TIMER7.Q));
 
-PTCB_TIMER10.D = ((PTCB_TIMER10.Q & XXL_285)
-	# (!PTCB_TIMER10.Q & PTCB_TIMER9.Q & PTCB_TIMER8.Q & PTCB_TIMER6.Q & PTCB_TIMER7.Q));
+PTCB_TIMER10.D = ((!PTCB_TIMER10.Q & PTCB_TIMER9.Q & PTCB_TIMER8.Q & PTCB_TIMER6.Q & PTCB_TIMER7.Q)
+	# (PTCB_TIMER10.Q & !PTCB_TIMER9.Q)
+	# (PTCB_TIMER10.Q & XXL_278));
 
 PTCB_TIMER9.D = ((!PTCB_TIMER9.Q & PTCB_TIMER8.Q & PTCB_TIMER6.Q & PTCB_TIMER7.Q)
 	# (PTCB_TIMER9.Q & XXL_278));
 
-PTCB_TIMER11.D = ((PTCB_TIMER11.Q & XXL_285)
-	# (!PTCB_TIMER11.Q & PTCB_TIMER10.Q & PTCB_TIMER9.Q & PTCB_TIMER8.Q & PTCB_TIMER6.Q & PTCB_TIMER7.Q)
-	# (PTCB_TIMER11.Q & !PTCB_TIMER10.Q));
+PTCB_TIMER11.D = ((PTCB_TIMER11.Q & XXL_278)
+	# (!PTCB_TIMER11.Q & PTCB_TIMER9.Q & PTCB_TIMER10.Q & PTCB_TIMER8.Q & PTCB_TIMER6.Q & PTCB_TIMER7.Q)
+	# (PTCB_TIMER11.Q & !PTCB_TIMER10.Q)
+	# (PTCB_TIMER11.Q & !PTCB_TIMER9.Q));
 
 PTCB_TIMER_RESET.D = D7.PIN;
 
@@ -453,21 +478,29 @@ TIMERB_RATE1.D = D5.PIN;
 
 TIMERB_RATE2.D = D6.PIN;
 
-nINTA_OUT = ((!TIMERA_RATE0.Q & TIMERA_RATE1.Q & TIMERA_RATE2.Q & !PTCA_TIMER10.Q)
-	# (TIMERA_RATE0.Q & TIMERA_RATE1.Q & TIMERA_RATE2.Q & !PTCA_TIMER11.Q)
-	# XXL_322
-	# (!TIMERA_RATE0.Q & TIMERA_RATE1.Q & !TIMERA_RATE2.Q & !PTCA_TIMER6.Q));
+nINTA_OUT = ((TIMERA_RATE0.Q & TIMERA_RATE1.Q & TIMERA_RATE2.Q & !PTCA_TIMER11.Q)
+	# (TIMERA_RATE0.Q & !TIMERA_RATE1.Q & !TIMERA_RATE2.Q & !PTCA_TIMER5.Q)
+	# (TIMERA_RATE0.Q & !TIMERA_RATE1.Q & TIMERA_RATE2.Q & !PTCA_TIMER9.Q)
+	# (!TIMERA_RATE0.Q & !TIMERA_RATE1.Q & TIMERA_RATE2.Q & !PTCA_TIMER8.Q)
+	# (!TIMERA_RATE0.Q & !TIMERA_RATE1.Q & !TIMERA_RATE2.Q & !PTCA_TIMER4.Q)
+	# (!TIMERA_RATE0.Q & TIMERA_RATE1.Q & !TIMERA_RATE2.Q & !PTCA_TIMER6.Q)
+	# (!TIMERA_RATE0.Q & TIMERA_RATE1.Q & TIMERA_RATE2.Q & !PTCA_TIMER10.Q)
+	# (TIMERA_RATE0.Q & TIMERA_RATE1.Q & !PTCA_TIMER7.Q & !TIMERA_RATE2.Q));
 
-nINTB_OUT = ((!TIMERB_RATE0.Q & TIMERB_RATE1.Q & TIMERB_RATE2.Q & !PTCB_TIMER10.Q)
+nINTB_OUT = ((TIMERB_RATE0.Q & !TIMERB_RATE1.Q & TIMERB_RATE2.Q & !PTCB_TIMER9.Q)
 	# (TIMERB_RATE0.Q & TIMERB_RATE1.Q & !TIMERB_RATE2.Q & !PTCB_TIMER7.Q)
-	# XXL_323
-	# (!TIMERB_RATE0.Q & TIMERB_RATE1.Q & !TIMERB_RATE2.Q & !PTCB_TIMER6.Q));
+	# (TIMERB_RATE0.Q & TIMERB_RATE1.Q & TIMERB_RATE2.Q & !PTCB_TIMER11.Q)
+	# (!TIMERB_RATE0.Q & !TIMERB_RATE1.Q & TIMERB_RATE2.Q & !PTCB_TIMER8.Q)
+	# (!TIMERB_RATE0.Q & !TIMERB_RATE1.Q & !TIMERB_RATE2.Q & !PTCB_TIMER4.Q)
+	# (!TIMERB_RATE0.Q & TIMERB_RATE1.Q & !TIMERB_RATE2.Q & !PTCB_TIMER6.Q)
+	# (!TIMERB_RATE0.Q & TIMERB_RATE1.Q & TIMERB_RATE2.Q & !PTCB_TIMER10.Q)
+	# (TIMERB_RATE0.Q & !TIMERB_RATE1.Q & !PTCB_TIMER5.Q & !TIMERB_RATE2.Q));
 
-!Com_Ctrl_244 = (!nPTC_CS & !nPTC_RW);
+!Com_Ctrl_245 = (!nPTC_CS & !nPTC_RW);
 
-!Com_Ctrl_245 = (nINTB_OUT & PTCB_TIMER_RESET.Q & nSYS_RESET);
+!Com_Ctrl_246 = (PTCB_TIMER_RESET.Q & nSYS_RESET & nINTB_OUT);
 
-!Com_Ctrl_246 = (nINTA_OUT & PTCA_TIMER_RESET.Q & nSYS_RESET);
+!Com_Ctrl_247 = (PTCA_TIMER_RESET.Q & nSYS_RESET & nINTA_OUT);
 
 !XXL_278 = (PTCB_TIMER8.Q & PTCB_TIMER6.Q & PTCB_TIMER7.Q);
 
@@ -477,41 +510,17 @@ nINTB_OUT = ((!TIMERB_RATE0.Q & TIMERB_RATE1.Q & TIMERB_RATE2.Q & !PTCB_TIMER10.
 
 !XXL_281 = (PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q);
 
-!XXL_282 = (PTCA_TIMER3.Q & PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q);
+!XXL_290 = (PTCB_TIMER6.Q & PTCB_TIMER7.Q);
 
-!XXL_283 = (PTCB_TIMER3.Q & PTCB_TIMER2.Q & PTCB_TIMER0.Q & PTCB_TIMER1.Q);
+!XXL_291 = (PTCB_TIMER0.Q & PTCB_TIMER1.Q);
 
-!XXL_284 = (PTCA_TIMER9.Q & PTCA_TIMER8.Q & PTCA_TIMER6.Q & PTCA_TIMER7.Q);
+!XXL_292 = (PTCA_TIMER6.Q & PTCA_TIMER7.Q);
 
-!XXL_285 = (PTCB_TIMER9.Q & PTCB_TIMER8.Q & PTCB_TIMER6.Q & PTCB_TIMER7.Q);
+!XXL_293 = (PTCA_TIMER0.Q & PTCA_TIMER1.Q);
 
-!XXL_294 = (PTCB_TIMER6.Q & PTCB_TIMER7.Q);
+!FB_294 = (nSYS_RESET & PTCB_TIMER_RESET.Q);
 
-!XXL_295 = (PTCB_TIMER0.Q & PTCB_TIMER1.Q);
-
-!XXL_296 = (PTCA_TIMER6.Q & PTCA_TIMER7.Q);
-
-!XXL_297 = (PTCA_TIMER0.Q & PTCA_TIMER1.Q);
-
-!XXL_317 = (PTCB_TIMER4.Q & PTCB_TIMER3.Q & PTCB_TIMER2.Q & PTCB_TIMER0.Q & PTCB_TIMER1.Q);
-
-!XXL_319 = (PTCA_TIMER4.Q & PTCA_TIMER3.Q & PTCA_TIMER2.Q & PTCA_TIMER0.Q & PTCA_TIMER1.Q);
-
-!FB_320 = (nSYS_RESET & PTCB_TIMER_RESET.Q);
-
-!FB_321 = (nSYS_RESET & PTCA_TIMER_RESET.Q);
-
-XXL_322 = ((TIMERA_RATE0.Q & !TIMERA_RATE1.Q & !TIMERA_RATE2.Q & !PTCA_TIMER5.Q)
-	# (TIMERA_RATE0.Q & !TIMERA_RATE1.Q & TIMERA_RATE2.Q & !PTCA_TIMER9.Q)
-	# (!TIMERA_RATE0.Q & !TIMERA_RATE1.Q & TIMERA_RATE2.Q & !PTCA_TIMER8.Q)
-	# (!TIMERA_RATE0.Q & !TIMERA_RATE1.Q & !TIMERA_RATE2.Q & !PTCA_TIMER4.Q)
-	# (TIMERA_RATE0.Q & TIMERA_RATE1.Q & !TIMERA_RATE2.Q & !PTCA_TIMER7.Q));
-
-XXL_323 = ((TIMERB_RATE0.Q & !TIMERB_RATE1.Q & TIMERB_RATE2.Q & !PTCB_TIMER9.Q)
-	# (TIMERB_RATE0.Q & !TIMERB_RATE1.Q & !TIMERB_RATE2.Q & !PTCB_TIMER5.Q)
-	# (!TIMERB_RATE0.Q & !TIMERB_RATE1.Q & TIMERB_RATE2.Q & !PTCB_TIMER8.Q)
-	# (!TIMERB_RATE0.Q & !TIMERB_RATE1.Q & !TIMERB_RATE2.Q & !PTCB_TIMER4.Q)
-	# (TIMERB_RATE0.Q & TIMERB_RATE1.Q & TIMERB_RATE2.Q & !PTCB_TIMER11.Q));
+!FB_295 = (nSYS_RESET & PTCA_TIMER_RESET.Q);
 
 D1.OE = (!nPTC_CS & nPTC_RW);
 
@@ -545,139 +554,139 @@ D14.OE = (!nPTC_CS & nPTC_RW);
 
 PTCA_MIDCLOCK.C = PTCA_CLOCK;
 
-PTCA_MIDCLOCK.AR = FB_321;
+PTCA_MIDCLOCK.AR = FB_295;
 
 D15.OE = (!nPTC_CS & nPTC_RW);
 
 PTCA_TIMER0.C = PTCA_CLOCK;
 
-PTCA_TIMER0.AR = Com_Ctrl_246;
+PTCA_TIMER0.AR = Com_Ctrl_247;
 
 PTCA_TIMER1.C = PTCA_CLOCK;
 
-PTCA_TIMER1.AR = Com_Ctrl_246;
+PTCA_TIMER1.AR = Com_Ctrl_247;
 
 PTCA_TIMER2.C = PTCA_CLOCK;
 
-PTCA_TIMER2.AR = Com_Ctrl_246;
+PTCA_TIMER2.AR = Com_Ctrl_247;
 
 PTCA_TIMER3.C = PTCA_CLOCK;
 
-PTCA_TIMER3.AR = Com_Ctrl_246;
+PTCA_TIMER3.AR = Com_Ctrl_247;
 
 PTCA_TIMER5.C = PTCA_CLOCK;
 
-PTCA_TIMER5.AR = Com_Ctrl_246;
+PTCA_TIMER5.AR = Com_Ctrl_247;
 
 PTCA_TIMER4.C = PTCA_CLOCK;
 
-PTCA_TIMER4.AR = Com_Ctrl_246;
+PTCA_TIMER4.AR = Com_Ctrl_247;
 
 PTCA_TIMER6.C = PTCA_MIDCLOCK.Q;
 
-PTCA_TIMER6.AR = Com_Ctrl_246;
+PTCA_TIMER6.AR = Com_Ctrl_247;
 
 PTCA_TIMER7.C = PTCA_MIDCLOCK.Q;
 
-PTCA_TIMER7.AR = Com_Ctrl_246;
+PTCA_TIMER7.AR = Com_Ctrl_247;
 
 PTCA_TIMER8.C = PTCA_MIDCLOCK.Q;
 
-PTCA_TIMER8.AR = Com_Ctrl_246;
+PTCA_TIMER8.AR = Com_Ctrl_247;
 
 PTCA_TIMER9.C = PTCA_MIDCLOCK.Q;
 
-PTCA_TIMER9.AR = Com_Ctrl_246;
+PTCA_TIMER9.AR = Com_Ctrl_247;
 
 PTCA_TIMER10.C = PTCA_MIDCLOCK.Q;
 
-PTCA_TIMER10.AR = Com_Ctrl_246;
+PTCA_TIMER10.AR = Com_Ctrl_247;
 
 PTCA_TIMER11.C = PTCA_MIDCLOCK.Q;
 
-PTCA_TIMER11.AR = Com_Ctrl_246;
+PTCA_TIMER11.AR = Com_Ctrl_247;
 
-PTCA_TIMER_RESET.C = Com_Ctrl_244;
+PTCA_TIMER_RESET.C = Com_Ctrl_245;
 
 PTCA_TIMER_RESET.AR = !nSYS_RESET;
 
 PTCB_TIMER0.C = PTCB_CLOCK;
 
-PTCB_TIMER0.AR = Com_Ctrl_245;
+PTCB_TIMER0.AR = Com_Ctrl_246;
 
 PTCB_MIDCLOCK.C = PTCB_CLOCK;
 
-PTCB_MIDCLOCK.AR = FB_320;
+PTCB_MIDCLOCK.AR = FB_294;
 
 PTCB_TIMER1.C = PTCB_CLOCK;
 
-PTCB_TIMER1.AR = Com_Ctrl_245;
+PTCB_TIMER1.AR = Com_Ctrl_246;
 
 PTCB_TIMER2.C = PTCB_CLOCK;
 
-PTCB_TIMER2.AR = Com_Ctrl_245;
+PTCB_TIMER2.AR = Com_Ctrl_246;
 
 PTCB_TIMER3.C = PTCB_CLOCK;
 
-PTCB_TIMER3.AR = Com_Ctrl_245;
+PTCB_TIMER3.AR = Com_Ctrl_246;
 
 PTCB_TIMER4.C = PTCB_CLOCK;
 
-PTCB_TIMER4.AR = Com_Ctrl_245;
+PTCB_TIMER4.AR = Com_Ctrl_246;
 
 PTCB_TIMER5.C = PTCB_CLOCK;
 
-PTCB_TIMER5.AR = Com_Ctrl_245;
+PTCB_TIMER5.AR = Com_Ctrl_246;
 
 PTCB_TIMER6.C = PTCB_MIDCLOCK.Q;
 
-PTCB_TIMER6.AR = Com_Ctrl_245;
+PTCB_TIMER6.AR = Com_Ctrl_246;
 
 PTCB_TIMER7.C = PTCB_MIDCLOCK.Q;
 
-PTCB_TIMER7.AR = Com_Ctrl_245;
+PTCB_TIMER7.AR = Com_Ctrl_246;
 
 PTCB_TIMER8.C = PTCB_MIDCLOCK.Q;
 
-PTCB_TIMER8.AR = Com_Ctrl_245;
+PTCB_TIMER8.AR = Com_Ctrl_246;
 
 PTCB_TIMER10.C = PTCB_MIDCLOCK.Q;
 
-PTCB_TIMER10.AR = Com_Ctrl_245;
+PTCB_TIMER10.AR = Com_Ctrl_246;
 
 PTCB_TIMER9.C = PTCB_MIDCLOCK.Q;
 
-PTCB_TIMER9.AR = Com_Ctrl_245;
+PTCB_TIMER9.AR = Com_Ctrl_246;
 
 PTCB_TIMER11.C = PTCB_MIDCLOCK.Q;
 
-PTCB_TIMER11.AR = Com_Ctrl_245;
+PTCB_TIMER11.AR = Com_Ctrl_246;
 
-PTCB_TIMER_RESET.C = Com_Ctrl_244;
+PTCB_TIMER_RESET.C = Com_Ctrl_245;
 
 PTCB_TIMER_RESET.AR = !nSYS_RESET;
 
-TIMERA_RATE0.C = Com_Ctrl_244;
+TIMERA_RATE0.C = Com_Ctrl_245;
 
 TIMERA_RATE0.AR = !nSYS_RESET;
 
-TIMERA_RATE1.C = Com_Ctrl_244;
+TIMERA_RATE1.C = Com_Ctrl_245;
 
 TIMERA_RATE1.AR = !nSYS_RESET;
 
-TIMERA_RATE2.C = Com_Ctrl_244;
+TIMERA_RATE2.C = Com_Ctrl_245;
 
 TIMERA_RATE2.AR = !nSYS_RESET;
 
-TIMERB_RATE0.C = Com_Ctrl_244;
+TIMERB_RATE0.C = Com_Ctrl_245;
 
 TIMERB_RATE0.AR = !nSYS_RESET;
 
-TIMERB_RATE1.C = Com_Ctrl_244;
+TIMERB_RATE1.C = Com_Ctrl_245;
 
 TIMERB_RATE1.AR = !nSYS_RESET;
 
-TIMERB_RATE2.C = Com_Ctrl_244;
+TIMERB_RATE2.C = Com_Ctrl_245;
 
 TIMERB_RATE2.AR = !nSYS_RESET;
 
@@ -685,89 +694,82 @@ TIMERB_RATE2.AR = !nSYS_RESET;
 TQFP44 Pin/Node Placement:
 ------------------------------------
 Pin 1  = TDI; /* MC 8 */
+Pin 2  = D0; /* MC 5 */
+Pin 3  = D1; /* MC 4 */
+Pin 5  = D2; /* MC 3 */
+Pin 6  = D3; /* MC 1 */
 Pin 7  = TMS; /* MC 32 */
-Pin 8  = nINTB_OUT; /* MC 30 */
-Pin 10 = nINTA_OUT; /* MC 25 */ 
-Pin 11 = D14; /* MC 24 */ 
-Pin 12 = D13; /* MC 21 */ 
-Pin 13 = D15; /* MC 20 */ 
-Pin 14 = D12; /* MC 19 */ 
+Pin 14 = nPTC_A2; /* MC 19 */ 
+Pin 15 = nPTC_RW; /* MC 17 */ 
 Pin 18 = D4; /* MC 33 */ 
-Pin 19 = D8; /* MC 35 */ 
-Pin 20 = D7; /* MC 36 */ 
-Pin 21 = D5; /* MC 37 */ 
-Pin 22 = D10; /* MC 40 */ 
+Pin 19 = D5; /* MC 35 */ 
+Pin 20 = D6; /* MC 36 */ 
+Pin 21 = D7; /* MC 37 */ 
+Pin 22 = D8; /* MC 40 */ 
 Pin 23 = D9; /* MC 41 */ 
-Pin 25 = D11; /* MC 46 */ 
+Pin 25 = D10; /* MC 46 */ 
 Pin 26 = TCK; /* MC 48 */ 
 Pin 27 = nPTC_CS; /* MC 49 */ 
-Pin 28 = nPTC_RW; /* MC 51 */ 
-Pin 30 = D0; /* MC 52 */ 
-Pin 31 = D3; /* MC 53 */ 
+Pin 31 = D11; /* MC 53 */ 
 Pin 32 = TDO; /* MC 56 */ 
-Pin 33 = D1; /* MC 57 */ 
-Pin 34 = D6; /* MC 62 */ 
-Pin 35 = D2; /* MC 64 */ 
+Pin 33 = D12; /* MC 57 */ 
+Pin 34 = D13; /* MC 62 */ 
+Pin 35 = D14; /* MC 64 */ 
 Pin 37 = PTCB_CLOCK;
 Pin 39 = nSYS_RESET;
 Pin 40 = PTCA_CLOCK;
-PINNODE 301 = FB_321; /* MC 1 Foldback */
-PINNODE 302 = FB_320; /* MC 2 Foldback */
-PINNODE 303 = XXL_319; /* MC 3 Foldback */
-PINNODE 304 = XXL_317; /* MC 4 Foldback */
-PINNODE 305 = XXL_296; /* MC 5 Foldback */
-PINNODE 306 = XXL_285; /* MC 6 Foldback */
-PINNODE 307 = XXL_284; /* MC 7 Foldback */
-PINNODE 308 = XXL_283; /* MC 8 Foldback */
-PINNODE 309 = XXL_282; /* MC 9 Foldback */
-PINNODE 310 = XXL_281; /* MC 10 Foldback */
-PINNODE 311 = XXL_280; /* MC 11 Foldback */
-PINNODE 312 = XXL_278; /* MC 12 Foldback */
-PINNODE 314 = Com_Ctrl_246; /* MC 14 Foldback */
-PINNODE 316 = Com_Ctrl_245; /* MC 16 Foldback */
-PINNODE 327 = XXL_297; /* MC 27 Foldback */
-PINNODE 328 = XXL_295; /* MC 28 Foldback */
-PINNODE 329 = XXL_294; /* MC 29 Foldback */
-PINNODE 330 = XXL_279; /* MC 30 Foldback */
-PINNODE 331 = Com_Ctrl_246; /* MC 31 Foldback */
-PINNODE 332 = Com_Ctrl_245; /* MC 32 Foldback */
-PINNODE 347 = Com_Ctrl_244; /* MC 47 Foldback */
-PINNODE 601 = PTCB_MIDCLOCK; /* MC 1 Feedback */
-PINNODE 602 = PTCB_TIMER7; /* MC 2 Feedback */
-PINNODE 603 = PTCA_MIDCLOCK; /* MC 3 Feedback */
-PINNODE 604 = PTCA_TIMER3; /* MC 4 Feedback */
-PINNODE 605 = PTCB_TIMER4; /* MC 5 Feedback */
-PINNODE 606 = PTCA_TIMER7; /* MC 6 Feedback */
-PINNODE 607 = PTCA_TIMER8; /* MC 7 Feedback */
-PINNODE 608 = PTCB_TIMER9; /* MC 8 Feedback */
-PINNODE 609 = PTCA_TIMER9; /* MC 9 Feedback */
-PINNODE 610 = PTCB_TIMER10; /* MC 10 Feedback */
-PINNODE 611 = PTCA_TIMER4; /* MC 11 Feedback */
-PINNODE 612 = PTCA_TIMER10; /* MC 12 Feedback */
-PINNODE 613 = PTCB_TIMER11; /* MC 13 Feedback */
-PINNODE 614 = PTCB_TIMER5; /* MC 14 Feedback */
-PINNODE 615 = PTCA_TIMER11; /* MC 15 Feedback */
-PINNODE 616 = PTCA_TIMER5; /* MC 16 Feedback */
-PINNODE 617 = PTCB_TIMER0; /* MC 17 Feedback */
-PINNODE 618 = PTCA_TIMER0; /* MC 18 Feedback */
-PINNODE 622 = PTCB_TIMER6; /* MC 22 Feedback */
-PINNODE 623 = PTCB_TIMER1; /* MC 23 Feedback */
-PINNODE 626 = PTCA_TIMER6; /* MC 26 Feedback */
-PINNODE 627 = PTCA_TIMER1; /* MC 27 Feedback */
-PINNODE 628 = PTCB_TIMER2; /* MC 28 Feedback */
-PINNODE 629 = PTCA_TIMER2; /* MC 29 Feedback */
-PINNODE 631 = PTCB_TIMER3; /* MC 31 Feedback */
-PINNODE 632 = PTCB_TIMER8; /* MC 32 Feedback */
-PINNODE 634 = TIMERB_RATE2; /* MC 34 Feedback */
-PINNODE 638 = TIMERB_RATE0; /* MC 38 Feedback */
-PINNODE 639 = TIMERB_RATE1; /* MC 39 Feedback */
-PINNODE 642 = TIMERA_RATE2; /* MC 42 Feedback */
-PINNODE 643 = TIMERA_RATE1; /* MC 43 Feedback */
-PINNODE 644 = TIMERA_RATE0; /* MC 44 Feedback */
-PINNODE 645 = PTCA_TIMER_RESET; /* MC 45 Feedback */
-PINNODE 647 = PTCB_TIMER_RESET; /* MC 47 Feedback */
-PINNODE 648 = XXL_323; /* MC 48 Feedback */
-PINNODE 663 = XXL_322; /* MC 63 Feedback */
+Pin 42 = nINTB_OUT; /* MC 16 */ 
+Pin 43 = nINTA_OUT; /* MC 14 */ 
+Pin 44 = D15; /* MC 11 */ 
+PINNODE 321 = FB_295; /* MC 21 Foldback */
+PINNODE 322 = XXL_293; /* MC 22 Foldback */
+PINNODE 323 = XXL_292; /* MC 23 Foldback */
+PINNODE 324 = XXL_290; /* MC 24 Foldback */
+PINNODE 325 = XXL_281; /* MC 25 Foldback */
+PINNODE 329 = XXL_280; /* MC 29 Foldback */
+PINNODE 330 = XXL_278; /* MC 30 Foldback */
+PINNODE 331 = Com_Ctrl_247; /* MC 31 Foldback */
+PINNODE 332 = Com_Ctrl_246; /* MC 32 Foldback */
+PINNODE 344 = FB_294; /* MC 44 Foldback */
+PINNODE 345 = XXL_291; /* MC 45 Foldback */
+PINNODE 346 = XXL_279; /* MC 46 Foldback */
+PINNODE 347 = Com_Ctrl_246; /* MC 47 Foldback */
+PINNODE 363 = Com_Ctrl_247; /* MC 63 Foldback */
+PINNODE 364 = Com_Ctrl_245; /* MC 64 Foldback */
+PINNODE 617 = PTCA_TIMER7; /* MC 17 Feedback */
+PINNODE 618 = PTCA_TIMER8; /* MC 18 Feedback */
+PINNODE 619 = PTCB_TIMER9; /* MC 19 Feedback */
+PINNODE 620 = PTCB_TIMER10; /* MC 20 Feedback */
+PINNODE 621 = PTCA_TIMER2; /* MC 21 Feedback */
+PINNODE 622 = PTCA_TIMER9; /* MC 22 Feedback */
+PINNODE 623 = PTCA_TIMER4; /* MC 23 Feedback */
+PINNODE 624 = PTCA_TIMER3; /* MC 24 Feedback */
+PINNODE 625 = PTCB_TIMER8; /* MC 25 Feedback */
+PINNODE 626 = PTCA_MIDCLOCK; /* MC 26 Feedback */
+PINNODE 627 = PTCA_TIMER10; /* MC 27 Feedback */
+PINNODE 628 = PTCA_TIMER5; /* MC 28 Feedback */
+PINNODE 630 = PTCA_TIMER11; /* MC 30 Feedback */
+PINNODE 632 = PTCB_TIMER11; /* MC 32 Feedback */
+PINNODE 634 = PTCB_TIMER0; /* MC 34 Feedback */
+PINNODE 638 = PTCB_MIDCLOCK; /* MC 38 Feedback */
+PINNODE 639 = PTCB_TIMER1; /* MC 39 Feedback */
+PINNODE 642 = PTCB_TIMER2; /* MC 42 Feedback */
+PINNODE 643 = PTCB_TIMER3; /* MC 43 Feedback */
+PINNODE 644 = PTCB_TIMER6; /* MC 44 Feedback */
+PINNODE 645 = PTCB_TIMER4; /* MC 45 Feedback */
+PINNODE 647 = PTCB_TIMER7; /* MC 47 Feedback */
+PINNODE 648 = PTCB_TIMER5; /* MC 48 Feedback */
+PINNODE 649 = TIMERB_RATE2; /* MC 49 Feedback */
+PINNODE 650 = TIMERB_RATE1; /* MC 50 Feedback */
+PINNODE 652 = PTCA_TIMER0; /* MC 52 Feedback */
+PINNODE 654 = TIMERA_RATE2; /* MC 54 Feedback */
+PINNODE 655 = TIMERA_RATE1; /* MC 55 Feedback */
+PINNODE 656 = TIMERB_RATE0; /* MC 56 Feedback */
+PINNODE 658 = TIMERA_RATE0; /* MC 58 Feedback */
+PINNODE 659 = PTCA_TIMER_RESET; /* MC 59 Feedback */
+PINNODE 660 = PTCB_TIMER_RESET; /* MC 60 Feedback */
+PINNODE 661 = PTCA_TIMER6; /* MC 61 Feedback */
+PINNODE 663 = PTCA_TIMER1; /* MC 63 Feedback */
 
 ** Resource Usage **
 
@@ -786,92 +788,92 @@ DCERP Field = Summary of Allocations.
 
 For input only = INPUT.
 
-MCell Pin# Oe   PinDrive   DCERP  FBDrive          DCERP  Foldback     CascadeOut     TotPT output_slew
-MC1   6         --                PTCB_MIDCLOCK    Dg-r-  FB_321       --             3     slow
-MC2   0         --                PTCB_TIMER7      Dc-r-  FB_320       --             5     slow
-MC3   5         --                PTCA_MIDCLOCK    Dg-r-  XXL_319      --             3     slow
-MC4   3         --                PTCA_TIMER3      Dg-r-  XXL_317      --             4     slow
-MC5   2         --                PTCB_TIMER4      Dg-r-  XXL_296      --             4     slow
-MC6   0         --                PTCA_TIMER7      Dc-r-  XXL_285      --             5     slow
-MC7   0         --                PTCA_TIMER8      Dc-r-  XXL_284      --             5     slow
-MC8   1    --   TDI        INPUT  PTCB_TIMER9      Dc-r-  XXL_283      --             5     slow
-MC9   0         --                PTCA_TIMER9      Dc-r-  XXL_282      --             5     slow
-MC10  0         --                PTCB_TIMER10     Dc-r-  XXL_281      --             5     slow
-MC11  44        --                PTCA_TIMER4      Dg-r-  XXL_280      --             4     slow
-MC12  0         --                PTCA_TIMER10     Dc-r-  XXL_278      --             5     slow
-MC13  0         --                PTCB_TIMER11     Dc-r-  NA           --             5     slow
-MC14  43        --                PTCB_TIMER5      Dg-r-  Com_Ctrl_246 --             4     slow
-MC15  0         --                PTCA_TIMER11     Dc-r-  NA           --             5     slow
-MC16  42        --                PTCA_TIMER5      Dg-r-  Com_Ctrl_245 --             4     slow
-MC17  15        --                PTCB_TIMER0      Dg-r-  --           --             2     slow
-MC18  0         --                PTCA_TIMER0      Dg-r-  --           --             2     slow
-MC19  14   PT   D12        C----  --                      --           --             1     slow
-MC20  13   PT   D15        C----  --                      --           --             1     slow
-MC21  12   PT   D13        C----  --                      --           --             1     slow
-MC22  0         --                PTCB_TIMER6      Dc-r-  --           --             3     slow
-MC23  0         --                PTCB_TIMER1      Dg-r-  --           --             3     slow
-MC24  11   PT   D14        C----  --                      --           --             1     slow
-MC25  10   on   nINTA_OUT  C----  --                      --           --             4     slow
-MC26  0         --                PTCA_TIMER6      Dc-r-  --           --             3     slow
-MC27  0         --                PTCA_TIMER1      Dg-r-  XXL_297      --             4     slow
-MC28  0         --                PTCB_TIMER2      Dg-r-  XXL_295      --             4     slow
-MC29  0         --                PTCA_TIMER2      Dg-r-  XXL_294      --             4     slow
-MC30  8    on   nINTB_OUT  C----  --                      XXL_279      --             5     slow
-MC31  0         --                PTCB_TIMER3      Dg-r-  Com_Ctrl_246 --             4     slow
-MC32  7    --   TMS        INPUT  PTCB_TIMER8      Dc-r-  Com_Ctrl_245 --             5     slow
-MC33  18   PT   D4         C----  --                      --           --             1     slow
-MC34  0         --                TIMERB_RATE2     Dc-g-  --           --             2     slow
-MC35  19   PT   D8         C----  --                      --           --             1     slow
-MC36  20   PT   D7         C----  --                      --           --             1     slow
-MC37  21   PT   D5         C----  --                      --           --             1     slow
-MC38  0         --                TIMERB_RATE0     Dc-g-  --           --             2     slow
-MC39  0         --                TIMERB_RATE1     Dc-g-  --           --             2     slow
-MC40  22   PT   D10        C----  --                      --           --             1     slow
-MC41  23   PT   D9         C----  --                      --           --             1     slow
-MC42  0         --                TIMERA_RATE2     Dc-g-  --           --             2     slow
-MC43  0         --                TIMERA_RATE1     Dc-g-  --           --             2     slow
-MC44  0         --                TIMERA_RATE0     Dc-g-  --           --             2     slow
-MC45  0         --                PTCA_TIMER_RESET Dc-g-  --           --             2     slow
-MC46  25   PT   D11        C----  --                      --           --             1     slow
-MC47  0         --                PTCB_TIMER_RESET Dc-g-  Com_Ctrl_244 --             3     slow
-MC48  26   --   TCK        INPUT  XXL_323          C----  NA           --             5     slow
-MC49  27   --   nPTC_CS    INPUT  --                      --           --             0     slow
-MC50  0         --                --                      --           --             0     slow
-MC51  28   --   nPTC_RW    INPUT  --                      --           --             0     slow
-MC52  30   PT   D0         C----  --                      --           --             1     slow
-MC53  31   PT   D3         C----  --                      --           --             1     slow
-MC54  0         --                --                      --           --             0     slow
-MC55  0         --                --                      --           --             0     slow
-MC56  32   --   TDO        INPUT  --                      --           --             0     slow
-MC57  33   PT   D1         C----  --                      --           --             1     slow
-MC58  0         --                --                      --           --             0     slow
-MC59  0         --                --                      --           --             0     slow
-MC60  0         --                --                      --           --             0     slow
-MC61  0         --                --                      --           --             0     slow
-MC62  34   PT   D6         C----  --                      --           --             1     slow
-MC63  0         --                XXL_322          C----  NA           --             5     slow
-MC64  35   PT   D2         C----  --                      --           --             1     slow
-MC0   40        PTCA_CLOCK INPUT  --                      --           --             0     slow
-MC0   39        nSYS_RESET INPUT  --                      --           --             0     slow
-MC0   38        --                --                      --           --             0     slow
-MC0   37        PTCB_CLOCK INPUT  --                      --           --             0     slow
+MCell Pin# Oe   PinDrive   DCERP  FBDrive          DCERP  Foldback     CascadeOut      TotPT output_slew
+MC1   6    PT   D3         C----  --                      --           --              3     slow
+MC2   0         --                --                      --           --              0     slow
+MC3   5    PT   D2         C----  --                      --           --              3     slow
+MC4   3    PT   D1         C----  --                      --           --              3     slow
+MC5   2    PT   D0         C----  --                      --           --              3     slow
+MC6   0         --                --                      --           --              0     slow
+MC7   0         --                --                      --           --              0     slow
+MC8   1    --   TDI        INPUT  --                      --           --              0     slow
+MC9   0         --                --                      --           --              0     slow
+MC10  0         --                --                      --           --              0     slow
+MC11  44   PT   D15        C----  --                      --           --              1     slow
+MC12  0         --                --                      --           --              0     slow
+MC13  0         --                --                      --           -> nINTA_OUT    5     slow
+MC14  43   on   nINTA_OUT  C----  --                      --           --              3     slow
+MC15  0         --                --                      --           -> nINTB_OUT    5     slow
+MC16  42   on   nINTB_OUT  C----  --                      --           --              3     slow
+MC17  15   --   nPTC_RW    INPUT  PTCA_TIMER7      Dc-r-  --           --              4     slow
+MC18  0         --                PTCA_TIMER8      Dc-r-  --           --              4     slow
+MC19  14   --   nPTC_A2    INPUT  PTCB_TIMER9      Dc-r-  --           --              4     slow
+MC20  13        --                PTCB_TIMER10     Dc-r-  NA           --              5     slow
+MC21  12        --                PTCA_TIMER2      Dg-r-  FB_295       --              4     slow
+MC22  0         --                PTCA_TIMER9      Dc-r-  XXL_293      --              5     slow
+MC23  0         --                PTCA_TIMER4      Dg-r-  XXL_292      --              5     slow
+MC24  11        --                PTCA_TIMER3      Dg-r-  XXL_290      --              4     slow
+MC25  10        --                PTCB_TIMER8      Dc-r-  XXL_281      --              5     slow
+MC26  0         --                PTCA_MIDCLOCK    Dg-r-  --           --              2     slow
+MC27  0         --                PTCA_TIMER10     Dc-r-  NA           --              5     slow
+MC28  0         --                PTCA_TIMER5      Dg-r-  NA           --              5     slow
+MC29  0         --                --                      XXL_280      -> PTCA_TIMER11 5     slow
+MC30  8         --                PTCA_TIMER11     Dc-r-  XXL_278      --              3     slow
+MC31  0         --                --                      Com_Ctrl_247 -> PTCB_TIMER11 5     slow
+MC32  7    --   TMS        INPUT  PTCB_TIMER11     Dc-r-  Com_Ctrl_246 --              3     slow
+MC33  18   PT   D4         C----  --                      --           --              3     slow
+MC34  0         --                PTCB_TIMER0      Dg-r-  --           --              2     slow
+MC35  19   PT   D5         C----  --                      --           --              3     slow
+MC36  20   PT   D6         C----  --                      --           --              3     slow
+MC37  21   PT   D7         C----  --                      --           --              3     slow
+MC38  0         --                PTCB_MIDCLOCK    Dg-r-  --           --              2     slow
+MC39  0         --                PTCB_TIMER1      Dg-r-  --           --              3     slow
+MC40  22   PT   D8         C----  --                      --           --              3     slow
+MC41  23   PT   D9         C----  --                      --           --              3     slow
+MC42  0         --                PTCB_TIMER2      Dg-r-  --           --              3     slow
+MC43  0         --                PTCB_TIMER3      Dg-r-  --           --              3     slow
+MC44  0         --                PTCB_TIMER6      Dc-r-  FB_294       --              4     slow
+MC45  0         --                PTCB_TIMER4      Dg-r-  XXL_291      --              5     slow
+MC46  25   PT   D10        C----  --                      XXL_279      --              4     slow
+MC47  0         --                PTCB_TIMER7      Dc-r-  Com_Ctrl_246 --              5     slow
+MC48  26   --   TCK        INPUT  PTCB_TIMER5      Dg-r-  NA           --              5     slow
+MC49  27   --   nPTC_CS    INPUT  TIMERB_RATE2     Dc-g-  --           --              2     slow
+MC50  0         --                TIMERB_RATE1     Dc-g-  --           --              2     slow
+MC51  28        --                --                      --           --              0     slow
+MC52  30        --                PTCA_TIMER0      Dg-r-  --           --              2     slow
+MC53  31   PT   D11        C----  --                      --           --              3     slow
+MC54  0         --                TIMERA_RATE2     Dc-g-  --           --              2     slow
+MC55  0         --                TIMERA_RATE1     Dc-g-  --           --              2     slow
+MC56  32   --   TDO        INPUT  TIMERB_RATE0     Dc-g-  --           --              2     slow
+MC57  33   PT   D12        C----  --                      --           --              1     slow
+MC58  0         --                TIMERA_RATE0     Dc-g-  --           --              2     slow
+MC59  0         --                PTCA_TIMER_RESET Dc-g-  --           --              2     slow
+MC60  0         --                PTCB_TIMER_RESET Dc-g-  --           --              2     slow
+MC61  0         --                PTCA_TIMER6      Dc-r-  --           --              3     slow
+MC62  34   PT   D13        C----  --                      --           --              1     slow
+MC63  0         --                PTCA_TIMER1      Dg-r-  Com_Ctrl_247 --              4     slow
+MC64  35   PT   D14        C----  --                      Com_Ctrl_245 --              2     slow
+MC0   40        PTCA_CLOCK INPUT  --                      --           --              0     slow
+MC0   39        nSYS_RESET INPUT  --                      --           --              0     slow
+MC0   38        --                --                      --           --              0     slow
+MC0   37        PTCB_CLOCK INPUT  --                      --           --              0     slow
 
 Logic Array Block	Logic Cells	I/O Pins	Foldbacks	TotalPT		FanIN	Cascades
-A: LC1	- LC16		16/16(100%)	1/16(6%)	14/16(87%)	71/80(88%)	(31)	0
-B: LC17	- LC32		16/16(100%)	7/16(43%)	6/16(37%)	47/80(58%)	(31)	0
-C: LC33	- LC48		16/16(100%)	8/16(50%)	1/16(6%)	29/80(36%)	(18)	0
-D: LC49	- LC64		6/16(37%)	8/16(50%)	0/16(0%)	10/80(12%)	(10)	0
+A: LC1	- LC16		7/16(43%)	8/16(50%)	0/16(0%)	29/80(36%)	(33)	2
+B: LC17	- LC32		14/16(87%)	3/16(18%)	9/16(56%)	68/80(85%)	(25)	2
+C: LC33	- LC48		16/16(100%)	8/16(50%)	4/16(25%)	54/80(67%)	(25)	0
+D: LC49	- LC64		15/16(93%)	6/16(37%)	2/16(12%)	32/80(40%)	(20)	0
 
 Total dedicated input used:	3/4 	(75%)
-Total I/O pins used		24/32 	(75%)
-Total Logic cells used 		54/64 	(84%)
+Total I/O pins used		25/32 	(78%)
+Total Logic cells used 		56/64 	(87%)
 Total Flip-Flop used 		34/64 	(53%)
-Total Foldback logic used 	21/64 	(32%)
-Total Nodes+FB/MCells 		75/64 	(117%)
-Total cascade used 		0
-Total input pins 		9
+Total Foldback logic used 	15/64 	(23%)
+Total Nodes+FB/MCells 		67/64 	(104%)
+Total cascade used 		4
+Total input pins 		10
 Total output pins 		18
-Total Pts 			157
+Total Pts 			183
 Creating pla file C:\USERS\JEFF\SRC\ROSCOE\PLDS\PTC\PTC.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
 
 ----------------  End fitter, Design FITS

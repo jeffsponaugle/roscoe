@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Wed May 21 15:00:37 2025 "}
+  {DBtime "Wed May 21 20:25:06 2025 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,29 +33,128 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
+   {P PTCB_CLO {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P NPTC_A2 {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
+   {P NPTC_RW {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P NPTC_CS {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
+   {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P PTCA_CLO {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
+   {P D0 {Pt "I/O"}{Lq 0}{Ploc 360 20}}
+   {P D1 {Pt "I/O"}{Lq 0}{Ploc 360 40}}
+   {P D2 {Pt "I/O"}{Lq 0}{Ploc 360 60}}
+   {P D3 {Pt "I/O"}{Lq 0}{Ploc 360 80}}
+   {P D4 {Pt "I/O"}{Lq 0}{Ploc 360 100}}
+   {P D5 {Pt "I/O"}{Lq 0}{Ploc 360 120}}
+   {P D6 {Pt "I/O"}{Lq 0}{Ploc 360 140}}
+   {P D7 {Pt "I/O"}{Lq 0}{Ploc 360 160}}
+   {P D8 {Pt "I/O"}{Lq 0}{Ploc 360 180}}
+   {P D9 {Pt "I/O"}{Lq 0}{Ploc 360 200}}
+   {P D10 {Pt "I/O"}{Lq 0}{Ploc 360 220}}
+   {P D11 {Pt "I/O"}{Lq 0}{Ploc 360 240}}
+   {P D12 {Pt "I/O"}{Lq 0}{Ploc 360 260}}
+   {P D13 {Pt "I/O"}{Lq 0}{Ploc 360 280}}
+   {P D14 {Pt "I/O"}{Lq 0}{Ploc 360 300}}
+   {P NINTB_OU {Pt "I/O"}{Lq 0}{Ploc 360 320}}
+   {P NINTA_OU {Pt "I/O"}{Lq 0}{Ploc 360 340}}
+   {P D15 {Pt "I/O"}{Lq 0}{Ploc 360 360}}
   }
 
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 190 390}
+   {Rdl 230 390}
 
    [Ly "PINNUM"]
+   [Ts 15][Tj "RC"]
+   {Pnl 120 150}
+   [Ts 15][Tj "RC"]
+   {Pnl 120 110}
+   {Pnl 120 90}
+   {Pnl 120 70}
+   {Pnl 120 50}
+   {Pnl 120 30}
    [Ts 15][Tj "LC"]
+   {Pnl 340 30}
+   {Pnl 340 50}
+   {Pnl 340 70}
+   {Pnl 340 90}
+   {Pnl 340 110}
+   {Pnl 340 130}
+   {Pnl 340 150}
+   {Pnl 340 170}
+   {Pnl 340 190}
+   {Pnl 340 210}
+   {Pnl 340 230}
+   {Pnl 340 250}
+   {Pnl 340 270}
+   {Pnl 340 290}
+   {Pnl 340 310}
+   {Pnl 340 330}
+   {Pnl 340 350}
+   {Pnl 340 370}
 
-   {Sd A}
+   {Sd A 37 14 15 27 39 40 2 3 5 6 18 19 20 21 22 23 25 31 33 34 35 42 43 44}
   }
 
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 380 250 0}
+   {R 130 380 330 0}
+   {L 130 140 100 140}
+   {L 130 150 140 140 130 130}
+   {L 130 100 100 100}
+   {L 130 80 100 80}
+   {L 130 60 100 60}
+   {L 130 40 100 40}
+   {L 130 20 100 20}
+   {L 330 20 360 20}
+   {L 330 40 360 40}
+   {L 330 60 360 60}
+   {L 330 80 360 80}
+   {L 330 100 360 100}
+   {L 330 120 360 120}
+   {L 330 140 360 140}
+   {L 330 160 360 160}
+   {L 330 180 360 180}
+   {L 330 200 360 200}
+   {L 330 220 360 220}
+   {L 330 240 360 240}
+   {L 330 260 360 260}
+   {L 330 280 360 280}
+   {L 330 300 360 300}
+   {L 330 320 360 320}
+   {L 330 340 360 340}
+   {L 330 360 360 360}
    [Ly "PINNAM"]
    [Tj "LC"]
+   {T "PTCB_CLO" 140 140}
+   {T "NPTC_A2" 140 100}
+   {T "NPTC_RW" 140 80}
+   {T "NPTC_CS" 140 60}
+   {T "NSYS_RES" 140 40}
+   {T "PTCA_CLO" 140 20}
    [Tj "RC"]
+   {T "D0" 320 20}
+   {T "D1" 320 40}
+   {T "D2" 320 60}
+   {T "D3" 320 80}
+   {T "D4" 320 100}
+   {T "D5" 320 120}
+   {T "D6" 320 140}
+   {T "D7" 320 160}
+   {T "D8" 320 180}
+   {T "D9" 320 200}
+   {T "D10" 320 220}
+   {T "D11" 320 240}
+   {T "D12" 320 260}
+   {T "D13" 320 280}
+   {T "D14" 320 300}
+   {T "NINTB_OU" 320 320}
+   {T "NINTA_OU" 320 340}
+   {T "D15" 320 360}
    [Ly "DEVICE"]
    [Tj "CT"]
-   {T "F1504ISPTQFP44" 190 -10}
+   {T "F1504ISPTQFP44" 230 -10}
   }
 
   {ATR
@@ -66,7 +165,7 @@
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\PTC\PTC 190 380}
+    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\PTC\PTC 230 380}
    }
   }
  }
@@ -76,6 +175,54 @@
   }
 
   {NET_DEF
+   {N PTCB_CLO
+   }
+   {N NPTC_A2
+   }
+   {N NPTC_RW
+   }
+   {N NPTC_CS
+   }
+   {N NSYS_RES
+   }
+   {N PTCA_CLO
+   }
+   {N D0
+   }
+   {N D1
+   }
+   {N D2
+   }
+   {N D3
+   }
+   {N D4
+   }
+   {N D5
+   }
+   {N D6
+   }
+   {N D7
+   }
+   {N D8
+   }
+   {N D9
+   }
+   {N D10
+   }
+   {N D11
+   }
+   {N D12
+   }
+   {N D13
+   }
+   {N D14
+   }
+   {N NINTB_OU
+   }
+   {N NINTA_OU
+   }
+   {N D15
+   }
   }
 
   {SUBCOMP
