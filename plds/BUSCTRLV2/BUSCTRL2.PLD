@@ -44,6 +44,7 @@ Pin[42] = nCPU_HALT;
 Pin[46] = nCPU_BERR;
 Pin[45] = nCPU_STERM;
 Pin[84] = nFPU_CS;
+Pin[7] = nCPU_RMC;
 
 // To Devices
 Pin[8] = nCPU_RD;       // An inverted version of the CPU_RW line, used to /OE pins on memory and devices.
@@ -54,7 +55,7 @@ Pin[40] = nBFLASH_WE;
 
 // To 64M Flash
 
-Pin[7] = nBIGFLASH_CE;
+
 
 // To SRAM
 
@@ -97,13 +98,16 @@ Pin[12] = DRAM_MUX;              // MUX for addess lines going to DRAM (0=ROW, 1
 Pin[10] = nDRAM_DATA_EN;         // Enable the 245 buffers between DRAM and the CPU.
 Pin[9]  = nDRAM_WE;
 Pin[83] = RESET_CONTROL_IN;     // Active high signal to perform a system reset.
-Pin[75] = n3V_DATA_EN;
+
 Pin[47] = CPU_CLK_div16;
 
 Pin[81] = EXTRA_BC_DM1;
 Pin[85] = EXTRA_BC_DM2;
 Pin[30] = EXTRA_BC_INT1;
 Pin[31] = EXTRA_BC_INT2;
+
+
+Pin[75] = UNUSED2;
 
 PINNODE = REFRESH_ACTIVE;
 PINNODE = CPU_CLK_div2;
@@ -130,9 +134,9 @@ EXP_BC_CPLD1 = 'b'0;
 EXP_BC_CPLD2 = 'b'0;
 
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
-//TESTP1 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2; 
-//TESTP0 = TESTP2 & TESTP3;
 
+TESTP1 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2; 
+TESTP0 = TESTP2 & TESTP3 & nCPU_RMC & UNUSED2;
 
 /* 
     Clock Generation:
@@ -302,15 +306,6 @@ nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCE
 nBFLASH_CE = !BOOTFLASH_REGION_ACCESS;
 nBFLASH_WE = !BOOTFLASH_REGION_ACCESS # CPU_RW;
 
-
-/* 
-    64MB Flash signaling.  The 64MB FLASH does not support 8 bit reads/writes.  This does not effect reads as extra data on 
-    reads won't change any state. On writes if the CPU does an 8 bit write or an unaligned write it will write random data
-    to the other 8bit section.  
-*/
-
-nBIGFLASH_CE = !BIGFLASH_REGION_ACCESS;
-n3V_DATA_EN = !BIGFLASH_REGION_ACCESS;
 
 
 /*
@@ -704,15 +699,16 @@ nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 /*
 
 Total dedicated input used:	4/4 	(100%)
-Total I/O pins used		73/80 	(91%)
+Total I/O pins used		80/80 	(100%)
 Total Logic cells used 		74/128 	(57%)
-Total Flip-Flop used 		25/128 	(19%)
-Total Foldback logic used 	10/128 	(7%)
-Total Nodes+FB/MCells 		84/128 	(65%)
+Total Flip-Flop used 		26/128 	(20%)
+Total Foldback logic used 	12/128 	(9%)
+Total Nodes+FB/MCells 		86/128 	(67%)
 Total cascade used 		0
-Total input pins 		33
-Total output pins 		44
-Total Pts 			209
+Total input pins 		41
+Total output pins 		43
+Total Pts 			208
+
 */
 
 
