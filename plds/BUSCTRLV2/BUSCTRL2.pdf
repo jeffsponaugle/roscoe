@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Thu May 22 11:55:37 2025 "}
+  {DBtime "Sun Jun 01 13:04:06 2025 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -35,7 +35,7 @@
    [Ly "PINCON"]
    {P CPU_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 840}}
    {P NDEV_WAI {Pt "INPUT"}{Lq 0}{Ploc 100 820}}
-   {P UNUSED1 {Pt "INPUT"}{Lq 0}{Ploc 100 780}}
+   {P NCPU_RMC {Pt "INPUT"}{Lq 0}{Ploc 100 780}}
    {P EXTRA1 {Pt "INPUT"}{Lq 0}{Ploc 100 760}}
    {P EXTRA2 {Pt "INPUT"}{Lq 0}{Ploc 100 740}}
    {P TESTP2 {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
@@ -298,7 +298,7 @@
    [Tj "LC"]
    {T "CPU_CLK" 140 840}
    {T "NDEV_WAI" 140 820}
-   {T "UNUSED1" 140 780}
+   {T "NCPU_RMC" 140 780}
    {T "EXTRA1" 140 760}
    {T "EXTRA2" 140 740}
    {T "TESTP2" 140 720}
@@ -404,7 +404,7 @@
    }
    {N NDEV_WAI
    }
-   {N UNUSED1
+   {N NCPU_RMC
    }
    {N EXTRA1
    }
