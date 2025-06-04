@@ -374,7 +374,7 @@ nPTC_CS =>
   # CPU_A25
   # CPU_A26
   # CPU_A27
-  # nDEV8BITCS
+  # nDEV16BITCS
 
 nRTC_CS =>
     !CPU_A8

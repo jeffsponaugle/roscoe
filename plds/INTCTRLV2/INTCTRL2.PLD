@@ -157,17 +157,24 @@ PINNODE =  INT2B_REQUEST_PE;
 
 /* Temporary Interrupt Enable/Disable  */
 
-[INT_MSK15].d = 'b'0;
-[INT_MSK14].d = 'b'0;  // Enable PTC 1 CPU_D6.io;  /
-[INT_MSK13].d = 'b'0;  // Enable PTC 2 CPU_D5.io; 
-[INT_MSK12].d = 'b'0; 
-[INT_MSK11].d = 'b'0;
-[INT_MSK10].d = 'b'0;
-[INT_MSK9].d = 'b'0;
-[INT_MSK8].d = 'b'0;
+/* These are currently forced to 0, which prevents the software from being able to enable
+   these interrupts.   The RTC interrupt is configued to allow software enable.
 
-[INT_MSK7..2].d = 'b'0;
-[INT_MSK1].d= 'b'0;    // Enable RTC CPU_D1.io;
+*/
+
+
+[INT_MSK15].d = CPU_D7.io;  // Debug Button CPU_D7.io;
+[INT_MSK14].d = CPU_D6.io;  // Enable PTC 1 CPU_D6.io;  
+[INT_MSK13].d = CPU_D5.io;  // Enable PTC 2 CPU_D5.io; 
+[INT_MSK12].d = 'b'0;  // Expansion
+[INT_MSK11].d = CPU_D3.io;  // IDE1
+[INT_MSK10].d = CPU_D2.io;  // IDE2
+[INT_MSK9].d = 'b'0;   // Expansion
+[INT_MSK8].d = CPU_D0.io;   // UARTT1
+
+[INT_MSK7].d = CPU_D7.io; // UART2
+[INT_MSK6..2].d = 'b'0; // UART2
+[INT_MSK1].d= CPU_D1.io;   // Enable RTC CPU_D1.io;
 [INT_MSK0].d = 'b'0;
 
 

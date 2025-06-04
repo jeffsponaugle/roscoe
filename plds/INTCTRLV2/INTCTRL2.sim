@@ -397,7 +397,7 @@ INT_MSK0.ck  =>
   # CPU_A3
 
 INT_MSK1.d  =>
-    0 
+    CPU_D1.io 
 
 INT_MSK1.ar  =>
     !nSYS_RESET
@@ -481,7 +481,7 @@ INT_MSK6.ck  =>
   # CPU_A3
 
 INT_MSK7.d  =>
-    0 
+    CPU_D7.io 
 
 INT_MSK7.ar  =>
     !nSYS_RESET
@@ -495,7 +495,7 @@ INT_MSK7.ck  =>
   # CPU_A3
 
 INT_MSK8.d  =>
-    0 
+    CPU_D0.io 
 
 INT_MSK8.ar  =>
     !nSYS_RESET
@@ -523,7 +523,7 @@ INT_MSK9.ck  =>
   # CPU_A3
 
 INT_MSK10.d  =>
-    0 
+    CPU_D2.io 
 
 INT_MSK10.ar  =>
     !nSYS_RESET
@@ -537,7 +537,7 @@ INT_MSK10.ck  =>
   # CPU_A3
 
 INT_MSK11.d  =>
-    0 
+    CPU_D3.io 
 
 INT_MSK11.ar  =>
     !nSYS_RESET
@@ -565,7 +565,7 @@ INT_MSK12.ck  =>
   # CPU_A3
 
 INT_MSK13.d  =>
-    0 
+    CPU_D5.io 
 
 INT_MSK13.ar  =>
     !nSYS_RESET
@@ -579,7 +579,7 @@ INT_MSK13.ck  =>
   # CPU_A3
 
 INT_MSK14.d  =>
-    0 
+    CPU_D6.io 
 
 INT_MSK14.ar  =>
     !nSYS_RESET
@@ -593,7 +593,7 @@ INT_MSK14.ck  =>
   # CPU_A3
 
 INT_MSK15.d  =>
-    0 
+    CPU_D7.io 
 
 INT_MSK15.ar  =>
     !nSYS_RESET
