@@ -1,0 +1,243 @@
+Name	 ADDER;
+PartNo   ADDER;
+Date     04/18/2022;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1504ispplcc44;
+
+
+Pin  = [VM_A0..17];        /* SUM output bits S*/
+Pin  = VM_ADDR_OE;            /* Active low enable output of VM_A0-VM_A9 */
+Pin = VM_ADDR_RESET;         /* Active High reset of address counter */
+Pin = VM_ADDR_CLOCK;
+Pin = [MODE2..0];     /* MODE detemines what happend in the internal counter on ClockIn positive edge */
+
+Pin  = VID_CPLD_6;
+
+PINNODE = [C11..6];          /* Optimizing - Creating nodes for carry elements that are very large */
+PINNODE = [S17..0];          /* Internal 15 bit counter allows access to 16K of video memory from the video side */
+ 
+/* MODE input - Action to take on clock edge 
+
+         000['d'0] = NO CHANGE
+         001['d'1] = INCREMENT BY 1  
+         010['d'2] = DECREMENT BY 64 (ADD 11 1111 1100 0000)
+         011['d'3] = DECREMENT BY 80 (ADD 11 1111 1011 0000)
+         100['d'4] = UNUSED
+         101['d'5] = UNUSED
+         110['d'6] = UNUSED
+         111['d'7] = UNUSED
+
+*/
+
+FIELD mode_field = [MODE2..0];
+
+
+
+/* The internal 14 bit counter changes on rising ClockIn and is reset of Reset=1 */
+[S0..17].ck = VM_ADDR_CLOCK;
+[S0..17].ar = VM_ADDR_RESET;
+
+[VM_A17..0] = [S17..0];
+[VM_A17..0].oe = !VM_ADDR_OE;
+
+/* 
+    The upper 4 address bits are equal to VM_PAGEx if the VM_AddrOE input is high signaling CPU access to video memory.
+    If VM_AddrOE is low video output is accessing video memory so the internal 14 bit counter value is used.
+*/
+/* Carry IN is 1 for increment by 1 mode, MODE=001 */
+C0 = mode_field:['d'1];
+
+/* First 4 bits of add are always 0. */
+[B0..3] = 'b'0;
+/* Remaining bits are on for either -80 or -64 */
+B4 = mode_field:['d'3];
+B5 = mode_field:['d'3];
+B6 = mode_field:['d'2];
+B7 = mode_field:['d'2,3];
+B8 = mode_field:['d'2,3];
+B9 = mode_field:['d'2,3];
+B10 = mode_field:['d'2,3];
+B11 = mode_field:['d'2,3];
+B12 = mode_field:['d'2,3];
+B13 = mode_field:['d'2,3];
+B14 = mode_field:['d'2,3];
+B15 = mode_field:['d'2,3];
+B16 = mode_field:['d'2,3];
+B17 = mode_field:['d'2,3];
+
+/* if mode==0, the adder will add 0, resulting in no change */
+
+
+P0 = S0 $ B0;
+G0 = S0 & B0;
+S0.d = P0 $ C0;
+C1 = G0 # (P0&C0);
+
+P1 = S1 $ B1;
+G1 = S1 & B1;
+S1.d = P1 $ C1;
+C2 = G1 # (P1&C1);
+
+P2 = S2 $ B2;
+G2 = S2 & B2;
+S2.d = P2 $ C2;
+C3 = G2 # (P2&C2);
+
+P3 = S3 $ B3;
+G3 = S3 & B3;
+S3.d = P3 $ C3;
+C4 = G3 # (P3&C3);
+
+P4 = S4 $ B4;
+G4 = S4 & B4;
+S4.d = P4 $ C4;
+C5 = G4 # (P4&C4);
+
+P5 = S5 $ B5;
+G5 = S5 & B5;
+S5.d = P5 $ C5;
+C6 = G5 # (P5&C5);
+
+P6 = S6 $ B6;
+G6 = S6 & B6;
+S6.d = P6 $ C6;
+C7 = G6 # (P6&C6);
+
+P7 = S7 $ B7;
+G7 = S7 & B7;
+S7.d = P7 $ C7;
+C8 = G7 # (P7&C7);
+
+P8 = S8 $ B8;
+G8 = S8 & B8;
+S8.d = P8 $ C8;
+C9 = G8 # (P8&C8);
+
+P9 = S9 $ B9;
+G9 = S9 & B9;
+S9.d = P9 $ C9;
+C10 = G9 # (P9&C9);
+
+P10 = S10 $ B10;
+G10 = S10 & B10;
+S10.d = P10 $ C10;
+C11 = G10 # (P10&C10);
+
+P11 = S11 $ B11;
+G11 = S11 & B11;
+S11.d = P11 $ C11;
+C12 = G11 # (P11&C11);
+
+P12 = S12 $ B12;
+G12 = S12 & B12;
+S12.d = P12 $ C12;
+C13 = G12 # (P12&C12);
+
+P13 = S13 $ B13;
+G13 = S13 & B13;
+S13.d = P13 $ C13;
+C14 = G13 # (P13&C13);
+
+P14 = S14 $ B14;
+G14 = S14 & B14;
+S14.d = P14 $ C14;
+C15 = G14 # (P14&C14);
+
+P15 = S15 $ B15;
+G15 = S15 & B15;
+S15.d = P15 $ C15;
+C16 = G15 # (P15&C15);
+
+P16 = S16 $ B16;
+G16 = S16 & B16;
+S16.d = P16 $ C16;
+C17 = G16 # (P16&C16);
+
+P17 = S17 $ B17;
+G17 = S17 & B17;
+S17.d = P17 $ C17;
+//C18 = G17 # (P17&C17);
+
+
+/* 
+
+
+Total dedicated input used:	3/4 	(75%)
+Total I/O pins used		22/32 	(68%)
+Total Logic cells used 		36/64 	(56%)
+Total Flip-Flop used 		15/64 	(23%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		35/64 	(54%)
+Total cascade used 		1
+Total input pins 		10
+Total output pins 		15
+Total Pts 			134
+
+Total dedicated input used:	3/4 	(75%)
+Total I/O pins used		22/32 	(68%)
+Total Logic cells used 		37/64 	(57%)
+Total Flip-Flop used 		15/64 	(23%)
+Total Foldback logic used 	0/64 	(0%)
+Total Nodes+FB/MCells 		36/64 	(56%)
+Total cascade used 		1
+Total input pins 		10
+Total output pins 		15
+Total Pts 			135
+
+                                 V                               
+                                 M                               
+                  V  V  V     V  _                               
+                  M  M  M     M  A                               
+                  _  _  _     _  D                               
+                  P  P  P     P  D          M  M                 
+                  A  A  A     A  R          O  O                 
+                  G  G  G  V  G  _       G  D  D                 
+                  E  E  E  C  E  O       N  E  E                 
+                  0  1  2  C  3  E       D  0  1                 
+               ____________________________________              
+              /   6  5  4  3  2  1 44 43 42 41 40  \             
+         TDI |  7                                39 | MODE2      
+     UNUSED1 |  8                                38 | TDO        
+       VM_A0 |  9                                37 | VM_A13     
+         GND | 10                                36 | VM_A12     
+       VM_A1 | 11                                35 | VCC        
+       VM_A2 | 12            ATF1504             34 | VM_A11     
+         TMS | 13          44-Lead PLCC          33 | VM_A10     
+       VM_A3 | 14                                32 | TCK        
+         VCC | 15                                31 | VM_A8      
+       VM_A4 | 16                                30 | GND        
+     UNUSED5 | 17                                29 | VM_A9      
+             |   18 19 20 21 22 23 24 25 26 27 28   |            
+              \____________________________________/             
+                 U  U  U  V  G  V  V  V  U  U  U                 
+                 N  N  N  M  N  C  M  M  N  N  N                 
+                 U  U  U  _  D  C  _  _  U  U  U                 
+                 S  S  S  A        A  A  S  S  S                 
+                 E  E  E  5        6  7  E  E  E                 
+                 D  D  D                 D  D  D                 
+                 2  3  4                 7  8  6      
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

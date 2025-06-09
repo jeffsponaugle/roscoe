@@ -1,0 +1,750 @@
+%SIGNAL
+PIN   0 =  C6 
+PIN   0 =  C7 
+PIN   0 =  C8 
+PIN   0 =  C9 
+PIN   0 =  C10 
+PIN   0 =  C11 
+PIN   0 =  MODE0 
+PIN   0 =  MODE1 
+PIN   0 =  MODE2 
+PIN   0 =  S0 
+PIN   0 =  S1 
+PIN   0 =  S2 
+PIN   0 =  S3 
+PIN   0 =  S4 
+PIN   0 =  S5 
+PIN   0 =  S6 
+PIN   0 =  S7 
+PIN   0 =  S8 
+PIN   0 =  S9 
+PIN   0 =  S10 
+PIN   0 =  S11 
+PIN   0 =  S12 
+PIN   0 =  S13 
+PIN   0 =  S14 
+PIN   0 =  S15 
+PIN   0 =  S16 
+PIN   0 =  S17 
+PIN   0 =  VID_CPLD_6 
+PIN   0 =  VM_A0 
+PIN   0 =  VM_A1 
+PIN   0 =  VM_A2 
+PIN   0 =  VM_A3 
+PIN   0 =  VM_A4 
+PIN   0 =  VM_A5 
+PIN   0 =  VM_A6 
+PIN   0 =  VM_A7 
+PIN   0 =  VM_A8 
+PIN   0 =  VM_A9 
+PIN   0 =  VM_A10 
+PIN   0 =  VM_A11 
+PIN   0 =  VM_A12 
+PIN   0 =  VM_A13 
+PIN   0 =  VM_A14 
+PIN   0 =  VM_A15 
+PIN   0 =  VM_A16 
+PIN   0 =  VM_A17 
+PIN   0 =  VM_ADDR_CLOCK 
+PIN   0 =  VM_ADDR_OE 
+PIN   0 =  VM_ADDR_RESET 
+%END
+
+%FIELD
+FIELD mode_field = MODE2,MODE1,MODE0
+%END
+
+%EQUATION
+B0 =>
+    0 
+
+B1 =>
+    0 
+
+B2 =>
+    0 
+
+B3 =>
+    0 
+
+B4 =>
+    MODE0 & MODE1 & !MODE2
+
+B5 =>
+    MODE0 & MODE1 & !MODE2
+
+B6 =>
+    !MODE0 & MODE1 & !MODE2
+
+B7 =>
+    MODE1 & !MODE2
+
+B8 =>
+    MODE1 & !MODE2
+
+B9 =>
+    MODE1 & !MODE2
+
+B10 =>
+    MODE1 & !MODE2
+
+B11 =>
+    MODE1 & !MODE2
+
+B12 =>
+    MODE1 & !MODE2
+
+B13 =>
+    MODE1 & !MODE2
+
+B14 =>
+    MODE1 & !MODE2
+
+B15 =>
+    MODE1 & !MODE2
+
+B16 =>
+    MODE1 & !MODE2
+
+B17 =>
+    MODE1 & !MODE2
+
+C0 =>
+    MODE0 & !MODE1 & !MODE2
+
+C1 =>
+    MODE0 & !MODE1 & !MODE2 & S0
+
+C2 =>
+    MODE0 & !MODE1 & !MODE2 & S0 & S1
+
+C3 =>
+    MODE0 & !MODE1 & !MODE2 & S0 & S1 & S2
+
+C4 =>
+    MODE0 & !MODE1 & !MODE2 & S0 & S1 & S2 & S3
+
+C5 =>
+    MODE0 & MODE1 & !MODE2 & S4
+  # MODE0 & !MODE1 & !MODE2 & S0 & S1 & S2 & S3 & S4
+
+C6 =>
+    MODE0 & MODE1 & !MODE2 & S4
+  # MODE0 & MODE1 & !MODE2 & S5
+  # MODE0 & !MODE2 & S0 & S1 & S2 & S3 & S4 & S5
+
+C7 =>
+    C6 & S6
+  # C6 & !MODE0 & MODE1 & !MODE2
+  # !MODE0 & MODE1 & !MODE2 & S6
+
+C8 =>
+    C7 & S7
+  # C7 & MODE1 & !MODE2
+  # MODE1 & !MODE2 & S7
+
+C9 =>
+    C8 & S8
+  # C8 & MODE1 & !MODE2
+  # MODE1 & !MODE2 & S8
+
+C10 =>
+    C9 & S9
+  # C9 & MODE1 & !MODE2
+  # MODE1 & !MODE2 & S9
+
+C11 =>
+    C10 & S10
+  # C10 & MODE1 & !MODE2
+  # MODE1 & !MODE2 & S10
+
+C12 =>
+    MODE1 & !MODE2 & S11
+  # C11 & MODE1 & !MODE2 & !S11
+  # C11 & !MODE1 & S11
+  # C11 & MODE2 & S11
+
+C13 =>
+    MODE1 & !MODE2 & S12
+  # C11 & MODE1 & !MODE2 & !S11 & !S12
+  # C11 & MODE2 & S11 & S12
+  # C11 & !MODE1 & S11 & S12
+  # MODE1 & !MODE2 & S11 & !S12
+
+C14 =>
+    MODE1 & !MODE2 & S13
+  # C11 & MODE1 & !MODE2 & !S11 & !S12 & !S13
+  # C11 & MODE2 & S11 & S12 & S13
+  # C11 & !MODE1 & S11 & S12 & S13
+  # MODE1 & !MODE2 & S11 & !S12 & !S13
+  # MODE1 & !MODE2 & S12 & !S13
+
+C15 =>
+    MODE1 & !MODE2 & S14
+  # C11 & MODE1 & !MODE2 & !S11 & !S12 & !S13 & !S14
+  # C11 & MODE2 & S11 & S12 & S13 & S14
+  # C11 & !MODE1 & S11 & S12 & S13 & S14
+  # MODE1 & !MODE2 & S11 & !S12 & !S13 & !S14
+  # MODE1 & !MODE2 & S12 & !S13 & !S14
+  # MODE1 & !MODE2 & S13 & !S14
+
+C16 =>
+    MODE1 & !MODE2 & S15
+  # C11 & MODE1 & !MODE2 & !S11 & !S12 & !S13 & !S14 & !S15
+  # C11 & MODE2 & S11 & S12 & S13 & S14 & S15
+  # C11 & !MODE1 & S11 & S12 & S13 & S14 & S15
+  # MODE1 & !MODE2 & S11 & !S12 & !S13 & !S14 & !S15
+  # MODE1 & !MODE2 & S12 & !S13 & !S14 & !S15
+  # MODE1 & !MODE2 & S13 & !S14 & !S15
+  # MODE1 & !MODE2 & S14 & !S15
+
+C17 =>
+    MODE1 & !MODE2 & S16
+  # C11 & MODE1 & !MODE2 & !S11 & !S12 & !S13 & !S14 & !S15 & !S16
+  # C11 & MODE2 & S11 & S12 & S13 & S14 & S15 & S16
+  # C11 & !MODE1 & S11 & S12 & S13 & S14 & S15 & S16
+  # MODE1 & !MODE2 & S11 & !S12 & !S13 & !S14 & !S15 & !S16
+  # MODE1 & !MODE2 & S12 & !S13 & !S14 & !S15 & !S16
+  # MODE1 & !MODE2 & S13 & !S14 & !S15 & !S16
+  # MODE1 & !MODE2 & S14 & !S15 & !S16
+  # MODE1 & !MODE2 & S15 & !S16
+
+G0 =>
+    0 
+
+G1 =>
+    0 
+
+G2 =>
+    0 
+
+G3 =>
+    0 
+
+G4 =>
+    MODE0 & MODE1 & !MODE2 & S4
+
+G5 =>
+    MODE0 & MODE1 & !MODE2 & S5
+
+G6 =>
+    !MODE0 & MODE1 & !MODE2 & S6
+
+G7 =>
+    MODE1 & !MODE2 & S7
+
+G8 =>
+    MODE1 & !MODE2 & S8
+
+G9 =>
+    MODE1 & !MODE2 & S9
+
+G10 =>
+    MODE1 & !MODE2 & S10
+
+G11 =>
+    MODE1 & !MODE2 & S11
+
+G12 =>
+    MODE1 & !MODE2 & S12
+
+G13 =>
+    MODE1 & !MODE2 & S13
+
+G14 =>
+    MODE1 & !MODE2 & S14
+
+G15 =>
+    MODE1 & !MODE2 & S15
+
+G16 =>
+    MODE1 & !MODE2 & S16
+
+G17 =>
+    MODE1 & !MODE2 & S17
+
+P0 =>
+    S0
+
+P1 =>
+    S1
+
+P2 =>
+    S2
+
+P3 =>
+    S3
+
+P4 =>
+    MODE2 & S4
+  # !MODE1 & S4
+  # !MODE0 & S4
+  # MODE0 & MODE1 & !MODE2 & !S4
+
+P5 =>
+    MODE2 & S5
+  # !MODE1 & S5
+  # !MODE0 & S5
+  # MODE0 & MODE1 & !MODE2 & !S5
+
+P6 =>
+    MODE2 & S6
+  # !MODE1 & S6
+  # MODE0 & S6
+  # !MODE0 & MODE1 & !MODE2 & !S6
+
+P7 =>
+    MODE2 & S7
+  # !MODE1 & S7
+  # MODE1 & !MODE2 & !S7
+
+P8 =>
+    MODE2 & S8
+  # !MODE1 & S8
+  # MODE1 & !MODE2 & !S8
+
+P9 =>
+    MODE2 & S9
+  # !MODE1 & S9
+  # MODE1 & !MODE2 & !S9
+
+P10 =>
+    MODE2 & S10
+  # !MODE1 & S10
+  # MODE1 & !MODE2 & !S10
+
+P11 =>
+    MODE2 & S11
+  # !MODE1 & S11
+  # MODE1 & !MODE2 & !S11
+
+P12 =>
+    MODE2 & S12
+  # !MODE1 & S12
+  # MODE1 & !MODE2 & !S12
+
+P13 =>
+    MODE2 & S13
+  # !MODE1 & S13
+  # MODE1 & !MODE2 & !S13
+
+P14 =>
+    MODE2 & S14
+  # !MODE1 & S14
+  # MODE1 & !MODE2 & !S14
+
+P15 =>
+    MODE2 & S15
+  # !MODE1 & S15
+  # MODE1 & !MODE2 & !S15
+
+P16 =>
+    MODE2 & S16
+  # !MODE1 & S16
+  # MODE1 & !MODE2 & !S16
+
+P17 =>
+    MODE2 & S17
+  # !MODE1 & S17
+  # MODE1 & !MODE2 & !S17
+
+S0.d  =>
+    !MODE0 & S0
+  # MODE1 & S0
+  # MODE2 & S0
+  # MODE0 & !MODE1 & !MODE2 & !S0
+
+S0.ar  =>
+    VM_ADDR_RESET
+
+S0.ck  =>
+    VM_ADDR_CLOCK
+
+S1.d  =>
+    !MODE0 & S1
+  # MODE1 & S1
+  # MODE2 & S1
+  # !S0 & S1
+  # MODE0 & !MODE1 & !MODE2 & S0 & !S1
+
+S1.ar  =>
+    VM_ADDR_RESET
+
+S1.ck  =>
+    VM_ADDR_CLOCK
+
+S2.d  =>
+    !MODE0 & S2
+  # MODE1 & S2
+  # MODE2 & S2
+  # !S0 & S2
+  # !S1 & S2
+  # MODE0 & !MODE1 & !MODE2 & S0 & S1 & !S2
+
+S2.ar  =>
+    VM_ADDR_RESET
+
+S2.ck  =>
+    VM_ADDR_CLOCK
+
+S3.d  =>
+    !MODE0 & S3
+  # MODE1 & S3
+  # MODE2 & S3
+  # !S0 & S3
+  # !S1 & S3
+  # !S2 & S3
+  # MODE0 & !MODE1 & !MODE2 & S0 & S1 & S2 & !S3
+
+S3.ar  =>
+    VM_ADDR_RESET
+
+S3.ck  =>
+    VM_ADDR_CLOCK
+
+S4.d  =>
+    !MODE0 & S4
+  # MODE2 & S4
+  # !MODE1 & !S0 & S4
+  # !MODE1 & !S1 & S4
+  # !MODE1 & !S2 & S4
+  # !MODE1 & !S3 & S4
+  # MODE0 & MODE1 & !MODE2 & !S4
+  # MODE0 & !MODE2 & S0 & S1 & S2 & S3 & !S4
+
+S4.ar  =>
+    VM_ADDR_RESET
+
+S4.ck  =>
+    VM_ADDR_CLOCK
+
+S5.d  =>
+    !MODE0 & S5
+  # MODE2 & S5
+  # !MODE1 & !S0 & S5
+  # !MODE1 & !S1 & S5
+  # !MODE1 & !S2 & S5
+  # !MODE1 & !S3 & S5
+  # MODE1 & S4 & S5
+  # !MODE1 & !S4 & S5
+  # MODE0 & MODE1 & !MODE2 & !S4 & !S5
+  # MODE0 & !MODE1 & !MODE2 & S0 & S1 & S2 & S3 & S4 & !S5
+
+S5.ar  =>
+    VM_ADDR_RESET
+
+S5.ck  =>
+    VM_ADDR_CLOCK
+
+S6.d  =>
+    !C6 & MODE0 & S6
+  # !C6 & !MODE1 & S6
+  # !C6 & MODE2 & S6
+  # C6 & MODE0 & !S6
+  # C6 & !MODE1 & !S6
+  # C6 & MODE2 & !S6
+  # C6 & !MODE0 & MODE1 & !MODE2 & S6
+  # !C6 & !MODE0 & MODE1 & !MODE2 & !S6
+
+S6.ar  =>
+    VM_ADDR_RESET
+
+S6.ck  =>
+    VM_ADDR_CLOCK
+
+S7.d  =>
+    !C7 & !MODE1 & S7
+  # !C7 & MODE2 & S7
+  # C7 & !MODE1 & !S7
+  # C7 & MODE2 & !S7
+  # C7 & MODE1 & !MODE2 & S7
+  # !C7 & MODE1 & !MODE2 & !S7
+
+S7.ar  =>
+    VM_ADDR_RESET
+
+S7.ck  =>
+    VM_ADDR_CLOCK
+
+S8.d  =>
+    !C8 & !MODE1 & S8
+  # !C8 & MODE2 & S8
+  # C8 & !MODE1 & !S8
+  # C8 & MODE2 & !S8
+  # C8 & MODE1 & !MODE2 & S8
+  # !C8 & MODE1 & !MODE2 & !S8
+
+S8.ar  =>
+    VM_ADDR_RESET
+
+S8.ck  =>
+    VM_ADDR_CLOCK
+
+S9.d  =>
+    !C9 & !MODE1 & S9
+  # !C9 & MODE2 & S9
+  # C9 & !MODE1 & !S9
+  # C9 & MODE2 & !S9
+  # C9 & MODE1 & !MODE2 & S9
+  # !C9 & MODE1 & !MODE2 & !S9
+
+S9.ar  =>
+    VM_ADDR_RESET
+
+S9.ck  =>
+    VM_ADDR_CLOCK
+
+S10.d  =>
+    !C10 & !MODE1 & S10
+  # !C10 & MODE2 & S10
+  # C10 & !MODE1 & !S10
+  # C10 & MODE2 & !S10
+  # C10 & MODE1 & !MODE2 & S10
+  # !C10 & MODE1 & !MODE2 & !S10
+
+S10.ar  =>
+    VM_ADDR_RESET
+
+S10.ck  =>
+    VM_ADDR_CLOCK
+
+S11.d  =>
+    !C11 & !MODE1 & S11
+  # !C11 & MODE2 & S11
+  # C11 & !MODE1 & !S11
+  # C11 & MODE2 & !S11
+  # C11 & MODE1 & !MODE2 & S11
+  # !C11 & MODE1 & !MODE2 & !S11
+
+S11.ar  =>
+    VM_ADDR_RESET
+
+S11.ck  =>
+    VM_ADDR_CLOCK
+
+S12.d  =>
+    !C11 & !MODE1 & S12
+  # !C11 & MODE2 & S12
+  # !C11 & S11 & S12
+  # C11 & !S11 & S12
+  # C11 & MODE1 & !MODE2 & S12
+  # C11 & !MODE1 & S11 & !S12
+  # C11 & MODE2 & S11 & !S12
+  # !C11 & MODE1 & !MODE2 & !S11 & !S12
+
+S12.ar  =>
+    VM_ADDR_RESET
+
+S12.ck  =>
+    VM_ADDR_CLOCK
+
+S13.d  =>
+    !C11 & !MODE1 & S13
+  # !C11 & MODE2 & S13
+  # !C11 & S11 & S13
+  # C11 & !S11 & S13
+  # C11 & !S12 & S13
+  # MODE1 & !MODE2 & S12 & S13
+  # C11 & !MODE1 & S11 & S12 & !S13
+  # C11 & MODE2 & S11 & S12 & !S13
+  # !C11 & MODE1 & !MODE2 & !S11 & !S12 & !S13
+
+S13.ar  =>
+    VM_ADDR_RESET
+
+S13.ck  =>
+    VM_ADDR_CLOCK
+
+S14.d  =>
+    !C11 & S11 & S14
+  # !S11 & S12 & S14
+  # C11 & !S12 & S14
+  # !C11 & S13 & S14
+  # C11 & !S13 & S14
+  # !MODE1 & !S13 & S14
+  # MODE2 & !S13 & S14
+  # MODE1 & !MODE2 & S13 & S14
+  # C11 & !MODE1 & S11 & S12 & S13 & !S14
+  # C11 & MODE2 & S11 & S12 & S13 & !S14
+  # !C11 & MODE1 & !MODE2 & !S11 & !S12 & !S13 & !S14
+
+S14.ar  =>
+    VM_ADDR_RESET
+
+S14.ck  =>
+    VM_ADDR_CLOCK
+
+S15.d  =>
+    !C11 & S11 & S15
+  # !S11 & S12 & S15
+  # C11 & !S12 & S15
+  # !C11 & S13 & S15
+  # C11 & !S13 & S15
+  # !S13 & S14 & S15
+  # !MODE1 & !S14 & S15
+  # MODE2 & !S14 & S15
+  # MODE1 & !MODE2 & S13 & S15
+  # C11 & !MODE1 & S11 & S12 & S13 & S14 & !S15
+  # C11 & MODE2 & S11 & S12 & S13 & S14 & !S15
+  # !C11 & MODE1 & !MODE2 & !S11 & !S12 & !S13 & !S14 & !S15
+
+S15.ar  =>
+    VM_ADDR_RESET
+
+S15.ck  =>
+    VM_ADDR_CLOCK
+
+S16.d  =>
+    !C11 & !MODE1 & S16
+  # !C11 & MODE2 & S16
+  # !C11 & S11 & S16
+  # !S11 & S12 & S16
+  # C11 & !S12 & S16
+  # !C11 & S13 & S16
+  # C11 & !S13 & S16
+  # !S13 & S14 & S16
+  # !S14 & S15 & S16
+  # S13 & !S15 & S16
+  # C11 & MODE1 & !MODE2 & S16
+  # C11 & !MODE1 & S11 & S12 & S13 & S14 & S15 & !S16
+  # C11 & MODE2 & S11 & S12 & S13 & S14 & S15 & !S16
+  # !C11 & MODE1 & !MODE2 & !S11 & !S12 & !S13 & !S14 & !S15 & !S16
+
+S16.ar  =>
+    VM_ADDR_RESET
+
+S16.ck  =>
+    VM_ADDR_CLOCK
+
+S17.d  =>
+    !C11 & S11 & S17
+  # !S11 & S12 & S17
+  # C11 & !S12 & S17
+  # C11 & !S13 & S17
+  # !S13 & S14 & S17
+  # !S14 & S15 & S17
+  # S13 & !S15 & S17
+  # !C11 & S16 & S17
+  # !MODE1 & !S16 & S17
+  # MODE2 & !S16 & S17
+  # S13 & !S16 & S17
+  # MODE1 & !MODE2 & S16 & S17
+  # C11 & !MODE1 & S11 & S12 & S13 & S14 & S15 & S16 & !S17
+  # C11 & MODE2 & S11 & S12 & S13 & S14 & S15 & S16 & !S17
+  # !C11 & MODE1 & !MODE2 & !S11 & !S12 & !S13 & !S14 & !S15 & !S16 & !S17
+
+S17.ar  =>
+    VM_ADDR_RESET
+
+S17.ck  =>
+    VM_ADDR_CLOCK
+
+VM_A0 =>
+    S0
+
+VM_A0.oe  =>
+    !VM_ADDR_OE
+
+VM_A1 =>
+    S1
+
+VM_A1.oe  =>
+    !VM_ADDR_OE
+
+VM_A2 =>
+    S2
+
+VM_A2.oe  =>
+    !VM_ADDR_OE
+
+VM_A3 =>
+    S3
+
+VM_A3.oe  =>
+    !VM_ADDR_OE
+
+VM_A4 =>
+    S4
+
+VM_A4.oe  =>
+    !VM_ADDR_OE
+
+VM_A5 =>
+    S5
+
+VM_A5.oe  =>
+    !VM_ADDR_OE
+
+VM_A6 =>
+    S6
+
+VM_A6.oe  =>
+    !VM_ADDR_OE
+
+VM_A7 =>
+    S7
+
+VM_A7.oe  =>
+    !VM_ADDR_OE
+
+VM_A8 =>
+    S8
+
+VM_A8.oe  =>
+    !VM_ADDR_OE
+
+VM_A9 =>
+    S9
+
+VM_A9.oe  =>
+    !VM_ADDR_OE
+
+VM_A10 =>
+    S10
+
+VM_A10.oe  =>
+    !VM_ADDR_OE
+
+VM_A11 =>
+    S11
+
+VM_A11.oe  =>
+    !VM_ADDR_OE
+
+VM_A12 =>
+    S12
+
+VM_A12.oe  =>
+    !VM_ADDR_OE
+
+VM_A13 =>
+    S13
+
+VM_A13.oe  =>
+    !VM_ADDR_OE
+
+VM_A14 =>
+    S14
+
+VM_A14.oe  =>
+    !VM_ADDR_OE
+
+VM_A15 =>
+    S15
+
+VM_A15.oe  =>
+    !VM_ADDR_OE
+
+VM_A16 =>
+    S16
+
+VM_A16.oe  =>
+    !VM_ADDR_OE
+
+VM_A17 =>
+    S17
+
+VM_A17.oe  =>
+    !VM_ADDR_OE
+
+%END
