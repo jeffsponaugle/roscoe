@@ -183,14 +183,14 @@ PINNODE =  INT2B_REQUEST_PE;
 /* Power Control and Reset Control Register */
 
 POWER_CONTROL_STATE.d = CPU_D0.io;
-POWER_CONTROL_STATE.ck = nINTCTRL_CS # CPU_RW # CPU_A0 # !CPU_A1 # CPU_A2 # CPU_A3;         // An 8-bit write to 0x3000 0202
+POWER_CONTROL_STATE.ck = nINTCTRL_CS # CPU_RW # CPU_A0 # !CPU_A1 # CPU_A2 # CPU_A3;         // An 8-bit write to 0x3000 0202, bit 0
 POWER_CONTROL_STATE.ar = !nSYS_RESET;
 
 POWER_CONTROL_OUT = 'b'1;
 POWER_CONTROL_OUT.oe = POWER_CONTROL_STATE;
 
 RESET_CONTROL_OUT.d = 'b'0; // Should be CPU_D1.io;, but we will set to zero to disable the function.
-RESET_CONTROL_OUT.ck = nINTCTRL_CS # CPU_RW # CPU_A0 # !CPU_A1 # CPU_A2 # CPU_A3;            // An 8-bit write to 0x3000 0202
+RESET_CONTROL_OUT.ck = nINTCTRL_CS # CPU_RW # CPU_A0 # !CPU_A1 # CPU_A2 # CPU_A3;            // An 8-bit write to 0x3000 0202, bit 1
 RESET_CONTROL_OUT.ar = !nSYS_RESET;
 
 /*
@@ -340,18 +340,35 @@ INT1B_REQUEST_PE = !INT1A_REQUEST_PE & INT1B_REQUEST;
 [CPU_D7..0].oe = !nINT_ACK_CYCLE;       // If we are in an Interrupt Ack Cycle or Reg Read, enable the data bus outputs.
 
 
+/*  
+    This current desing only drives the databus for the ACK_CYCLE.  If we want to add the ability to read something
+    from the interrupt controller, we would need to add those here 
+*/
+
+
 CPU_D7 = ('b'1 & !nINT_ACK_CYCLE);
 CPU_D6 = (CPU_A3 & !nINT_ACK_CYCLE);
 CPU_D5 = (CPU_A2 & !nINT_ACK_CYCLE);
 CPU_D4 = (CPU_A1 & !nINT_ACK_CYCLE);
-CPU_D3 = ((INTL5_REQUEST_PE & INT5D_REQUEST_PE) & !nINT_ACK_CYCLE);
-CPU_D2 = (((INTL5_REQUEST_PE & INT5C_REQUEST_PE) # (INTL4_REQUEST_PE & INT4C_REQUEST_PE)) & !nINT_ACK_CYCLE);
-CPU_D1 = (((INTL6_REQUEST_PE & INT6B_REQUEST_PE) # (INTL5_REQUEST_PE & INT5B_REQUEST_PE)
-       # (INTL4_REQUEST_PE & INT4B_REQUEST_PE) # (INTL3_REQUEST_PE & INT3B_REQUEST_PE)
-       # (INTL2_REQUEST_PE & INT2B_REQUEST_PE) # (INTL1_REQUEST_PE & INT1B_REQUEST_PE)) & !nINT_ACK_CYCLE);
-CPU_D0 = (((INTL6_REQUEST_PE & INT6A_REQUEST_PE) # (INTL5_REQUEST_PE & INT5A_REQUEST_PE)
-         # (INTL4_REQUEST_PE & INT4A_REQUEST_PE) # (INTL3_REQUEST_PE & INT3A_REQUEST_PE)
-         # (INTL2_REQUEST_PE & INT2A_REQUEST_PE) # (INTL1_REQUEST_PE & INT1A_REQUEST_PE)) & !nINT_ACK_CYCLE);
+CPU_D3 = ((INTL5_REQUEST_PE & INT5D_REQUEST_PE & field_INT_ACK_LEVEL:['d'5]) & !nINT_ACK_CYCLE );
+CPU_D2 = ((
+           (INTL5_REQUEST_PE & INT5C_REQUEST_PE & field_INT_ACK_LEVEL:['d'5]) 
+         # (INTL4_REQUEST_PE & INT4C_REQUEST_PE & field_INT_ACK_LEVEL:['d'4])
+         ) & !nINT_ACK_CYCLE);
+CPU_D1 = ((
+         (INTL6_REQUEST_PE & INT6B_REQUEST_PE & field_INT_ACK_LEVEL:['d'6]) 
+       # (INTL5_REQUEST_PE & INT5B_REQUEST_PE & field_INT_ACK_LEVEL:['d'5])
+       # (INTL4_REQUEST_PE & INT4B_REQUEST_PE & field_INT_ACK_LEVEL:['d'4]) 
+       # (INTL3_REQUEST_PE & INT3B_REQUEST_PE & field_INT_ACK_LEVEL:['d'3])
+       # (INTL2_REQUEST_PE & INT2B_REQUEST_PE & field_INT_ACK_LEVEL:['d'2]) 
+       # (INTL1_REQUEST_PE & INT1B_REQUEST_PE & field_INT_ACK_LEVEL:['d'1])
+         ) & !nINT_ACK_CYCLE);
+CPU_D0 = (((INTL6_REQUEST_PE & INT6A_REQUEST_PE & field_INT_ACK_LEVEL:['d'6]) 
+         # (INTL5_REQUEST_PE & INT5A_REQUEST_PE & field_INT_ACK_LEVEL:['d'5])
+         # (INTL4_REQUEST_PE & INT4A_REQUEST_PE & field_INT_ACK_LEVEL:['d'4]) 
+         # (INTL3_REQUEST_PE & INT3A_REQUEST_PE & field_INT_ACK_LEVEL:['d'3])
+         # (INTL2_REQUEST_PE & INT2A_REQUEST_PE & field_INT_ACK_LEVEL:['d'2])
+         # (INTL1_REQUEST_PE & INT1A_REQUEST_PE & field_INT_ACK_LEVEL:['d'1])) & !nINT_ACK_CYCLE);
 
 
 /* 
