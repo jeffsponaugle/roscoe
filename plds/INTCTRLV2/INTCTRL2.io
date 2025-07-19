@@ -69,9 +69,8 @@ BEGIN
     "TESTP2"                                  : OUTPUT_PIN = 42 ;
     "POWER_CONTROL_OUT"                       : OUTPUT_PIN = 45 ;
     "RESET_CONTROL_OUT"                       : OUTPUT_PIN = 46 ;
-    "INT6B_REQUEST"                           : NODE_NUM = 674 ;
-    "INT1B_REQUEST"                           : NODE_NUM = 676 ;
-    "INT6A_REQUEST"                           : NODE_NUM = 679 ;
+    "INT6A_REQUEST"                           : NODE_NUM = 676 ;
+    "INT1B_REQUEST"                           : NODE_NUM = 679 ;
     "CPU_IPL2"                                : OUTPUT_PIN = 52 ;
     "CPU_IPL1"                                : OUTPUT_PIN = 53 ;
     "CPU_IPL0"                                : OUTPUT_PIN = 54 ;
@@ -80,8 +79,9 @@ BEGIN
     "CPU_D6"                                  : OUTPUT_PIN = 58 ;
     "CPU_D5"                                  : OUTPUT_PIN = 60 ;
     "CPU_D4"                                  : OUTPUT_PIN = 61 ;
+    "INT7A_REQUEST"                           : NODE_NUM = 695 ;
     "TCK"                                     : INPUT_PIN = 62 ;
-    "INT7A_REQUEST"                           : NODE_NUM = 696 ;
+    "INT6B_REQUEST"                           : NODE_NUM = 696 ;
     "CPU_D3"                                  : OUTPUT_PIN = 63 ;
     "CPU_D2"                                  : OUTPUT_PIN = 64 ;
     "CPU_D1"                                  : OUTPUT_PIN = 65 ;

@@ -125,8 +125,7 @@ PINNODE = nDRAM_ACCESS_CAS;
 
 
 /* Unused pin defauts */
-nCPU_HALT = 'b'1;
-nCPU_BERR = 'b'1;
+nCPU_HALT = 'b'1;   
 nCPU_STERM = 'b'1;
 nCPU_RD = !CPU_RW;
 nCPU_CIIN = 'b'1;
@@ -240,15 +239,16 @@ FC_CPU_SPACE = CPU_FC0 & CPU_FC1 & CPU_FC2;
 
     These variables are active high indicators of access to a particular area of memory.
 
-    DRAM_REGION_ACCESS - Any access to the upper 2GB of address space
-    BOOTFLASH_REGION_ACCESS - Any access to 0x0000 0000 to 0x0FFF FFFF
-    SRAM_REGION_ACCESS - Any access to 0x1000 0000 to 0x1FFF FFFF
-    DEV8BIT_REGION_ACCESS - Any access to 0x3000 0000 to 0x3FFF FFFF
-    DEV16BIT_REGION_ACCESS - Any access to 0x4000 0000 to 0x4FFF FFFF
-    DEV32BIT_REGION_ACCESS - Any access to 0x5000 0000 to 0x5FFF FFFF
-    VIDEO_REGION_ACCESS - Any access to 0x6000 0000 to 0x7FFF FFFF
+    DRAM_REGION_ACCESS - Any access to the upper 2GB of address space  [0x8000 0000 to 0xFFFF FFFF]
+    BOOTFLASH_REGION_ACCESS - Any access to 0x0000 0000 to 0x0FFF FFFF [0x0000 0000 to 0x1FFF FFFF]
+    SRAM_REGION_ACCESS - Any access to 0x1000 0000 to 0x1FFF FFFF      [0x1000 0000 to 0x1FFF FFFF]
+    DEV8BIT_REGION_ACCESS - Any access to 0x3000 0000 to 0x3FFF FFFF   [0x3000 0000 to 0x3FFF FFFF]
+    DEV16BIT_REGION_ACCESS - Any access to 0x4000 0000 to 0x4FFF FFFF  [0x4000 0000 to 0x4FFF FFFF]
+    DEV32BIT_REGION_ACCESS - Any access to 0x5000 0000 to 0x5FFF FFFF  [0x5000 0000 to 0x5FFF FFFF]
+    VIDEO_REGION_ACCESS - Any access to 0x6000 0000 to 0x7FFF FFFF     [0x6000 0000 to 0xFFFF FFFF]
     INTERRUPT_ACK_ACCESS - Any access in the CPU Space that is also an Interrupt ACK (Determined by A16-A19)
 
+    UNUSED_REGION_ACCESS - An area that is not mapped to anything.     [0x2000 0000 to 0x2FFF FFFF]
 */
 
 DRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & CPU_A31 # !REFRESH_ACTIVE;                                  // 0x8000 0000 - 0xFFFF FFFF
@@ -263,6 +263,7 @@ DEV32BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30
                         & !CPU_A29 & CPU_A28;                                                               // 0x5000 0000 - 0x5FFF FFFF
 VIDEO_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;                              // 0x6000 0000 - 0x7FFF FFFF
 INTERRUPT_ACK_ACCESS =  !nCPU_AS & FC_CPU_SPACE & CPU_A16 & CPU_A17 & CPU_A18 & CPU_A19;
+UNUSED_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & CPU_A29 & !CPU_A28;   
 
 nINT_ACK_CYCLE = !INTERRUPT_ACK_ACCESS;
 
@@ -307,8 +308,9 @@ nCPU_DSACK0 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCE
 nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCESS & nDEV_WAIT) # (DEV16BIT_REGION_ACCESS & nDEV_WAIT)  # BIGFLASH_REGION_ACCESS );
 */
 
-/* Boot Flash signaling */
+nCPU_BERR = !UNUSED_REGION_ACCESS;
 
+/* Boot Flash signaling */
 
 nBFLASH_CE = !BOOTFLASH_REGION_ACCESS;
 nBFLASH_WE = !BOOTFLASH_REGION_ACCESS # CPU_RW;

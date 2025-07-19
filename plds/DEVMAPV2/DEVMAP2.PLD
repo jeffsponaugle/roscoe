@@ -59,9 +59,6 @@ Pin[14] = nRTC_CS;
 Pin[23] = nEXP_VMEM_CS;
 Pin[22] = nEXP_VIO_CS;
 
-
-
-
 Pin[17] = RTC_A_SEL;
 Pin[16] = RTC_D_SEL;
 

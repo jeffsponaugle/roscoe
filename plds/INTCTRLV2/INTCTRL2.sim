@@ -137,19 +137,19 @@ CPU_D3.oe  =>
     !nINT_ACK_CYCLE
 
 CPU_D4 =>
-    CPU_A1 & !nINT_ACK_CYCLE
+    INT_ACK_LEVEL0 & !nINT_ACK_CYCLE
 
 CPU_D4.oe  =>
     !nINT_ACK_CYCLE
 
 CPU_D5 =>
-    CPU_A2 & !nINT_ACK_CYCLE
+    INT_ACK_LEVEL1 & !nINT_ACK_CYCLE
 
 CPU_D5.oe  =>
     !nINT_ACK_CYCLE
 
 CPU_D6 =>
-    CPU_A3 & !nINT_ACK_CYCLE
+    INT_ACK_LEVEL2 & !nINT_ACK_CYCLE
 
 CPU_D6.oe  =>
     !nINT_ACK_CYCLE
@@ -627,7 +627,7 @@ POWER_CONTROL_STATE.ck  =>
   # CPU_A3
 
 RESET_CONTROL_OUT.d  =>
-    0 
+    CPU_D1.io 
 
 RESET_CONTROL_OUT.ar  =>
     !nSYS_RESET

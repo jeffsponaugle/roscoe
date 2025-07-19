@@ -189,7 +189,7 @@ POWER_CONTROL_STATE.ar = !nSYS_RESET;
 POWER_CONTROL_OUT = 'b'1;
 POWER_CONTROL_OUT.oe = POWER_CONTROL_STATE;
 
-RESET_CONTROL_OUT.d = 'b'0; // Should be CPU_D1.io;, but we will set to zero to disable the function.
+RESET_CONTROL_OUT.d = CPU_D1.io; // Should be CPU_D1.io;, but we will set to zero to disable the function.
 RESET_CONTROL_OUT.ck = nINTCTRL_CS # CPU_RW # CPU_A0 # !CPU_A1 # CPU_A2 # CPU_A3;            // An 8-bit write to 0x3000 0202, bit 1
 RESET_CONTROL_OUT.ar = !nSYS_RESET;
 
@@ -347,9 +347,9 @@ INT1B_REQUEST_PE = !INT1A_REQUEST_PE & INT1B_REQUEST;
 
 
 CPU_D7 = ('b'1 & !nINT_ACK_CYCLE);
-CPU_D6 = (CPU_A3 & !nINT_ACK_CYCLE);
-CPU_D5 = (CPU_A2 & !nINT_ACK_CYCLE);
-CPU_D4 = (CPU_A1 & !nINT_ACK_CYCLE);
+CPU_D6 = (INT_ACK_LEVEL2 & !nINT_ACK_CYCLE);
+CPU_D5 = (INT_ACK_LEVEL1 & !nINT_ACK_CYCLE);
+CPU_D4 = (INT_ACK_LEVEL0 & !nINT_ACK_CYCLE);
 CPU_D3 = ((INTL5_REQUEST_PE & INT5D_REQUEST_PE) & !nINT_ACK_CYCLE );
 CPU_D2 = ((
            (INTL5_REQUEST_PE & INT5C_REQUEST_PE ) 
