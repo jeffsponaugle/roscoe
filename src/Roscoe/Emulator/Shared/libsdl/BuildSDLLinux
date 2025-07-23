@@ -1,0 +1,8 @@
+cd libsdlsrc
+rm -rf BuildLinux
+mkdir BuildLinux
+cd BuildLinux
+../configure --disable-shared
+make
+sudo make install
+

@@ -1,0 +1,39 @@
+#include <stdint.h>
+#include <stddef.h>
+#include "Shared/Version.h"
+#include "Shared/Flash.h"
+
+// AUTOMATICALLY GENERATED - DO NOT CHECK IN!!!
+
+// Linker-provided variables
+extern uint8_t __DYNAMIC;
+extern void _start(void);
+extern uint8_t __bss_start;
+extern uint8_t __end;
+extern uint8_t __stack;
+
+// Image version structure
+volatile const SImageVersion g_sImageVersion =
+{
+	VERSION_PREFIX,						// Version struct prefix
+
+	EIMGTYPE_BOOT_LOADER,				// Boot loader image
+	(((uint32_t) 1 << 24) | ((uint32_t) 0 << 16) | $WCREV$),	// Major/minor/build #
+
+	0,								// Build timestamp (64 bit time_t)
+	STAMP_IMAGE_CRC32_FILL,	 		// Image CRC32 (filled in by stamp)
+	0,								// Iaage size (filled in by stamper)
+
+	(uint32_t) &__DYNAMIC,	 		// Load address of image
+	(uint32_t) _start,				// Entry point
+	(uint32_t) &__bss_start,		// bss start
+	(uint32_t) &__end,				// End of bss/start of heap
+
+	NULL, 						    // Image specific data is the flash map
+
+	STAMP_VERSION_CRC32_FILL,		// Version structure CRC32 (filled in by stamp)
+
+
+	VERSION_SUFFIX					// Version structure suffix
+};
+
