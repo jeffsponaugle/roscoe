@@ -1,5 +1,0 @@
-* Delete libsdlsrc
-* Commit it to Subversion
-* Untar the new SDL drop
-* Rename the directory libsdlsrc
-

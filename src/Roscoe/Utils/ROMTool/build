@@ -1,1 +1,0 @@
-cc -m32 lex.c ROMTool.c -o ROMTool 
