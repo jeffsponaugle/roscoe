@@ -444,12 +444,7 @@ nBFLASH_WE =>
   # CPU_FC0 & CPU_FC1 & CPU_FC2
 
 nCPU_BERR =>
-    CPU_A28
-  # !CPU_A29
-  # CPU_A30
-  # CPU_A31
-  # nCPU_AS
-  # CPU_FC0 & CPU_FC1 & CPU_FC2
+    1 
 
 nCPU_CIIN =>
     1 

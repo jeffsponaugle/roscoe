@@ -1,4 +1,4 @@
-Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Fri Jul 18 21:42:55 2025
+Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Wed Jul 23 08:15:36 2025
 
 
 fit1508 C:\USERS\JEFF\SRC\ROSCOE\PLDS\INTCTRLV2\INTCTRL2.tt2 -CUPL -dev P1508T100 -JTAG ON
@@ -97,23 +97,23 @@ FB_251 is placed at foldback expander node 314 (MC 14)
 XXL_253 is placed at feedback node 615 (MC 15)
 INT1A_REQUEST is placed at foldback expander node 316 (MC 16)
 vINT5C is placed at pin 14 (MC 17)
-INT_MSK5 is placed at feedback node 617 (MC 17)
-INT_MSK3 is placed at feedback node 618 (MC 18)
+INT_MSK12 is placed at feedback node 617 (MC 17)
+INT_MSK11 is placed at feedback node 618 (MC 18)
 vINT5B is placed at pin 13 (MC 19)
-INT_MSK4 is placed at feedback node 619 (MC 19)
-INT_MSK2 is placed at feedback node 620 (MC 20)
+INT_MSK10 is placed at feedback node 619 (MC 19)
+INT_MSK9 is placed at feedback node 620 (MC 20)
 vINT5A is placed at pin 12 (MC 21)
-INT_MSK0 is placed at feedback node 621 (MC 21)
+INT_MSK6 is placed at feedback node 621 (MC 21)
 vINT6B is placed at pin 10 (MC 22)
-POWER_CONTROL_STATE is placed at feedback node 622 (MC 22)
-INT_MSK15 is placed at feedback node 623 (MC 23)
+INT_MSK5 is placed at feedback node 622 (MC 22)
+INT_MSK4 is placed at feedback node 623 (MC 23)
 vINT6A is placed at pin 9 (MC 24)
-INT_MSK14 is placed at feedback node 624 (MC 24)
+INT_MSK3 is placed at feedback node 624 (MC 24)
 vINT7A is placed at pin 8 (MC 25)
-INT_MSK11 is placed at feedback node 625 (MC 25)
-INT_MSK13 is placed at feedback node 626 (MC 26)
+INT_MSK0 is placed at feedback node 625 (MC 25)
+INT_MSK2 is placed at feedback node 626 (MC 26)
 vINT3A is placed at pin 7 (MC 27)
-INT_MSK10 is placed at feedback node 627 (MC 27)
+POWER_CONTROL_STATE is placed at feedback node 627 (MC 27)
 INT_MSK8 is placed at feedback node 628 (MC 28)
 UNUSED1 is placed at pin 6 (MC 29)
 UNUSED2 is placed at pin 5 (MC 30)
@@ -125,41 +125,42 @@ INT_MSK1 is placed at feedback node 632 (MC 32)
 Com_Ctrl_248 is placed at foldback expander node 332 (MC 32)
 vINT2A is placed at pin 25 (MC 33)
 vINT3B is placed at pin 24 (MC 35)
-INTL1_REQUEST_PE is placed at feedback node 639 (MC 39)
+INTL6_REQUEST_PE is placed at feedback node 636 (MC 36)
+INTL2_REQUEST_PE is placed at feedback node 639 (MC 39)
 vINT4C is placed at pin 21 (MC 40)
-INTL2_REQUEST_PE is placed at feedback node 640 (MC 40)
+INT_ACK_RESET is placed at feedback node 640 (MC 40)
 vINT4B is placed at pin 20 (MC 41)
 INT7A_REQUEST.AR is placed at feedback node 641 (MC 41)
 INT_ACK_LEVEL2 is placed at feedback node 642 (MC 42)
 vINT4A is placed at pin 19 (MC 43)
-INT_ACK_LEVEL1 is placed at feedback node 643 (MC 43)
-INT_ACK_LEVEL0 is placed at feedback node 644 (MC 44)
+INT_ACK_LEVEL0 is placed at feedback node 643 (MC 43)
+INT_ACK_LEVEL1 is placed at feedback node 644 (MC 44)
 vINT5D is placed at pin 16 (MC 46)
-INT_MSK12 is placed at feedback node 646 (MC 46)
-INT_MSK6 is placed at feedback node 647 (MC 47)
-Com_Ctrl_250 is placed at foldback expander node 347 (MC 47)
+INT_MSK15 is placed at feedback node 646 (MC 46)
+INT_MSK13 is placed at feedback node 647 (MC 47)
 TMS is placed at pin 15 (MC 48)
-INT_MSK9 is placed at feedback node 648 (MC 48)
+INT_MSK14 is placed at feedback node 648 (MC 48)
 Com_Ctrl_249 is placed at foldback expander node 348 (MC 48)
-INTL6_REQUEST_PE is placed at feedback node 655 (MC 55)
 EXP_INT_CPLD2 is placed at pin 32 (MC 56)
 EXP_INT_CPLD1 is placed at pin 31 (MC 57)
-INT5C_REQUEST_PE is placed at feedback node 658 (MC 58)
+INT5B_REQUEST_PE is placed at feedback node 658 (MC 58)
 vINT1B is placed at pin 30 (MC 59)
-INT5B_REQUEST_PE is placed at feedback node 659 (MC 59)
+INT5C_REQUEST_PE is placed at feedback node 659 (MC 59)
 INT4B_REQUEST_PE is placed at feedback node 660 (MC 60)
 vINT1A is placed at pin 29 (MC 61)
-INTL3_REQUEST_PE is placed at feedback node 661 (MC 61)
+INTL1_REQUEST_PE is placed at feedback node 661 (MC 61)
 INTL4_REQUEST_PE is placed at feedback node 663 (MC 63)
 vINT2B is placed at pin 27 (MC 64)
 INTL5_REQUEST_PE is placed at feedback node 664 (MC 64)
 TESTP0 is placed at pin 40 (MC 65)
 TESTP1 is placed at pin 41 (MC 67)
 TESTP2 is placed at pin 42 (MC 69)
+INT7A_REQUEST is placed at feedback node 671 (MC 71)
 POWER_CONTROL_OUT is placed at pin 45 (MC 72)
 RESET_CONTROL_OUT is placed at pin 46 (MC 73)
-INT6A_REQUEST is placed at feedback node 676 (MC 76)
-INT1B_REQUEST is placed at feedback node 679 (MC 79)
+INT6B_REQUEST is placed at feedback node 674 (MC 74)
+INT1B_REQUEST is placed at feedback node 676 (MC 76)
+INT6A_REQUEST is placed at feedback node 679 (MC 79)
 Com_Ctrl_248 is placed at foldback expander node 380 (MC 80)
 CPU_IPL2 is placed at pin 52 (MC 81)
 CPU_IPL1 is placed at pin 53 (MC 83)
@@ -169,9 +170,8 @@ CPU_D7 is placed at pin 57 (MC 89)
 CPU_D6 is placed at pin 58 (MC 91)
 CPU_D5 is placed at pin 60 (MC 93)
 CPU_D4 is placed at pin 61 (MC 94)
-INT7A_REQUEST is placed at feedback node 695 (MC 95)
 TCK is placed at pin 62 (MC 96)
-INT6B_REQUEST is placed at feedback node 696 (MC 96)
+INTL3_REQUEST_PE is placed at feedback node 696 (MC 96)
 CPU_D3 is placed at pin 63 (MC 97)
 CPU_D2 is placed at pin 64 (MC 99)
 CPU_D1 is placed at pin 65 (MC 101)
@@ -259,225 +259,216 @@ Universal-Interconnect-Multiplexer assignments
 ------------------------------------------------
 FanIn assignment for block A [25]
 {
-INTL2_REQUEST_PE,INT_MSK2,INT1B_REQUEST,INT_MSK1,INTL4_REQUEST_PE,INTL1_REQUEST_PE,INT_MSK12,INT_ACK_LEVEL2,INT_ACK_LEVEL0,INT5B_REQUEST_PE,INTL5_REQUEST_PE,INT_MSK5,INT_ACK_LEVEL1,INT6A_REQUEST,INTL6_REQUEST_PE,INT6B_REQUEST,INT_MSK8,
-TESTP1,
+INT5B_REQUEST_PE,INTL1_REQUEST_PE,INT_ACK_RESET,INT_MSK1,INT_ACK_LEVEL2,INT_ACK_LEVEL0,INTL2_REQUEST_PE,INTL6_REQUEST_PE,INT_MSK2,INTL5_REQUEST_PE,INT1B_REQUEST,INT_ACK_LEVEL1,INT_MSK5,INT_MSK12,INT6A_REQUEST,INTL4_REQUEST_PE,INT_MSK8,INT6B_REQUEST,
 nSYS_RESET,nINT_ACK_CYCLE,
-vINT3A,vINT2B,vINT5A,vINT4A,vINT1A,
+vINT3A,vINT4A,vINT5A,vINT2B,vINT1A,
 }
 Multiplexer assignment for block A
-INTL2_REQUEST_PE		(MC6	FB)  : MUX 0		Ref (C40fb)
-vINT3A			(MC22	P)   : MUX 2		Ref (B27p)
-nSYS_RESET		(MC20	FB)  : MUX 3		Ref (OE1)
-INT_MSK2		(MC2	FB)  : MUX 4		Ref (B20fb)
-INT1B_REQUEST		(MC17	FB)  : MUX 5		Ref (E79fb)
-INT_MSK1		(MC4	FB)  : MUX 7		Ref (B32fb)
-INTL4_REQUEST_PE		(MC13	FB)  : MUX 9		Ref (D63fb)
-INTL1_REQUEST_PE		(MC5	FB)  : MUX 10		Ref (C39fb)
-TESTP1			(MC15	P)   : MUX 11		Ref (E67p)
+vINT3A			(MC21	P)   : MUX 0		Ref (B27p)
+INT5B_REQUEST_PE		(MC12	FB)  : MUX 1		Ref (D58fb)
+INTL1_REQUEST_PE		(MC13	FB)  : MUX 3		Ref (D61fb)
+INT_ACK_RESET		(MC8	FB)  : MUX 6		Ref (C40fb)
+INT_MSK1		(MC5	FB)  : MUX 7		Ref (B32fb)
+INT_ACK_LEVEL2		(MC9	FB)  : MUX 9		Ref (C42fb)
+vINT4A			(MC23	P)   : MUX 10		Ref (C43p)
+vINT5A			(MC22	P)   : MUX 11		Ref (B21p)
 vINT2B			(MC25	P)   : MUX 12		Ref (D64p)
-INT_MSK12		(MC10	FB)  : MUX 13		Ref (C46fb)
-INT_ACK_LEVEL2		(MC7	FB)  : MUX 15		Ref (C42fb)
-vINT5A			(MC23	P)   : MUX 17		Ref (B21p)
-vINT4A			(MC24	P)   : MUX 18		Ref (C43p)
-INT_ACK_LEVEL0		(MC9	FB)  : MUX 19		Ref (C44fb)
-vINT1A			(MC21	P)   : MUX 20		Ref (D61p)
-INT5B_REQUEST_PE		(MC12	FB)  : MUX 21		Ref (D59fb)
-nINT_ACK_CYCLE		(MC19	FB)  : MUX 22		Ref (OE2)
-INTL5_REQUEST_PE		(MC14	FB)  : MUX 23		Ref (D64fb)
-INT_MSK5		(MC1	FB)  : MUX 26		Ref (B17fb)
-INT_ACK_LEVEL1		(MC8	FB)  : MUX 27		Ref (C43fb)
-INT6A_REQUEST		(MC16	FB)  : MUX 29		Ref (E76fb)
-INTL6_REQUEST_PE		(MC11	FB)  : MUX 32		Ref (D55fb)
-INT6B_REQUEST		(MC18	FB)  : MUX 33		Ref (F96fb)
-INT_MSK8		(MC3	FB)  : MUX 37		Ref (B28fb)
+INT_ACK_LEVEL0		(MC10	FB)  : MUX 13		Ref (C43fb)
+INTL2_REQUEST_PE		(MC7	FB)  : MUX 14		Ref (C39fb)
+nSYS_RESET		(MC20	FB)  : MUX 15		Ref (OE1)
+nINT_ACK_CYCLE		(MC19	FB)  : MUX 16		Ref (OE2)
+INTL6_REQUEST_PE		(MC6	FB)  : MUX 18		Ref (C36fb)
+INT_MSK2		(MC3	FB)  : MUX 21		Ref (B26fb)
+INTL5_REQUEST_PE		(MC15	FB)  : MUX 23		Ref (D64fb)
+INT1B_REQUEST		(MC17	FB)  : MUX 25		Ref (E76fb)
+vINT1A			(MC24	P)   : MUX 26		Ref (D61p)
+INT_ACK_LEVEL1		(MC11	FB)  : MUX 29		Ref (C44fb)
+INT_MSK5		(MC2	FB)  : MUX 30		Ref (B22fb)
+INT_MSK12		(MC1	FB)  : MUX 32		Ref (B17fb)
+INT6A_REQUEST		(MC18	FB)  : MUX 33		Ref (E79fb)
+INTL4_REQUEST_PE		(MC14	FB)  : MUX 35		Ref (D63fb)
+INT_MSK8		(MC4	FB)  : MUX 37		Ref (B28fb)
+INT6B_REQUEST		(MC16	FB)  : MUX 39		Ref (E74fb)
 
-FanIn assignment for block B [23]
+FanIn assignment for block B [19]
 {
-CPU_D7,CPU_A3,CPU_D2,CPU_D3,CPU_D1,CPU_A2,CPU_A1,CPU_D6,CPU_D5,CPU_A0,CPU_D0,CPU_RW,
-EXTRA_DM_INT1,EXTRA_BC_INT2,EXTRA_BC_INT1,EXTRA_DM_INT2,
+CPU_A3,CPU_A1,CPU_D1,CPU_A2,CPU_D7,CPU_A0,CPU_D0,CPU_RW,
+EXTRA_DM_INT1,EXTRA_BC_INT1,EXTRA_DM_INT2,EXTRA_BC_INT2,
 UNUSED6,UNUSED5,UNUSED4,UNUSED3,UNUSED7,
 nINTCTRL_CS,nSYS_RESET,
 }
 Multiplexer assignment for block B
-UNUSED6			(MC22	P)   : MUX 1		Ref (A5p)
-CPU_D7			(MC1	P)   : MUX 2		Ref (F89p)
-EXTRA_DM_INT1		(MC17	P)   : MUX 3		Ref (H117p)
-CPU_A3			(MC12	P)   : MUX 4		Ref (G109p)
-CPU_D2			(MC5	P)   : MUX 5		Ref (G99p)
-CPU_D3			(MC4	P)   : MUX 7		Ref (G97p)
-CPU_D1			(MC6	P)   : MUX 9		Ref (G101p)
-CPU_A2			(MC11	P)   : MUX 10		Ref (G110p)
-CPU_A1			(MC10	P)   : MUX 11		Ref (H113p)
-UNUSED5			(MC21	P)   : MUX 15		Ref (A6p)
-CPU_D6			(MC2	P)   : MUX 16		Ref (F91p)
-UNUSED4			(MC20	P)   : MUX 17		Ref (A3p)
-CPU_D5			(MC3	P)   : MUX 18		Ref (F93p)
-UNUSED3			(MC19	P)   : MUX 21		Ref (A1p)
-CPU_A0			(MC9	P)   : MUX 23		Ref (H115p)
-EXTRA_BC_INT2		(MC16	P)   : MUX 24		Ref (H121p)
-CPU_D0			(MC7	P)   : MUX 25		Ref (G102p)
-EXTRA_BC_INT1		(MC15	P)   : MUX 27		Ref (H120p)
-CPU_RW			(MC13	P)   : MUX 28		Ref (G107p)
-EXTRA_DM_INT2		(MC18	P)   : MUX 29		Ref (H118p)
-nINTCTRL_CS		(MC14	FB)  : MUX 34		Ref (GCLR)
-UNUSED7			(MC23	P)   : MUX 35		Ref (F88p)
-nSYS_RESET		(MC8	FB)  : MUX 37		Ref (OE1)
+UNUSED6			(MC18	P)   : MUX 1		Ref (A5p)
+nINTCTRL_CS		(MC10	FB)  : MUX 2		Ref (GCLR)
+EXTRA_DM_INT1		(MC13	P)   : MUX 3		Ref (H117p)
+CPU_A3			(MC8	P)   : MUX 4		Ref (G109p)
+CPU_A1			(MC6	P)   : MUX 5		Ref (H113p)
+CPU_D1			(MC2	P)   : MUX 7		Ref (G101p)
+CPU_A2			(MC7	P)   : MUX 8		Ref (G110p)
+EXTRA_BC_INT1		(MC11	P)   : MUX 9		Ref (H120p)
+CPU_D7			(MC1	P)   : MUX 10		Ref (F89p)
+EXTRA_DM_INT2		(MC14	P)   : MUX 11		Ref (H118p)
+UNUSED5			(MC17	P)   : MUX 15		Ref (A6p)
+UNUSED4			(MC16	P)   : MUX 17		Ref (A3p)
+EXTRA_BC_INT2		(MC12	P)   : MUX 20		Ref (H121p)
+CPU_A0			(MC5	P)   : MUX 23		Ref (H115p)
+CPU_D0			(MC3	P)   : MUX 25		Ref (G102p)
+CPU_RW			(MC9	P)   : MUX 28		Ref (G107p)
+UNUSED3			(MC15	P)   : MUX 33		Ref (A1p)
+UNUSED7			(MC19	P)   : MUX 35		Ref (F88p)
+nSYS_RESET		(MC4	FB)  : MUX 37		Ref (OE1)
 
-FanIn assignment for block C [25]
+FanIn assignment for block C [24]
 {
-CPU_A1,CPU_RW,CPU_A0,CPU_A3,CPU_A2,
-INTL2_REQUEST_PE,INT_MSK1,INTL5_REQUEST_PE,INT_MSK3,INT_ACK_LEVEL2,INTL6_REQUEST_PE,INT1B_REQUEST,INT_MSK2,INTL4_REQUEST_PE,INT7A_REQUEST,INT_ACK_LEVEL1,INTL3_REQUEST_PE,INT_ACK_LEVEL0,
-TESTP1,
-nINTCTRL_CS,nINT_ACK_CYCLE,nSYS_RESET,
-vINT2A,vINT1A,vINT2B,
+CPU_A3,CPU_A2,CPU_A1,CPU_A0,CPU_RW,
+INT7A_REQUEST,INT_MSK3,INTL4_REQUEST_PE,INTL3_REQUEST_PE,INT6A_REQUEST,INT_ACK_RESET,INT_MSK2,INT_ACK_RESET_PRE,INT_ACK_LEVEL2,INT_ACK_LEVEL1,INT_ACK_LEVEL0,INT6B_REQUEST,INTL6_REQUEST_PE,INTL5_REQUEST_PE,
+nSYS_RESET,nINT_ACK_CYCLE,nINTCTRL_CS,
+vINT2A,vINT2B,
 }
 Multiplexer assignment for block C
-INTL2_REQUEST_PE		(MC4	FB)  : MUX 0		Ref (C40fb)
-vINT2A			(MC25	P)   : MUX 1		Ref (C33p)
-nINTCTRL_CS		(MC23	FB)  : MUX 2		Ref (GCLR)
-nINT_ACK_CYCLE		(MC15	FB)  : MUX 4		Ref (OE2)
-CPU_A1			(MC19	P)   : MUX 5		Ref (H113p)
-CPU_RW			(MC22	P)   : MUX 6		Ref (G107p)
-INT_MSK1		(MC3	FB)  : MUX 7		Ref (B32fb)
-INTL5_REQUEST_PE		(MC11	FB)  : MUX 9		Ref (D64fb)
-TESTP1			(MC12	P)   : MUX 11		Ref (E67p)
-CPU_A0			(MC18	P)   : MUX 13		Ref (H115p)
-INT_MSK3		(MC1	FB)  : MUX 14		Ref (B18fb)
-INT_ACK_LEVEL2		(MC5	FB)  : MUX 15		Ref (C42fb)
-INTL6_REQUEST_PE		(MC8	FB)  : MUX 16		Ref (D55fb)
-INT1B_REQUEST		(MC13	FB)  : MUX 17		Ref (E79fb)
-INT_MSK2		(MC2	FB)  : MUX 18		Ref (B20fb)
-INTL4_REQUEST_PE		(MC10	FB)  : MUX 19		Ref (D63fb)
-vINT1A			(MC17	P)   : MUX 20		Ref (D61p)
-CPU_A3			(MC21	P)   : MUX 24		Ref (G109p)
-CPU_A2			(MC20	P)   : MUX 28		Ref (G110p)
-INT7A_REQUEST		(MC14	FB)  : MUX 29		Ref (F95fb)
-INT_ACK_LEVEL1		(MC6	FB)  : MUX 31		Ref (C43fb)
-INTL3_REQUEST_PE		(MC9	FB)  : MUX 33		Ref (D61fb)
-nSYS_RESET		(MC16	FB)  : MUX 35		Ref (OE1)
-vINT2B			(MC24	P)   : MUX 38		Ref (D64p)
-INT_ACK_LEVEL0		(MC7	FB)  : MUX 39		Ref (C44fb)
+INT7A_REQUEST		(MC11	FB)  : MUX 0		Ref (E71fb)
+vINT2A			(MC24	P)   : MUX 1		Ref (C33p)
+INT_MSK3		(MC2	FB)  : MUX 2		Ref (B24fb)
+nSYS_RESET		(MC16	FB)  : MUX 3		Ref (OE1)
+CPU_A3			(MC20	P)   : MUX 4		Ref (G109p)
+CPU_A2			(MC19	P)   : MUX 8		Ref (G110p)
+INTL4_REQUEST_PE		(MC9	FB)  : MUX 9		Ref (D63fb)
+CPU_A1			(MC18	P)   : MUX 11		Ref (H113p)
+vINT2B			(MC23	P)   : MUX 12		Ref (D64p)
+CPU_A0			(MC17	P)   : MUX 13		Ref (H115p)
+INTL3_REQUEST_PE		(MC14	FB)  : MUX 15		Ref (F96fb)
+nINT_ACK_CYCLE		(MC15	FB)  : MUX 16		Ref (OE2)
+INT6A_REQUEST		(MC13	FB)  : MUX 17		Ref (E79fb)
+INT_ACK_RESET		(MC5	FB)  : MUX 20		Ref (C40fb)
+INT_MSK2		(MC3	FB)  : MUX 21		Ref (B26fb)
+INT_ACK_RESET_PRE		(MC1	FB)  : MUX 22		Ref (A7fb)
+INT_ACK_LEVEL2		(MC6	FB)  : MUX 23		Ref (C42fb)
+CPU_RW			(MC21	P)   : MUX 26		Ref (G107p)
+INT_ACK_LEVEL1		(MC8	FB)  : MUX 29		Ref (C44fb)
+INT_ACK_LEVEL0		(MC7	FB)  : MUX 31		Ref (C43fb)
+nINTCTRL_CS		(MC22	FB)  : MUX 34		Ref (GCLR)
+INT6B_REQUEST		(MC12	FB)  : MUX 35		Ref (E74fb)
+INTL6_REQUEST_PE		(MC4	FB)  : MUX 36		Ref (C36fb)
+INTL5_REQUEST_PE		(MC10	FB)  : MUX 37		Ref (D64fb)
 
-FanIn assignment for block D [25]
+FanIn assignment for block D [24]
 {
-INT7A_REQUEST,INT_MSK11,INT_MSK10,INT5B_REQUEST_PE,INTL4_REQUEST_PE,INT_MSK9,INT_MSK4,INTL5_REQUEST_PE,INT_MSK7,INT_MSK8,INT6A_REQUEST,INTL6_REQUEST_PE,INT6B_REQUEST,INT_MSK5,INT_MSK6,INT_MSK12,
-vINT3A,vINT4C,vINT5B,vINT4A,vINT5A,vINT5D,vINT5C,vINT4B,vINT3B,
+INT5B_REQUEST_PE,INT_MSK9,INT_MSK7,INT_MSK11,INT_MSK1,INTL2_REQUEST_PE,INT_MSK10,INTL4_REQUEST_PE,INTL5_REQUEST_PE,INTL3_REQUEST_PE,INTL6_REQUEST_PE,INT_MSK6,INT_MSK12,INT1B_REQUEST,INT_MSK8,INT7A_REQUEST,
+vINT5B,vINT4A,vINT5D,vINT5C,vINT5A,vINT1A,vINT4C,vINT4B,
 }
 Multiplexer assignment for block D
-vINT3A			(MC17	P)   : MUX 0		Ref (B27p)
-vINT4C			(MC21	P)   : MUX 3		Ref (C40p)
-INT7A_REQUEST		(MC15	FB)  : MUX 5		Ref (F95fb)
-INT_MSK11		(MC3	FB)  : MUX 7		Ref (B25fb)
-vINT5B			(MC23	P)   : MUX 9		Ref (B19p)
-vINT4A			(MC19	P)   : MUX 10		Ref (C43p)
-vINT5A			(MC18	P)   : MUX 11		Ref (B21p)
+INT5B_REQUEST_PE		(MC11	FB)  : MUX 1		Ref (D58fb)
+INT_MSK9		(MC4	FB)  : MUX 2		Ref (B20fb)
+INT_MSK7		(MC7	FB)  : MUX 3		Ref (B31fb)
+INT_MSK11		(MC2	FB)  : MUX 6		Ref (B18fb)
+INT_MSK1		(MC8	FB)  : MUX 7		Ref (B32fb)
+vINT5B			(MC22	P)   : MUX 9		Ref (B19p)
+vINT4A			(MC18	P)   : MUX 10		Ref (C43p)
 vINT5D			(MC20	P)   : MUX 12		Ref (C46p)
-vINT5C			(MC24	P)   : MUX 13		Ref (B17p)
-INT_MSK10		(MC4	FB)  : MUX 15		Ref (B27fb)
-vINT4B			(MC25	P)   : MUX 16		Ref (C41p)
-INT5B_REQUEST_PE		(MC11	FB)  : MUX 17		Ref (D59fb)
+vINT5C			(MC23	P)   : MUX 13		Ref (B17p)
+INTL2_REQUEST_PE		(MC10	FB)  : MUX 14		Ref (C39fb)
+INT_MSK10		(MC3	FB)  : MUX 16		Ref (B19fb)
+vINT5A			(MC17	P)   : MUX 17		Ref (B21p)
 INTL4_REQUEST_PE		(MC12	FB)  : MUX 19		Ref (D63fb)
-INT_MSK9		(MC9	FB)  : MUX 21		Ref (C48fb)
-INT_MSK4		(MC2	FB)  : MUX 22		Ref (B19fb)
+vINT1A			(MC19	P)   : MUX 20		Ref (D61p)
+vINT4C			(MC21	P)   : MUX 21		Ref (C40p)
 INTL5_REQUEST_PE		(MC13	FB)  : MUX 23		Ref (D64fb)
-INT_MSK7		(MC6	FB)  : MUX 25		Ref (B31fb)
-INT_MSK8		(MC5	FB)  : MUX 27		Ref (B28fb)
-INT6A_REQUEST		(MC14	FB)  : MUX 29		Ref (E76fb)
-INTL6_REQUEST_PE		(MC10	FB)  : MUX 32		Ref (D55fb)
-INT6B_REQUEST		(MC16	FB)  : MUX 33		Ref (F96fb)
-vINT3B			(MC22	P)   : MUX 35		Ref (C35p)
-INT_MSK5		(MC1	FB)  : MUX 36		Ref (B17fb)
-INT_MSK6		(MC8	FB)  : MUX 37		Ref (C47fb)
-INT_MSK12		(MC7	FB)  : MUX 39		Ref (C46fb)
+INTL3_REQUEST_PE		(MC16	FB)  : MUX 25		Ref (F96fb)
+INTL6_REQUEST_PE		(MC9	FB)  : MUX 26		Ref (C36fb)
+INT_MSK6		(MC5	FB)  : MUX 30		Ref (B21fb)
+INT_MSK12		(MC1	FB)  : MUX 32		Ref (B17fb)
+vINT4B			(MC24	P)   : MUX 34		Ref (C41p)
+INT1B_REQUEST		(MC15	FB)  : MUX 35		Ref (E76fb)
+INT_MSK8		(MC6	FB)  : MUX 37		Ref (B28fb)
+INT7A_REQUEST		(MC14	FB)  : MUX 38		Ref (E71fb)
 
-FanIn assignment for block E [23]
+FanIn assignment for block E [25]
 {
-CPU_RW,CPU_D1,CPU_A0,CPU_A3,CPU_A2,CPU_A1,
-INT_ACK_RESET_PRE,INT1B_REQUEST.AR,INT_ACK_LEVEL0,INT_ACK_LEVEL2,INT_ACK_LEVEL1,INT_MSK14,INT_MSK0,INT_MSK1,INT1B_REQUEST.AR,
+CPU_A1,CPU_RW,CPU_D1,CPU_A2,CPU_A0,CPU_A3,
+INT6B_REQUEST.AR,INT6B_REQUEST.AR,INT_ACK_LEVEL2,INT_ACK_LEVEL0,INT_MSK14,INT_MSK0,INT6B_REQUEST.AR,INT_ACK_LEVEL1,INT_MSK15,INT6B_REQUEST.AR,INT_MSK13,
 POWER_CONTROL_STATE,
-TESTP1,
-nINTCTRL_CS,nSYS_RESET,nINT_ACK_CYCLE,
-vINT6A,vINT1A,vINT1B,
+nSYS_RESET,nINTCTRL_CS,nINT_ACK_CYCLE,
+vINT1B,vINT6B,vINT7A,vINT6A,
 }
 Multiplexer assignment for block E
-INT_ACK_RESET_PRE		(MC2	FB)  : MUX 0		Ref (A7fb)
+INT7A_REQUEST.AR		(MC6	FB)  : MUX 1		Ref (C41fb)
 INT6A_REQUEST.AR		(MC1	FB)  : MUX 2		Ref (A5fb)
-vINT6A			(MC23	P)   : MUX 3		Ref (B24p)
-INT_ACK_LEVEL0		(MC10	FB)  : MUX 5		Ref (C44fb)
+CPU_A1			(MC17	P)   : MUX 5		Ref (H113p)
 CPU_RW			(MC20	P)   : MUX 6		Ref (G107p)
-CPU_D1			(MC12	P)   : MUX 7		Ref (G101p)
-vINT1A			(MC15	P)   : MUX 8		Ref (D61p)
-TESTP1			(MC11	P)   : MUX 11		Ref (E67p)
-vINT1B			(MC22	P)   : MUX 12		Ref (D59p)
-CPU_A0			(MC16	P)   : MUX 13		Ref (H115p)
-nINTCTRL_CS		(MC21	FB)  : MUX 14		Ref (GCLR)
-INT_ACK_LEVEL2		(MC8	FB)  : MUX 15		Ref (C42fb)
-INT_ACK_LEVEL1		(MC9	FB)  : MUX 17		Ref (C43fb)
-INT_MSK14		(MC6	FB)  : MUX 20		Ref (B24fb)
+CPU_D1			(MC13	P)   : MUX 7		Ref (G101p)
+CPU_A2			(MC18	P)   : MUX 8		Ref (G110p)
+CPU_A0			(MC16	P)   : MUX 9		Ref (H115p)
+vINT1B			(MC23	P)   : MUX 12		Ref (D59p)
+vINT6B			(MC24	P)   : MUX 13		Ref (B22p)
+vINT7A			(MC25	P)   : MUX 14		Ref (B25p)
+INT_ACK_LEVEL2		(MC7	FB)  : MUX 15		Ref (C42fb)
+INT_ACK_LEVEL0		(MC8	FB)  : MUX 17		Ref (C43fb)
+INT_MSK14		(MC12	FB)  : MUX 21		Ref (C48fb)
+vINT6A			(MC22	P)   : MUX 23		Ref (B24p)
 CPU_A3			(MC19	P)   : MUX 24		Ref (G109p)
-CPU_A2			(MC18	P)   : MUX 28		Ref (G110p)
-POWER_CONTROL_STATE		(MC5	FB)  : MUX 30		Ref (B22fb)
-CPU_A1			(MC17	P)   : MUX 33		Ref (H113p)
-nSYS_RESET		(MC14	FB)  : MUX 35		Ref (OE1)
-INT_MSK0		(MC4	FB)  : MUX 36		Ref (B21fb)
-INT_MSK1		(MC7	FB)  : MUX 37		Ref (B32fb)
-nINT_ACK_CYCLE		(MC13	FB)  : MUX 38		Ref (OE2)
-INT1B_REQUEST.AR		(MC3	FB)  : MUX 39		Ref (A10fb)
+INT_MSK0		(MC4	FB)  : MUX 25		Ref (B25fb)
+INT1B_REQUEST.AR		(MC3	FB)  : MUX 27		Ref (A10fb)
+INT_ACK_LEVEL1		(MC9	FB)  : MUX 29		Ref (C44fb)
+INT_MSK15		(MC10	FB)  : MUX 31		Ref (C46fb)
+INT6B_REQUEST.AR		(MC2	FB)  : MUX 32		Ref (A6fb)
+nSYS_RESET		(MC15	FB)  : MUX 35		Ref (OE1)
+nINTCTRL_CS		(MC21	FB)  : MUX 36		Ref (GCLR)
+INT_MSK13		(MC11	FB)  : MUX 37		Ref (C47fb)
+nINT_ACK_CYCLE		(MC14	FB)  : MUX 38		Ref (OE2)
+POWER_CONTROL_STATE		(MC5	FB)  : MUX 39		Ref (B27fb)
 
-FanIn assignment for block F [17]
+FanIn assignment for block F [15]
 {
-INTL2_REQUEST_PE,INT6B_REQUEST.AR,INTL3_REQUEST_PE,INTL1_REQUEST_PE,INT7A_REQUEST,INT6B_REQUEST.AR,INTL4_REQUEST_PE,INT_MSK15,INT_MSK13,INTL5_REQUEST_PE,INT_ACK_LEVEL0,INTL6_REQUEST_PE,INT_ACK_LEVEL2,INT_ACK_LEVEL1,
+INTL1_REQUEST_PE,INTL4_REQUEST_PE,INTL6_REQUEST_PE,INTL5_REQUEST_PE,INT_ACK_LEVEL2,INT_ACK_LEVEL0,INT_MSK4,INT7A_REQUEST,INT_MSK5,INTL3_REQUEST_PE,INTL2_REQUEST_PE,INT_ACK_LEVEL1,
 nINT_ACK_CYCLE,
-vINT6B,vINT7A,
+vINT3A,vINT3B,
 }
 Multiplexer assignment for block F
-INTL2_REQUEST_PE		(MC5	FB)  : MUX 0		Ref (C40fb)
-INT7A_REQUEST.AR		(MC6	FB)  : MUX 1		Ref (C41fb)
-INTL3_REQUEST_PE		(MC11	FB)  : MUX 3		Ref (D61fb)
-INTL1_REQUEST_PE		(MC4	FB)  : MUX 10		Ref (C39fb)
-INT7A_REQUEST		(MC14	FB)  : MUX 11		Ref (F95fb)
-INT6B_REQUEST.AR		(MC1	FB)  : MUX 12		Ref (A6fb)
-vINT6B			(MC16	P)   : MUX 13		Ref (B22p)
-vINT7A			(MC17	P)   : MUX 14		Ref (B25p)
-INTL4_REQUEST_PE		(MC12	FB)  : MUX 15		Ref (D63fb)
-INT_MSK15		(MC2	FB)  : MUX 18		Ref (B23fb)
-INT_MSK13		(MC3	FB)  : MUX 21		Ref (B26fb)
-INTL5_REQUEST_PE		(MC13	FB)  : MUX 23		Ref (D64fb)
-INT_ACK_LEVEL0		(MC9	FB)  : MUX 29		Ref (C44fb)
-INTL6_REQUEST_PE		(MC10	FB)  : MUX 32		Ref (D55fb)
-INT_ACK_LEVEL2		(MC7	FB)  : MUX 33		Ref (C42fb)
-nINT_ACK_CYCLE		(MC15	FB)  : MUX 34		Ref (OE2)
-INT_ACK_LEVEL1		(MC8	FB)  : MUX 35		Ref (C43fb)
+vINT3A			(MC14	P)   : MUX 0		Ref (B27p)
+INTL1_REQUEST_PE		(MC8	FB)  : MUX 3		Ref (D61fb)
+INTL4_REQUEST_PE		(MC9	FB)  : MUX 5		Ref (D63fb)
+INTL6_REQUEST_PE		(MC3	FB)  : MUX 8		Ref (C36fb)
+INTL5_REQUEST_PE		(MC10	FB)  : MUX 9		Ref (D64fb)
+INT_ACK_LEVEL2		(MC5	FB)  : MUX 11		Ref (C42fb)
+INT_ACK_LEVEL0		(MC6	FB)  : MUX 13		Ref (C43fb)
+INT_MSK4		(MC2	FB)  : MUX 14		Ref (B23fb)
+vINT3B			(MC15	P)   : MUX 15		Ref (C35p)
+nINT_ACK_CYCLE		(MC13	FB)  : MUX 16		Ref (OE2)
+INT7A_REQUEST		(MC11	FB)  : MUX 18		Ref (E71fb)
+INT_MSK5		(MC1	FB)  : MUX 30		Ref (B22fb)
+INTL3_REQUEST_PE		(MC12	FB)  : MUX 33		Ref (F96fb)
+INTL2_REQUEST_PE		(MC4	FB)  : MUX 34		Ref (C39fb)
+INT_ACK_LEVEL1		(MC7	FB)  : MUX 39		Ref (C44fb)
 
 FanIn assignment for block G [21]
 {
-INT4B_REQUEST_PE,INTL4_REQUEST_PE,INT_MSK12,INT5B_REQUEST_PE,INT5C_REQUEST_PE,INT_MSK9,INTL3_REQUEST_PE,INTL5_REQUEST_PE,INT_MSK4,INT_MSK5,INT_MSK6,INT_MSK8,
-XXL_252,XXL_253,
+INT5B_REQUEST_PE,INTL3_REQUEST_PE,INT_MSK5,INT_MSK8,INT5C_REQUEST_PE,INT_MSK9,INTL4_REQUEST_PE,INT4B_REQUEST_PE,INT_MSK6,INT_MSK4,INT_MSK12,INTL5_REQUEST_PE,
+XXL_253,XXL_252,
 nINT_ACK_CYCLE,
-vINT3A,vINT4C,vINT4A,vINT5A,vINT5D,vINT3B,
+vINT3A,vINT4C,vINT4A,vINT5D,vINT3B,vINT5A,
 }
 Multiplexer assignment for block G
-vINT3A			(MC16	P)   : MUX 0		Ref (B27p)
-XXL_252			(MC1	FB)  : MUX 1		Ref (A12fb)
+INT5B_REQUEST_PE		(MC9	FB)  : MUX 1		Ref (D58fb)
+vINT3A			(MC16	P)   : MUX 2		Ref (B27p)
 vINT4C			(MC20	P)   : MUX 3		Ref (C40p)
+nINT_ACK_CYCLE		(MC15	FB)  : MUX 4		Ref (OE2)
 XXL_253			(MC2	FB)  : MUX 5		Ref (A15fb)
-INT4B_REQUEST_PE		(MC11	FB)  : MUX 7		Ref (D60fb)
-INTL4_REQUEST_PE		(MC13	FB)  : MUX 9		Ref (D63fb)
+INTL3_REQUEST_PE		(MC14	FB)  : MUX 7		Ref (F96fb)
+INT_MSK5		(MC6	FB)  : MUX 8		Ref (B22fb)
 vINT4A			(MC18	P)   : MUX 10		Ref (C43p)
-vINT5A			(MC17	P)   : MUX 11		Ref (B21p)
 vINT5D			(MC19	P)   : MUX 12		Ref (C46p)
-INT_MSK12		(MC6	FB)  : MUX 13		Ref (C46fb)
-nINT_ACK_CYCLE		(MC15	FB)  : MUX 16		Ref (OE2)
-INT5B_REQUEST_PE		(MC10	FB)  : MUX 17		Ref (D59fb)
-INT5C_REQUEST_PE		(MC9	FB)  : MUX 19		Ref (D58fb)
-INT_MSK9		(MC8	FB)  : MUX 21		Ref (C48fb)
+INT_MSK8		(MC8	FB)  : MUX 13		Ref (B28fb)
+INT5C_REQUEST_PE		(MC10	FB)  : MUX 17		Ref (D59fb)
+INT_MSK9		(MC4	FB)  : MUX 18		Ref (B20fb)
+INTL4_REQUEST_PE		(MC12	FB)  : MUX 19		Ref (D63fb)
+XXL_252			(MC1	FB)  : MUX 21		Ref (A12fb)
 vINT3B			(MC21	P)   : MUX 23		Ref (C35p)
-INTL3_REQUEST_PE		(MC12	FB)  : MUX 25		Ref (D61fb)
-INTL5_REQUEST_PE		(MC14	FB)  : MUX 29		Ref (D64fb)
-INT_MSK4		(MC4	FB)  : MUX 30		Ref (B19fb)
-INT_MSK5		(MC3	FB)  : MUX 32		Ref (B17fb)
-INT_MSK6		(MC7	FB)  : MUX 33		Ref (C47fb)
-INT_MSK8		(MC5	FB)  : MUX 37		Ref (B28fb)
+INT4B_REQUEST_PE		(MC11	FB)  : MUX 27		Ref (D60fb)
+INT_MSK6		(MC5	FB)  : MUX 30		Ref (B21fb)
+vINT5A			(MC17	P)   : MUX 31		Ref (B21p)
+INT_MSK4		(MC7	FB)  : MUX 32		Ref (B23fb)
+INT_MSK12		(MC3	FB)  : MUX 36		Ref (B17fb)
+INTL5_REQUEST_PE		(MC13	FB)  : MUX 37		Ref (D64fb)
 
 Creating JEDEC file C:\USERS\JEFF\SRC\ROSCOE\PLDS\INTCTRLV2\INTCTRL2.jed ...
 
@@ -520,7 +511,7 @@ INT_ACK_LEVEL2.D = CPU_A3;
 
 INT_ACK_LEVEL1.D = CPU_A2;
 
-TESTP1.D = INT_ACK_RESET_PRE.Q;
+INT_ACK_RESET.D = INT_ACK_RESET_PRE.Q;
 
 INT_MSK0.D = 0;
 
@@ -544,17 +535,17 @@ INT_MSK8.D = CPU_D0.PIN;
 
 INT_MSK9.D = 0;
 
-INT_MSK10.D = CPU_D2.PIN;
+INT_MSK10.D = 0;
 
-INT_MSK11.D = CPU_D3.PIN;
+INT_MSK11.D = 0;
 
 INT_MSK12.D = 0;
 
-INT_MSK13.D = CPU_D5.PIN;
+INT_MSK13.D = 0;
 
-INT_MSK14.D = CPU_D6.PIN;
+INT_MSK14.D = 0;
 
-INT_MSK15.D = CPU_D7.PIN;
+INT_MSK15.D = 0;
 
 POWER_CONTROL_OUT = 1;
 
@@ -562,9 +553,13 @@ POWER_CONTROL_STATE.D = CPU_D0.PIN;
 
 RESET_CONTROL_OUT.D = CPU_D1.PIN;
 
-TESTP0 = nINT_ACK_CYCLE;
+TESTP0 = vINT6A;
 
 UNUSED1 = (EXTRA_BC_INT1 & EXTRA_BC_INT2 & EXTRA_DM_INT1 & EXTRA_DM_INT2);
+
+TESTP1 = (!INT_ACK_LEVEL0.Q & !INT_ACK_LEVEL1.Q & INT_ACK_LEVEL2.Q);
+
+TESTP2 = nINT_ACK_CYCLE;
 
 UNUSED2 = (UNUSED3 & UNUSED4 & UNUSED5 & UNUSED6 & UNUSED7);
 
@@ -575,8 +570,6 @@ INTL5_REQUEST_PE = ((!INT7A_REQUEST.Q & !INTL6_REQUEST_PE & INT_MSK12.Q & !vINT5
 	# (!INT7A_REQUEST.Q & !INTL6_REQUEST_PE & INT_MSK11.Q & !vINT5B)
 	# (!INT7A_REQUEST.Q & !INTL6_REQUEST_PE & INT_MSK10.Q & !vINT5C)
 	# (!INT7A_REQUEST.Q & !INTL6_REQUEST_PE & INT_MSK9.Q & !vINT5D));
-
-TESTP2 = (INT_ACK_LEVEL0.Q & !INT_ACK_LEVEL1.Q & !INT_ACK_LEVEL2.Q & TESTP1.Q & INT_MSK1.Q & !vINT1A);
 
 INTL4_REQUEST_PE = ((!INT7A_REQUEST.Q & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & INT_MSK7.Q & vINT4B)
 	# (!INT7A_REQUEST.Q & !INTL5_REQUEST_PE & !INTL6_REQUEST_PE & INT_MSK6.Q & !vINT4C)
@@ -618,7 +611,7 @@ CPU_IPL0 = (!INT7A_REQUEST.Q & !INTL1_REQUEST_PE & !INTL3_REQUEST_PE & !INTL5_RE
 
 !Com_Ctrl_250 = (CPU_A0 & !CPU_A1 & !CPU_A2 & !CPU_A3 & !CPU_RW & !nINTCTRL_CS);
 
-!FB_251 = (!TESTP1.Q & nSYS_RESET);
+!FB_251 = (!INT_ACK_RESET.Q & nSYS_RESET);
 
 XXL_252 = ((!nINT_ACK_CYCLE & INTL5_REQUEST_PE & INT_MSK12.Q & !vINT5A)
 	# (!nINT_ACK_CYCLE & INTL1_REQUEST_PE & INT_MSK1.Q & !vINT1A)
@@ -643,22 +636,22 @@ CPU_D7.OE = !nINT_ACK_CYCLE;
 INT1B_REQUEST.C = !vINT1B;
 
 INT1B_REQUEST.AR = (!nSYS_RESET
-	# (INT1A_REQUEST & INT1B_REQUEST.Q & INT_ACK_LEVEL0.Q & !INT_ACK_LEVEL1.Q & !INT_ACK_LEVEL2.Q & TESTP1.Q));
+	# (INT1A_REQUEST & INT1B_REQUEST.Q & INT_ACK_LEVEL0.Q & !INT_ACK_LEVEL1.Q & !INT_ACK_LEVEL2.Q & INT_ACK_RESET.Q));
 
 INT6A_REQUEST.C = !vINT6A;
 
 INT6A_REQUEST.AR = (!nSYS_RESET
-	# (INT6A_REQUEST.Q & !INT_ACK_LEVEL0.Q & INT_ACK_LEVEL1.Q & INT_ACK_LEVEL2.Q & TESTP1.Q));
+	# (INT6A_REQUEST.Q & !INT_ACK_LEVEL0.Q & INT_ACK_LEVEL1.Q & INT_ACK_LEVEL2.Q & INT_ACK_RESET.Q));
 
 INT6B_REQUEST.C = !vINT6B;
 
 INT6B_REQUEST.AR = (!nSYS_RESET
-	# (!INT_ACK_LEVEL0.Q & INT_ACK_LEVEL1.Q & INT_ACK_LEVEL2.Q & TESTP1.Q & !INT6A_REQUEST.Q & INT6B_REQUEST.Q));
+	# (!INT_ACK_LEVEL0.Q & INT_ACK_LEVEL1.Q & INT_ACK_LEVEL2.Q & INT_ACK_RESET.Q & !INT6A_REQUEST.Q & INT6B_REQUEST.Q));
 
 INT7A_REQUEST.C = !vINT7A;
 
 INT7A_REQUEST.AR = (!nSYS_RESET
-	# (INT7A_REQUEST.Q & INT_ACK_LEVEL0.Q & INT_ACK_LEVEL1.Q & INT_ACK_LEVEL2.Q & TESTP1.Q));
+	# (INT7A_REQUEST.Q & INT_ACK_LEVEL0.Q & INT_ACK_LEVEL1.Q & INT_ACK_LEVEL2.Q & INT_ACK_RESET.Q));
 
 INT_ACK_LEVEL0.C = !nINT_ACK_CYCLE;
 
@@ -672,9 +665,9 @@ INT_ACK_LEVEL1.C = !nINT_ACK_CYCLE;
 
 INT_ACK_LEVEL1.AR = !nSYS_RESET;
 
-TESTP1.C = CPU_CLK;
+INT_ACK_RESET.C = CPU_CLK;
 
-TESTP1.AR = !nSYS_RESET;
+INT_ACK_RESET.AR = !nSYS_RESET;
 
 INT_MSK0.C = Com_Ctrl_250;
 
@@ -828,7 +821,6 @@ PINNODE 316 = INT1A_REQUEST; /* MC 16 Foldback */
 PINNODE 330 = Com_Ctrl_250; /* MC 30 Foldback */
 PINNODE 331 = Com_Ctrl_249; /* MC 31 Foldback */
 PINNODE 332 = Com_Ctrl_248; /* MC 32 Foldback */
-PINNODE 347 = Com_Ctrl_250; /* MC 47 Foldback */
 PINNODE 348 = Com_Ctrl_249; /* MC 48 Foldback */
 PINNODE 380 = Com_Ctrl_248; /* MC 80 Foldback */
 PINNODE 605 = INT6A_REQUEST.AR; /* MC 5 Feedback */
@@ -837,40 +829,41 @@ PINNODE 607 = INT_ACK_RESET_PRE; /* MC 7 Feedback */
 PINNODE 610 = INT1B_REQUEST.AR; /* MC 10 Feedback */
 PINNODE 612 = XXL_252; /* MC 12 Feedback */
 PINNODE 615 = XXL_253; /* MC 15 Feedback */
-PINNODE 617 = INT_MSK5; /* MC 17 Feedback */
-PINNODE 618 = INT_MSK3; /* MC 18 Feedback */
-PINNODE 619 = INT_MSK4; /* MC 19 Feedback */
-PINNODE 620 = INT_MSK2; /* MC 20 Feedback */
-PINNODE 621 = INT_MSK0; /* MC 21 Feedback */
-PINNODE 622 = POWER_CONTROL_STATE; /* MC 22 Feedback */
-PINNODE 623 = INT_MSK15; /* MC 23 Feedback */
-PINNODE 624 = INT_MSK14; /* MC 24 Feedback */
-PINNODE 625 = INT_MSK11; /* MC 25 Feedback */
-PINNODE 626 = INT_MSK13; /* MC 26 Feedback */
-PINNODE 627 = INT_MSK10; /* MC 27 Feedback */
+PINNODE 617 = INT_MSK12; /* MC 17 Feedback */
+PINNODE 618 = INT_MSK11; /* MC 18 Feedback */
+PINNODE 619 = INT_MSK10; /* MC 19 Feedback */
+PINNODE 620 = INT_MSK9; /* MC 20 Feedback */
+PINNODE 621 = INT_MSK6; /* MC 21 Feedback */
+PINNODE 622 = INT_MSK5; /* MC 22 Feedback */
+PINNODE 623 = INT_MSK4; /* MC 23 Feedback */
+PINNODE 624 = INT_MSK3; /* MC 24 Feedback */
+PINNODE 625 = INT_MSK0; /* MC 25 Feedback */
+PINNODE 626 = INT_MSK2; /* MC 26 Feedback */
+PINNODE 627 = POWER_CONTROL_STATE; /* MC 27 Feedback */
 PINNODE 628 = INT_MSK8; /* MC 28 Feedback */
 PINNODE 631 = INT_MSK7; /* MC 31 Feedback */
 PINNODE 632 = INT_MSK1; /* MC 32 Feedback */
-PINNODE 639 = INTL1_REQUEST_PE; /* MC 39 Feedback */
-PINNODE 640 = INTL2_REQUEST_PE; /* MC 40 Feedback */
+PINNODE 636 = INTL6_REQUEST_PE; /* MC 36 Feedback */
+PINNODE 639 = INTL2_REQUEST_PE; /* MC 39 Feedback */
+PINNODE 640 = INT_ACK_RESET; /* MC 40 Feedback */
 PINNODE 641 = INT7A_REQUEST.AR; /* MC 41 Feedback */
 PINNODE 642 = INT_ACK_LEVEL2; /* MC 42 Feedback */
-PINNODE 643 = INT_ACK_LEVEL1; /* MC 43 Feedback */
-PINNODE 644 = INT_ACK_LEVEL0; /* MC 44 Feedback */
-PINNODE 646 = INT_MSK12; /* MC 46 Feedback */
-PINNODE 647 = INT_MSK6; /* MC 47 Feedback */
-PINNODE 648 = INT_MSK9; /* MC 48 Feedback */
-PINNODE 655 = INTL6_REQUEST_PE; /* MC 55 Feedback */
-PINNODE 658 = INT5C_REQUEST_PE; /* MC 58 Feedback */
-PINNODE 659 = INT5B_REQUEST_PE; /* MC 59 Feedback */
+PINNODE 643 = INT_ACK_LEVEL0; /* MC 43 Feedback */
+PINNODE 644 = INT_ACK_LEVEL1; /* MC 44 Feedback */
+PINNODE 646 = INT_MSK15; /* MC 46 Feedback */
+PINNODE 647 = INT_MSK13; /* MC 47 Feedback */
+PINNODE 648 = INT_MSK14; /* MC 48 Feedback */
+PINNODE 658 = INT5B_REQUEST_PE; /* MC 58 Feedback */
+PINNODE 659 = INT5C_REQUEST_PE; /* MC 59 Feedback */
 PINNODE 660 = INT4B_REQUEST_PE; /* MC 60 Feedback */
-PINNODE 661 = INTL3_REQUEST_PE; /* MC 61 Feedback */
+PINNODE 661 = INTL1_REQUEST_PE; /* MC 61 Feedback */
 PINNODE 663 = INTL4_REQUEST_PE; /* MC 63 Feedback */
 PINNODE 664 = INTL5_REQUEST_PE; /* MC 64 Feedback */
-PINNODE 676 = INT6A_REQUEST; /* MC 76 Feedback */
-PINNODE 679 = INT1B_REQUEST; /* MC 79 Feedback */
-PINNODE 695 = INT7A_REQUEST; /* MC 95 Feedback */
-PINNODE 696 = INT6B_REQUEST; /* MC 96 Feedback */
+PINNODE 671 = INT7A_REQUEST; /* MC 71 Feedback */
+PINNODE 674 = INT6B_REQUEST; /* MC 74 Feedback */
+PINNODE 676 = INT1B_REQUEST; /* MC 76 Feedback */
+PINNODE 679 = INT6A_REQUEST; /* MC 79 Feedback */
+PINNODE 696 = INTL3_REQUEST_PE; /* MC 96 Feedback */
 
 ** Resource Usage **
 
@@ -906,17 +899,17 @@ MC13  94        --                       --                         --          
 MC14  93        --                       --                         FB_251        --             1     slow
 MC15  0         --                       XXL_253             C----  NA            --             5     slow
 MC16  92        --                       --                         INT1A_REQUEST --             1     slow
-MC17  14   --   vINT5C            INPUT  INT_MSK5            Dc-r-  --            --             2     slow
-MC18  0         --                       INT_MSK3            Dc-r-  --            --             2     slow
-MC19  13   --   vINT5B            INPUT  INT_MSK4            Dc-r-  --            --             2     slow
-MC20  0         --                       INT_MSK2            Dc-r-  --            --             2     slow
-MC21  12   --   vINT5A            INPUT  INT_MSK0            Dc-r-  --            --             2     slow
-MC22  10   --   vINT6B            INPUT  POWER_CONTROL_STATE Dc-r-  --            --             3     slow
-MC23  0         --                       INT_MSK15           Dc-r-  --            --             3     slow
-MC24  9    --   vINT6A            INPUT  INT_MSK14           Dc-r-  --            --             3     slow
-MC25  8    --   vINT7A            INPUT  INT_MSK11           Dc-r-  --            --             3     slow
-MC26  0         --                       INT_MSK13           Dc-r-  --            --             3     slow
-MC27  7    --   vINT3A            INPUT  INT_MSK10           Dc-r-  --            --             3     slow
+MC17  14   --   vINT5C            INPUT  INT_MSK12           Dc-r-  --            --             2     slow
+MC18  0         --                       INT_MSK11           Dc-r-  --            --             2     slow
+MC19  13   --   vINT5B            INPUT  INT_MSK10           Dc-r-  --            --             2     slow
+MC20  0         --                       INT_MSK9            Dc-r-  --            --             2     slow
+MC21  12   --   vINT5A            INPUT  INT_MSK6            Dc-r-  --            --             2     slow
+MC22  10   --   vINT6B            INPUT  INT_MSK5            Dc-r-  --            --             2     slow
+MC23  0         --                       INT_MSK4            Dc-r-  --            --             2     slow
+MC24  9    --   vINT6A            INPUT  INT_MSK3            Dc-r-  --            --             2     slow
+MC25  8    --   vINT7A            INPUT  INT_MSK0            Dc-r-  --            --             2     slow
+MC26  0         --                       INT_MSK2            Dc-r-  --            --             2     slow
+MC27  7    --   vINT3A            INPUT  POWER_CONTROL_STATE Dc-r-  --            --             3     slow
 MC28  0         --                       INT_MSK8            Dc-r-  --            --             3     slow
 MC29  6    on   UNUSED1           C----  --                         --            --             1     slow
 MC30  5    on   UNUSED2           C----  --                         Com_Ctrl_250  --             2     slow
@@ -925,50 +918,50 @@ MC32  4    --   TDI               INPUT  INT_MSK1            Dc-r-  Com_Ctrl_248
 MC33  25   --   vINT2A            INPUT  --                         --            --             0     slow
 MC34  0         --                       --                         --            --             0     slow
 MC35  24   --   vINT3B            INPUT  --                         --            --             0     slow
-MC36  0         --                       --                         --            --             0     slow
+MC36  0         --                       INTL6_REQUEST_PE    C----  --            --             2     slow
 MC37  23        --                       --                         --            --             0     slow
 MC38  22        --                       --                         --            --             0     slow
-MC39  0         --                       INTL1_REQUEST_PE    C----  --            --             2     slow
-MC40  21   --   vINT4C            INPUT  INTL2_REQUEST_PE    C----  --            --             2     slow
+MC39  0         --                       INTL2_REQUEST_PE    C----  --            --             2     slow
+MC40  21   --   vINT4C            INPUT  INT_ACK_RESET       Dg-r-  --            --             2     slow
 MC41  20   --   vINT4B            INPUT  INT7A_REQUEST.AR    C----  --            --             2     slow
 MC42  0         --                       INT_ACK_LEVEL2      Dc-r-  --            --             3     slow
-MC43  19   --   vINT4A            INPUT  INT_ACK_LEVEL1      Dc-r-  --            --             3     slow
-MC44  0         --                       INT_ACK_LEVEL0      Dc-r-  --            --             3     slow
+MC43  19   --   vINT4A            INPUT  INT_ACK_LEVEL0      Dc-r-  --            --             3     slow
+MC44  0         --                       INT_ACK_LEVEL1      Dc-r-  --            --             3     slow
 MC45  17        --                       --                         --            --             0     slow
-MC46  16   --   vINT5D            INPUT  INT_MSK12           Dc-r-  --            --             2     slow
-MC47  0         --                       INT_MSK6            Dc-r-  Com_Ctrl_250  --             3     slow
-MC48  15   --   TMS               INPUT  INT_MSK9            Dc-r-  Com_Ctrl_249  --             3     slow
+MC46  16   --   vINT5D            INPUT  INT_MSK15           Dc-r-  --            --             2     slow
+MC47  0         --                       INT_MSK13           Dc-r-  --            --             2     slow
+MC48  15   --   TMS               INPUT  INT_MSK14           Dc-r-  Com_Ctrl_249  --             3     slow
 MC49  37        --                       --                         --            --             0     slow
 MC50  0         --                       --                         --            --             0     slow
 MC51  36        --                       --                         --            --             0     slow
 MC52  0         --                       --                         --            --             0     slow
 MC53  35        --                       --                         --            --             0     slow
 MC54  33        --                       --                         --            --             0     slow
-MC55  0         --                       INTL6_REQUEST_PE    C----  --            --             2     slow
+MC55  0         --                       --                         --            --             0     slow
 MC56  32   on   EXP_INT_CPLD2     C----  --                         --            --             0     slow
 MC57  31   on   EXP_INT_CPLD1     C----  --                         --            --             0     slow
-MC58  0         --                       INT5C_REQUEST_PE    C----  --            --             2     slow
-MC59  30   --   vINT1B            INPUT  INT5B_REQUEST_PE    C----  --            --             2     slow
+MC58  0         --                       INT5B_REQUEST_PE    C----  --            --             2     slow
+MC59  30   --   vINT1B            INPUT  INT5C_REQUEST_PE    C----  --            --             2     slow
 MC60  0         --                       INT4B_REQUEST_PE    C----  --            --             2     slow
-MC61  29   --   vINT1A            INPUT  INTL3_REQUEST_PE    C----  --            --             2     slow
+MC61  29   --   vINT1A            INPUT  INTL1_REQUEST_PE    C----  --            --             2     slow
 MC62  28        --                       --                         --            --             0     slow
 MC63  0         --                       INTL4_REQUEST_PE    C----  --            --             3     slow
 MC64  27   --   vINT2B            INPUT  INTL5_REQUEST_PE    C----  --            --             4     slow
 MC65  40   on   TESTP0            C----  --                         --            --             1     slow
 MC66  0         --                       --                         --            --             0     slow
-MC67  41   on   TESTP1            Dg-r-  --                         --            --             2     slow
+MC67  41   on   TESTP1            C----  --                         --            --             1     slow
 MC68  0         --                       --                         --            --             0     slow
 MC69  42   on   TESTP2            C----  --                         --            --             1     slow
 MC70  44        --                       --                         --            --             0     slow
-MC71  0         --                       --                         --            --             0     slow
+MC71  0         --                       INT7A_REQUEST       Dc-r-  --            --             3     slow
 MC72  45   PT   POWER_CONTROL_OUT C----  --                         --            --             1     slow
 MC73  46   on   RESET_CONTROL_OUT Dc-r-  --                         --            --             3     slow
-MC74  0         --                       --                         --            --             0     slow
+MC74  0         --                       INT6B_REQUEST       Dc-r-  --            --             3     slow
 MC75  47        --                       --                         --            --             0     slow
-MC76  0         --                       INT6A_REQUEST       Dc-r-  --            --             3     slow
+MC76  0         --                       INT1B_REQUEST       Dc-r-  --            --             3     slow
 MC77  48        --                       --                         --            --             0     slow
 MC78  49        --                       --                         --            --             0     slow
-MC79  0         --                       INT1B_REQUEST       Dc-r-  --            --             3     slow
+MC79  0         --                       INT6A_REQUEST       Dc-r-  --            --             3     slow
 MC80  50        --                       --                         Com_Ctrl_248  --             1     slow
 MC81  52   on   CPU_IPL2          C----  --                         --            --             1     slow
 MC82  0         --                       --                         --            --             0     slow
@@ -984,8 +977,8 @@ MC91  58   PT   CPU_D6            C----  --                         --          
 MC92  0         --                       --                         --            --             0     slow
 MC93  60   PT   CPU_D5            C----  --                         --            --             2     slow
 MC94  61   PT   CPU_D4            C----  --                         --            --             2     slow
-MC95  0         --                       INT7A_REQUEST       Dc-r-  --            --             3     slow
-MC96  62   --   TCK               INPUT  INT6B_REQUEST       Dc-r-  --            --             3     slow
+MC95  0         --                       --                         --            --             0     slow
+MC96  62   --   TCK               INPUT  INTL3_REQUEST_PE    C----  --            --             2     slow
 MC97  63   PT   CPU_D3            C----  --                         --            --             3     slow
 MC98  0         --                       --                         --            --             0     slow
 MC99  64   PT   CPU_D2            C----  --                         --            --             4     slow
@@ -1025,24 +1018,24 @@ MC0   87        CPU_CLK           INPUT  --                         --          
 
 Logic Array Block	Logic Cells	I/O Pins	Foldbacks	TotalPT		FanIN	Cascades
 A: LC1	- LC16		6/16(37%)	4/16(25%)	2/16(12%)	19/80(23%)	(25)	0
-B: LC17	- LC32		16/16(100%)	10/16(62%)	3/16(18%)	42/80(52%)	(23)	0
-C: LC33	- LC48		9/16(56%)	7/16(43%)	2/16(12%)	23/80(28%)	(25)	0
-D: LC49	- LC64		9/16(56%)	5/16(31%)	0/16(0%)	17/80(21%)	(25)	0
-E: LC65	- LC80		7/16(43%)	5/16(31%)	1/16(6%)	15/80(18%)	(23)	0
-F: LC81	- LC96		9/16(56%)	9/16(56%)	0/16(0%)	17/80(21%)	(17)	0
+B: LC17	- LC32		16/16(100%)	10/16(62%)	3/16(18%)	37/80(46%)	(19)	0
+C: LC33	- LC48		10/16(62%)	7/16(43%)	1/16(6%)	24/80(30%)	(24)	0
+D: LC49	- LC64		8/16(50%)	5/16(31%)	0/16(0%)	15/80(18%)	(24)	0
+E: LC65	- LC80		9/16(56%)	5/16(31%)	1/16(6%)	20/80(25%)	(25)	0
+F: LC81	- LC96		8/16(50%)	9/16(56%)	0/16(0%)	13/80(16%)	(15)	0
 G: LC97	- LC112		4/16(25%)	8/16(50%)	0/16(0%)	15/80(18%)	(21)	0
 H: LC113- LC128		0/16(0%)	6/16(37%)	0/16(0%)	0/80(0%)	(0)	0
 
 Total dedicated input used:	4/4 	(100%)
 Total I/O pins used		54/80 	(67%)
-Total Logic cells used 		60/128 	(46%)
+Total Logic cells used 		61/128 	(47%)
 Total Flip-Flop used 		27/128 	(21%)
-Total Foldback logic used 	8/128 	(6%)
+Total Foldback logic used 	7/128 	(5%)
 Total Nodes+FB/MCells 		68/128 	(53%)
 Total cascade used 		0
 Total input pins 		38
 Total output pins 		20
-Total Pts 			148
+Total Pts 			143
 Creating pla file C:\USERS\JEFF\SRC\ROSCOE\PLDS\INTCTRLV2\INTCTRL2.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
 
 ----------------  End fitter, Design FITS

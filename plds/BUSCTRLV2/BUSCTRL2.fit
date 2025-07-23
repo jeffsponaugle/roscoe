@@ -1,4 +1,4 @@
-Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Sat Jul 19 11:16:08 2025
+Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Mon Jul 21 13:16:48 2025
 
 
 fit1508 C:\USERS\JEFF\SRC\ROSCOE\PLDS\BUSCTRLV2\BUSCTRL2.tt2 -CUPL -dev P1508T100 -JTAG ON
@@ -595,9 +595,7 @@ TESTP1 = (CPU_A17 & CPU_A18 & CPU_A19 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_I
 	# (!CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_RW & !nCPU_AS & !CPU_FC1)
 	# (!CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & !CPU_A31 & !CPU_RW & !nCPU_AS & !CPU_FC2));
 
-!nCPU_BERR = ((!CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS & !CPU_FC0)
-	# (!CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS & !CPU_FC1)
-	# (!CPU_A28 & CPU_A29 & !CPU_A30 & !CPU_A31 & !nCPU_AS & !CPU_FC2));
+nCPU_BERR = 1;
 
 nCPU_CIIN = 1;
 
@@ -1107,7 +1105,7 @@ MC69  42   on   nCPU_HALT        C----  --                            --        
 MC70  44   on   nCPU_CIIN        C----  --                            --           --             0     slow
 MC71  0         --                      REFRESH_TIMER4         Dc-r-  --           --             3     slow
 MC72  45   on   nCPU_STERM       C----  --                            --           --             0     slow
-MC73  46   on   nCPU_BERR        C----  --                            --           --             3     slow
+MC73  46   on   nCPU_BERR        C----  --                            --           --             0     slow
 MC74  0         --                      REFRESH_TIMER3         Dc-r-  --           --             3     slow
 MC75  47   on   CPU_CLK_div16    Dc---  --                            --           --             2     slow
 MC76  0         --                      REFRESH_TIMER1         Dc-r-  --           --             4     slow
@@ -1173,7 +1171,7 @@ A: LC1	- LC16		14/16(87%)	10/16(62%)	1/16(6%)	43/80(53%)	(25)	0
 B: LC17	- LC32		11/16(68%)	10/16(62%)	2/16(12%)	26/80(32%)	(25)	0
 C: LC33	- LC48		16/16(100%)	10/16(62%)	4/16(25%)	51/80(63%)	(25)	0
 D: LC49	- LC64		6/16(37%)	10/16(62%)	0/16(0%)	7/80(8%)	(25)	0
-E: LC65	- LC80		13/16(81%)	10/16(62%)	2/16(12%)	33/80(41%)	(25)	0
+E: LC65	- LC80		13/16(81%)	10/16(62%)	2/16(12%)	30/80(37%)	(25)	0
 F: LC81	- LC96		10/16(62%)	10/16(62%)	2/16(12%)	38/80(47%)	(25)	0
 G: LC97	- LC112		4/16(25%)	10/16(62%)	0/16(0%)	11/80(13%)	(18)	0
 H: LC113- LC128		1/16(6%)	10/16(62%)	0/16(0%)	3/80(3%)	(10)	0
@@ -1187,7 +1185,7 @@ Total Nodes+FB/MCells 		86/128 	(67%)
 Total cascade used 		0
 Total input pins 		41
 Total output pins 		43
-Total Pts 			212
+Total Pts 			209
 Creating pla file C:\USERS\JEFF\SRC\ROSCOE\PLDS\BUSCTRLV2\BUSCTRL2.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
 
 ----------------  End fitter, Design FITS

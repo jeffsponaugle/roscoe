@@ -82,7 +82,6 @@ EXP_INT_CPLD1 = 'b'0;
 EXP_INT_CPLD2 = 'b'0;
 
 
-
 /* 
                                                 Internal NODES
     ##########################################################################################
@@ -163,14 +162,14 @@ PINNODE =  INT2B_REQUEST_PE;
 */
 
 
-[INT_MSK15].d = CPU_D7.io;  // Debug Button CPU_D7.io;
-[INT_MSK14].d = CPU_D6.io;  // Enable PTC 1 CPU_D6.io;  
-[INT_MSK13].d = CPU_D5.io;  // Enable PTC 2 CPU_D5.io; 
+[INT_MSK15].d = 'b'0; // CPU_D7.io;  // Debug Button CPU_D7.io;
+[INT_MSK14].d = 'b'0; //CPU_D6.io;  // Enable PTC 1 CPU_D6.io;  
+[INT_MSK13].d = 'b'0; //CPU_D5.io;  // Enable PTC 2 CPU_D5.io; 
 [INT_MSK12].d = 'b'0;  // Expansion
-[INT_MSK11].d = CPU_D3.io;  // IDE1
-[INT_MSK10].d = CPU_D2.io;  // IDE2
+[INT_MSK11].d = 'b'0; //CPU_D3.io;  // IDE1
+[INT_MSK10].d = 'b'0; //CPU_D2.io;  // IDE2
 [INT_MSK9].d = 'b'0;   // Expansion
-[INT_MSK8].d = CPU_D0.io;   // UARTT1
+[INT_MSK8].d =  CPU_D0.io;   // UARTT1
 
 [INT_MSK7].d = CPU_D7.io; // UART2
 [INT_MSK6..2].d = 'b'0; // UART2
@@ -414,10 +413,10 @@ INT_ACK_RESET.d = INT_ACK_RESET_PRE;
 INT_ACK_RESET.ck = CPU_CLK;
 INT_ACK_RESET.ar = !nSYS_RESET;
 
-TESTP0 = nINT_ACK_CYCLE;
-TESTP1 = INT_ACK_RESET;
-TESTP2 = (INT_ACK_RESET & INT1A_REQUEST_PE & field_INT_ACK_LEVEL:['d'1]);
 
+TESTP0 = vINT6A;
+TESTP1 = field_INT_ACK_LEVEL:['d'4];
+TESTP2 = nINT_ACK_CYCLE;
 
 /*
 Total dedicated input used:	4/4 	(100%)
