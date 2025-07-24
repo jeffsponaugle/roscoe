@@ -1,7 +1,7 @@
 Name	 INTCTRL;
 PartNo   INTCTRL;
 Date     03/30/2024;
-Revision 01;
+Revision 16;
 Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
@@ -12,7 +12,7 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
-//      VERSION 15
+//      VERSION 16
 
 
 /* 
@@ -127,8 +127,6 @@ PINNODE = INTL3_REQUEST_PE;
 PINNODE = INTL2_REQUEST_PE;
 PINNODE = INTL1_REQUEST_PE;
 
-
-
 /* 
     Interrupt Mask Register 
     Byte Write to high,then low. 
@@ -174,7 +172,7 @@ PINNODE = INTL1_REQUEST_PE;
 */
 
 
-[INT_MSK15].d = 'b'0; // CPU_D7.io;  // Debug Button CPU_D7.io;
+[INT_MSK15].d = CPU_D7.io;  // Debug Button CPU_D7.io;
 [INT_MSK14].d = CPU_D6.io;  // Enable PTC 1 CPU_D6.io;  
 [INT_MSK13].d = CPU_D5.io;  // Enable PTC 2 CPU_D5.io; 
 [INT_MSK12].d = 'b'0;  // Expansion
@@ -184,7 +182,7 @@ PINNODE = INTL1_REQUEST_PE;
 [INT_MSK8].d =  CPU_D0.io;   // UARTT1
 
 [INT_MSK7].d = CPU_D7.io; // UART2
-[INT_MSK6..2].d = 'b'0; // UART2
+[INT_MSK6..2].d = 'b'0; // Expansion
 [INT_MSK1].d= CPU_D1.io;   // Enable RTC CPU_D1.io;
 [INT_MSK0].d = 'b'0;
 
@@ -391,12 +389,21 @@ INTL1_REQUEST_PE.d = (!INTL2_REQUEST_PE & !INTL3_REQUEST_PE & !INTL4_REQUEST_PE 
                  & (INT1A_REQUEST_LATCHED # INT1B_REQUEST_LATCHED );
 
 /* 
-    We will create the CPU_IPL signals back to the CPU.
+    We will create the CPU_IPL signals back to the CPU.  These are clocked on the rising edge of the 
+    CPU_CLK signal since the CPU samples these on the falling CPU_CLK signal.  That guarentees we are driving
+    these with a constant value during the CPU sample period.  The CPU will sample these twice (two complete
+    cpu cycles), and if the values match an interrupt cycle will be considered.
 */
 
-CPU_IPL2 = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL5_REQUEST_PE # INTL4_REQUEST_PE);
-CPU_IPL1 = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL3_REQUEST_PE # INTL2_REQUEST_PE);
-CPU_IPL0 = !(INTL7_REQUEST_PE # INTL5_REQUEST_PE # INTL3_REQUEST_PE # INTL1_REQUEST_PE);
+
+[CPU_IPL0..2].ck = CPU_CLK;
+[CPU_IPL0..2].ap = !nSYS_RESET;
+
+CPU_IPL2.d = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL5_REQUEST_PE # INTL4_REQUEST_PE);
+CPU_IPL1.d = !(INTL7_REQUEST_PE # INTL6_REQUEST_PE # INTL3_REQUEST_PE # INTL2_REQUEST_PE);
+CPU_IPL0.d = !(INTL7_REQUEST_PE # INTL5_REQUEST_PE # INTL3_REQUEST_PE # INTL1_REQUEST_PE);
+
+
 
 /* 
     Next we will create a set of priorty encoders for each level to pick the particular winning interrupt.

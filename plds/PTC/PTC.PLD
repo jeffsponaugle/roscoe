@@ -1,7 +1,7 @@
-Name	 DEVMAP;
-PartNo   DEVMAP;
-Date     03/30/2024;
-Revision 01;
+Name	 PTC;
+PartNo   PTC;
+Date     07/24/2025;
+Revision 4;
 Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
@@ -12,6 +12,53 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
+//      VERSION 4
+
+/*
+
+This device has two timers.  Timer A is based of a 32.768Khz clock source, and Timer B is based on the 
+system CPU clock divided by 16.   You can select the PTC interrupt rate using a 3 bit selector for each 
+timer.
+
+Timer A:
+    Master Clock Source = 32768hz, 30.517us period
+    Interrupt Selection
+    Bit Source      Selection Value     Interrupt Period
+    -------------   ---------------     ----------------
+    0               XXX                 30.5us
+    1               XXX                 61us
+    2               XXX                 122us
+    3               XXX                 244us
+    4               000 (0)             488us
+    5               001 (1)             976us
+    6               010 (2)             1.953ms
+    7               011 (3)             3.906ms
+    8               100 (4)             7.812ms
+    9               101 (5)             15.625ms
+    10              110 (6)             31.250ms
+    11              111 (7)             62.500ms
+
+Timer B:
+    Master Clock Source = CPU/16
+    Interrupt Selection
+    Bit Source      Selection Value     Interrupt Period
+                                        CPU=12Mhz       CPU=16Mhz       CPU=20Mhz       CPU=40Mhz
+    -------------   ---------------     -----------------------------------------------------------
+    0               XXX                 1.33us          1us             800ns           400ns
+    1               XXX                 2.66us          2us             1.6us           800ns
+    2               XXX                 5.33us          4us             3.2us           1.6us
+    3               XXX                 10.66us         8us             6.4us           3.2us
+    4               000 (0)             21.33us         16us            12.8us          6.4us
+    5               001 (1)             42.66us         32us            25.6us          12.8us
+    6               010 (2)             85.33us         64us            51.2us          25.6us
+    7               011 (3)             170.66us        128us           102.4us         51.2us
+    8               100 (4)             341.33us        256us           204.8us         102.4us
+    9               101 (5)             682.66us        512us           409.6us         204.8us
+    10              110 (6)             1.365us         1.024ms         819.2us         409.6us
+    11              111 (7)             2.730us         2.048ms         1.6384ms        819.2us
+*/
+
+
 /* 
                                                 Inputs
     ##########################################################################################
@@ -21,7 +68,6 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 
 PIN[39] = nSYS_RESET;
 PIN[2,3,5,6,18,19,20,21,22,23,25,31,33,34,35,44] = [D0..15];
-/* PIN[18,19,20,21,25,22,23,2,6,3,5,44,31,34,35,33] = [D0..15];*/
 PIN[27] = nPTC_CS;
 PIN[15] = nPTC_RW;   /* _RW 0=W, 1=R */
 PIN[14] = nPTC_A2;   /* A2 for read select to read both counters */
@@ -88,7 +134,17 @@ nINTB_OUT =   !(field_TIMERB_RATE:['b'000] & PTCB_TIMER4)
   	        & !(field_TIMERB_RATE:['b'110] & PTCB_TIMER10)
             & !(field_TIMERB_RATE:['b'111] & PTCB_TIMER11);
 
-			
+PINNODE = nINTA_OUT_DELAYED;
+PINNODE = nINTB_OUT_DELAYED;
+
+nINTA_OUT_DELAYED.d = nINTA_OUT;
+nINTA_OUT_DELAYED.ck = !PTCB_CLOCK;
+nINTA_OUT_DELAYED.ap = !PTCA_TIMER_RESET # !nSYS_RESET;
+
+nINTB_OUT_DELAYED.d = nINTB_OUT;
+nINTB_OUT_DELAYED.ck = !PTCB_CLOCK;
+nINTB_OUT_DELAYED.ap= !PTCB_TIMER_RESET # !nSYS_RESET;
+
 TIMERA_RATE0.d = D0.io;
 TIMERA_RATE1.d = D1.io;
 TIMERA_RATE2.d = D2.io;
@@ -141,7 +197,7 @@ PTCA_F10 = PTCA_TIMER10 & PTCA_F9;
 */
 PTCA_MIDCLOCK.d = PTCA_F5;
 PTCA_MIDCLOCK.ck = PTCA_CLOCK;
-PTCA_MIDCLOCK.ar =  !PTCA_TIMER_RESET # !nSYS_RESET;
+PTCA_MIDCLOCK.ar =  !PTCA_TIMER_RESET # !nSYS_RESET # !nINTA_OUT_DELAYED;
 
 /* Lower Part of Counter */
 PTCA_TIMER0.d = !PTCA_TIMER0;
@@ -172,7 +228,7 @@ PTCA_TIMER11.d = ( PTCA_TIMER11 & !(PTCA_F10))
 [PTCA_TIMER0..5].ck = PTCA_CLOCK;
 [PTCA_TIMER6..11].ck = PTCA_MIDCLOCK;
 /* if the INT1_OUT pin goes low, lets reset the counter and start counting again to the next interrupt */
-[PTCA_TIMER0..11].ar = !PTCA_TIMER_RESET # !nSYS_RESET # !nINTA_OUT;
+[PTCA_TIMER0..11].ar = !PTCA_TIMER_RESET # !nSYS_RESET # !nINTA_OUT_DELAYED;
 
 
 
@@ -194,7 +250,7 @@ PTCB_F10 = PTCB_TIMER10 & PTCB_F9;
 /* This mid clock is used to clock the second half of the counter */
 PTCB_MIDCLOCK.d = PTCB_F5;
 PTCB_MIDCLOCK.ck = PTCB_CLOCK;
-PTCB_MIDCLOCK.ar =  !PTCB_TIMER_RESET # !nSYS_RESET;
+PTCB_MIDCLOCK.ar =  !PTCB_TIMER_RESET # !nSYS_RESET # !nINTB_OUT_DELAYED;
 
 /* Lower Part of Counter */
 PTCB_TIMER0.d = !PTCB_TIMER0;
@@ -225,7 +281,7 @@ PTCB_TIMER11.d = ( PTCB_TIMER11 & !(PTCB_F10))
 [PTCB_TIMER0..5].ck = PTCB_CLOCK;
 [PTCB_TIMER6..11].ck = PTCB_MIDCLOCK;
 /* if the INT1_OUT pin goes low, lets reset the counter and start counting again to the next interrupt */
-[PTCB_TIMER0..11].ar =! PTCB_TIMER_RESET # !nSYS_RESET # !nINTB_OUT;
+[PTCB_TIMER0..11].ar =! PTCB_TIMER_RESET # !nSYS_RESET # !nINTB_OUT_DELAYED;
 
 
 

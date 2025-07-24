@@ -1,7 +1,7 @@
 Name	 BUSCTRL;
 PartNo   BUSCTRL;
 Date     03/30/2024;
-Revision 15;
+Revision 16;
 Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
@@ -14,7 +14,7 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 
 PROPERTY ATMEL {open_collector=nCPU_DSACK0, nCPU_DSACK1};
 
-//      VERSION 15
+//      VERSION 16
 
 
 /* NOTE:  Active low values are designated with a starting n. */
@@ -144,21 +144,21 @@ TESTP3 = TESTP2 & TESTP3 & nCPU_RMC & UNUSED2;
     CPU_CLK is the CPU Clock
     CPU_CLK is is not held in reset during a SYS_RESET event, so the CPU will have a clock running 
     all of the time.
-
     We will also generate some subdivisor clocks to use in the DRAM system.
+
 */
 
-
-CPU_CLK_div2.d = !CPU_CLK_div2;     /* [8],10,12.5,16.5,20 Mhz */
+                                    /* 12,16,20,24,28,32,40 */
+CPU_CLK_div2.d = !CPU_CLK_div2;     /* [6],8,10,12,14,20 Mhz */
 CPU_CLK_div2.ck = CPU_CLK;
 
-CPU_CLK_div4.d = !CPU_CLK_div4;     /* [4],5,6.25,8.25,10 Mhz */
+CPU_CLK_div4.d = !CPU_CLK_div4;     /* [3],4,5,6,7,10 Mhz */
 CPU_CLK_div4.ck = CPU_CLK_div2;
 
-CPU_CLK_div8.d = !CPU_CLK_div8;     /* [2],2.5,3.125,4.125,5 Mhz */
+CPU_CLK_div8.d = !CPU_CLK_div8;     /* [1.5],2,2.5,3,3.5,5 Mhz */
 CPU_CLK_div8.ck = CPU_CLK_div4;
 
-CPU_CLK_div16.d = !CPU_CLK_div16;
+CPU_CLK_div16.d = !CPU_CLK_div16;   /* [0.75],1,1.25,1.5,1.75,2.5 */
 CPU_CLK_div16.ck = CPU_CLK_div8;
 
 
