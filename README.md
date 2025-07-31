@@ -45,12 +45,12 @@ The other key parts including the CPLDs can be ordered directly from a major sup
   + Build 3rd PCB revision with fixed
 
 ## Videos
-    There are a few videos on Youtube about this design and the progress.   (Note the videos are a bit behind the actual project, but there are more videos in editing)
+There are a few videos on Youtube about this design and the progress.   (Note the videos are a bit behind the actual project, but there are more videos in editing)
 
-    https://www.youtube.com/watch?v=tBRo3DbZRVQ
-    https://www.youtube.com/watch?v=KKh2h3Bjyjc
-    https://www.youtube.com/watch?v=ODHoEpH3M6Y
-    https://www.youtube.com/watch?v=-ZucQPS6IJU
+https://www.youtube.com/watch?v=tBRo3DbZRVQ
+https://www.youtube.com/watch?v=KKh2h3Bjyjc
+https://www.youtube.com/watch?v=ODHoEpH3M6Y
+https://www.youtube.com/watch?v=-ZucQPS6IJU
 
 ![](/images/RoscoeBench.png)
 
