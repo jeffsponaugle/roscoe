@@ -39,6 +39,26 @@ From a parts point of view most of the parts needed can be purchased new from Di
 
 The other key parts including the CPLDs can be ordered directly from a major supplier.   We will post up a complete BOM with the next PCB revision.
 
+## Hardware Design Notes
+
+The core system design is relativly simple with a 68030 processor and a 6888x FPU connected to a PCB wide data/address bus that includes an 8-bit wide boot/BIOS flash memory (512k), 4MB of 10/12ns static RAM, a dual UART, RTC, PTC, Dual IDE interfaces, and DRAM interface.  DRAM support is for 72 pin SIMM EDO or FPM DRAM, 70ns or faster.  The 4 SIMM slots can support up to 128MB double-sided SIMMs for a total of 512MBs of DRAM.  Additional DRAM can be added via the expansion interface.
+
+### Logic
+
+The system logic is implemented in 3 ATF1508 CPLDS.  The ATF1508 CPLD is a current production CPLD that comes in a hand solderable form factor and supports 5V operation.  The CPLDs we are using come in a 100pin 0.5mm QFP package and have 80 usable I/O pins, JTAG programming, and 7-12ns propegation delay. The three CPLDs are partitioned into the following logical segments:
+
+#### CPLD 1 - Bus Controller
+
+The first CPLD serves as a bus controller, handling all of the core interactions with the CPU bus including the wait state generation, SRAM and DRAM interfaces, DeviceIO partitioning, and FPU interface.  This implements the broad memory map as well as interfaces needed for 2 and 3 cycle memory access.
+
+#### CPLD 2 - Device Interface
+
+The second CPLD serves as the device interface logic, generating all of the signal needed for the onboard devices as well as device decoding for the expansion interface.  This includes the logic needed for the RTC, IDE interface, as well as the system POST code display.   This CPLD has some additional unused logic space for future sytem expansion and bug fixes.
+
+#### CPLD 3 - Interrupt Controller
+
+The third CPLD implements a 16 input priority vector generating interrupt controller.  It has configurable edge/level triggering as well as indiviual interrupt source enable/disable.   It interfaces with the 68030 IPL0-2 interrupt lines to provide 7 levels of interrupt priorty as well as unique vector generation for each interrupt source.
+
 ## Work still left todo - Hardware
   + Test DRAM implentation, including refresh.
   + Test FPU support
