@@ -22,7 +22,16 @@ The PCB is a 4 layer PCBs, although it uses smallish .20mm vias and 0.15mm trace
   + VGA Video Card ( 640x480, 1bpp, 2bpp,4bpp,16bpp,24bpp )
 
 
-I have PCBs and have started constiuction - Two PCBs are up and running.
+We have PCBs and have started construction, with two PCBs up and running.  PCB construction is relativly straightforward. The most difficult part to solder are the three CPLDS which are 0.50mm QFP packages.  They are still large enough to do with a normal solder iron with the right technique.  Most of other parts are either through-hole DIP or SOIC.
+
+If you are interested in this project, feel free to reach out to me at jeff@sponaugle.com.  Once we get DRAM and the FPU working this should be a good project entry point as you will be able to build a PCB and get the software stack up and running.
+
+Neil has developed an excellent monitor, boot loader, and BIOS that takes advantage of the system features and can server as a great starting point for OS development.  He also has an excellent build environment using GCC.
+
+## Work still left todo - Hardware
+  + Test DRAM implentation, including refresh.
+  + Test FPU support
+  + Build 3rd PCB revision with fixed
 
 
 ![](/images/RoscoeBench.png)
