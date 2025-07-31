@@ -74,6 +74,8 @@ The current PCB design has three expansion ports implemented using 98 pin edge c
 
 The pin/signal format is however not ISA compatible. Due to wanting to have a complete 32 bit address and data bus available for expansion it was not possible to use the existing ISA layout. The expansion bus currently includes 32 data and address lines as well as device-bit-width specific chip selects, 7 interrupt sources, wait state requrts, and a few other bus related signals. It should be realtivly straighforward to build an expansion card to add capabilities. I have a VGA card, network controller, and keyboard controller desing in progress.  
 
+[Pinouts](docs/V2ExpansionConntectorPinouts.pdf)
+
 ### Power
 
 The PCB power input is provided via an ATX power supply connector, and any ATX power supply of approximatly 50w or greater should work. There is an ATX power controller management implemented in an ATTiny to allow soft power-on and soft power-off, as well as commanded and asked power management at the OS level. Reset control is also done in this controller.
