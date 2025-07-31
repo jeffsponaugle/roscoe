@@ -2,7 +2,7 @@
 
 ![](/images/68030CPU.png)
 
-Roscoe is an open source single board computer build in an ATX form factor using the Pin Grid Array Motorola 68030 processor.  It will support CPUs from 16-40Mhz, and has both onboard static RAM as well as Dynamic RAM.  The 8MBs of static ram is 12ns memory that support 0WS 2 Cycle Syncronous transfers for fast cache filling.  The dynamic RAM can support up to 2GB of RAM in both the onboard slots plus the expansion slots.
+Roscoe is an open source single board computer build in an ATX form factor using the Pin Grid Array Motorola 68030 processor.  It will support CPUs from 16-40Mhz, and has both onboard static RAM as well as Dynamic RAM.  The 4MBs of static ram is 10 or 12ns memory that support 0WS 2 Cycle Syncronous transfers for fast cache filling.  The dynamic RAM can support up to 2GB of RAM in both the onboard slots plus the expansion slots.
 
 The PCB is a 4 layer PCBs, although it uses smallish .20mm vias and 0.15mm traces to get a route in only 2 signal layers (the other two layers are power and ground) The system is designed to support running Linux, and support UEFI. 
 
@@ -12,13 +12,13 @@ This system is designed for the enthusiast to build, expand, change, enhance, an
 - Features:
   + 68030 PGA Processor, 16-40Mhz
   + 68882 Math Coprocessor, 16-40Mhz Syncronous
-  + 4x 72 pin SIMM DRAM sockets, 60ns, 1MB - 128MB Single or Dual Rank Supported
-  + 8MB on board 10ns Static Ram, 0WS 2 cycle sync transfer
+  + 4x 72 pin SIMM DRAM sockets, 70ns, 1MB - 128MB Single or Dual Rank Supported
+  + 4MB on board 10/12ns Static Ram, 0WS 2 cycle sync transfer
   + 2 UARTS
   + 2 IDE interfeaces, 4 drives total
   + Programmable Timer Interface
   + Real Time Clock
-  + ATX Power and Power Control with Soft power off.
+  + ATX Power and Power Control with Soft power off/on.
 
 ## External Addin Card
   + Microchip 9218 Ethernet controller
@@ -33,14 +33,14 @@ We have initial PCBs and have started construction, with two PCBs up and running
 
 If you are interested in this project, feel free to reach out to me at jeff@sponaugle.com. Once we get DRAM and the FPU working this should be a good project entry point as you will be able to build a PCB and get the software stack up and running.
 
-Neil has developed an excellent monitor, boot loader, and BIOS that takes advantage of the system features and can server as a great starting point for OS development. He also has an excellent build environment using GCC.
+Neil has developed an excellent monitor, boot loader, and BIOS that takes advantage of the system features and can serve as a great starting point for OS development. He also has created an excellent build environment using GCC. He just recently finished adding support for over the wire flashing and updating. 
 
 From a parts point of view most of the parts needed can be purchased new from Digikey/Mouser, with the key exception being:
 
-  + 68030 CPU, very available on eBay
-  + 68030 CPU Socket, available on eBay
-  + 68881/68882 FPU, available on eBay
-  + 72 pin DRAM SIMM - 8MB/16MB/32MB/64MB/128MB, 70ns EDO or FPM, available on ebay
+  + 68030 CPU, very available on eBay, ~$20
+  + 68030 CPU Socket, available on eBay ~$10
+  + 68881/68882 FPU, available on eBay ~$30
+  + 72 pin DRAM SIMM - 8MB/16MB/32MB/64MB/128MB, 70ns EDO or FPM, available on ebay $40
 
 The other key parts including the CPLDs can be ordered directly from a major supplier. We will post up a complete BOM with the next PCB revision.
 
@@ -50,9 +50,9 @@ The core system design is relativly simple with a 68030 processor and a 6888x FP
 
 ### Logic
 
-The system logic is implemented in 3 ATF1508 CPLDS.  The ATF1508 CPLD is a current production CPLD that comes in a hand solderable form factor and supports 5V operation.  The CPLDs we are using come in a 100pin 0.5mm QFP package and have 80 usable I/O pins, JTAG programming, and 7-12ns propegation delay.  The design language for these CPLDs is CUPL, which is a varient of ABEL. There is a windows tool available from Atmel/Microchip called WinCUPL that can do the compilation, optimization, and device fit.  The output from this process is a .JED JEDEC file that can be flashed into the CPLD over JTAG.
+The system logic is implemented in 3 ATF1508 CPLDs. The ATF1508 CPLD is a current production CPLD that comes in a hand solderable form factor and supports 5V operation. The CPLDs we are using come in a 100pin 0.5mm QFP package and have 80 usable I/O pins, JTAG programming, and 7-12ns propegation delay.  The design language for these CPLDs is CUPL, which is a varient of ABEL. There is a windows tool available from Atmel/Microchip called WinCUPL that can do the compilation, optimization, and device fit. The output from this process is a .JED JEDEC file that can be flashed into the CPLD over JTAG.
 
-The logic design is very easy to follow and understand as CUPL/ABEL is a straightforward equation declartive language.  You can take what is writting and write an equivilent schematic with ease.
+The logic design is very easy to follow and understand as CUPL/ABEL is a straightforward equation declartive language. You can take what is writting and write an equivilent schematic with ease.
 
 The three CPLDs are partitioned into the following logical segments:
 
@@ -87,6 +87,13 @@ The PCB power input is provided via an ATX power supply connector, and any ATX p
 The system implenents a memory map (physcical addresses) shown in the link below.
 
 [Roscoe 68030 Memory Map](docs/Roscoe68030MemoryMap.pdf)
+
+### Schematic
+
+You can view the current schematic here:
+
+[Main PCB Schematic](schematic/RoscoeMainboardV2Final.pdf)
+[SRAM Riser Schematic](schematic/RoscoeSRAMboardV2.pdf)
 
 
 ## Work still left todo - Hardware
