@@ -84,7 +84,15 @@ The PCB power input is provided via an ATX power supply connector, and any ATX p
 
 ### Memory Map
 
-The system implenents a memory map (physcical addresses) shown in the link below.
+The system implements a memory map (physical addresses) shown in the link below.  The memory space is broken up into 8 regions.
+ + Startup BIOS [256MBs]
+ + Fast SRAM [256MBs]
+ + Second FAST SRAM [256MBs]
+ + UNUSED [512MBs]
+ + 8-bit Devices [256MBs]
+ + 16-bit Devices [256MBs]
+ + 32-bit Devices [256MBs]
+ + DRAM [2GBs]
 
 [Roscoe 68030 Memory Map](docs/Roscoe68030MemoryMap.pdf)
 
@@ -92,8 +100,8 @@ The system implenents a memory map (physcical addresses) shown in the link below
 
 You can view the current schematic here:
 
-[Main PCB Schematic](schematic/RoscoeMainboardV2Final.pdf)
-[SRAM Riser Schematic](schematic/RoscoeSRAMboardV2.pdf)
+ + [Main PCB Schematic](schematic/RoscoeMainboardV2Final.pdf)
+ + [SRAM Riser Schematic](schematic/RoscoeSRAMboardV2.pdf)
 
 
 ## Work still left todo - Hardware
