@@ -4,6 +4,8 @@ Roscoe is a single board computer build in an ATX form factor using the Pin Grid
 
 The PCB is a 4 layer PCBs, although it uses smallish .20mm vias and 0.15mm traces to get a route in only 2 signal layers (the other two layers are power and ground) The system is designed to support running Linux, and support UEFI. 
 
+This system is designed for the enthusiast to build!
+
 ## PCB 
 - Features:
   + 68030 PGA Processor, 16-40Mhz
@@ -27,6 +29,15 @@ We have PCBs and have started construction, with two PCBs up and running.  PCB c
 If you are interested in this project, feel free to reach out to me at jeff@sponaugle.com.  Once we get DRAM and the FPU working this should be a good project entry point as you will be able to build a PCB and get the software stack up and running.
 
 Neil has developed an excellent monitor, boot loader, and BIOS that takes advantage of the system features and can server as a great starting point for OS development.  He also has an excellent build environment using GCC.
+
+From a parts point of view most of the parts needed can be purchased new from Digikey/Mouser, with the key exception being:
+
+  + 68030 CPU, very available on eBay
+  + 68030 CPU Socket, available on eBay
+  + 68881/68882 FPU, available on eBay
+  + 72 pin DRAM SIMM - 8MB/16MB/32MB, 70ns EDO or FPM, available on ebay
+
+The other key parts including the CPLDs can be ordered directly from a major supplier.   We will post up a complete BOM with the next PCB revision.
 
 ## Work still left todo - Hardware
   + Test DRAM implentation, including refresh.
