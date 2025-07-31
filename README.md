@@ -57,12 +57,22 @@ The second CPLD serves as the device interface logic, generating all of the sign
 
 #### CPLD 3 - Interrupt Controller
 
-The third CPLD implements a 16 input priority vector generating interrupt controller.  It has configurable edge/level triggering as well as indiviual interrupt source enable/disable.   It interfaces with the 68030 IPL0-2 interrupt lines to provide 7 levels of interrupt priorty as well as unique vector generation for each interrupt source.
+The third CPLD implements a 16 input priority vector generating interrupt controller. It has configurable edge/level triggering as well as indiviual interrupt source enable/disable. It interfaces with the 68030 IPL0-2 interrupt lines to provide 7 levels of interrupt priorty as well as unique vector generation for each interrupt source.
+
+### Expansion
+
+The current PCB design has three expansion ports implemented using 98 pin edge card connectors that are the same as used in the original IBM PC AT. (ISA). This connector allows the expansion cards to use gold edge fingers instead of a dedicated connector, making expansion a bit easier. The alignment of these connectors on the PCB is the same as an original ATX style PC motherboard, so slot alignment will work with existing ATX cases.  
+
+The pin/signal format is however not ISA compatible. Due to wanting to have a complete 32 bit address and data bus available for expansion it was not possible to use the existing ISA layout. The expansion bus currently includes 32 data and address lines as well as device-bit-width specific chip selects, 7 interrupt sources, wait state requrts, and a few other bus related signals. It should be realtivly straighforward to build an expansion card to add capabilities. I have a VGA card, network controller, and keyboard controller desing in progress.  
+
+### Power
+
+The PCB power input is provided via an ATX power supply connector, and any ATX power supply of approximatly 50w or greater should work. There is an ATX power controller management implemented in an ATTiny to allow soft power-on and soft power-off, as well as commanded and asked power management at the OS level. Reset control is also done in this controller.
 
 ## Work still left todo - Hardware
-  + Test DRAM implentation, including refresh.
-  + Test FPU support
-  + Build 3rd PCB revision with fixed
+  - [ ] Test DRAM implentation, including refresh.
+  - [ ] Test FPU support
+  - [ ] Build 3rd PCB revision with fixed
 
 ## Videos
 There are a few videos on Youtube about this design and the progress.   (Note the videos are a bit behind the actual project, but there are more videos in editing)
