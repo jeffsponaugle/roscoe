@@ -14,7 +14,7 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 
 PROPERTY ATMEL {open_collector=nCPU_DSACK0, nCPU_DSACK1};
 
-//      VERSION 16
+//      VERSION 19
 
 
 /* NOTE:  Active low values are designated with a starting n. */
@@ -130,14 +130,14 @@ PINNODE = nDRAM_ACCESS_CAS;
 nCPU_HALT = 'b'1;   
 nCPU_STERM = 'b'1;
 nCPU_RD = !CPU_RW;
-nCPU_CIIN = 'b'1;
+nCPU_CIIN = 'b'0;           // For now, cache is disabled for everything
 EXP_BC_CPLD1 = 'b'0;
 EXP_BC_CPLD2 = 'b'0;
 
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
 
-TESTP2 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2; 
-TESTP3 = TESTP2 & TESTP3 & nCPU_RMC & UNUSED2;
+// TESTP2 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2; 
+TESTP3 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2 & nCPU_RMC & UNUSED2;
 
 /* 
     Clock Generation:
@@ -253,7 +253,7 @@ FC_CPU_SPACE = CPU_FC0 & CPU_FC1 & CPU_FC2;
     UNUSED_REGION_ACCESS - An area that is not mapped to anything.     [0x2000 0000 to 0x2FFF FFFF]
 */
 
-DRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & CPU_A31 # !REFRESH_ACTIVE;                                  // 0x8000 0000 - 0xFFFF FFFF
+DRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & CPU_A31 & !REFRESH_ACTIVE;                                  // 0x8000 0000 - 0xFFFF FFFF
 BOOTFLASH_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28 & !CPU_A27;  // 0x0000 0000 - 0x07FF FFFF
 BIGFLASH_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28 & CPU_A27;    // 0x0800 0000 - 0x0FFF FFFF
 SRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & CPU_A28;                   // 0x1000 0000 - 0x1FFF FFFF
@@ -386,11 +386,18 @@ CPU_CLK_DELAY2.d = 'b'1;
 CPU_CLK_DELAY2.ck = CPU_CLK;
 CPU_CLK_DELAY2.ar = !nSYS_RESET # !CPU_CLK_DELAY1;
 
+/* 
 nFPU_CS = !(
             (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & !CPU_CLK)
           # (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & !nCPU_AS)
           # (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16 & CPU_CLK_DELAY1)
           );
+*/
+
+nFPU_CS = !(
+            (CPU_FC0 & CPU_FC1 & CPU_FC2 & !CPU_A19 & !CPU_A18 & CPU_A17 & !CPU_A16)
+          );
+
 /* 
     DRAM Access Logic:
 
@@ -542,7 +549,7 @@ PINNODE = [REFRESH_STATE_MACHINE0..2];
 FIELD field_REFRESH_STATE_MACHINE = [REFRESH_STATE_MACHINE0..2];         // a field is used to make it simplier to refer to state machine values
 
 [REFRESH_STATE_MACHINE0..2].ck = !CPU_CLK;
-[REFRESH_STATE_MACHINE0..2].ar = !REFRESH_ACTIVE # REFRESH_COMPLETE # nSYS_RESET;
+[REFRESH_STATE_MACHINE0..2].ar = !REFRESH_ACTIVE # REFRESH_COMPLETE # !nSYS_RESET;
 
 REFRESH_STATE_MACHINE0.d = !REFRESH_STATE_MACHINE0;
 REFRESH_STATE_MACHINE1.d = (REFRESH_STATE_MACHINE1 & !REFRESH_STATE_MACHINE0)
@@ -694,11 +701,17 @@ nDRAM_CAS3 = (nDRAM_ACCESS_CAS # (!CPU_RW & !BA32_LL )) & nREFRESH_CAS;
 
 DRAM_MUX = DRAM_ACCESS_MUX;
 /* 
-   nDRAM_DATA_EN is connected to the 74HC245 buffers that go between the DRAM and the CPU.  They are enabled as soon as we start
-   a DRAM transaction.  The direction of these buffers it set by CPU_RW, which is connected to the DIR pin on the 245.
+   nDRAM_DATA_EN is connected to the Direction pins on the 74HC245 buffers that go between the DRAM and the CPU.  These buffers are enabled all of the time
+   and the direction is used to disable CPU bus driving.  The default state (0) drives the DRAM with what is on the CPU
+   data bus.  If there is DRAM access and the cycle is a READ, the direction is reversed and this should be set to '1'
 */
 
-nDRAM_DATA_EN = !DRAM_REGION_ACCESS;
+// If we are doing a DRAM ACCCESS, and the ACCESS is a READ, lets reverse the drivers and drive the bus with
+// the data from the DRAM
+
+nDRAM_DATA_EN = DRAM_REGION_ACCESS & CPU_RW;
+
+//nDRAM_DATA_EN = 'b'0;
 
 /*
    nDRAM_WE is the DRAM write signal, which is pulled low at the start of a DRAM transaction that also has CPU_RW == 0.   This signal goes to
@@ -708,8 +721,9 @@ nDRAM_DATA_EN = !DRAM_REGION_ACCESS;
 */
 nDRAM_WE = !(DRAM_REGION_ACCESS & !CPU_RW);
 
-TESTP0 = UNUSED_REGION_ACCESS;
-TESTP1 = nCPU_BERR;
+TESTP0 = REFRESH_REQUESTED;
+TESTP1 = REFRESH_ACTIVE;
+TESTP2 = REFRESH_COMPLETE;
 
 
 /*
