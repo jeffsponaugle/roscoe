@@ -83,12 +83,12 @@ BEGIN
     "XXL_209"                                 : NODE_NUM = 691 ;
     "XXL_210"                                 : NODE_NUM = 692 ;
     "CPU_A24"                                 : INPUT_PIN = 60 ;
-    "XXL_215"                                 : NODE_NUM = 693 ;
+    "XXL_212"                                 : NODE_NUM = 693 ;
     "CPU_A23"                                 : INPUT_PIN = 61 ;
-    "XXL_212"                                 : NODE_NUM = 694 ;
+    "XXL_211"                                 : NODE_NUM = 694 ;
     "XXL_213"                                 : NODE_NUM = 695 ;
     "TCK"                                     : INPUT_PIN = 62 ;
-    "XXL_211"                                 : NODE_NUM = 696 ;
+    "XXL_215"                                 : NODE_NUM = 696 ;
     "CPU_A22"                                 : INPUT_PIN = 63 ;
     "CPU_A21"                                 : INPUT_PIN = 64 ;
     "CPU_A20"                                 : INPUT_PIN = 65 ;
