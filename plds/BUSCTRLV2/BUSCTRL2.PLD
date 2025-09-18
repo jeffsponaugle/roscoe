@@ -14,7 +14,7 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 
 PROPERTY ATMEL {open_collector=nCPU_DSACK0, nCPU_DSACK1};
 
-//      VERSION 21
+//      VERSION 22
 
 
 /* NOTE:  Active low values are designated with a starting n. */
@@ -451,8 +451,13 @@ nDRAM_ACCESS_CAS.ck = DRAM_ACCESS_RAS_RESET1;
     CAS signal goes to 0.  There is RAS holdtime requirement of 10ns, and CAS setup requirement if 10ns, and a 
     MUX propegation delay of at least 7ns.
 
-    The solution is the change the MUX signal based on the DRAM_ACCESS_RAS signal.  As soon as the RAS signal goes low, 
-    the MUX signal will start to change.  The MUX change will be 7.5ns behind the RAS signal, and the MUX itself
+    The solution is the change the MUX signal based on the DRAM_ACCESS_RAS signal.   However there is a problem with 
+    using DRAM_ACCESS_RAS.  The DRAM_ACCESS_RAS signal will go low before the actual RAS signal the DRAM since the DRAM
+    single (nDRAM_Sxx_RAS) has more logic to it.  As a result the MUX change would beat the RAS signal the the DRAM
+    going low.  The solution is to instead change the MUX based on the actual RAS signals that are doing to the DRAM. 
+    
+    These RAS signals are also used for REFRESH, however during refresh the DRAM_REGION_ACCESS signal is not asserted
+    so this FF will stay in reset.   The MUX change will be 7.5ns behind the RAS signal, and the MUX itself
     will take another 7ns to change outputs.  This will give the needed RAS hold time.
 
     MUX = 0 for ROW address, 1 for COL address.  Reset puts it at 0. 
@@ -460,7 +465,8 @@ nDRAM_ACCESS_CAS.ck = DRAM_ACCESS_RAS_RESET1;
 
 DRAM_ACCESS_MUX.d = 'b'1;
 DRAM_ACCESS_MUX.ar = !DRAM_REGION_ACCESS # !nSYS_RESET;
-DRAM_ACCESS_MUX.ck = !nDRAM_ACCESS_RAS;
+DRAM_ACCESS_MUX.ck = !nDRAM_S1A_RAS # !nDRAM_S2A_RAS # !nDRAM_S3A_RAS # !nDRAM_S4A_RAS # !nDRAM_S1B_RAS
+                    # !nDRAM_S2B_RAS # !nDRAM_S3B_RAS # !nDRAM_S4B_RAS;
 
 /* 
     DRAM Refresh Logic:
