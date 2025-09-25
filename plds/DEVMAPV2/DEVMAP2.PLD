@@ -42,6 +42,22 @@ Pin[30] = nEXP_DEV16BITCS;
 Pin[31] = nEXP_DEV32BITCS;
 Pin[32] = nEXP_DEV_WAIT;
 
+/*
+
+    The Expansion interface has 3 CS based on the size of the device bus.   The 8 bit expansion region covers 
+0x3100 0000 to 0x31FF FFFF [16MBs], the 16 bit expansion region covers 0x4100 0000 to 0x41FF FFFF[16MBs], and the 32 bit region
+covers 0x5000 0000 to 0x51FF FFFF [16MBs)].   These regions could be expanded, but it would also require additional selection
+discrition in the downstream expansion devices.
+
+With these 16MBs regions, devices on the expansion bus need to decode based on address lines A23-A0.
+
+There is an additional special region for the video output device.   This region needs an additional line from the bus controller CPLD
+to indicate access in the dedicated video region (0x6XXX XXXX).   That region would be further subdivided to create the 
+nEXP_VMEM_CS signal so it is a subset of that memory area.  640x480 at 32bpp is only 1.2MBs of memory, so a 16 MB chunk is probably 
+sufficient.  
+
+*/
+
 
 Pin[6] = nDEV_WAIT;
 Pin[93] = SYS_RESET_POS;  // Inverted version of reset, needed for the UART IC.
@@ -113,6 +129,8 @@ nEXP_DEV32BITCS = nDEV32BITCS;
     DEV8BIT_REGION_ACCESS   0x3000 0000 - 0x3FFF FFFF
     DEV16BIT_REGION_ACCESS  0x4000 0000 - 0x4FFF FFFF
     DEV32BIT_REGION_ACCESS  0x5000 0000 - 0x5FFF FFFF
+
+    The smalled segment decodable here is 256 bytes do to only having access to A27-A8
 */
 
 

@@ -14,7 +14,7 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 
 PROPERTY ATMEL {open_collector=nCPU_DSACK0, nCPU_DSACK1};
 
-//      VERSION 22
+//      VERSION 23
 
 
 /* NOTE:  Active low values are designated with a starting n. */
@@ -117,6 +117,7 @@ PINNODE = CPU_CLK_div4;
 PINNODE = CPU_CLK_div8;
 PINNODE = nDRAM_ACCESS_RAS;
 PINNODE = REFRESH_COMPLETE;
+PINNODE = REFRESH_COMPLETE_DELAY;
 PINNODE = REFRESH_REQUESTED;
 PINNODE = DRAM_ACCESS_RAS_RESET1;
 PINNODE = DRAM_ACCESS_RAS_RESET2;
@@ -548,7 +549,7 @@ REFRESH_REQUESTED.ar = !nSYS_RESET # REFRESH_COMPLETE;
 
 REFRESH_ACTIVE.d = (REFRESH_REQUESTED & nCPU_AS) # REFRESH_ACTIVE;
 REFRESH_ACTIVE.ck = CPU_CLK;
-REFRESH_ACTIVE.ar = !nSYS_RESET # REFRESH_COMPLETE;         
+REFRESH_ACTIVE.ar = !nSYS_RESET # REFRESH_COMPLETE_DELAY;         
 
 /*  When REFRESH_ACTIVE goes high, it is time to do a refresh cycle.  We will use a 3 bit counter to count CPU cycles.
     This state machine will be held in reset until the REFRESH_ACTIVE flag goes active.  At that point it will start counting 
@@ -589,6 +590,12 @@ REFRESH_COMPLETE.d = (field_REFRESH_STATE_MACHINE:['d'5]);
 REFRESH_COMPLETE.ck = CPU_CLK;
 REFRESH_COMPLETE.ar = !nSYS_RESET;
 
+// Refresh delay is delay of the complete signal to the next falling clock edge so it aligns with when a DRAM_ACCESS cycle would
+// normally start (after AS low, which is right after a CLK low edge.)
+
+REFRESH_COMPLETE_DELAY.d = REFRESH_COMPLETE;
+REFRESH_COMPLETE_DELAY.ck = !CPU_CLK;
+REFRESH_COMPLETE_DELAY.ar = !nSYS_RESET;
 
 /* Actual DRAM signals:
 
