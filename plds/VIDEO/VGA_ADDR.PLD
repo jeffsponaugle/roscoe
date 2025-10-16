@@ -1,0 +1,164 @@
+Name	 VGA_SYNC;
+PartNo   VGA_SYNC;
+Date     03/30/2024;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1504isptqfp44;
+
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+
+Pin  = [VM_A0..17];         // The 18 address bits going to the video memory.  These are tri-state outputs.
+                            // Each address has 4 bytes, so 18 address bits nets 1MB of video memory.
+                            // at 640x480 16bpp a single frame is 614,400 bytes (1 page)
+                            // at 640x480 8bpp a single frame is 307,200 bytes (3 pages)
+                            // In text mode 80x30 with attribue is 4,800 bytes (218 pages)
+Pin = VMEM_ADDR_RESET;
+Pin = VM_ADDR_OE;           // Output enable for the address lines to the VRAM
+Pin = DOT_CLK;
+Pin = [ADDR_MODE1..0];
+
+PINNODE = [C11..6];          /* Optimizing - Creating nodes for carry elements that are very large */
+PINNODE = [S17..0];          /* Internal 17 bit counter for the memory address generation */
+
+FIELD address_mode_field = [ADDR_MODE1..0];
+
+// The adder for the memory address
+
+[S0..17].ck = DOT_CLK;      // UNSURE
+[S0..17].ar = VMEM_ADDR_RESET;
+
+[VM_A17..0] = [S17..0];
+[VM_A17..0].oe = !VM_ADDR_OE;
+
+/* Carry IN is 1 for increment by 1 mode, MODE=001 */
+C0 = address_mode_field:['d'1];
+
+// To subtract 80, we will add the 0b11 1111 1111 1011 0000, or 0x3FFB0
+
+/* First 4 bits of add are always 0. */
+[B0..3] = 'b'0;
+
+/* Remaining bits are on for -80  */
+B4 = address_mode_field:['d'2];
+B5 = address_mode_field:['d'2];
+B6 = 'b'0;
+B7 = address_mode_field:['d'2];
+B8 = address_mode_field:['d'2];
+B9 = address_mode_field:['d'2];
+B10 = address_mode_field:['d'2];
+B11 = address_mode_field:['d'2];
+B12 = address_mode_field:['d'2];
+B13 = address_mode_field:['d'2];
+B14 = address_mode_field:['d'2];
+B15 = address_mode_field:['d'2];
+B16 = address_mode_field:['d'2];
+B17 = address_mode_field:['d'2];
+
+// The actual adder for the video memory address generation
+
+P0 = S0 $ B0;
+G0 = S0 & B0;
+S0.d = P0 $ C0;
+C1 = G0 # (P0&C0);
+
+P1 = S1 $ B1;
+G1 = S1 & B1;
+S1.d = P1 $ C1;
+C2 = G1 # (P1&C1);
+
+P2 = S2 $ B2;
+G2 = S2 & B2;
+S2.d = P2 $ C2;
+C3 = G2 # (P2&C2);
+
+P3 = S3 $ B3;
+G3 = S3 & B3;
+S3.d = P3 $ C3;
+C4 = G3 # (P3&C3);
+
+P4 = S4 $ B4;
+G4 = S4 & B4;
+S4.d = P4 $ C4;
+C5 = G4 # (P4&C4);
+
+P5 = S5 $ B5;
+G5 = S5 & B5;
+S5.d = P5 $ C5;
+C6 = G5 # (P5&C5);
+
+P6 = S6 $ B6;
+G6 = S6 & B6;
+S6.d = P6 $ C6;
+C7 = G6 # (P6&C6);
+
+P7 = S7 $ B7;
+G7 = S7 & B7;
+S7.d = P7 $ C7;
+C8 = G7 # (P7&C7);
+
+P8 = S8 $ B8;
+G8 = S8 & B8;
+S8.d = P8 $ C8;
+C9 = G8 # (P8&C8);
+
+P9 = S9 $ B9;
+G9 = S9 & B9;
+S9.d = P9 $ C9;
+C10 = G9 # (P9&C9);
+
+P10 = S10 $ B10;
+G10 = S10 & B10;
+S10.d = P10 $ C10;
+C11 = G10 # (P10&C10);
+
+P11 = S11 $ B11;
+G11 = S11 & B11;
+S11.d = P11 $ C11;
+C12 = G11 # (P11&C11);
+
+P12 = S12 $ B12;
+G12 = S12 & B12;
+S12.d = P12 $ C12;
+C13 = G12 # (P12&C12);
+
+P13 = S13 $ B13;
+G13 = S13 & B13;
+S13.d = P13 $ C13;
+C14 = G13 # (P13&C13);
+
+P14 = S14 $ B14;
+G14 = S14 & B14;
+S14.d = P14 $ C14;
+C15 = G14 # (P14&C14);
+
+P15 = S15 $ B15;
+G15 = S15 & B15;
+S15.d = P15 $ C15;
+C16 = G15 # (P15&C15);
+
+P16 = S16 $ B16;
+G16 = S16 & B16;
+S16.d = P16 $ C16;
+C17 = G16 # (P16&C16);
+
+P17 = S17 $ B17;
+G17 = S17 & B17;
+S17.d = P17 $ C17;
+
+/*
+Total dedicated input used:	3/4 	(75%)
+Total I/O pins used		24/32 	(75%)
+Total Logic cells used 		60/64 	(93%)
+Total Flip-Flop used 		18/64 	(28%)
+Total Foldback logic used 	1/64 	(1%)
+Total Nodes+FB/MCells 		59/64 	(92%)
+Total cascade used 		2
+Total input pins 		9
+Total output pins 		18
+Total Pts 			186
+*/

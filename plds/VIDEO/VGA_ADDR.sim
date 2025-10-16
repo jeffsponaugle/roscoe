@@ -1,0 +1,729 @@
+%SIGNAL
+PIN   0 =  ADDR_MODE0 
+PIN   0 =  ADDR_MODE1 
+PIN   0 =  C6 
+PIN   0 =  C7 
+PIN   0 =  C8 
+PIN   0 =  C9 
+PIN   0 =  C10 
+PIN   0 =  C11 
+PIN   0 =  DOT_CLK 
+PIN   0 =  S0 
+PIN   0 =  S1 
+PIN   0 =  S2 
+PIN   0 =  S3 
+PIN   0 =  S4 
+PIN   0 =  S5 
+PIN   0 =  S6 
+PIN   0 =  S7 
+PIN   0 =  S8 
+PIN   0 =  S9 
+PIN   0 =  S10 
+PIN   0 =  S11 
+PIN   0 =  S12 
+PIN   0 =  S13 
+PIN   0 =  S14 
+PIN   0 =  S15 
+PIN   0 =  S16 
+PIN   0 =  S17 
+PIN   0 =  VMEM_ADDR_RESET 
+PIN   0 =  VM_A0 
+PIN   0 =  VM_A1 
+PIN   0 =  VM_A2 
+PIN   0 =  VM_A3 
+PIN   0 =  VM_A4 
+PIN   0 =  VM_A5 
+PIN   0 =  VM_A6 
+PIN   0 =  VM_A7 
+PIN   0 =  VM_A8 
+PIN   0 =  VM_A9 
+PIN   0 =  VM_A10 
+PIN   0 =  VM_A11 
+PIN   0 =  VM_A12 
+PIN   0 =  VM_A13 
+PIN   0 =  VM_A14 
+PIN   0 =  VM_A15 
+PIN   0 =  VM_A16 
+PIN   0 =  VM_A17 
+PIN   0 =  VM_ADDR_OE 
+%END
+
+%FIELD
+FIELD address_mode_field = ADDR_MODE1,ADDR_MODE0
+%END
+
+%EQUATION
+B0 =>
+    0 
+
+B1 =>
+    0 
+
+B2 =>
+    0 
+
+B3 =>
+    0 
+
+B4 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B5 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B6 =>
+    0 
+
+B7 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B8 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B9 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B10 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B11 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B12 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B13 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B14 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B15 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B16 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+B17 =>
+    !ADDR_MODE0 & ADDR_MODE1
+
+C0 =>
+    ADDR_MODE0 & !ADDR_MODE1
+
+C1 =>
+    ADDR_MODE0 & !ADDR_MODE1 & S0
+
+C2 =>
+    ADDR_MODE0 & !ADDR_MODE1 & S0 & S1
+
+C3 =>
+    ADDR_MODE0 & !ADDR_MODE1 & S0 & S1 & S2
+
+C4 =>
+    ADDR_MODE0 & !ADDR_MODE1 & S0 & S1 & S2 & S3
+
+C5 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S4
+  # ADDR_MODE0 & !ADDR_MODE1 & S0 & S1 & S2 & S3 & S4
+
+C6 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S4
+  # !ADDR_MODE0 & ADDR_MODE1 & S5
+  # ADDR_MODE0 & !ADDR_MODE1 & S0 & S1 & S2 & S3 & S4 & S5
+
+C7 =>
+    C6 & S6
+
+C8 =>
+    C7 & S7
+  # !ADDR_MODE0 & ADDR_MODE1 & C7
+  # !ADDR_MODE0 & ADDR_MODE1 & S7
+
+C9 =>
+    C8 & S8
+  # !ADDR_MODE0 & ADDR_MODE1 & C8
+  # !ADDR_MODE0 & ADDR_MODE1 & S8
+
+C10 =>
+    C9 & S9
+  # !ADDR_MODE0 & ADDR_MODE1 & C9
+  # !ADDR_MODE0 & ADDR_MODE1 & S9
+
+C11 =>
+    C10 & S10
+  # !ADDR_MODE0 & ADDR_MODE1 & C10
+  # !ADDR_MODE0 & ADDR_MODE1 & S10
+
+C12 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S11
+  # !ADDR_MODE0 & ADDR_MODE1 & C11 & !S11
+  # ADDR_MODE0 & C11 & S11
+  # !ADDR_MODE1 & C11 & S11
+
+C13 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S12
+  # !ADDR_MODE0 & ADDR_MODE1 & S11 & !S12
+  # !ADDR_MODE0 & ADDR_MODE1 & C11 & !S11 & !S12
+  # !ADDR_MODE1 & C11 & S11 & S12
+  # ADDR_MODE0 & C11 & S11 & S12
+
+C14 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S13
+  # !ADDR_MODE0 & ADDR_MODE1 & S12 & !S13
+  # !ADDR_MODE0 & ADDR_MODE1 & S11 & !S12 & !S13
+  # !ADDR_MODE0 & ADDR_MODE1 & C11 & !S11 & !S12 & !S13
+  # ADDR_MODE0 & C11 & S11 & S12 & S13
+  # !ADDR_MODE1 & C11 & S11 & S12 & S13
+
+C15 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S14
+  # !ADDR_MODE0 & ADDR_MODE1 & S13 & !S14
+  # !ADDR_MODE0 & ADDR_MODE1 & S12 & !S13 & !S14
+  # !ADDR_MODE0 & ADDR_MODE1 & S11 & !S12 & !S13 & !S14
+  # !ADDR_MODE0 & ADDR_MODE1 & C11 & !S11 & !S12 & !S13 & !S14
+  # !ADDR_MODE1 & C11 & S11 & S12 & S13 & S14
+  # ADDR_MODE0 & C11 & S11 & S12 & S13 & S14
+
+C16 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S15
+  # !ADDR_MODE0 & ADDR_MODE1 & S14 & !S15
+  # !ADDR_MODE0 & ADDR_MODE1 & S13 & !S14 & !S15
+  # !ADDR_MODE0 & ADDR_MODE1 & S12 & !S13 & !S14 & !S15
+  # !ADDR_MODE0 & ADDR_MODE1 & S11 & !S12 & !S13 & !S14 & !S15
+  # !ADDR_MODE0 & ADDR_MODE1 & C11 & !S11 & !S12 & !S13 & !S14 & !S15
+  # ADDR_MODE0 & C11 & S11 & S12 & S13 & S14 & S15
+  # !ADDR_MODE1 & C11 & S11 & S12 & S13 & S14 & S15
+
+C17 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S16
+  # !ADDR_MODE0 & ADDR_MODE1 & S15 & !S16
+  # !ADDR_MODE0 & ADDR_MODE1 & S14 & !S15 & !S16
+  # !ADDR_MODE0 & ADDR_MODE1 & S13 & !S14 & !S15 & !S16
+  # !ADDR_MODE0 & ADDR_MODE1 & S12 & !S13 & !S14 & !S15 & !S16
+  # !ADDR_MODE0 & ADDR_MODE1 & S11 & !S12 & !S13 & !S14 & !S15 & !S16
+  # !ADDR_MODE0 & ADDR_MODE1 & C11 & !S11 & !S12 & !S13 & !S14 & !S15 & !S16
+  # !ADDR_MODE1 & C11 & S11 & S12 & S13 & S14 & S15 & S16
+  # ADDR_MODE0 & C11 & S11 & S12 & S13 & S14 & S15 & S16
+
+G0 =>
+    0 
+
+G1 =>
+    0 
+
+G2 =>
+    0 
+
+G3 =>
+    0 
+
+G4 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S4
+
+G5 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S5
+
+G6 =>
+    0 
+
+G7 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S7
+
+G8 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S8
+
+G9 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S9
+
+G10 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S10
+
+G11 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S11
+
+G12 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S12
+
+G13 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S13
+
+G14 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S14
+
+G15 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S15
+
+G16 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S16
+
+G17 =>
+    !ADDR_MODE0 & ADDR_MODE1 & S17
+
+P0 =>
+    S0
+
+P1 =>
+    S1
+
+P2 =>
+    S2
+
+P3 =>
+    S3
+
+P4 =>
+    !ADDR_MODE1 & S4
+  # ADDR_MODE0 & S4
+  # !ADDR_MODE0 & ADDR_MODE1 & !S4
+
+P5 =>
+    !ADDR_MODE1 & S5
+  # ADDR_MODE0 & S5
+  # !ADDR_MODE0 & ADDR_MODE1 & !S5
+
+P6 =>
+    S6
+
+P7 =>
+    !ADDR_MODE1 & S7
+  # ADDR_MODE0 & S7
+  # !ADDR_MODE0 & ADDR_MODE1 & !S7
+
+P8 =>
+    !ADDR_MODE1 & S8
+  # ADDR_MODE0 & S8
+  # !ADDR_MODE0 & ADDR_MODE1 & !S8
+
+P9 =>
+    !ADDR_MODE1 & S9
+  # ADDR_MODE0 & S9
+  # !ADDR_MODE0 & ADDR_MODE1 & !S9
+
+P10 =>
+    !ADDR_MODE1 & S10
+  # ADDR_MODE0 & S10
+  # !ADDR_MODE0 & ADDR_MODE1 & !S10
+
+P11 =>
+    !ADDR_MODE1 & S11
+  # ADDR_MODE0 & S11
+  # !ADDR_MODE0 & ADDR_MODE1 & !S11
+
+P12 =>
+    !ADDR_MODE1 & S12
+  # ADDR_MODE0 & S12
+  # !ADDR_MODE0 & ADDR_MODE1 & !S12
+
+P13 =>
+    !ADDR_MODE1 & S13
+  # ADDR_MODE0 & S13
+  # !ADDR_MODE0 & ADDR_MODE1 & !S13
+
+P14 =>
+    !ADDR_MODE1 & S14
+  # ADDR_MODE0 & S14
+  # !ADDR_MODE0 & ADDR_MODE1 & !S14
+
+P15 =>
+    !ADDR_MODE1 & S15
+  # ADDR_MODE0 & S15
+  # !ADDR_MODE0 & ADDR_MODE1 & !S15
+
+P16 =>
+    !ADDR_MODE1 & S16
+  # ADDR_MODE0 & S16
+  # !ADDR_MODE0 & ADDR_MODE1 & !S16
+
+P17 =>
+    !ADDR_MODE1 & S17
+  # ADDR_MODE0 & S17
+  # !ADDR_MODE0 & ADDR_MODE1 & !S17
+
+S0.d  =>
+    !ADDR_MODE0 & S0
+  # ADDR_MODE1 & S0
+  # ADDR_MODE0 & !ADDR_MODE1 & !S0
+
+S0.ar  =>
+    VMEM_ADDR_RESET
+
+S0.ck  =>
+    DOT_CLK
+
+S1.d  =>
+    !ADDR_MODE0 & S1
+  # ADDR_MODE1 & S1
+  # !S0 & S1
+  # ADDR_MODE0 & !ADDR_MODE1 & S0 & !S1
+
+S1.ar  =>
+    VMEM_ADDR_RESET
+
+S1.ck  =>
+    DOT_CLK
+
+S2.d  =>
+    !ADDR_MODE0 & S2
+  # ADDR_MODE1 & S2
+  # !S0 & S2
+  # !S1 & S2
+  # ADDR_MODE0 & !ADDR_MODE1 & S0 & S1 & !S2
+
+S2.ar  =>
+    VMEM_ADDR_RESET
+
+S2.ck  =>
+    DOT_CLK
+
+S3.d  =>
+    !ADDR_MODE0 & S3
+  # ADDR_MODE1 & S3
+  # !S0 & S3
+  # !S1 & S3
+  # !S2 & S3
+  # ADDR_MODE0 & !ADDR_MODE1 & S0 & S1 & S2 & !S3
+
+S3.ar  =>
+    VMEM_ADDR_RESET
+
+S3.ck  =>
+    DOT_CLK
+
+S4.d  =>
+    ADDR_MODE0 & ADDR_MODE1 & S4
+  # !ADDR_MODE0 & !ADDR_MODE1 & S4
+  # ADDR_MODE0 & !S0 & S4
+  # ADDR_MODE0 & !S1 & S4
+  # ADDR_MODE0 & !S2 & S4
+  # ADDR_MODE0 & !S3 & S4
+  # !ADDR_MODE0 & ADDR_MODE1 & !S4
+  # ADDR_MODE0 & !ADDR_MODE1 & S0 & S1 & S2 & S3 & !S4
+
+S4.ar  =>
+    VMEM_ADDR_RESET
+
+S4.ck  =>
+    DOT_CLK
+
+S5.d  =>
+    ADDR_MODE0 & ADDR_MODE1 & S5
+  # ADDR_MODE0 & !S0 & S5
+  # ADDR_MODE0 & !S1 & S5
+  # ADDR_MODE0 & !S2 & S5
+  # ADDR_MODE0 & !S3 & S5
+  # !ADDR_MODE0 & S4 & S5
+  # !ADDR_MODE1 & !S4 & S5
+  # !ADDR_MODE0 & ADDR_MODE1 & !S4 & !S5
+  # ADDR_MODE0 & !ADDR_MODE1 & S0 & S1 & S2 & S3 & S4 & !S5
+
+S5.ar  =>
+    VMEM_ADDR_RESET
+
+S5.ck  =>
+    DOT_CLK
+
+S6.d  =>
+    !C6 & S6
+  # C6 & !S6
+
+S6.ar  =>
+    VMEM_ADDR_RESET
+
+S6.ck  =>
+    DOT_CLK
+
+S7.d  =>
+    ADDR_MODE0 & !C7 & S7
+  # !ADDR_MODE1 & !C7 & S7
+  # ADDR_MODE0 & C7 & !S7
+  # !ADDR_MODE1 & C7 & !S7
+  # !ADDR_MODE0 & ADDR_MODE1 & C7 & S7
+  # !ADDR_MODE0 & ADDR_MODE1 & !C7 & !S7
+
+S7.ar  =>
+    VMEM_ADDR_RESET
+
+S7.ck  =>
+    DOT_CLK
+
+S8.d  =>
+    ADDR_MODE0 & !C8 & S8
+  # !ADDR_MODE1 & !C8 & S8
+  # ADDR_MODE0 & C8 & !S8
+  # !ADDR_MODE1 & C8 & !S8
+  # !ADDR_MODE0 & ADDR_MODE1 & C8 & S8
+  # !ADDR_MODE0 & ADDR_MODE1 & !C8 & !S8
+
+S8.ar  =>
+    VMEM_ADDR_RESET
+
+S8.ck  =>
+    DOT_CLK
+
+S9.d  =>
+    ADDR_MODE0 & !C9 & S9
+  # !ADDR_MODE1 & !C9 & S9
+  # ADDR_MODE0 & C9 & !S9
+  # !ADDR_MODE1 & C9 & !S9
+  # !ADDR_MODE0 & ADDR_MODE1 & C9 & S9
+  # !ADDR_MODE0 & ADDR_MODE1 & !C9 & !S9
+
+S9.ar  =>
+    VMEM_ADDR_RESET
+
+S9.ck  =>
+    DOT_CLK
+
+S10.d  =>
+    ADDR_MODE0 & !C10 & S10
+  # !ADDR_MODE1 & !C10 & S10
+  # ADDR_MODE0 & C10 & !S10
+  # !ADDR_MODE1 & C10 & !S10
+  # !ADDR_MODE0 & ADDR_MODE1 & C10 & S10
+  # !ADDR_MODE0 & ADDR_MODE1 & !C10 & !S10
+
+S10.ar  =>
+    VMEM_ADDR_RESET
+
+S10.ck  =>
+    DOT_CLK
+
+S11.d  =>
+    ADDR_MODE0 & !C11 & S11
+  # !ADDR_MODE1 & !C11 & S11
+  # ADDR_MODE0 & C11 & !S11
+  # !ADDR_MODE1 & C11 & !S11
+  # !ADDR_MODE0 & ADDR_MODE1 & C11 & S11
+  # !ADDR_MODE0 & ADDR_MODE1 & !C11 & !S11
+
+S11.ar  =>
+    VMEM_ADDR_RESET
+
+S11.ck  =>
+    DOT_CLK
+
+S12.d  =>
+    !C11 & S11 & S12
+  # ADDR_MODE0 & !S11 & S12
+  # !ADDR_MODE1 & !S11 & S12
+  # !ADDR_MODE0 & ADDR_MODE1 & C11 & S12
+  # ADDR_MODE0 & C11 & S11 & !S12
+  # !ADDR_MODE1 & C11 & S11 & !S12
+  # !ADDR_MODE0 & ADDR_MODE1 & !C11 & !S11 & !S12
+
+S12.ar  =>
+    VMEM_ADDR_RESET
+
+S12.ck  =>
+    DOT_CLK
+
+S13.d  =>
+    ADDR_MODE0 & !C11 & S13
+  # !ADDR_MODE1 & !C11 & S13
+  # !C11 & S11 & S13
+  # C11 & !S11 & S13
+  # C11 & !S12 & S13
+  # !ADDR_MODE0 & ADDR_MODE1 & S12 & S13
+  # ADDR_MODE0 & C11 & S11 & S12 & !S13
+  # !ADDR_MODE1 & C11 & S11 & S12 & !S13
+  # !ADDR_MODE0 & ADDR_MODE1 & !C11 & !S11 & !S12 & !S13
+
+S13.ar  =>
+    VMEM_ADDR_RESET
+
+S13.ck  =>
+    DOT_CLK
+
+S14.d  =>
+    !C11 & S11 & S14
+  # !S11 & S12 & S14
+  # C11 & !S12 & S14
+  # !C11 & S13 & S14
+  # ADDR_MODE0 & !S13 & S14
+  # !ADDR_MODE1 & !S13 & S14
+  # C11 & !S13 & S14
+  # !ADDR_MODE0 & ADDR_MODE1 & S13 & S14
+  # ADDR_MODE0 & C11 & S11 & S12 & S13 & !S14
+  # !ADDR_MODE1 & C11 & S11 & S12 & S13 & !S14
+  # !ADDR_MODE0 & ADDR_MODE1 & !C11 & !S11 & !S12 & !S13 & !S14
+
+S14.ar  =>
+    VMEM_ADDR_RESET
+
+S14.ck  =>
+    DOT_CLK
+
+S15.d  =>
+    !C11 & S11 & S15
+  # !S11 & S12 & S15
+  # C11 & !S12 & S15
+  # !C11 & S13 & S15
+  # C11 & !S13 & S15
+  # !S13 & S14 & S15
+  # ADDR_MODE0 & !S14 & S15
+  # !ADDR_MODE1 & !S14 & S15
+  # !ADDR_MODE0 & ADDR_MODE1 & S13 & S15
+  # ADDR_MODE0 & C11 & S11 & S12 & S13 & S14 & !S15
+  # !ADDR_MODE1 & C11 & S11 & S12 & S13 & S14 & !S15
+  # !ADDR_MODE0 & ADDR_MODE1 & !C11 & !S11 & !S12 & !S13 & !S14 & !S15
+
+S15.ar  =>
+    VMEM_ADDR_RESET
+
+S15.ck  =>
+    DOT_CLK
+
+S16.d  =>
+    ADDR_MODE0 & !C11 & S16
+  # !ADDR_MODE1 & !C11 & S16
+  # !C11 & S11 & S16
+  # !S11 & S12 & S16
+  # C11 & !S12 & S16
+  # !C11 & S13 & S16
+  # C11 & !S13 & S16
+  # !S13 & S14 & S16
+  # !S14 & S15 & S16
+  # S13 & !S15 & S16
+  # !ADDR_MODE0 & ADDR_MODE1 & C11 & S16
+  # ADDR_MODE0 & C11 & S11 & S12 & S13 & S14 & S15 & !S16
+  # !ADDR_MODE1 & C11 & S11 & S12 & S13 & S14 & S15 & !S16
+  # !ADDR_MODE0 & ADDR_MODE1 & !C11 & !S11 & !S12 & !S13 & !S14 & !S15 & !S16
+
+S16.ar  =>
+    VMEM_ADDR_RESET
+
+S16.ck  =>
+    DOT_CLK
+
+S17.d  =>
+    !C11 & S11 & S17
+  # !S11 & S12 & S17
+  # C11 & !S12 & S17
+  # C11 & !S13 & S17
+  # !S13 & S14 & S17
+  # !S14 & S15 & S17
+  # S13 & !S15 & S17
+  # !C11 & S16 & S17
+  # ADDR_MODE0 & !S16 & S17
+  # !ADDR_MODE1 & !S16 & S17
+  # S13 & !S16 & S17
+  # !ADDR_MODE0 & ADDR_MODE1 & S16 & S17
+  # ADDR_MODE0 & C11 & S11 & S12 & S13 & S14 & S15 & S16 & !S17
+  # !ADDR_MODE1 & C11 & S11 & S12 & S13 & S14 & S15 & S16 & !S17
+  # !ADDR_MODE0 & ADDR_MODE1 & !C11 & !S11 & !S12 & !S13 & !S14 & !S15 & !S16 & !S17
+
+S17.ar  =>
+    VMEM_ADDR_RESET
+
+S17.ck  =>
+    DOT_CLK
+
+VM_A0 =>
+    S0
+
+VM_A0.oe  =>
+    !VM_ADDR_OE
+
+VM_A1 =>
+    S1
+
+VM_A1.oe  =>
+    !VM_ADDR_OE
+
+VM_A2 =>
+    S2
+
+VM_A2.oe  =>
+    !VM_ADDR_OE
+
+VM_A3 =>
+    S3
+
+VM_A3.oe  =>
+    !VM_ADDR_OE
+
+VM_A4 =>
+    S4
+
+VM_A4.oe  =>
+    !VM_ADDR_OE
+
+VM_A5 =>
+    S5
+
+VM_A5.oe  =>
+    !VM_ADDR_OE
+
+VM_A6 =>
+    S6
+
+VM_A6.oe  =>
+    !VM_ADDR_OE
+
+VM_A7 =>
+    S7
+
+VM_A7.oe  =>
+    !VM_ADDR_OE
+
+VM_A8 =>
+    S8
+
+VM_A8.oe  =>
+    !VM_ADDR_OE
+
+VM_A9 =>
+    S9
+
+VM_A9.oe  =>
+    !VM_ADDR_OE
+
+VM_A10 =>
+    S10
+
+VM_A10.oe  =>
+    !VM_ADDR_OE
+
+VM_A11 =>
+    S11
+
+VM_A11.oe  =>
+    !VM_ADDR_OE
+
+VM_A12 =>
+    S12
+
+VM_A12.oe  =>
+    !VM_ADDR_OE
+
+VM_A13 =>
+    S13
+
+VM_A13.oe  =>
+    !VM_ADDR_OE
+
+VM_A14 =>
+    S14
+
+VM_A14.oe  =>
+    !VM_ADDR_OE
+
+VM_A15 =>
+    S15
+
+VM_A15.oe  =>
+    !VM_ADDR_OE
+
+VM_A16 =>
+    S16
+
+VM_A16.oe  =>
+    !VM_ADDR_OE
+
+VM_A17 =>
+    S17
+
+VM_A17.oe  =>
+    !VM_ADDR_OE
+
+%END

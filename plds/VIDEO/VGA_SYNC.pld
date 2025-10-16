@@ -1,0 +1,464 @@
+Name	 VGA_SYNC;
+PartNo   VGA_SYNC;
+Date     03/30/2024;
+Revision 01;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1508isptqfp100;
+
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+PROPERTY ATMEL {open_collector=nEXP_CPU_DEV_WAIT};
+
+/*  
+               MHz	   Horizontal (in Pixels)	                           Vertical (in Lines)
+Format	Pixel Clock    Active Video   Front_Porch Sync_Pulse  Back_Porch	Active_Video	Front_Porch	Sync_Pulse Back_Porch
+640x480, 60Hz	25.175	640	         16	         -96	      48	         480	         11	        -2	         31
+640x480, 72Hz	31.500	640	         24	         -40	      128	         480	         9	        -3	         2
+
+TEXT MODE - 640x480 80x30 characters, 8x16 FONT size.
+GRAPHICS MODE 1 - 640x480 16bpp, 2 pixels for every memory read
+GRAPHICS MODE 2 - 640x480 8bpp, 4 pixels for every memory read
+
+16 blanking intervals at start of each line.
+
+            Horizontal                              Vertical
+640x480 - Blanking  (0-15)    [16]              Video out (0-479)   [480]
+ TEXT     Video out (16-655) [640]              Blanking (480-490)  [11]
+          Blanking  (656-671) [16]              VSYNC (491-492)     [2]
+          HSYNC     (672-767) [96]              Blanking (493-524)  [31]
+          Blanking  (768-799) [32]
+
+
+*/
+
+// Inputs
+
+Pin = EXP_nSYS_RESET;
+Pin = DOT_CLK;
+Pin = DOT_CLK2;             // Secondary DOT Clock
+
+Pin = [EXP_D0..7];         // Data lines from host for configuration
+Pin = nEXP_VIO_CS;              // Chip select from host to read/write config register
+Pin = EXP_RW;              // Read/Write from host for config register 0=W, 1=R    
+Pin = [EXP_A0..1];         // Address bits for config registers
+
+Pin = nEXP_VMEM_CS;
+Pin = nEXP_CPU_DEV_WAIT;
+Pin = [EXP_CPU_SIZE0..1];
+Pin = nEXP_DATA_EN;
+
+
+// Outputs
+
+Pin = [FONTROW0..3];        // The current row for the font rom (used for address lines 0-3)
+Pin = VGA_HSYNC;            // Video HSYNC Output
+Pin = VGA_VSYNC;            // Video VSYNC Output
+
+Pin = [BIT_PROC_MODE0..1];  // Output to the video processor CPLD to tell it what mode we are in.
+Pin = BIT_PROC_LATCH_SREG;
+Pin = BIT_PROC_SHIFT_SREG;
+Pin = BIT_PROC_LATCH_VRAM;
+Pin = BIT_PROC_VGA_ENABLE;
+Pin = [BIT_PROC_SELECT_SUB0..1];
+
+// Outputs to the Address Generation CPLD
+Pin = VMEM_ADDR_RESET;
+Pin = VM_ADDR_OE;
+Pin = [ADDR_MODE1..0];
+
+// Outputs to VRAM
+
+Pin = nVRAM_CS;
+Pin = nVRAM_OE;
+Pin = nVRAM_WE;
+
+Pin = nVRAM_LL_SEL;
+Pin = nVRAM_LH_SEL;
+Pin = nVRAM_UL_SEL;
+Pin = nVRAM_UH_SEL;
+
+
+
+// Nodes
+
+PINNODE = VGA_DISPLAY_ACTIVE;
+PINNODE = VSYNC_DISPLAY_ACTIVE;
+PINNODE = HSYNC_DISPLAY_ACTIVE;
+PINNODE = [HSYNC_COUNTER0..9];
+PINNODE = [VSYNC_COUNTER0..9];    
+PINNODE = VSYNC_CLOCK_A,VSYNC_CLOCK_B;
+PINNODE = VRAM_BUSY;
+PINNODE = VRAM_READ;
+
+PINNODE = [CONFIG_REGA0..3];
+
+PINNODE = VMEM_ACCESS_BUSY_START, VMEM_ACCESS_BUSY_START_RESET;
+
+/*
+PINNODE = VMEM_ACCESS_BUSY_START;
+PINNODE = VMEM_ACCESS_BUSY_START_RESET;
+PINNODE = VRAM_LATCH_DATA_IN;
+PINNODE = SHIFTER_SHIFT;
+*/
+
+
+// Fields
+
+
+
+ 
+/* MODE input - Action to take on clock edge 
+
+         000['d'0] = NO CHANGE
+         001['d'1] = INCREMENT BY 1  
+         010['d'2] = DECREMENT BY 64 (ADD 11 1111 1100 0000)
+         011['d'3] = DECREMENT BY 80 (ADD 11 1111 1011 0000)
+         100['d'4] = UNUSED
+         101['d'5] = UNUSED
+         110['d'6] = UNUSED
+         111['d'7] = UNUSED
+
+         00['d'0] = NO CHANGE
+         01['d'1] = INCREMENT BY 1
+         10['d'2] = DECREMENT BY 80
+         11['d'3] = UNDEFINED.
+
+*/
+
+
+// Font Address Generation
+
+FONTROW0 = VSYNC_COUNTER0;
+FONTROW1 = VSYNC_COUNTER1;
+FONTROW2 = VSYNC_COUNTER2;
+FONTROW3 = VSYNC_COUNTER3;
+
+// Interface to host CPU
+// Writes to the config register
+// Config Register A:
+//      b0 = TEXT or GRAPHICS MODE (0=TEXT, 1=GRAPHICS)
+//      b1 = GRAPHICS DEPTH (0=8bpp, 1=16bpp)
+
+[CONFIG_REGA0..3].d = [EXP_D0..3];
+[CONFIG_REGA0..3].ck = (nEXP_VIO_CS & !EXP_RW);
+[CONFIG_REGA0..3].ar = !EXP_nSYS_RESET;
+
+// Shorthands for the register bits
+cfg_TEXT_OR_GRAPHICS = CONFIG_REGA0;
+cfg_GRAPHICS_DEPTH = CONFIG_REGA1;
+
+HSYNC_COUNTER0.d = !HSYNC_COUNTER0 & HSYNC_ZERO;
+HSYNC_COUNTER0.ck = DOT_CLK;
+HSYNC_COUNTER0.ar = !EXP_nSYS_RESET;
+
+HSYNC_COUNTER1.d = ((HSYNC_COUNTER0&!HSYNC_COUNTER1) # (!HSYNC_COUNTER0&HSYNC_COUNTER1)) & HSYNC_ZERO;
+HSYNC_COUNTER1.ck = DOT_CLK;
+HSYNC_COUNTER1.ar = !EXP_nSYS_RESET;
+
+HSYNC_COUNTER2T = HSYNC_COUNTER0&HSYNC_COUNTER1;
+HSYNC_COUNTER2.d = ((HSYNC_COUNTER2T&!HSYNC_COUNTER2) # (!HSYNC_COUNTER2T&HSYNC_COUNTER2)) & HSYNC_ZERO;
+HSYNC_COUNTER2.ck = DOT_CLK;
+HSYNC_COUNTER2.ar = !EXP_nSYS_RESET;
+
+HSYNC_COUNTER3T = HSYNC_COUNTER2T&HSYNC_COUNTER2;
+HSYNC_COUNTER3.d = ((HSYNC_COUNTER3T&!HSYNC_COUNTER3) # (!HSYNC_COUNTER3T&HSYNC_COUNTER3)) & HSYNC_ZERO;
+HSYNC_COUNTER3.ck = DOT_CLK;
+HSYNC_COUNTER3.ar = !EXP_nSYS_RESET;
+
+HSYNC_COUNTER4T = HSYNC_COUNTER3T&HSYNC_COUNTER3;
+HSYNC_COUNTER4.d = ((HSYNC_COUNTER4T&!HSYNC_COUNTER4) # (!HSYNC_COUNTER4T&HSYNC_COUNTER4)) & HSYNC_ZERO;
+HSYNC_COUNTER4.ck = DOT_CLK;
+HSYNC_COUNTER4.ar = !EXP_nSYS_RESET;
+
+HSYNC_COUNTER5T = HSYNC_COUNTER4T&HSYNC_COUNTER4;
+HSYNC_COUNTER5.d = ((HSYNC_COUNTER5T&!HSYNC_COUNTER5) # (!HSYNC_COUNTER5T&HSYNC_COUNTER5)) & HSYNC_ZERO;
+HSYNC_COUNTER5.ck = DOT_CLK;
+HSYNC_COUNTER5.ar = !EXP_nSYS_RESET;
+
+HSYNC_COUNTER6T = HSYNC_COUNTER5T&HSYNC_COUNTER5;
+HSYNC_COUNTER6.d = ((HSYNC_COUNTER6T&!HSYNC_COUNTER6) # (!HSYNC_COUNTER6T&HSYNC_COUNTER6)) & HSYNC_ZERO;
+HSYNC_COUNTER6.ck = DOT_CLK;
+HSYNC_COUNTER6.ar = !EXP_nSYS_RESET;
+
+HSYNC_COUNTER7T = HSYNC_COUNTER6T&HSYNC_COUNTER6;
+HSYNC_COUNTER7.d = ((HSYNC_COUNTER7T&!HSYNC_COUNTER7) # (!HSYNC_COUNTER7T&HSYNC_COUNTER7)) & HSYNC_ZERO;
+HSYNC_COUNTER7.ck = DOT_CLK;
+HSYNC_COUNTER7.ar = !EXP_nSYS_RESET;
+
+HSYNC_COUNTER8T = HSYNC_COUNTER7T&HSYNC_COUNTER7;
+HSYNC_COUNTER8.d = ((HSYNC_COUNTER8T&!HSYNC_COUNTER8) # (!HSYNC_COUNTER8T&HSYNC_COUNTER8)) & HSYNC_ZERO;
+HSYNC_COUNTER8.ck = DOT_CLK;
+HSYNC_COUNTER8.ar = !EXP_nSYS_RESET;
+
+HSYNC_COUNTER9T = HSYNC_COUNTER8T&HSYNC_COUNTER8;
+HSYNC_COUNTER9.d = ((HSYNC_COUNTER9T&!HSYNC_COUNTER9) # (!HSYNC_COUNTER9T&HSYNC_COUNTER9)) & HSYNC_ZERO;
+HSYNC_COUNTER9.ck = DOT_CLK;
+HSYNC_COUNTER9.ar = !EXP_nSYS_RESET;
+
+FIELD hsync_counter_field = [HSYNC_COUNTER9..0];    // 0-799 counter
+FIELD hsync_counter_3_field = [HSYNC_COUNTER2..0];  // 0-8 counter
+FIELD hsync_counter_4_field = [HSYNC_COUNTER3..0];  // 0-15 counter
+
+/* 
+   HSYNC_ZERO is 0 when we need to loop the counter.  This is Logical AND'ed with the other inputs to each
+   counters .d value, so when we are at the loop location, the next location loaded will be 0.
+   HSYNC_ZERO us normally at 1, and goes to 0 for 1 clock cycle ( CLK25 low to CLK25 low ), and that
+   edge is also used to increment the vertical counters via VSYNC_CLOCK.
+*/
+
+HSYNC_ZERO = !(hsync_counter_field:['d'799]);
+
+/* 
+   The VSYNC_CLOCK signal is used to increment the V_SYNC counter at the end of each horizontal sync row.   
+   The reason for two FFs is to first capture the HSYNC value (on the clock edge opposite of the counter itself changing)
+   followed by a second FF to sync the V_SYNC increment with the rising edge of DOT_CLK.   This allows both the H_SYNC and V_SYNC 
+   counters to be used in logical operations that are clocked on the same clock signal (falling DOT_CLK)
+*/
+
+
+VSYNC_CLOCK_A.d = !HSYNC_ZERO;
+VSYNC_CLOCK_A.ck = !DOT_CLK;
+VSYNC_CLOCK_A.ar = !EXP_nSYS_RESET;
+
+VSYNC_CLOCK_B.d = VSYNC_CLOCK_A;
+VSYNC_CLOCK_B.ck = DOT_CLK;
+VSYNC_CLOCK_B.ar = !EXP_nSYS_RESET;
+
+/* Vertical Sync 9 bit counter, 0-498.  VSYNC_ZERO is used to reset this counter so it loops from 498 back to 0 */
+
+VSYNC_COUNTER0.d = (!VSYNC_COUNTER0) & VSYNC_ZERO;
+VSYNC_COUNTER0.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER0.ar = !EXP_nSYS_RESET;
+
+VSYNC_COUNTER1.d = ((VSYNC_COUNTER0&!VSYNC_COUNTER1) # (!VSYNC_COUNTER0&VSYNC_COUNTER1)) & VSYNC_ZERO;
+VSYNC_COUNTER1.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER1.ar = !EXP_nSYS_RESET;
+
+VSYNC_COUNTER2T = VSYNC_COUNTER0&VSYNC_COUNTER1;
+VSYNC_COUNTER2.d = ((VSYNC_COUNTER2T&!VSYNC_COUNTER2) # (!VSYNC_COUNTER2T&VSYNC_COUNTER2)) & VSYNC_ZERO;
+VSYNC_COUNTER2.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER2.ar = !EXP_nSYS_RESET;
+
+VSYNC_COUNTER3T = VSYNC_COUNTER2T&VSYNC_COUNTER2;
+VSYNC_COUNTER3.d = ((VSYNC_COUNTER3T&!VSYNC_COUNTER3) # (!VSYNC_COUNTER3T&VSYNC_COUNTER3)) & VSYNC_ZERO;
+VSYNC_COUNTER3.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER3.ar = !EXP_nSYS_RESET;
+
+VSYNC_COUNTER4T = VSYNC_COUNTER3T&VSYNC_COUNTER3;
+VSYNC_COUNTER4.d = ((VSYNC_COUNTER4T&!VSYNC_COUNTER4) # (!VSYNC_COUNTER4T&VSYNC_COUNTER4)) & VSYNC_ZERO;
+VSYNC_COUNTER4.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER4.ar = !EXP_nSYS_RESET;
+
+VSYNC_COUNTER5T = VSYNC_COUNTER4T&VSYNC_COUNTER4;
+VSYNC_COUNTER5.d = ((VSYNC_COUNTER5T&!VSYNC_COUNTER5) # (!VSYNC_COUNTER5T&VSYNC_COUNTER5)) & VSYNC_ZERO;
+VSYNC_COUNTER5.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER5.ar = !EXP_nSYS_RESET;
+
+VSYNC_COUNTER6T = VSYNC_COUNTER5T&VSYNC_COUNTER5;
+VSYNC_COUNTER6.d = ((VSYNC_COUNTER6T&!VSYNC_COUNTER6) # (!VSYNC_COUNTER6T&VSYNC_COUNTER6)) & VSYNC_ZERO;
+VSYNC_COUNTER6.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER6.ar = !EXP_nSYS_RESET;
+
+VSYNC_COUNTER7T = VSYNC_COUNTER6T&VSYNC_COUNTER6;
+VSYNC_COUNTER7.d = ((VSYNC_COUNTER7T&!VSYNC_COUNTER7) # (!VSYNC_COUNTER7T&VSYNC_COUNTER7)) & VSYNC_ZERO;
+VSYNC_COUNTER7.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER7.ar = !EXP_nSYS_RESET;
+
+VSYNC_COUNTER8T = VSYNC_COUNTER7T&VSYNC_COUNTER7;
+VSYNC_COUNTER8.d = ((VSYNC_COUNTER8T&!VSYNC_COUNTER8) # (!VSYNC_COUNTER8T&VSYNC_COUNTER8)) & VSYNC_ZERO;
+VSYNC_COUNTER8.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER8.ar = !EXP_nSYS_RESET;
+
+VSYNC_COUNTER9T = VSYNC_COUNTER8T&VSYNC_COUNTER8;
+VSYNC_COUNTER9.d = ((VSYNC_COUNTER9T&!VSYNC_COUNTER9) # (!VSYNC_COUNTER9T&VSYNC_COUNTER9)) & VSYNC_ZERO;
+VSYNC_COUNTER9.ck = VSYNC_CLOCK_B;
+VSYNC_COUNTER9.ar = !EXP_nSYS_RESET;
+
+FIELD vsync_counter_field = [VSYNC_COUNTER9..0];
+FIELD vsync_counter_4_field = [VSYNC_COUNTER3..0];
+
+VSYNC_ZERO = !(vsync_counter_field:['d'524]);
+
+VSYNC_DISPLAY_ACTIVE = (vsync_counter_field:[0..'d'479]);
+HSYNC_DISPLAY_ACTIVE = (hsync_counter_field:[16..'d'656]);
+
+VGA_DISPLAY_ACTIVE.d = (HSYNC_DISPLAY_ACTIVE) & (VSYNC_DISPLAY_ACTIVE);
+VGA_DISPLAY_ACTIVE.ck = !DOT_CLK;
+VGA_DISPLAY_ACTIVE.ar = !EXP_nSYS_RESET;
+
+VGA_HSYNC.d = !((hsync_counter_field:['d'672..'d'767]));
+VGA_HSYNC.ck = !DOT_CLK;
+VGA_HSYNC.ap = !EXP_nSYS_RESET;
+
+VGA_VSYNC.d = !((vsync_counter_field:['d'490..'d'491]));
+VGA_VSYNC.ck = !DOT_CLK;
+VGA_VSYNC.ar = !EXP_nSYS_RESET;
+
+VRAM_BUSY.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;
+VRAM_BUSY.ck = !DOT_CLK;
+VRAM_BUSY.ar = !EXP_nSYS_RESET;
+
+VRAM_READ.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;
+VRAM_READ.ck = !DOT_CLK;
+VRAM_READ.ar = !EXP_nSYS_RESET;
+
+// This needs some work.
+nEXP_CPU_DEV_WAIT = nEXP_VMEM_CS # VRAM_BUSY;
+// HOST_VRAM_ACCESS_GRANTED
+
+/* 
+   VMEM_ACCCESS_BUSY_START records the value of VRAM_BUSY at the start of a CPU VMEM access.  If this recorded value is 0 then we know
+   the VRAM_BUSY flag was not set at the start of a CPU bus transaction.  As a result we can complete this transaction without any 
+   delay. This is possible because the VRAM_BUSY signal is asserted by the video subsection with at least 4 dot clock cycles before a 
+   video access occurs.  This is enough time for any CPU bus transaction to complete.  This arrangement prevents bus cycles from neededing
+   to be aborted mid cycle.
+*/
+
+VMEM_ACCESS_BUSY_START.d = VRAM_BUSY;
+VMEM_ACCESS_BUSY_START.ck = !nEXP_VMEM_CS;
+VMEM_ACCESS_BUSY_START.ap = !EXP_nSYS_RESET # VMEM_ACCESS_BUSY_START_RESET;
+
+/* 
+   The Reset flip flop below starts out at 0 (in reset).  On the rising edge of VMEM_CS it is set to 1.  That value of 1 will
+   reset the above flipflop to 1 which is the default busy state.  This is done to prevent there from being a race condition.  If the
+   above flip flop is left in the unbusy(0) state there will be a small window between when MEM_CS goes low and the current VRAM_BUSY value is
+   lateched.  If that VRAM_BUSY is 1, that will create a small glitch in the DEV_WAIT signal.  By keeping the idle state '1' for this
+   flip flop there will never be a condition where AS goes low a bit before this sees the VRAM_BUSY flag.
+   
+   The reset flipflop is then reset by the above flip flop, preventing it from holding the above flipflop in reset.
+*/
+VMEM_ACCESS_BUSY_START_RESET.d = 'b'1;
+VMEM_ACCESS_BUSY_START_RESET.ck = nEXP_VMEM_CS;
+VMEM_ACCESS_BUSY_START_RESET.ar = VMEM_ACCESS_BUSY_START;
+
+/* The above flip flops will allow CPU access when VRAM_BUSY is not asserted, however if it is asserted at the start we 
+   need to handle that case.   We will keep DEV_WAIT at 0 until the VRAM_BUSY signal also goes to 0.
+*/
+
+PINNODE = CPU_ACCESS_IN_PROGRESS;
+
+CPU_ACCESS_IN_PROGRESS = (!nEXP_VMEM_CS & !VMEM_ACCESS_BUSY_START) # (!nEXP_VMEM_CS & !VRAM_BUSY);
+
+/* nEXP_DEV_WAIT is the open collector signal we set to 0 to pause a CPU bus operation.
+
+   IF VMEM_CS is low and the BUSY_START is low, we are doing a bus cycle with no wait, so make sure DEV_WAIT is kept high.
+   IF VEMM_CS is low and the VRAM_BUSY is high, keep DEV_WAIT low.  As soon as VRAM_BUSY goes low DEV_WAIT will go high.
+   If CS is high, keep the DEV_WAIT high
+ */
+
+nEXP_DEV_WAIT = CPU_ACCESS_IN_PROGRESS
+                # (nEXP_VMEM_CS);
+
+
+
+// If VRAM_READ is 1 or if CPU_ACCESS_IN_PROGRESS is 1, lets enable the Video memory.
+nVRAM_CE = !(VRAM_READ # CPU_ACCESS_IN_PROGRESS);
+nVRAM_OE = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW));
+nVRAM_WE = !(CPU_ACCESS_IN_PROGRESS & !EXP_RW);
+nEXP_DATA_EN = !(CPU_ACCESS_IN_PROGRESS & EXP_RW);      // DATA_EN must be low if this is a READ from the CPU
+
+/* 
+   The individual Bx enables allow access to single byte sections of a 4 byte address.  On read (either CPU or Video card) 
+   these are all 4 enabled.  On Writes, only the secion being written is enabled.
+
+*/
+nVRAM_B0 = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW) # (CPU_ACCESS_IN_PROGRESS & !EXP_RW & BA32_UH )  );
+nVRAM_B1 = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW) # (CPU_ACCESS_IN_PROGRESS & !EXP_RW & BA32_UL )  );
+nVRAM_B2 = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW) # (CPU_ACCESS_IN_PROGRESS & !EXP_RW & BA32_LH )  );
+nVRAM_B3 = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW) # (CPU_ACCESS_IN_PROGRESS & !EXP_RW & BA32_LL )  );
+
+
+
+
+// Signals needed for the CPU to VRAM access, which allows byte/word/dword.
+
+BA32_LL = (!EXP_A0 & !EXP_A1 );
+BA32_LH = !((EXP_A1 # (!EXP_A0 & EXP_CPU_SIZE0 & !EXP_CPU_SIZE1)));
+BA32_UL = !(( (!EXP_A1 & EXP_CPU_SIZE0 & !EXP_CPU_SIZE1) 
+            # (EXP_A1 & EXP_A0) 
+            # (!EXP_A0 & !EXP_A1 & !EXP_CPU_SIZE0 & EXP_CPU_SIZE1)
+           ));
+BA32_UH = (   (EXP_A1 & EXP_CPU_SIZE1) 
+            # (!EXP_CPU_SIZE1 & !EXP_CPU_SIZE0) 
+            # (EXP_A0 & EXP_CPU_SIZE1 & EXP_CPU_SIZE0) 
+            # (EXP_A0 & EXP_A1)
+          );
+
+BA16_LL = !EXP_A0;
+BA16_LH = !(!EXP_A0 & EXP_CPU_SIZE0 & !EXP_CPU_SIZE1);
+
+BA8 = 'b'1;
+
+nSRAM_LL_SEL = !(EXP_RW # BA32_LL);
+nSRAM_LH_SEL = !(EXP_RW # BA32_LH);
+nSRAM_UL_SEL = !(EXP_RW # BA32_UL);
+nSRAM_UH_SEL = !(EXP_RW # BA32_UH);
+
+
+
+
+// The signals that go to the video processor
+// THESE ARE SETUP TO ESTIMATE RESOURCE BUT NOT DEFINED CORRECTLY.  THESE NEED TO BE DEFINED CORRECTLY.
+
+BIT_PROC_MODE0 = cfg_TEXT_OR_GRAPHICS;
+BIT_PROC_MODE1 = cfg_GRAPHICS_DEPTH;
+BIT_PROC_VGA_ENABLE = VGA_DISPLAY_ACTIVE;
+
+BIT_PROC_LATCH_SREG.d = !((hsync_counter_4_field:['d'0]));
+BIT_PROC_LATCH_SREG.ck = !DOT_CLK;
+BIT_PROC_LATCH_SREG.ar = !EXP_nSYS_RESET;
+
+BIT_PROC_SHIFT_SREG.d = !((hsync_counter_4_field:['d'1]));
+BIT_PROC_SHIFT_SREG.ck = !DOT_CLK;
+BIT_PROC_SHIFT_SREG.ar = !EXP_nSYS_RESET;
+
+BIT_PROC_LATCH_VRAM.d = !((hsync_counter_4_field:['d'2]));
+BIT_PROC_LATCH_VRAM.ck = !DOT_CLK;
+BIT_PROC_LATCH_VRAM.ar = !EXP_nSYS_RESET;
+
+BIT_PROC_SELECT_SUB0.d = !((hsync_counter_4_field:['d'3]));
+BIT_PROC_SELECT_SUB0.ck = !DOT_CLK;
+BIT_PROC_SELECT_SUB0.ar = !EXP_nSYS_RESET;
+ 
+BIT_PROC_SELECT_SUB1.d = !((hsync_counter_4_field:['d'4]));
+BIT_PROC_SELECT_SUB1.ck = !DOT_CLK;
+BIT_PROC_SELECT_SUB1.ar = !EXP_nSYS_RESET;
+
+// Signals for controlling the generation of VRAM addresses
+
+
+
+VM_ADDR_OE.d = !((hsync_counter_4_field:['d'5]));
+VM_ADDR_OE.ck = !DOT_CLK;
+VM_ADDR_OE.ar = !EXP_nSYS_RESET;
+
+VMEM_ADDR_RESET.d = !((hsync_counter_4_field:['d'6]));
+VMEM_ADDR_RESET.ck = !DOT_CLK;
+VMEM_ADDR_RESET.ar = !EXP_nSYS_RESET;
+
+ADDR_MODE1.d = !((hsync_counter_4_field:['d'7]));
+ADDR_MODE1.ck = !DOT_CLK;
+ADDR_MODE1.ar = !EXP_nSYS_RESET;
+
+ADDR_MODE0.d = !((hsync_counter_4_field:['d'8]));
+ADDR_MODE0.ck = !DOT_CLK;
+ADDR_MODE0.ar = !EXP_nSYS_RESET;
+
+
+/*
+Total dedicated input used:	2/4 	(50%)
+Total I/O pins used		28/80 	(35%)
+Total Logic cells used 		58/128 	(45%)
+Total Flip-Flop used 		39/128 	(30%)
+Total Foldback logic used 	0/128 	(0%)
+Total Nodes+FB/MCells 		58/128 	(45%)
+Total cascade used 		0
+Total input pins 		12
+Total output pins 		18
+Total Pts 			194
+*/
+
