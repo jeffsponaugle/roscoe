@@ -25,7 +25,7 @@ Pin = [MODE0..1];           // 00 = Text Mode   (MODE1==0)
                             // 10 = Undefined
                             // b1 = 0 for TEXT, 1 for Graphics
                             // b0 = 0f for 16bpp, 1 for 8bpp
-Pin = LATCH_VRAM;           // If high, on the next dot clock we will latch the VMEM pins into the 16bit pixel register
+Pin = LATCH_VRAM;           // If high, on the next dot clock we will latch the VMEM pins into the 32bit pixel register
                             // and immediatly drive the RGB output based on the 16 bit value if we are in graphics mode.
 Pin = LATCH_SREG;           // If high, on the next dot clock we will latch the FONTROM in the shift register
 Pin = SHIFT_SREG;           // If high, on the next dot clock the shift register will shift legft
