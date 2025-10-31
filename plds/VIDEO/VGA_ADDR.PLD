@@ -18,14 +18,14 @@ Pin  = [VM_A0..17];         // The 18 address bits going to the video memory.  T
                             // at 640x480 8bpp a single frame is 307,200 bytes (3 pages)
                             // In text mode 80x30 with attribue is 4,800 bytes (218 pages)
 Pin = VMEM_ADDR_RESET;
-Pin = VM_ADDR_OE;           // Output enable for the address lines to the VRAM
+Pin = VMEM_ADDR_OE;           // Output enable for the address lines to the VRAM
 Pin = DOT_CLK;
-Pin = [ADDR_MODE1..0];
+Pin = [VMEM_ADDR_MODE1..0];
 
 PINNODE = [C11..6];          /* Optimizing - Creating nodes for carry elements that are very large */
 PINNODE = [S17..0];          /* Internal 17 bit counter for the memory address generation */
 
-FIELD address_mode_field = [ADDR_MODE1..0];
+FIELD address_mode_field = [VMEM_VMEM_ADDR_MODE1..0];
 
 // The adder for the memory address
 
@@ -33,7 +33,7 @@ FIELD address_mode_field = [ADDR_MODE1..0];
 [S0..17].ar = VMEM_ADDR_RESET;
 
 [VM_A17..0] = [S17..0];
-[VM_A17..0].oe = !VM_ADDR_OE;
+[VM_A17..0].oe = !VMEM_ADDR_OE;
 
 /* Carry IN is 1 for increment by 1 mode, MODE=001 */
 C0 = address_mode_field:['d'1];

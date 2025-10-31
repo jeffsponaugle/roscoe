@@ -1,4 +1,4 @@
-Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Wed Oct 29 17:28:39 2025
+Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Thu Oct 30 17:14:57 2025
 
 
 fit1508 C:\USERS\JEFF\SRC\ROSCOE\PLDS\BUSCTRLV2\BUSCTRL2.tt2 -CUPL -dev P1508T100 -JTAG ON
@@ -78,9 +78,9 @@ nDEV_WAIT assigned to pin  90
 CPU_CLK assigned to pin  87
 nSYS_RESET_IN assigned to pin  89
 CPU_RW assigned to pin  88
-DRAM_ACCESS_MUX.AR equation needs patching.
 nDRAM_ACCESS_CAS.AP equation needs patching.
 nDRAM_ACCESS_RAS.C equation needs patching.
+DRAM_ACCESS_MUX.AR equation needs patching.
 3 control equtions need patching
 
 Attempt to place floating signals ...
@@ -88,7 +88,7 @@ Attempt to place floating signals ...
 nDEV16BITCS is placed at pin 2 (MC 1)
 REFRESH_COMPLETE_DELAY is placed at feedback node 602 (MC 2)
 nDEV8BITCS is placed at pin 1 (MC 3)
-DRAM_ACCESS_MUX.AR is placed at feedback node 604 (MC 4)
+REFRESH_STATE_MACHINE0 is placed at feedback node 604 (MC 4)
 nSRAM_UH_SEL is placed at pin 100 (MC 5)
 nSRAM_UL_SEL is placed at pin 99 (MC 6)
 nDRAM_ACCESS_CAS.AP is placed at feedback node 607 (MC 7)
@@ -96,7 +96,7 @@ nSRAM_LH_SEL is placed at pin 98 (MC 8)
 nSRAM_LL_SEL is placed at pin 97 (MC 9)
 nDRAM_ACCESS_RAS.C is placed at feedback node 610 (MC 10)
 nSRAM_BANK4_CE is placed at pin 96 (MC 11)
-REFRESH_STATE_MACHINE0 is placed at feedback node 612 (MC 12)
+DRAM_ACCESS_MUX.AR is placed at feedback node 612 (MC 12)
 nSRAM_BANK3_CE is placed at pin 94 (MC 13)
 nSRAM_BANK2_CE is placed at pin 93 (MC 14)
 DRAM_REGION_ACCESS_WAITSTATE is placed at feedback node 615 (MC 15)
@@ -120,12 +120,13 @@ nDRAM_S2B_RAS is placed at pin 24 (MC 35)
 DRAM_ACCESS_RAS_RESET2 is placed at feedback node 636 (MC 36)
 nDRAM_S1B_RAS is placed at pin 23 (MC 37)
 nDRAM_S4A_RAS is placed at pin 22 (MC 38)
-REFRESH_COMPLETE is placed at feedback node 639 (MC 39)
+CPU_CLK_DELAY2 is placed at feedback node 639 (MC 39)
 nDRAM_S3A_RAS is placed at pin 21 (MC 40)
 nDRAM_S2A_RAS is placed at pin 20 (MC 41)
 REFRESH_STATE_MACHINE1 is placed at feedback node 642 (MC 42)
 nDRAM_S1A_RAS is placed at pin 19 (MC 43)
 nREFRESH_RAS is placed at feedback node 644 (MC 44)
+FB_228 is placed at foldback expander node 344 (MC 44)
 nDRAM_CAS0 is placed at pin 17 (MC 45)
 nDRAM_CAS1 is placed at pin 16 (MC 46)
 Com_Ctrl_221 is placed at foldback expander node 346 (MC 46)
@@ -165,6 +166,7 @@ nCPU_DSACK0 is placed at pin 50 (MC 80)
 CPU_A31 is placed at pin 52 (MC 81)
 CPU_A30 is placed at pin 53 (MC 83)
 CPU_A29 is placed at pin 54 (MC 85)
+nDRAM_ACCESS_CAS is placed at feedback node 685 (MC 85)
 CPU_A28 is placed at pin 55 (MC 86)
 CPU_CLK_div4 is placed at feedback node 686 (MC 86)
 CPU_CLK_div2 is placed at feedback node 687 (MC 87)
@@ -172,21 +174,19 @@ CPU_A27 is placed at pin 56 (MC 88)
 CPU_CLK_div8 is placed at feedback node 688 (MC 88)
 CPU_A26 is placed at pin 57 (MC 89)
 CPU_CLK_DELAY1 is placed at feedback node 689 (MC 89)
-REFRESH_TIMER_RESET is placed at feedback node 690 (MC 90)
 CPU_A25 is placed at pin 58 (MC 91)
-nDRAM_ACCESS_RAS is placed at feedback node 691 (MC 91)
-FB_229 is placed at foldback expander node 391 (MC 91)
-REFRESH_TIMER4 is placed at feedback node 692 (MC 92)
-FB_228 is placed at foldback expander node 392 (MC 92)
+REFRESH_TIMER_RESET is placed at feedback node 691 (MC 91)
+REFRESH_COMPLETE is placed at feedback node 692 (MC 92)
 CPU_A24 is placed at pin 60 (MC 93)
-CPU_CLK_DELAY2 is placed at feedback node 693 (MC 93)
-FB_223 is placed at foldback expander node 393 (MC 93)
+nDRAM_ACCESS_RAS is placed at feedback node 693 (MC 93)
+FB_229 is placed at foldback expander node 393 (MC 93)
 CPU_A23 is placed at pin 61 (MC 94)
-XXL_230 is placed at feedback node 694 (MC 94)
-Com_Ctrl_218 is placed at foldback expander node 394 (MC 94)
-XXL_231 is placed at feedback node 695 (MC 95)
+REFRESH_TIMER4 is placed at feedback node 694 (MC 94)
+FB_223 is placed at foldback expander node 394 (MC 94)
+XXL_230 is placed at feedback node 695 (MC 95)
+Com_Ctrl_218 is placed at foldback expander node 395 (MC 95)
 TCK is placed at pin 62 (MC 96)
-XXL_233 is placed at feedback node 696 (MC 96)
+XXL_231 is placed at feedback node 696 (MC 96)
 CPU_A22 is placed at pin 63 (MC 97)
 CPU_A21 is placed at pin 64 (MC 99)
 CPU_A20 is placed at pin 65 (MC 101)
@@ -195,9 +195,9 @@ CPU_A18 is placed at pin 68 (MC 104)
 CPU_A17 is placed at pin 69 (MC 105)
 CPU_A16 is placed at pin 70 (MC 107)
 CPU_AA1 is placed at pin 71 (MC 109)
-nDRAM_ACCESS_CAS is placed at feedback node 709 (MC 109)
+XXL_232 is placed at feedback node 709 (MC 109)
 CPU_AA0 is placed at pin 72 (MC 110)
-XXL_232 is placed at feedback node 710 (MC 110)
+XXL_233 is placed at feedback node 710 (MC 110)
 XXL_235 is placed at feedback node 711 (MC 111)
 TDO is placed at pin 73 (MC 112)
 XXL_234 is placed at feedback node 712 (MC 112)
@@ -284,167 +284,164 @@ Universal-Interconnect-Multiplexer assignments
 ------------------------------------------------
 FanIn assignment for block A [25]
 {
-CPU_SIZ0,CPU_SIZ1,CPU_FC1,CPU_A21,CPU_AA1,CPU_AA0,CPU_A22,CPU_A26,CPU_A28,CPU_A24,CPU_FC0,CPU_A23,CPU_A27,CPU_A30,CPU_A20,CPU_FC2,CPU_A29,CPU_A31,CPU_A25,CPU_RW,
+CPU_A21,CPU_SIZ1,CPU_FC1,CPU_A29,CPU_AA1,CPU_AA0,CPU_A22,CPU_A26,CPU_A31,CPU_A24,CPU_FC0,CPU_A23,CPU_A25,CPU_A27,CPU_A28,CPU_A30,CPU_A20,CPU_SIZ0,CPU_FC2,CPU_RW,
 REFRESH_COMPLETE,REFRESH_STATE_MACHINE0,
 TESTP1,
 nCPU_AS,nSYS_RESET,
 }
 Multiplexer assignment for block A
-CPU_SIZ0		(MC23	P)   : MUX 1		Ref (H120p)
+CPU_A21			(MC16	P)   : MUX 1		Ref (G99p)
 CPU_SIZ1		(MC24	P)   : MUX 2		Ref (H121p)
 CPU_FC1			(MC21	P)   : MUX 3		Ref (H117p)
-CPU_A21			(MC16	P)   : MUX 5		Ref (G99p)
+CPU_A29			(MC8	P)   : MUX 5		Ref (F85p)
 CPU_AA1			(MC18	P)   : MUX 6		Ref (G109p)
-TESTP1			(MC3	P)   : MUX 7		Ref (D54p)
+TESTP1			(MC2	P)   : MUX 7		Ref (D54p)
 CPU_AA0			(MC19	P)   : MUX 8		Ref (G110p)
 CPU_A22			(MC15	P)   : MUX 9		Ref (G97p)
 CPU_A26			(MC11	P)   : MUX 10		Ref (F89p)
-CPU_A28			(MC9	P)   : MUX 11		Ref (F86p)
+CPU_A31			(MC6	P)   : MUX 11		Ref (F81p)
 CPU_A24			(MC13	P)   : MUX 12		Ref (F93p)
 CPU_FC0			(MC20	P)   : MUX 13		Ref (H115p)
 CPU_A23			(MC14	P)   : MUX 14		Ref (F94p)
 nCPU_AS			(MC5	P)   : MUX 15		Ref (E67p)
+CPU_A25			(MC12	P)   : MUX 16		Ref (F91p)
 CPU_A27			(MC10	P)   : MUX 17		Ref (F88p)
+CPU_A28			(MC9	P)   : MUX 19		Ref (F86p)
 CPU_A30			(MC7	P)   : MUX 21		Ref (F83p)
 CPU_A20			(MC17	P)   : MUX 23		Ref (G101p)
-CPU_FC2			(MC22	P)   : MUX 25		Ref (H118p)
-nSYS_RESET		(MC4	P)   : MUX 30		Ref (E78p)
-CPU_A29			(MC8	P)   : MUX 31		Ref (F85p)
-REFRESH_COMPLETE		(MC2	FB)  : MUX 32		Ref (C39fb)
-CPU_A31			(MC6	P)   : MUX 33		Ref (F81p)
-CPU_A25			(MC12	P)   : MUX 34		Ref (F91p)
-CPU_RW			(MC25	FB)  : MUX 35		Ref (OE1)
-REFRESH_STATE_MACHINE0		(MC1	FB)  : MUX 37		Ref (A12fb)
+CPU_SIZ0		(MC23	P)   : MUX 27		Ref (H120p)
+CPU_FC2			(MC22	P)   : MUX 29		Ref (H118p)
+nSYS_RESET		(MC3	P)   : MUX 30		Ref (E78p)
+REFRESH_COMPLETE		(MC4	FB)  : MUX 31		Ref (F92fb)
+REFRESH_STATE_MACHINE0		(MC1	FB)  : MUX 32		Ref (A4fb)
+CPU_RW			(MC25	FB)  : MUX 37		Ref (OE1)
 
 FanIn assignment for block B [29]
 {
-CPU_A17,CPU_AA1,CPU_FC2,CPU_FC0,CPU_AA0,CPU_A30,CPU_A28,CPU_SIZ1,CPU_A19,CPU_A29,CPU_A31,CPU_SIZ0,CPU_A16,CPU_FC1,CPU_A18,CPU_RW,
+CPU_A17,CPU_A29,CPU_AA1,CPU_FC2,CPU_AA0,CPU_A30,CPU_SIZ1,CPU_A19,CPU_FC0,CPU_A31,CPU_SIZ0,CPU_A16,CPU_A28,CPU_FC1,CPU_A18,CPU_RW,
 DRAM_ACCESS_MUX.AR,
 TESTP1,
-nDRAM_S1A_RAS,nDRAM_S3B_RAS,nDRAM_S1B_RAS,nDRAM_ACCESS_CAS,nDRAM_S3A_RAS,nDRAM_S2B_RAS,nDRAM_S2A_RAS,nDRAM_S4A_RAS,nCPU_AS,nDRAM_S4B_RAS,nREFRESH_CAS,
+nDRAM_S1A_RAS,nDRAM_S3B_RAS,nDRAM_S1B_RAS,nDRAM_S2B_RAS,nDRAM_S3A_RAS,nDRAM_S4B_RAS,nCPU_AS,nDRAM_S2A_RAS,nDRAM_S4A_RAS,nDRAM_ACCESS_CAS,nREFRESH_CAS,
 }
 Multiplexer assignment for block B
 nDRAM_S1A_RAS		(MC8	P)   : MUX 0		Ref (C43p)
 nDRAM_S3B_RAS		(MC2	P)   : MUX 1		Ref (C33p)
 CPU_A17			(MC20	P)   : MUX 2		Ref (G105p)
 nDRAM_S1B_RAS		(MC4	P)   : MUX 3		Ref (C37p)
-nDRAM_ACCESS_CAS		(MC12	FB)  : MUX 5		Ref (G109fb)
+CPU_A29			(MC16	P)   : MUX 5		Ref (F85p)
 CPU_AA1			(MC22	P)   : MUX 6		Ref (G109p)
 CPU_FC2			(MC26	P)   : MUX 7		Ref (H118p)
-CPU_FC0			(MC24	P)   : MUX 9		Ref (H115p)
+nDRAM_S2B_RAS		(MC3	P)   : MUX 9		Ref (C35p)
 CPU_AA0			(MC23	P)   : MUX 10		Ref (G110p)
 nDRAM_S3A_RAS		(MC6	P)   : MUX 11		Ref (C40p)
+nDRAM_S4B_RAS		(MC11	P)   : MUX 12		Ref (D64p)
 CPU_A30			(MC15	P)   : MUX 13		Ref (F83p)
-DRAM_ACCESS_MUX.AR		(MC1	FB)  : MUX 14		Ref (A4fb)
-nDRAM_S2B_RAS		(MC3	P)   : MUX 15		Ref (C35p)
+nCPU_AS			(MC13	P)   : MUX 15		Ref (E67p)
 nDRAM_S2A_RAS		(MC7	P)   : MUX 16		Ref (C41p)
 nDRAM_S4A_RAS		(MC5	P)   : MUX 17		Ref (C38p)
-CPU_A28			(MC17	P)   : MUX 19		Ref (F86p)
+nDRAM_ACCESS_CAS		(MC12	FB)  : MUX 18		Ref (F85fb)
+DRAM_ACCESS_MUX.AR		(MC1	FB)  : MUX 19		Ref (A12fb)
 CPU_SIZ1		(MC28	P)   : MUX 20		Ref (H121p)
 CPU_A19			(MC18	P)   : MUX 21		Ref (G102p)
-CPU_A29			(MC16	P)   : MUX 23		Ref (F85p)
+CPU_FC0			(MC24	P)   : MUX 23		Ref (H115p)
 CPU_A31			(MC14	P)   : MUX 25		Ref (F81p)
 CPU_SIZ0		(MC27	P)   : MUX 27		Ref (H120p)
 CPU_A16			(MC21	P)   : MUX 28		Ref (G107p)
-nCPU_AS			(MC13	P)   : MUX 29		Ref (E67p)
+CPU_A28			(MC17	P)   : MUX 29		Ref (F86p)
 CPU_FC1			(MC25	P)   : MUX 31		Ref (H117p)
 TESTP1			(MC10	P)   : MUX 33		Ref (D54p)
 CPU_A18			(MC19	P)   : MUX 35		Ref (G104p)
 CPU_RW			(MC29	FB)  : MUX 37		Ref (OE1)
-nDRAM_S4B_RAS		(MC11	P)   : MUX 38		Ref (D64p)
 nREFRESH_CAS		(MC9	FB)  : MUX 39		Ref (C48fb)
 
-FanIn assignment for block C [25]
+FanIn assignment for block C [24]
 {
-CPU_SIZ1,CPU_A24,CPU_AA0,CPU_SIZ0,CPU_A26,CPU_A28,CPU_A30,CPU_A27,CPU_AA1,CPU_CLK,CPU_A29,CPU_A31,CPU_A25,CPU_RW,
+CPU_A30,CPU_SIZ1,CPU_A31,CPU_AA1,CPU_AA0,CPU_SIZ0,CPU_A26,CPU_A28,CPU_A29,CPU_RW,CPU_A27,CPU_CLK_DELAY1,CPU_CLK,
 DRAM_ACCESS_RAS_RESET1,
-REFRESH_STATE_MACHINE0,REFRESH_COMPLETE,REFRESH_STATE_MACHINE1,REFRESH_STATE_MACHINE2,
+REFRESH_STATE_MACHINE0,REFRESH_STATE_MACHINE2,REFRESH_COMPLETE,REFRESH_STATE_MACHINE1,
 TESTP1,
-nREFRESH_RAS,nSYS_RESET,nDRAM_ACCESS_CAS,nREFRESH_CAS,nDRAM_ACCESS_RAS,
+nREFRESH_RAS,nSYS_RESET,nDRAM_ACCESS_RAS,nDRAM_ACCESS_CAS,nREFRESH_CAS,
 }
 Multiplexer assignment for block C
-REFRESH_STATE_MACHINE0		(MC1	FB)  : MUX 1		Ref (A12fb)
-CPU_SIZ1		(MC23	P)   : MUX 2		Ref (H121p)
-CPU_A24			(MC19	P)   : MUX 4		Ref (F93p)
-nREFRESH_RAS		(MC5	FB)  : MUX 5		Ref (C44fb)
-TESTP1			(MC8	P)   : MUX 7		Ref (D54p)
-CPU_AA0			(MC21	P)   : MUX 8		Ref (G110p)
-CPU_SIZ0		(MC22	P)   : MUX 9		Ref (H120p)
-CPU_A26			(MC17	P)   : MUX 10		Ref (F89p)
-CPU_A28			(MC15	P)   : MUX 11		Ref (F86p)
-nSYS_RESET		(MC9	P)   : MUX 12		Ref (E78p)
-CPU_A30			(MC13	P)   : MUX 13		Ref (F83p)
-REFRESH_COMPLETE		(MC3	FB)  : MUX 14		Ref (C39fb)
-REFRESH_STATE_MACHINE1		(MC4	FB)  : MUX 15		Ref (C42fb)
-CPU_A27			(MC16	P)   : MUX 17		Ref (F88p)
-nDRAM_ACCESS_CAS		(MC11	FB)  : MUX 19		Ref (G109fb)
-nREFRESH_CAS		(MC7	FB)  : MUX 21		Ref (C48fb)
-CPU_AA1			(MC20	P)   : MUX 22		Ref (G109p)
-CPU_CLK			(MC24	FB)  : MUX 23		Ref (GCLK)
-REFRESH_STATE_MACHINE2		(MC6	FB)  : MUX 29		Ref (C47fb)
-CPU_A29			(MC14	P)   : MUX 31		Ref (F85p)
-CPU_A31			(MC12	P)   : MUX 33		Ref (F81p)
-CPU_A25			(MC18	P)   : MUX 34		Ref (F91p)
+CPU_A30			(MC14	P)   : MUX 1		Ref (F83p)
+CPU_SIZ1		(MC22	P)   : MUX 2		Ref (H121p)
+CPU_A31			(MC13	P)   : MUX 3		Ref (F81p)
+CPU_AA1			(MC19	P)   : MUX 4		Ref (G109p)
+nREFRESH_RAS		(MC4	FB)  : MUX 5		Ref (C44fb)
+TESTP1			(MC7	P)   : MUX 7		Ref (D54p)
+CPU_AA0			(MC20	P)   : MUX 8		Ref (G110p)
+CPU_SIZ0		(MC21	P)   : MUX 9		Ref (H120p)
+CPU_A26			(MC18	P)   : MUX 10		Ref (F89p)
+CPU_A28			(MC16	P)   : MUX 11		Ref (F86p)
+nSYS_RESET		(MC8	P)   : MUX 12		Ref (E78p)
+CPU_A29			(MC15	P)   : MUX 13		Ref (F85p)
+REFRESH_STATE_MACHINE0		(MC1	FB)  : MUX 14		Ref (A4fb)
+CPU_RW			(MC24	FB)  : MUX 15		Ref (OE1)
+CPU_A27			(MC17	P)   : MUX 17		Ref (F88p)
+CPU_CLK_DELAY1		(MC10	FB)  : MUX 21		Ref (F89fb)
+CPU_CLK			(MC23	FB)  : MUX 23		Ref (GCLK)
+REFRESH_STATE_MACHINE2		(MC5	FB)  : MUX 29		Ref (C47fb)
+REFRESH_COMPLETE		(MC11	FB)  : MUX 31		Ref (F92fb)
+REFRESH_STATE_MACHINE1		(MC3	FB)  : MUX 33		Ref (C42fb)
 DRAM_ACCESS_RAS_RESET1		(MC2	FB)  : MUX 36		Ref (C34fb)
-CPU_RW			(MC25	FB)  : MUX 37		Ref (OE1)
-nDRAM_ACCESS_RAS		(MC10	FB)  : MUX 39		Ref (F91fb)
+nDRAM_ACCESS_RAS		(MC12	FB)  : MUX 37		Ref (F93fb)
+nDRAM_ACCESS_CAS		(MC9	FB)  : MUX 38		Ref (F85fb)
+nREFRESH_CAS		(MC6	FB)  : MUX 39		Ref (C48fb)
 
-FanIn assignment for block D [30]
+FanIn assignment for block D [28]
 {
-CPU_A17,CPU_FC0,CPU_A26,CPU_FC2,CPU_A24,CPU_A30,CPU_A18,CPU_A28,CPU_FC1,CPU_A29,CPU_A19,CPU_A31,CPU_A25,CPU_A27,CPU_CLK,
-EXTRA_BC_DM1,EXTRA_BC_INT1,EXTRA_BC_INT2,EXTRA_BC_DM2,
-REFRESH_COMPLETE,REFRESH_TIMER_RESET,REFRESH_COMPLETE_DELAY,
+CPU_A17,CPU_A26,CPU_FC2,CPU_A30,CPU_A28,CPU_FC1,CPU_A29,CPU_A19,CPU_FC0,CPU_A18,CPU_A31,CPU_A27,CPU_CLK,
+EXTRA_BC_DM2,EXTRA_BC_INT1,EXTRA_BC_DM1,EXTRA_BC_INT2,
+REFRESH_TIMER_RESET,REFRESH_COMPLETE_DELAY,REFRESH_COMPLETE,
 TESTP0,TESTP1,
 UNUSED2,
-nCPU_RMC,nCPU_AS,nDRAM_ACCESS_RAS,nREFRESH_RAS,nSYS_RESET,
+nDRAM_ACCESS_RAS,nSYS_RESET,nCPU_AS,nCPU_RMC,nREFRESH_RAS,
 }
 Multiplexer assignment for block D
-nCPU_RMC		(MC9	P)   : MUX 0		Ref (B27p)
-TESTP0			(MC5	P)   : MUX 1		Ref (D56p)
-UNUSED2			(MC24	P)   : MUX 5		Ref (H113p)
-TESTP1			(MC4	P)   : MUX 7		Ref (D54p)
-CPU_A17			(MC23	P)   : MUX 8		Ref (G105p)
-CPU_FC0			(MC25	P)   : MUX 9		Ref (H115p)
+EXTRA_BC_DM2		(MC27	P)   : MUX 0		Ref (H128p)
+TESTP0			(MC4	P)   : MUX 1		Ref (D56p)
+REFRESH_TIMER_RESET		(MC6	FB)  : MUX 3		Ref (F91fb)
+UNUSED2			(MC22	P)   : MUX 5		Ref (H113p)
+TESTP1			(MC3	P)   : MUX 7		Ref (D54p)
+CPU_A17			(MC21	P)   : MUX 8		Ref (G105p)
+nDRAM_ACCESS_RAS		(MC8	FB)  : MUX 9		Ref (F93fb)
 CPU_A26			(MC18	P)   : MUX 10		Ref (F89p)
-CPU_FC2			(MC27	P)   : MUX 11		Ref (H118p)
-CPU_A24			(MC20	P)   : MUX 12		Ref (F93p)
+CPU_FC2			(MC25	P)   : MUX 11		Ref (H118p)
+nSYS_RESET		(MC5	P)   : MUX 12		Ref (E78p)
 CPU_A30			(MC14	P)   : MUX 13		Ref (F83p)
-EXTRA_BC_DM1		(MC28	P)   : MUX 14		Ref (H123p)
 nCPU_AS			(MC12	P)   : MUX 15		Ref (E67p)
 EXTRA_BC_INT1		(MC11	P)   : MUX 16		Ref (D59p)
-CPU_A18			(MC22	P)   : MUX 17		Ref (G104p)
 CPU_A28			(MC16	P)   : MUX 19		Ref (F86p)
-CPU_FC1			(MC26	P)   : MUX 21		Ref (H117p)
+CPU_FC1			(MC24	P)   : MUX 21		Ref (H117p)
 CPU_A29			(MC15	P)   : MUX 23		Ref (F85p)
-CPU_A19			(MC21	P)   : MUX 25		Ref (G102p)
-nDRAM_ACCESS_RAS		(MC8	FB)  : MUX 27		Ref (F91fb)
+nCPU_RMC		(MC9	P)   : MUX 24		Ref (B27p)
+CPU_A19			(MC19	P)   : MUX 25		Ref (G102p)
+EXTRA_BC_DM1		(MC26	P)   : MUX 26		Ref (H123p)
+CPU_FC0			(MC23	P)   : MUX 27		Ref (H115p)
 EXTRA_BC_INT2		(MC10	P)   : MUX 28		Ref (D57p)
-nREFRESH_RAS		(MC3	FB)  : MUX 29		Ref (C44fb)
-nSYS_RESET		(MC6	P)   : MUX 30		Ref (E78p)
-EXTRA_BC_DM2		(MC29	P)   : MUX 32		Ref (H128p)
+nREFRESH_RAS		(MC2	FB)  : MUX 29		Ref (C44fb)
+CPU_A18			(MC20	P)   : MUX 31		Ref (G104p)
 CPU_A31			(MC13	P)   : MUX 33		Ref (F81p)
-CPU_A25			(MC19	P)   : MUX 34		Ref (F91p)
+REFRESH_COMPLETE_DELAY		(MC1	FB)  : MUX 34		Ref (A2fb)
 CPU_A27			(MC17	P)   : MUX 35		Ref (F88p)
-REFRESH_COMPLETE		(MC2	FB)  : MUX 36		Ref (C39fb)
-REFRESH_TIMER_RESET		(MC7	FB)  : MUX 37		Ref (F90fb)
-REFRESH_COMPLETE_DELAY		(MC1	FB)  : MUX 38		Ref (A2fb)
-CPU_CLK			(MC30	FB)  : MUX 39		Ref (GCLK)
+REFRESH_COMPLETE		(MC7	FB)  : MUX 37		Ref (F92fb)
+CPU_CLK			(MC28	FB)  : MUX 39		Ref (GCLK)
 
 FanIn assignment for block E [25]
 {
-CPU_CLK_div8,CPU_A28,CPU_A31,CPU_A29,CPU_CLK_div16,CPU_FC0,CPU_A30,CPU_A27,CPU_FC1,CPU_FC2,CPU_RW,
+CPU_CLK_div8,CPU_A28,CPU_A31,CPU_CLK_div16,CPU_FC2,CPU_FC0,CPU_A30,CPU_A27,CPU_FC1,CPU_A29,CPU_RW,
 DRAM_REGION_ACCESS_WAITSTATE,
-RESET_CONTROL_IN,REFRESH_TIMER2,REFRESH_TIMER1,REFRESH_TIMER_RESET,REFRESH_TIMER0,
-XXL_235,XXL_232,XXL_234,XXL_230,XXL_233,
+REFRESH_TIMER2,RESET_CONTROL_IN,REFRESH_TIMER0,REFRESH_TIMER1,REFRESH_TIMER_RESET,
+XXL_235,XXL_232,XXL_233,XXL_234,XXL_230,
 nCPU_AS,nSYS_RESET,nSYS_RESET_IN,
 }
 Multiplexer assignment for block E
 CPU_CLK_div8		(MC7	FB)  : MUX 0		Ref (F88fb)
 CPU_A28			(MC18	P)   : MUX 1		Ref (F86p)
 CPU_A31			(MC15	P)   : MUX 3		Ref (F81p)
-CPU_A29			(MC17	P)   : MUX 5		Ref (F85p)
+REFRESH_TIMER2		(MC6	FB)  : MUX 5		Ref (E79fb)
 CPU_CLK_div16		(MC3	P)   : MUX 6		Ref (E75p)
-DRAM_REGION_ACCESS_WAITSTATE		(MC1	FB)  : MUX 7		Ref (A15fb)
+CPU_FC2			(MC22	P)   : MUX 7		Ref (H118p)
 RESET_CONTROL_IN		(MC23	P)   : MUX 8		Ref (H125p)
 CPU_FC0			(MC20	P)   : MUX 9		Ref (H115p)
 nCPU_AS			(MC14	P)   : MUX 11		Ref (E67p)
@@ -453,77 +450,70 @@ CPU_A30			(MC16	P)   : MUX 13		Ref (F83p)
 nSYS_RESET_IN		(MC24	FB)  : MUX 14		Ref (GCLR)
 XXL_235			(MC12	FB)  : MUX 15		Ref (G111fb)
 CPU_A27			(MC19	P)   : MUX 17		Ref (F88p)
-REFRESH_TIMER2		(MC6	FB)  : MUX 19		Ref (E79fb)
+XXL_232			(MC10	FB)  : MUX 19		Ref (G109fb)
 CPU_FC1			(MC21	P)   : MUX 21		Ref (H117p)
-XXL_232			(MC11	FB)  : MUX 23		Ref (G110fb)
-CPU_FC2			(MC22	P)   : MUX 25		Ref (H118p)
+XXL_233			(MC11	FB)  : MUX 23		Ref (G110fb)
+DRAM_REGION_ACCESS_WAITSTATE		(MC1	FB)  : MUX 25		Ref (A15fb)
 XXL_234			(MC13	FB)  : MUX 27		Ref (G112fb)
-REFRESH_TIMER1		(MC4	FB)  : MUX 29		Ref (E76fb)
-XXL_230			(MC9	FB)  : MUX 31		Ref (F94fb)
-XXL_233			(MC10	FB)  : MUX 33		Ref (F96fb)
-REFRESH_TIMER_RESET		(MC8	FB)  : MUX 35		Ref (F90fb)
+XXL_230			(MC9	FB)  : MUX 29		Ref (F95fb)
+CPU_A29			(MC17	P)   : MUX 31		Ref (F85p)
+REFRESH_TIMER0		(MC2	FB)  : MUX 33		Ref (E74fb)
+REFRESH_TIMER1		(MC4	FB)  : MUX 35		Ref (E76fb)
 CPU_RW			(MC25	FB)  : MUX 37		Ref (OE1)
-REFRESH_TIMER0		(MC2	FB)  : MUX 39		Ref (E74fb)
+REFRESH_TIMER_RESET		(MC8	FB)  : MUX 39		Ref (F91fb)
 
-FanIn assignment for block F [25]
+FanIn assignment for block F [20]
 {
-CPU_CLK_div8,CPU_A28,CPU_A31,CPU_CLK_DELAY1,CPU_CLK_div2,CPU_A30,CPU_A27,CPU_CLK_DELAY2,CPU_FC1,CPU_FC2,CPU_CLK_div4,CPU_A29,CPU_CLK,
-DRAM_ACCESS_RAS_RESET2,
-REFRESH_TIMER2,REFRESH_TIMER4,REFRESH_TIMER0,REFRESH_TIMER3,REFRESH_TIMER1,REFRESH_TIMER_RESET,
+CPU_CLK_DELAY2,CPU_CLK_div8,CPU_CLK_div2,CPU_CLK,CPU_CLK_div4,
+DRAM_ACCESS_RAS_RESET2,DRAM_ACCESS_RAS_RESET1,
+REFRESH_STATE_MACHINE0,REFRESH_TIMER2,REFRESH_STATE_MACHINE1,REFRESH_TIMER1,REFRESH_TIMER4,REFRESH_TIMER_RESET,REFRESH_STATE_MACHINE2,REFRESH_TIMER3,REFRESH_TIMER0,
 XXL_231,
-nSYS_RESET,nCPU_AS,nDRAM_ACCESS_RAS.C,nDEV_WAIT,
+nSYS_RESET,nDRAM_ACCESS_RAS.C,nDRAM_ACCESS_RAS.C,
 }
 Multiplexer assignment for block F
-CPU_CLK_div8		(MC10	FB)  : MUX 0		Ref (F88fb)
-CPU_A28			(MC20	P)   : MUX 1		Ref (F86p)
-CPU_A31			(MC17	P)   : MUX 3		Ref (F81p)
-REFRESH_TIMER2		(MC7	FB)  : MUX 5		Ref (E79fb)
-CPU_CLK_DELAY1		(MC11	FB)  : MUX 7		Ref (F89fb)
-nSYS_RESET		(MC6	P)   : MUX 8		Ref (E78p)
-REFRESH_TIMER4		(MC13	FB)  : MUX 9		Ref (F92fb)
-CPU_CLK_div2		(MC9	FB)  : MUX 10		Ref (F87fb)
-nCPU_AS			(MC16	P)   : MUX 11		Ref (E67p)
-CPU_A30			(MC18	P)   : MUX 13		Ref (F83p)
-REFRESH_TIMER0		(MC4	FB)  : MUX 15		Ref (E74fb)
-CPU_A27			(MC21	P)   : MUX 17		Ref (F88p)
-REFRESH_TIMER3		(MC3	FB)  : MUX 18		Ref (E71fb)
-CPU_CLK_DELAY2		(MC14	FB)  : MUX 19		Ref (F93fb)
-CPU_FC1			(MC22	P)   : MUX 21		Ref (H117p)
-XXL_231			(MC15	FB)  : MUX 23		Ref (F95fb)
-CPU_FC2			(MC23	P)   : MUX 25		Ref (H118p)
-CPU_CLK_div4		(MC8	FB)  : MUX 26		Ref (F86fb)
-nDRAM_ACCESS_RAS.C		(MC1	FB)  : MUX 27		Ref (A10fb)
-REFRESH_TIMER1		(MC5	FB)  : MUX 29		Ref (E76fb)
-CPU_A29			(MC19	P)   : MUX 31		Ref (F85p)
-DRAM_ACCESS_RAS_RESET2		(MC2	FB)  : MUX 36		Ref (C36fb)
-REFRESH_TIMER_RESET		(MC12	FB)  : MUX 37		Ref (F90fb)
-nDEV_WAIT		(MC24	FB)  : MUX 38		Ref (OE2)
-CPU_CLK			(MC25	FB)  : MUX 39		Ref (GCLK)
+DRAM_ACCESS_RAS_RESET2		(MC5	FB)  : MUX 0		Ref (C36fb)
+REFRESH_STATE_MACHINE0		(MC1	FB)  : MUX 2		Ref (A4fb)
+DRAM_ACCESS_RAS_RESET1		(MC4	FB)  : MUX 4		Ref (C34fb)
+REFRESH_TIMER2		(MC13	FB)  : MUX 5		Ref (E79fb)
+XXL_231			(MC19	FB)  : MUX 7		Ref (F96fb)
+nSYS_RESET		(MC12	P)   : MUX 8		Ref (E78p)
+REFRESH_STATE_MACHINE1		(MC7	FB)  : MUX 9		Ref (C42fb)
+REFRESH_TIMER1		(MC11	FB)  : MUX 11		Ref (E76fb)
+REFRESH_TIMER4		(MC18	FB)  : MUX 13		Ref (F94fb)
+CPU_CLK_DELAY2		(MC6	FB)  : MUX 14		Ref (C39fb)
+CPU_CLK_div8		(MC16	FB)  : MUX 20		Ref (F88fb)
+CPU_CLK_div2		(MC15	FB)  : MUX 22		Ref (F87fb)
+CPU_CLK			(MC20	FB)  : MUX 23		Ref (GCLK)
+nDRAM_ACCESS_CAS.AP		(MC2	FB)  : MUX 24		Ref (A7fb)
+CPU_CLK_div4		(MC14	FB)  : MUX 26		Ref (F86fb)
+REFRESH_TIMER_RESET		(MC17	FB)  : MUX 27		Ref (F91fb)
+nDRAM_ACCESS_RAS.C		(MC3	FB)  : MUX 29		Ref (A10fb)
+REFRESH_STATE_MACHINE2		(MC8	FB)  : MUX 37		Ref (C47fb)
+REFRESH_TIMER3		(MC9	FB)  : MUX 38		Ref (E71fb)
+REFRESH_TIMER0		(MC10	FB)  : MUX 39		Ref (E74fb)
 
-FanIn assignment for block G [17]
+FanIn assignment for block G [15]
 {
-CPU_A27,CPU_A29,CPU_FC2,CPU_A17,CPU_A31,CPU_FC1,CPU_FC0,CPU_A19,CPU_A30,CPU_A16,CPU_A28,CPU_A18,
-DRAM_ACCESS_RAS_RESET1,DRAM_REGION_ACCESS_WAITSTATE,
-nDRAM_ACCESS_CAS.AP,nCPU_AS,nDEV_WAIT,
+CPU_A17,CPU_A27,CPU_A29,CPU_A16,CPU_FC2,CPU_A31,CPU_FC1,CPU_FC0,CPU_A19,CPU_A30,CPU_A28,CPU_A18,
+DRAM_REGION_ACCESS_WAITSTATE,
+nCPU_AS,nDEV_WAIT,
 }
 Multiplexer assignment for block G
-nDRAM_ACCESS_CAS.AP		(MC1	FB)  : MUX 0		Ref (A7fb)
-CPU_A27			(MC9	P)   : MUX 3		Ref (F88p)
-CPU_A29			(MC7	P)   : MUX 5		Ref (F85p)
-CPU_FC2			(MC16	P)   : MUX 7		Ref (H118p)
-CPU_A17			(MC12	P)   : MUX 8		Ref (G105p)
-DRAM_ACCESS_RAS_RESET1		(MC3	FB)  : MUX 10		Ref (C34fb)
-CPU_A31			(MC5	P)   : MUX 11		Ref (F81p)
-CPU_FC1			(MC15	P)   : MUX 13		Ref (H117p)
-nCPU_AS			(MC4	P)   : MUX 15		Ref (E67p)
-nDEV_WAIT		(MC17	FB)  : MUX 22		Ref (OE2)
-CPU_FC0			(MC14	P)   : MUX 23		Ref (H115p)
-CPU_A19			(MC10	P)   : MUX 25		Ref (G102p)
-CPU_A30			(MC6	P)   : MUX 27		Ref (F83p)
-CPU_A16			(MC13	P)   : MUX 28		Ref (G107p)
-CPU_A28			(MC8	P)   : MUX 29		Ref (F86p)
-CPU_A18			(MC11	P)   : MUX 31		Ref (G104p)
-DRAM_REGION_ACCESS_WAITSTATE		(MC2	FB)  : MUX 37		Ref (A15fb)
+CPU_A17			(MC10	P)   : MUX 2		Ref (G105p)
+CPU_A27			(MC7	P)   : MUX 3		Ref (F88p)
+CPU_A29			(MC5	P)   : MUX 5		Ref (F85p)
+CPU_A16			(MC11	P)   : MUX 6		Ref (G107p)
+CPU_FC2			(MC14	P)   : MUX 7		Ref (H118p)
+CPU_A31			(MC3	P)   : MUX 11		Ref (F81p)
+CPU_FC1			(MC13	P)   : MUX 13		Ref (H117p)
+nCPU_AS			(MC2	P)   : MUX 15		Ref (E67p)
+nDEV_WAIT		(MC15	FB)  : MUX 22		Ref (OE2)
+CPU_FC0			(MC12	P)   : MUX 23		Ref (H115p)
+CPU_A19			(MC8	P)   : MUX 25		Ref (G102p)
+CPU_A30			(MC4	P)   : MUX 27		Ref (F83p)
+CPU_A28			(MC6	P)   : MUX 29		Ref (F86p)
+CPU_A18			(MC9	P)   : MUX 31		Ref (G104p)
+DRAM_REGION_ACCESS_WAITSTATE		(MC1	FB)  : MUX 37		Ref (A15fb)
 
 FanIn assignment for block H [7]
 {
@@ -672,27 +662,27 @@ nDRAM_DATA_EN = ((CPU_A31 & CPU_RW & !TESTP1.Q & !nCPU_AS & !CPU_FC0)
 	# (CPU_A31 & CPU_RW & !TESTP1.Q & !nCPU_AS & !CPU_FC2));
 
 !nDRAM_S2A_RAS = (!nREFRESH_RAS.Q
-	# (CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q));
+	# (CPU_A26 & !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q));
 
 !nDRAM_S1A_RAS = (!nREFRESH_RAS.Q
-	# (!CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q));
+	# (!CPU_A26 & !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q));
 
 !nDRAM_S1B_RAS = (!nREFRESH_RAS.Q
-	# (!CPU_A24 & !CPU_A25 & CPU_A26 & !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q));
+	# (!CPU_A26 & !CPU_A27 & CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q));
 
 !nDRAM_S2B_RAS = (!nREFRESH_RAS.Q
-	# (CPU_A24 & !CPU_A25 & CPU_A26 & !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q));
+	# (CPU_A26 & !CPU_A27 & CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q));
 
-!nDRAM_S3A_RAS = ((!CPU_A24 & CPU_A25 & !CPU_A26 & !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q)
+!nDRAM_S3A_RAS = ((!CPU_A26 & CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q)
 	# !nREFRESH_RAS.Q);
 
-!nDRAM_S4B_RAS = ((CPU_A24 & CPU_A25 & CPU_A26 & !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q)
+!nDRAM_S4B_RAS = ((CPU_A26 & CPU_A27 & CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q)
 	# !nREFRESH_RAS.Q);
 
-!nDRAM_S3B_RAS = ((!CPU_A24 & CPU_A25 & CPU_A26 & !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q)
+!nDRAM_S3B_RAS = ((!CPU_A26 & CPU_A27 & CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q)
 	# !nREFRESH_RAS.Q);
 
-!nDRAM_S4A_RAS = ((CPU_A24 & CPU_A25 & !CPU_A26 & !CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q)
+!nDRAM_S4A_RAS = ((CPU_A26 & CPU_A27 & !CPU_A28 & !CPU_A29 & !CPU_A30 & CPU_A31 & !nDRAM_ACCESS_RAS.Q)
 	# !nREFRESH_RAS.Q);
 
 !nDRAM_WE = ((CPU_A31 & !CPU_RW & !TESTP1.Q & !nCPU_AS & !CPU_FC0)
@@ -1001,6 +991,7 @@ Pin 100 = nSRAM_UH_SEL; /* MC  5 */
 PINNODE 315 = FB_226; /* MC 15 Foldback */
 PINNODE 316 = Com_Ctrl_219; /* MC 16 Foldback */
 PINNODE 332 = FB_227; /* MC 32 Foldback */
+PINNODE 344 = FB_228; /* MC 44 Foldback */
 PINNODE 346 = Com_Ctrl_221; /* MC 46 Foldback */
 PINNODE 347 = Com_Ctrl_219; /* MC 47 Foldback */
 PINNODE 348 = Com_Ctrl_220; /* MC 48 Foldback */
@@ -1008,19 +999,18 @@ PINNODE 363 = FB_225; /* MC 63 Foldback */
 PINNODE 364 = FB_224; /* MC 64 Foldback */
 PINNODE 377 = FB_222; /* MC 77 Foldback */
 PINNODE 378 = Com_Ctrl_218; /* MC 78 Foldback */
-PINNODE 391 = FB_229; /* MC 91 Foldback */
-PINNODE 392 = FB_228; /* MC 92 Foldback */
-PINNODE 393 = FB_223; /* MC 93 Foldback */
-PINNODE 394 = Com_Ctrl_218; /* MC 94 Foldback */
+PINNODE 393 = FB_229; /* MC 93 Foldback */
+PINNODE 394 = FB_223; /* MC 94 Foldback */
+PINNODE 395 = Com_Ctrl_218; /* MC 95 Foldback */
 PINNODE 602 = REFRESH_COMPLETE_DELAY; /* MC 2 Feedback */
-PINNODE 604 = DRAM_ACCESS_MUX.AR; /* MC 4 Feedback */
+PINNODE 604 = REFRESH_STATE_MACHINE0; /* MC 4 Feedback */
 PINNODE 607 = nDRAM_ACCESS_CAS.AP; /* MC 7 Feedback */
 PINNODE 610 = nDRAM_ACCESS_RAS.C; /* MC 10 Feedback */
-PINNODE 612 = REFRESH_STATE_MACHINE0; /* MC 12 Feedback */
+PINNODE 612 = DRAM_ACCESS_MUX.AR; /* MC 12 Feedback */
 PINNODE 615 = DRAM_REGION_ACCESS_WAITSTATE; /* MC 15 Feedback */
 PINNODE 634 = DRAM_ACCESS_RAS_RESET1; /* MC 34 Feedback */
 PINNODE 636 = DRAM_ACCESS_RAS_RESET2; /* MC 36 Feedback */
-PINNODE 639 = REFRESH_COMPLETE; /* MC 39 Feedback */
+PINNODE 639 = CPU_CLK_DELAY2; /* MC 39 Feedback */
 PINNODE 642 = REFRESH_STATE_MACHINE1; /* MC 42 Feedback */
 PINNODE 644 = nREFRESH_RAS; /* MC 44 Feedback */
 PINNODE 647 = REFRESH_STATE_MACHINE2; /* MC 47 Feedback */
@@ -1029,19 +1019,19 @@ PINNODE 671 = REFRESH_TIMER3; /* MC 71 Feedback */
 PINNODE 674 = REFRESH_TIMER0; /* MC 74 Feedback */
 PINNODE 676 = REFRESH_TIMER1; /* MC 76 Feedback */
 PINNODE 679 = REFRESH_TIMER2; /* MC 79 Feedback */
+PINNODE 685 = nDRAM_ACCESS_CAS; /* MC 85 Feedback */
 PINNODE 686 = CPU_CLK_div4; /* MC 86 Feedback */
 PINNODE 687 = CPU_CLK_div2; /* MC 87 Feedback */
 PINNODE 688 = CPU_CLK_div8; /* MC 88 Feedback */
 PINNODE 689 = CPU_CLK_DELAY1; /* MC 89 Feedback */
-PINNODE 690 = REFRESH_TIMER_RESET; /* MC 90 Feedback */
-PINNODE 691 = nDRAM_ACCESS_RAS; /* MC 91 Feedback */
-PINNODE 692 = REFRESH_TIMER4; /* MC 92 Feedback */
-PINNODE 693 = CPU_CLK_DELAY2; /* MC 93 Feedback */
-PINNODE 694 = XXL_230; /* MC 94 Feedback */
-PINNODE 695 = XXL_231; /* MC 95 Feedback */
-PINNODE 696 = XXL_233; /* MC 96 Feedback */
-PINNODE 709 = nDRAM_ACCESS_CAS; /* MC 109 Feedback */
-PINNODE 710 = XXL_232; /* MC 110 Feedback */
+PINNODE 691 = REFRESH_TIMER_RESET; /* MC 91 Feedback */
+PINNODE 692 = REFRESH_COMPLETE; /* MC 92 Feedback */
+PINNODE 693 = nDRAM_ACCESS_RAS; /* MC 93 Feedback */
+PINNODE 694 = REFRESH_TIMER4; /* MC 94 Feedback */
+PINNODE 695 = XXL_230; /* MC 95 Feedback */
+PINNODE 696 = XXL_231; /* MC 96 Feedback */
+PINNODE 709 = XXL_232; /* MC 109 Feedback */
+PINNODE 710 = XXL_233; /* MC 110 Feedback */
 PINNODE 711 = XXL_235; /* MC 111 Feedback */
 PINNODE 712 = XXL_234; /* MC 112 Feedback */
 
@@ -1066,7 +1056,7 @@ MCell Pin# Oe   PinDrive         DCERP  FBDrive                      DCERP  Fold
 MC1   2    on   nDEV16BITCS      C----  --                                  --           --             3     slow
 MC2   0         --                      REFRESH_COMPLETE_DELAY       Dg-r-  --           --             2     slow
 MC3   1    on   nDEV8BITCS       C----  --                                  --           --             3     slow
-MC4   0         --                      DRAM_ACCESS_MUX.AR           C----  --           --             3     slow
+MC4   0         --                      REFRESH_STATE_MACHINE0       Dg-r-  --           --             2     slow
 MC5   100  on   nSRAM_UH_SEL     C----  --                                  --           --             4     slow
 MC6   99   on   nSRAM_UL_SEL     C----  --                                  --           --             3     slow
 MC7   0         --                      nDRAM_ACCESS_CAS.AP          C----  --           --             3     slow
@@ -1074,7 +1064,7 @@ MC8   98   on   nSRAM_LH_SEL     C----  --                                  --  
 MC9   97   on   nSRAM_LL_SEL     C----  --                                  --           --             2     slow
 MC10  0         --                      nDRAM_ACCESS_RAS.C           C----  --           --             3     slow
 MC11  96   on   nSRAM_BANK4_CE   C----  --                                  --           --             3     slow
-MC12  0         --                      REFRESH_STATE_MACHINE0       Dg-r-  --           --             2     slow
+MC12  0         --                      DRAM_ACCESS_MUX.AR           C----  --           --             3     slow
 MC13  94   on   nSRAM_BANK3_CE   C----  --                                  --           --             3     slow
 MC14  93   on   nSRAM_BANK2_CE   C----  --                                  --           --             3     slow
 MC15  0         --                      DRAM_REGION_ACCESS_WAITSTATE Dg-r-  FB_226       --             5     slow
@@ -1101,12 +1091,12 @@ MC35  24   on   nDRAM_S2B_RAS    C----  --                                  --  
 MC36  0         --                      DRAM_ACCESS_RAS_RESET2       Dg-r-  --           --             2     slow
 MC37  23   on   nDRAM_S1B_RAS    C----  --                                  --           --             2     slow
 MC38  22   on   nDRAM_S4A_RAS    C----  --                                  --           --             2     slow
-MC39  0         --                      REFRESH_COMPLETE             Dc-r-  --           --             3     slow
+MC39  0         --                      CPU_CLK_DELAY2               Dc-r-  --           --             2     slow
 MC40  21   on   nDRAM_S3A_RAS    C----  --                                  --           --             2     slow
 MC41  20   on   nDRAM_S2A_RAS    C----  --                                  --           --             2     slow
 MC42  0         --                      REFRESH_STATE_MACHINE1       Dg-r-  --           --             3     slow
 MC43  19   on   nDRAM_S1A_RAS    C----  --                                  --           --             2     slow
-MC44  0         --                      nREFRESH_RAS                 Dc--p  --           --             4     slow
+MC44  0         --                      nREFRESH_RAS                 Dc--p  FB_228       --             5     slow
 MC45  17   on   nDRAM_CAS0       C----  --                                  NA           --             5     slow
 MC46  16   on   nDRAM_CAS1       C----  --                                  Com_Ctrl_221 --             5     slow
 MC47  0         --                      REFRESH_STATE_MACHINE2       Dg-r-  Com_Ctrl_219 --             5     slow
@@ -1147,18 +1137,18 @@ MC81  52   --   CPU_A31          INPUT  --                                  --  
 MC82  0         --                      --                                  --           --             0     slow
 MC83  53   --   CPU_A30          INPUT  --                                  --           --             0     slow
 MC84  0         --                      --                                  --           --             0     slow
-MC85  54   --   CPU_A29          INPUT  --                                  --           --             0     slow
+MC85  54   --   CPU_A29          INPUT  nDRAM_ACCESS_CAS             Dc--p  --           --             2     slow
 MC86  55   --   CPU_A28          INPUT  CPU_CLK_div4                 Dc---  --           --             2     slow
 MC87  0         --                      CPU_CLK_div2                 Dc---  --           --             2     slow
 MC88  56   --   CPU_A27          INPUT  CPU_CLK_div8                 Dc---  --           --             2     slow
 MC89  57   --   CPU_A26          INPUT  CPU_CLK_DELAY1               Dg-r-  --           --             1     slow
-MC90  0         --                      REFRESH_TIMER_RESET          Dc-r-  --           --             3     slow
-MC91  58   --   CPU_A25          INPUT  nDRAM_ACCESS_RAS             Dc--p  FB_229       --             3     slow
-MC92  0         --                      REFRESH_TIMER4               Dc-r-  FB_228       --             4     slow
-MC93  60   --   CPU_A24          INPUT  CPU_CLK_DELAY2               Dc-r-  FB_223       --             3     slow
-MC94  61   --   CPU_A23          INPUT  XXL_230                      C----  Com_Ctrl_218 --             5     slow
-MC95  0         --                      XXL_231                      C----  NA           --             5     slow
-MC96  62   --   TCK              INPUT  XXL_233                      C----  NA           --             5     slow
+MC90  0         --                      --                                  --           --             0     slow
+MC91  58   --   CPU_A25          INPUT  REFRESH_TIMER_RESET          Dc-r-  --           --             3     slow
+MC92  0         --                      REFRESH_COMPLETE             Dc-r-  --           --             3     slow
+MC93  60   --   CPU_A24          INPUT  nDRAM_ACCESS_RAS             Dc--p  FB_229       --             3     slow
+MC94  61   --   CPU_A23          INPUT  REFRESH_TIMER4               Dc-r-  FB_223       --             4     slow
+MC95  0         --                      XXL_230                      C----  Com_Ctrl_218 --             5     slow
+MC96  62   --   TCK              INPUT  XXL_231                      C----  NA           --             5     slow
 MC97  63   --   CPU_A22          INPUT  --                                  --           --             0     slow
 MC98  0         --                      --                                  --           --             0     slow
 MC99  64   --   CPU_A21          INPUT  --                                  --           --             0     slow
@@ -1171,8 +1161,8 @@ MC105 69   --   CPU_A17          INPUT  --                                  --  
 MC106 0         --                      --                                  --           --             0     slow
 MC107 70   --   CPU_A16          INPUT  --                                  --           --             0     slow
 MC108 0         --                      --                                  --           --             0     slow
-MC109 71   --   CPU_AA1          INPUT  nDRAM_ACCESS_CAS             Dc--p  --           --             2     slow
-MC110 72   --   CPU_AA0          INPUT  XXL_232                      C----  NA           --             5     slow
+MC109 71   --   CPU_AA1          INPUT  XXL_232                      C----  NA           --             5     slow
+MC110 72   --   CPU_AA0          INPUT  XXL_233                      C----  NA           --             5     slow
 MC111 0         --                      XXL_235                      C----  NA           --             5     slow
 MC112 73   --   TDO              INPUT  XXL_234                      C----  NA           --             5     slow
 MC113 75   --   UNUSED2          INPUT  --                                  --           --             0     slow
@@ -1199,11 +1189,11 @@ MC0   87        CPU_CLK          INPUT  --                                  --  
 Logic Array Block	Logic Cells	I/O Pins	Foldbacks	TotalPT		FanIN	Cascades
 A: LC1	- LC16		16/16(100%)	10/16(62%)	2/16(12%)	48/80(60%)	(25)	0
 B: LC17	- LC32		8/16(50%)	10/16(62%)	1/16(6%)	20/80(25%)	(29)	0
-C: LC33	- LC48		16/16(100%)	10/16(62%)	3/16(18%)	47/80(58%)	(25)	0
-D: LC49	- LC64		8/16(50%)	10/16(62%)	2/16(12%)	15/80(18%)	(30)	0
+C: LC33	- LC48		16/16(100%)	10/16(62%)	4/16(25%)	47/80(58%)	(24)	0
+D: LC49	- LC64		8/16(50%)	10/16(62%)	2/16(12%)	15/80(18%)	(28)	0
 E: LC65	- LC80		13/16(81%)	10/16(62%)	2/16(12%)	30/80(37%)	(25)	0
-F: LC81	- LC96		11/16(68%)	10/16(62%)	4/16(25%)	35/80(43%)	(25)	0
-G: LC97	- LC112		4/16(25%)	10/16(62%)	0/16(0%)	17/80(21%)	(17)	0
+F: LC81	- LC96		11/16(68%)	10/16(62%)	3/16(18%)	32/80(40%)	(20)	0
+G: LC97	- LC112		4/16(25%)	10/16(62%)	0/16(0%)	20/80(25%)	(15)	0
 H: LC113- LC128		1/16(6%)	10/16(62%)	0/16(0%)	1/80(1%)	(7)	0
 
 Total dedicated input used:	4/4 	(100%)
