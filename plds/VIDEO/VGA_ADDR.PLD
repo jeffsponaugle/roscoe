@@ -1,5 +1,5 @@
-Name	 VGA_SYNC;
-PartNo   VGA_SYNC;
+Name	 VGA_ADDR;
+PartNo   VGA_ADDR;
 Date     03/30/2024;
 Revision 01;
 Designer Sponaugle;
@@ -15,150 +15,192 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 Pin  = [VM_A0..17];         // The 18 address bits going to the video memory.  These are tri-state outputs.
                             // Each address has 4 bytes, so 18 address bits nets 1MB of video memory.
                             // at 640x480 16bpp a single frame is 614,400 bytes (1 page)
-                            // at 640x480 8bpp a single frame is 307,200 bytes (3 pages)
+                            // at 640x480 8bpp a single frame is 307,200 bytes (2 pages possible)
                             // In text mode 80x30 with attribue is 4,800 bytes (218 pages)
-Pin = VMEM_ADDR_RESET;
-Pin = VMEM_ADDR_OE;           // Output enable for the address lines to the VRAM
+
+Pin = VMEM_ADDR_RESET;      // Signal to reset the vidoe memory address.  This signal must be held high for a complete      
+                            // DOT_CLOCK cycle, and will take effect on the rising edge of DOTCLOCK, just like other 
+                            // changes to the video memory address. 
+
+Pin = nVMEM_ADDR_OE;           // Output enable for the address lines to the VRAM
 Pin = DOT_CLK;
+Pin = nRESET;
+Pin = VMEM_RESET_MODE;       //   What to do on mem_reset - 0 = RESET with OFFSET applied to bits 6-12
+                            //                           - 1 = RESET with OFFSET applied to bits 17
+
 Pin = [VMEM_ADDR_MODE1..0];
+Pin = [VMEM_OFFSET5..0];        // 8 bits of memory address offset used for text mode and graphics mode.
+                                //  In text mode this offset is in 256byte lines, so you can use it for
+                                //  scrolling up to 256 lines.
+                                //  In graphics mode it is used for pages of graphics
 
 PINNODE = [C11..6];          /* Optimizing - Creating nodes for carry elements that are very large */
 PINNODE = [S17..0];          /* Internal 17 bit counter for the memory address generation */
 
-FIELD address_mode_field = [VMEM_VMEM_ADDR_MODE1..0];
+FIELD address_mode_field = [VMEM_ADDR_MODE1..0];
+
+/* 
+    MODE 00(0) = Do Nothing
+    MODE 01(1) = Increment by 1
+    MODE 11(3) = Decrement by 40 ( 160 bytes or 80 characters, since memory is 32 bits wide )
+    MODE 10(2) = Increment to the next /64 multiple ( zero out bits 0-5, add 0x0000 0000 0100 0000)
+
+    Note Decrement by 40 is an extra (high) bit set from increment by 1.  This makes the generation logic for these bits easy to compute
+    since the decrement by 40 happens on each font line until the last one.
+
+    For Mode 2, the idea is to get to the next text mode line.  This assumes each text line that is 40 dwords of memory actually uses
+    up 64 dwords of actual memory space.  The extra space after the 40 dwords is unused.  The reason for having each text line take a 
+    power of 2 number of dwords is so we can use the VMEM_OFFSET variable to scroll a line at a time.   The VMEM_OFFSET is used during
+    the address reset to start at the beginning of a specific line, and would not be possible in this CPLD if the text lines were all
+    spaced 40 dwords apart.
+
+    This means a standard 80x25 text display mode uses 25*64 dwords of memory (1600 dwords, or 6400 bytes), even though each text 
+    row only uses 160 bytes of that memory.  The rest of the memory for each row is left unused.
+
+*/
+
 
 // The adder for the memory address
 
 [S0..17].ck = DOT_CLK;      // UNSURE
-[S0..17].ar = VMEM_ADDR_RESET;
+[S0..17].ar = nRESET;
 
 [VM_A17..0] = [S17..0];
-[VM_A17..0].oe = !VMEM_ADDR_OE;
+[VM_A17..0].oe = !nVMEM_ADDR_OE;
 
 /* Carry IN is 1 for increment by 1 mode, MODE=001 */
 C0 = address_mode_field:['d'1];
 
-// To subtract 80, we will add the 0b11 1111 1111 1011 0000, or 0x3FFB0
+// To subtract 40, we will add the 0b11 1111 1111 1101 1000, or 0x3FFD8 (-40)
+// To jump to the next mod 64 address, we will zero out bits 0-5, and then add 0b00 0000 0000 0100 0000 (+64)
 
-/* First 4 bits of add are always 0. */
-[B0..3] = 'b'0;
+// If we are in mode 2, the lower 6 bits are set to 0 to go to the beginning of the next text line
+NEXT_TEXT_LINE = address_mode_field:['d'2];
+RESTART_THIS_TEXT_LINE = address_mode_field:['d'3];
+
+/* First 3 bits of add are always 0. */
+[B0..2] = 'b'0;
 
 /* Remaining bits are on for -80  */
-B4 = address_mode_field:['d'2];
-B5 = address_mode_field:['d'2];
-B6 = 'b'0;
-B7 = address_mode_field:['d'2];
-B8 = address_mode_field:['d'2];
-B9 = address_mode_field:['d'2];
-B10 = address_mode_field:['d'2];
-B11 = address_mode_field:['d'2];
-B12 = address_mode_field:['d'2];
-B13 = address_mode_field:['d'2];
-B14 = address_mode_field:['d'2];
-B15 = address_mode_field:['d'2];
-B16 = address_mode_field:['d'2];
-B17 = address_mode_field:['d'2];
+B3 = RESTART_THIS_TEXT_LINE;
+B4 = RESTART_THIS_TEXT_LINE;
+B5 = 'b'0;
+
+// For mode 2 we want to add 64, so in mode 2 set bit 6 to 1. 
+B6 = RESTART_THIS_TEXT_LINE # NEXT_TEXT_LINE;
+B7 = RESTART_THIS_TEXT_LINE;
+B8 = RESTART_THIS_TEXT_LINE;
+B9 = RESTART_THIS_TEXT_LINE;
+B10 = RESTART_THIS_TEXT_LINE;
+B11 = RESTART_THIS_TEXT_LINE;
+B12 = RESTART_THIS_TEXT_LINE;
+B13 = RESTART_THIS_TEXT_LINE;
+B14 = RESTART_THIS_TEXT_LINE;
+B15 = RESTART_THIS_TEXT_LINE;
+B16 = RESTART_THIS_TEXT_LINE;
+B17 = RESTART_THIS_TEXT_LINE;
 
 // The actual adder for the video memory address generation
 
 P0 = S0 $ B0;
 G0 = S0 & B0;
-S0.d = P0 $ C0;
+S0.d = (!VMEM_ADDR_RESET & (P0 $ C0) & !NEXT_TEXT_LINE);
 C1 = G0 # (P0&C0);
 
 P1 = S1 $ B1;
 G1 = S1 & B1;
-S1.d = P1 $ C1;
+S1.d = (!VMEM_ADDR_RESET & (P1 $ C1) & !NEXT_TEXT_LINE);
 C2 = G1 # (P1&C1);
 
 P2 = S2 $ B2;
 G2 = S2 & B2;
-S2.d = P2 $ C2;
+S2.d = (!VMEM_ADDR_RESET & (P2 $ C2) & !NEXT_TEXT_LINE);
 C3 = G2 # (P2&C2);
 
 P3 = S3 $ B3;
 G3 = S3 & B3;
-S3.d = P3 $ C3;
+S3.d = (!VMEM_ADDR_RESET & (P3 $ C3) & !NEXT_TEXT_LINE);
 C4 = G3 # (P3&C3);
 
 P4 = S4 $ B4;
 G4 = S4 & B4;
-S4.d = P4 $ C4;
+S4.d = (!VMEM_ADDR_RESET & (P4 $ C4) & !NEXT_TEXT_LINE);
 C5 = G4 # (P4&C4);
 
 P5 = S5 $ B5;
 G5 = S5 & B5;
-S5.d = P5 $ C5;
+S5.d = (!VMEM_ADDR_RESET & (P5 $ C5) & !NEXT_TEXT_LINE);
 C6 = G5 # (P5&C5);
 
 P6 = S6 $ B6;
 G6 = S6 & B6;
-S6.d = P6 $ C6;
+S6.d = (!VMEM_ADDR_RESET & P6 $ C6) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET0 );
 C7 = G6 # (P6&C6);
 
 P7 = S7 $ B7;
 G7 = S7 & B7;
-S7.d = P7 $ C7;
+S7.d = (!VMEM_ADDR_RESET & P7 $ C7) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET1 );
 C8 = G7 # (P7&C7);
 
 P8 = S8 $ B8;
 G8 = S8 & B8;
-S8.d = P8 $ C8;
+S8.d = (!VMEM_ADDR_RESET & P8 $ C8) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET2 );
 C9 = G8 # (P8&C8);
 
 P9 = S9 $ B9;
 G9 = S9 & B9;
-S9.d = P9 $ C9;
+S9.d = (!VMEM_ADDR_RESET & P9 $ C9) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET3 );
 C10 = G9 # (P9&C9);
 
 P10 = S10 $ B10;
 G10 = S10 & B10;
-S10.d = P10 $ C10;
+S10.d = (!VMEM_ADDR_RESET & P10 $ C10) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET4 );
 C11 = G10 # (P10&C10);
 
 P11 = S11 $ B11;
 G11 = S11 & B11;
-S11.d = P11 $ C11;
+S11.d = (!VMEM_ADDR_RESET & P11 $ C11) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET5 );
 C12 = G11 # (P11&C11);
 
 P12 = S12 $ B12;
 G12 = S12 & B12;
-S12.d = P12 $ C12;
+S12.d = (!VMEM_ADDR_RESET & P12 $ C12);
 C13 = G12 # (P12&C12);
 
 P13 = S13 $ B13;
 G13 = S13 & B13;
-S13.d = P13 $ C13;
+S13.d = (!VMEM_ADDR_RESET & P13 $ C13);
 C14 = G13 # (P13&C13);
 
 P14 = S14 $ B14;
 G14 = S14 & B14;
-S14.d = P14 $ C14;
+S14.d = (!VMEM_ADDR_RESET & P14 $ C14);
 C15 = G14 # (P14&C14);
 
 P15 = S15 $ B15;
 G15 = S15 & B15;
-S15.d = P15 $ C15;
+S15.d = (!VMEM_ADDR_RESET & P15 $ C15);
 C16 = G15 # (P15&C15);
 
 P16 = S16 $ B16;
 G16 = S16 & B16;
-S16.d = P16 $ C16;
+S16.d = (!VMEM_ADDR_RESET & P16 $ C16);
 C17 = G16 # (P16&C16);
 
 P17 = S17 $ B17;
 G17 = S17 & B17;
-S17.d = P17 $ C17;
+S17.d = (!VMEM_ADDR_RESET & P17 $ C17);
+
 
 /*
 Total dedicated input used:	3/4 	(75%)
-Total I/O pins used		24/32 	(75%)
-Total Logic cells used 		60/64 	(93%)
+Total I/O pins used		25/32 	(78%)
+Total Logic cells used 		57/64 	(89%)
 Total Flip-Flop used 		18/64 	(28%)
-Total Foldback logic used 	1/64 	(1%)
-Total Nodes+FB/MCells 		59/64 	(92%)
-Total cascade used 		2
-Total input pins 		9
+Total Foldback logic used 	9/64 	(14%)
+Total Nodes+FB/MCells 		57/64 	(89%)
+Total cascade used 		9
+Total input pins 		10
 Total output pins 		18
-Total Pts 			186
+Total Pts 			175
 */

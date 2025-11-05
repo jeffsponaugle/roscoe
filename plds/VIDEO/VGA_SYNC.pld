@@ -69,6 +69,7 @@ Pin = [BIT_PROC_SELECT_SUB0..1];
 Pin = VMEM_ADDR_RESET;
 Pin = VM_ADDR_OE;
 Pin = [ADDR_MODE1..0];
+Pin = [VMEM_OFFSET5..0];
 
 // Outputs to VRAM
 
@@ -145,8 +146,12 @@ FONTROW3 = VSYNC_COUNTER3;
 //      b1 = GRAPHICS DEPTH (0=8bpp, 1=16bpp)
 
 [CONFIG_REGA0..3].d = [EXP_D0..3];
-[CONFIG_REGA0..3].ck = (nEXP_VIO_CS & !EXP_RW);
+[CONFIG_REGA0..3].ck = (nEXP_VIO_CS & !EXP_RW & !EXP_A0);   // Write to address 0
 [CONFIG_REGA0..3].ar = !EXP_nSYS_RESET;
+
+[VMEM_OFFSET5..0].d = [EXP_D5..0];
+[VMEM_OFFSET5..0].ck = (nEXP_VIO_CS & !EXP_RW & EXP_A0);    // Write to address 1
+[VMEM_OFFSET5..0].ar = !EXP_nSYS_RESET;
 
 // Shorthands for the register bits
 cfg_TEXT_OR_GRAPHICS = CONFIG_REGA0;
