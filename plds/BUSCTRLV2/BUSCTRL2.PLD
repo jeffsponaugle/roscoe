@@ -271,6 +271,43 @@ UNUSED_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & CPU_A29 
 
 nINT_ACK_CYCLE = !INTERRUPT_ACK_ACCESS;
 
+/* 
+    The DRAM_REGION_ACCESS signal above will bet set to 1 as soon as we detect the bus access is a DRAM access.  This should occur shortly 
+    after the AS signal goes low, which happens during the early part of bus cycle 1.
+
+              :----:    :----:    :----:    :----:    :----:    :----:
+              : S0 : S1 : S2 : S3 : S4 : S5 : S0 :    :    :    :    :
+   CLK    ----:    :----:    :----:    :----:    :----:    :----:    :----:
+
+    AS    ----------:                  :----------------
+                    :                  :
+                    :------------------:
+
+    The CPU samples the DSACK signals at the end of S2.  If they are not asserted, a full wait state is added and the DSACKs are sampled
+    again on the next falling edge.  Below is a sample of a single waitstated added.   
+
+              :----:    :----:    :----:    :----:    :----:    :----:
+              : S0 : S1 : S2 : S3 : Sw : Sw : S4 : S5 :    :    :    :
+   CLK    ----:    :----:    :----:    :----:    :----:    :----:    :----:
+
+                                       sample here
+   DSASK  ----------------------:      :            :----------------
+                                :      ^           :
+                                :------------------:
+
+    For 0 wait-states we assert DSACK as soon as we recognize the access pattern and the AS signal.  This means that DSACK will 
+    be asserted before the sample period at the end of S2.
+
+    To add a single waitstate, we add an additional flip-flop that latches the DRAM_REGION_ACCESS value but does so on the falling edge
+    of the clock.  Since DRAM_REGION_ACCESS is tied to AS, it will not go active until after the falling clock edge.  This flop-flop 
+    will miss that initial change and not see the change until the next falling clock edge (S2).  Since the FF has some propegation 
+    delay it's output change will be missed by the CPU until the next cycle, thus adding a single wait state to all access.
+
+    To add more waitstates, add more flipflops using the same clocking strategy.
+
+*/
+
+
 PINNODE = DRAM_REGION_ACCESS_WAITSTATE;
 DRAM_REGION_ACCESS_WAITSTATE.d = DRAM_REGION_ACCESS;
 DRAM_REGION_ACCESS_WAITSTATE.ck = !CPU_CLK;
@@ -302,6 +339,9 @@ DRAM_REGION_ACCESS_WAITSTATE.ar = nCPU_AS # !nSYS_RESET;
     will insert wait states.  As soon as the REFRESH completes, the REFRESH_ACTIVE flag will go to 0 which will allow 
     the DRAM_REGION_ACCESS flag to go to 1.  This transistion will start the DRAM access, which will then assert the DSACK 
     signals ending the wait states the CPU inserted.
+
+    The use of DRAM_REGION_ACCESS_WAITSTATE instead of DRAM_REGION_ACCESS will add a single additional waitstate to all 
+    DRAM memory access, which may be required at speeds above 16Mhz.
 
     Interrupt Ack Access is set to 8 bits since the INTCTRL (Interrupt controller) is 8 bit.
 
@@ -449,13 +489,13 @@ nDRAM_ACCESS_CAS.ck = DRAM_ACCESS_RAS_RESET1;
 
 /*
     The third critical signal for DRAM access is the MUX signal which switches the address lines on the DRAM
-    from the ROW to the COLUMN address.  This much be done after the RAS signal has gone to 0, and before the 
-    CAS signal goes to 0.  There is RAS holdtime requirement of 10ns, and CAS setup requirement if 10ns, and a 
+    from the ROW to the COLUMN address.  This must be done after the RAS signal has gone to 0, and before the 
+    CAS signal goes to 0.  There is RAS holdtime requirement of 10ns, and CAS setup requirement of 10ns, and a 
     MUX propegation delay of at least 7ns.
 
     The solution is the change the MUX signal based on the DRAM_ACCESS_RAS signal.   However there is a problem with 
-    using DRAM_ACCESS_RAS.  The DRAM_ACCESS_RAS signal will go low before the actual RAS signal the DRAM since the DRAM
-    single (nDRAM_Sxx_RAS) has more logic to it.  As a result the MUX change would beat the RAS signal the the DRAM
+    using DRAM_ACCESS_RAS.  The DRAM_ACCESS_RAS signal will go low before the actual RAS signal to the DRAM since the DRAM
+    signal (nDRAM_Sxx_RAS) has more logic to it.  As a result the MUX change would beat the RAS signal the the DRAM
     going low.  The solution is to instead change the MUX based on the actual RAS signals that are doing to the DRAM. 
     
     These RAS signals are also used for REFRESH, however during refresh the DRAM_REGION_ACCESS signal is not asserted
