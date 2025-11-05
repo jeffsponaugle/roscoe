@@ -12,7 +12,7 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
-//      VERSION 4
+//      VERSION 5 - Comment corrections.
 
 /*
 
@@ -54,8 +54,8 @@ Timer B:
     7               011 (3)             170.66us        128us           102.4us         51.2us
     8               100 (4)             341.33us        256us           204.8us         102.4us
     9               101 (5)             682.66us        512us           409.6us         204.8us
-    10              110 (6)             1.365us         1.024ms         819.2us         409.6us
-    11              111 (7)             2.730us         2.048ms         1.6384ms        819.2us
+    10              110 (6)             1.365ms         1.024ms         819.2us         409.6us
+    11              111 (7)             2.730ms         2.048ms         1.6384ms        819.2us
 */
 
 
