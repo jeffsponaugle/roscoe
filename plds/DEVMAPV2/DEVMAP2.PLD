@@ -12,7 +12,7 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
-//      VERSION 15
+//      VERSION 17
 
 /* 
                                                 Inputs
@@ -99,9 +99,13 @@ Pin[92,99] = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
 Pin[19] = UNUSED1;
 Pin[20] = UNUSED2;
 
+// ADD a CPU_AS signal to this device so we can have proper device bus cycle termination
+
 
 PINNODE = nIDE_WR_DELAY1, nIDE_WR_DELAY2;
 PINNODE = nINTCTRL_CS_delay;
+PINNODE = nIDE_WAITSTATE_DELAY;
+PINNODE = nIDE_WAITSTATE_DELAY_RESET;
 
 
 // dummy expression to force the pins to be assigned.
@@ -115,7 +119,7 @@ FIELD field_CPU_ADDRESS = [CPU_A27..8];
 
 SYS_RESET_POS = !nSYS_RESET;
 
-nDEV_WAIT = 'b'1;       // No Wait States right now for local devices.
+
 // These are currently unused, reserved for some future use.
 EXP_DM_CPLD1 = 'b'0;
 EXP_DM_CPLD2 = 'b'0;
@@ -208,6 +212,37 @@ RTC_A_SEL.ar = nRTC_CS # !nSYS_RESET;    /* nRTC_CS is active low, so it will be
 RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, this will be held at one which is off */
 
 
+
+/*
+
+    Wait State Generation - To insert wait states for devices, we need to hold nDEV_WAIT low during the S2 falling CLK of the system clock.
+
+    We want to add one wait state for all IDE activity.
+
+    There are two flip flops - The first is the signal that gets sent to the Bus controler CPLD asking for a waitstate.  This signal needs
+    to go to 0 shortly after the AS signal is decoded, and we do that with the nIDE_BUFFER_EN1/2 signals.  Those signals will go low if an IDE
+    cycle is starting.   That transition from high to low for one of them will clock in a '1' into the first flip flop.  This FF is used to 
+    ask for the wait state.
+
+    As the same time the second flip flop is being held in reset by the first flip flop, so as soon as the first flip flop is turned on
+    (by the IDE cycle), this second flip flip will come out of reset and wait until the next rising CLK edge.  Once that rising CLK edge 
+    appears the second flip flop will go to 1, which resets the first flip flop.   This creates a pulse that startes when the IDE cycle 
+    starts, and ends when the next rising CLK edge happens.  It looks like this should get the signal asserted right before the falling 
+    edge of S2 (CPU cycle), so the CPU will sample this and add a wait state.  The risk is the time from AS going low through the first 
+    CPLD (to do device selection) plus the time to generate the nIDE_CS, then the nIDE_BUFFER_EN, then the flip flop itself.  From AS to
+    DSACK sample looks to be about 0.75 of a clock cycle, so at 16mhz that is about 50ns.   This might require some tweaking.
+
+*/
+
+nIDE_WAITSTATE_DELAY.d = 'b'1;
+nIDE_WAITSTATE_DELAY.ck = !(nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2);
+nIDE_WAITSTATE_DELAY.ar = nIDE_WAITSTATE_DELAY_RESET # !nSYS_RESET;
+
+nIDE_WAITSTATE_DELAY_RESET.d = 'b'1;
+nIDE_WAITSTATE_DELAY_RESET.ck = CPU_CLK;
+nIDE_WAITSTATE_DELAY_RESET.ar = !nIDE_WAITSTATE_DELAY # !nSYS_RESET;
+
+nDEV_WAIT = !nIDE_WAITSTATE_DELAY;       // 1 = No waitstates - so if IDE_WAITSTATE_DELAY is in reset, we will invert.
 
 /*
 Total dedicated input used:	2/4 	(50%)
