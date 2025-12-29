@@ -42,7 +42,7 @@ Pin = DOT_CLK;
 Pin = DOT_CLK2;             // Secondary DOT Clock
 
 Pin = [EXP_D0..7];         // Data lines from host for configuration
-Pin = nEXP_VIO_CS;              // Chip select from host to read/write config register
+Pin = nEXP_VIO_CS;         // Chip select from host to read/write config register
 Pin = EXP_RW;              // Read/Write from host for config register 0=W, 1=R    
 Pin = [EXP_A0..1];         // Address bits for config registers
 

@@ -483,7 +483,12 @@ nCPU_BERR =>
     1 
 
 nCPU_CIIN =>
-    0 
+    CPU_A31
+  # nCPU_AS
+  # !CPU_A28 & CPU_A29
+  # CPU_A29 & CPU_A30
+  # !CPU_A29 & !CPU_A30
+  # CPU_FC0 & CPU_FC1 & CPU_FC2
 
 nCPU_DSACK0 =>
     !DRAM_REGION_ACCESS_WAITSTATE & nCPU_AS
