@@ -12,7 +12,7 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
-//      VERSION 17
+//      VERSION 18 - Added Expansion Interface DEV_WAIT passthru.
 
 /* 
                                                 Inputs
@@ -55,6 +55,11 @@ There is an additional special region for the video output device.   This region
 to indicate access in the dedicated video region (0x6XXX XXXX).   That region would be further subdivided to create the 
 nEXP_VMEM_CS signal so it is a subset of that memory area.  640x480 at 32bpp is only 1.2MBs of memory, so a 16 MB chunk is probably 
 sufficient.  
+
+nEXP_DEV_WAIT is a signal from the expansion interface is used to add waitstates.  If it is pulled to GND, waitstates will be added.  For 
+this singal to work, the CPU needs to see the DSASK lines unasserted by the end of CPU state S2.  The AS line goes low at the start of S1,
+so you only have about 3/4s of a clock cycle from AS to DSACK check.   This might be problemmatic with the CPLDs, so it might be needed
+to have the nEXP_DEV_WAIT signal go directly to the BUSCTRL CPLD.
 
 */
 
@@ -169,6 +174,7 @@ nPTC_CS = nDEV16BITCS #   !(field_CPU_ADDRESS:['h'00004XX]);       // 0x3000 040
 /* 32 bit devices */
 
 nEXP_VMEM_CS = nDEV32BITCS # !(field_CPU_ADDRESS:['h'00XXXXX]);   // 1MB of Video Memory
+
 // nNIC_CS = nDEV32BITCS # !(field_CPU_ADDRESS:['h'0200XXX]);          // 4096B NIC Interface
 
 
@@ -242,8 +248,8 @@ nIDE_WAITSTATE_DELAY_RESET.d = 'b'1;
 nIDE_WAITSTATE_DELAY_RESET.ck = CPU_CLK;
 nIDE_WAITSTATE_DELAY_RESET.ar = !nIDE_WAITSTATE_DELAY # !nSYS_RESET;
 
-nDEV_WAIT = !nIDE_WAITSTATE_DELAY;       // 1 = No waitstates - so if IDE_WAITSTATE_DELAY is in reset, we will invert.
-
+nDEV_WAIT = (!nIDE_WAITSTATE_DELAY) & nEXP_DEV_WAIT;       // 1 = No waitstates - so if IDE_WAITSTATE_DELAY is in reset, we will invert.
+                                                           // Also if EXP DEV WAIT asserted, lets assert it here.
 /*
 Total dedicated input used:	2/4 	(50%)
 Total I/O pins used		67/80 	(83%)

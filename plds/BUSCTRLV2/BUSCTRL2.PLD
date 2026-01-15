@@ -17,6 +17,7 @@ PROPERTY ATMEL {open_collector=nCPU_DSACK0, nCPU_DSACK1};
 //      VERSION 25 - First 128MB support added, removed DRAM aliasing.
 //      64/128MB
 //      VERSION 26 - Cache Enabled
+//      VERSION 27 - Bus Error Signal enabled.
 
 
 /* NOTE:  Active low values are designated with a starting n. */
@@ -267,7 +268,7 @@ DEV32BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30
                         & !CPU_A29 & CPU_A28;                                                               // 0x5000 0000 - 0x5FFF FFFF
 VIDEO_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;                              // 0x6000 0000 - 0x7FFF FFFF
 INTERRUPT_ACK_ACCESS =  !nCPU_AS & FC_CPU_SPACE & CPU_A16 & CPU_A17 & CPU_A18 & CPU_A19;
-UNUSED_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & CPU_A29 & !CPU_A28;   
+UNUSED_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & CPU_A29 & !CPU_A28;                 // 0x2000 0000 - 0x2FFF FFFF
 
 nINT_ACK_CYCLE = !INTERRUPT_ACK_ACCESS;
 
@@ -351,8 +352,7 @@ DRAM_REGION_ACCESS_WAITSTATE.ar = nCPU_AS # !nSYS_RESET;
 
 */
 
-nCPU_DSACK0 =  !( UNUSED_REGION_ACCESS 
-                # DRAM_REGION_ACCESS_WAITSTATE 
+nCPU_DSACK0 =  !( DRAM_REGION_ACCESS_WAITSTATE 
                 # SRAM_REGION_ACCESS 
                 # (DEV32BIT_REGION_ACCESS & nDEV_WAIT) 
                 # (DEV8BIT_REGION_ACCESS & nDEV_WAIT) 
@@ -367,8 +367,9 @@ nCPU_DSACK0 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCE
 nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCESS & nDEV_WAIT) # (DEV16BIT_REGION_ACCESS & nDEV_WAIT)  # BIGFLASH_REGION_ACCESS );
 */
 
-//nCPU_BERR = !UNUSED_REGION_ACCESS;
-nCPU_BERR = 'b'1; 
+nCPU_BERR = !UNUSED_REGION_ACCESS;
+
+//nCPU_BERR = 'b'1; 
 
 /* Boot Flash signaling */
 

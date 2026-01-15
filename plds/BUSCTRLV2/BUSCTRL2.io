@@ -99,12 +99,12 @@ BEGIN
     "CPU_A17"                                 : INPUT_PIN = 69 ;
     "CPU_A16"                                 : INPUT_PIN = 70 ;
     "CPU_AA1"                                 : INPUT_PIN = 71 ;
-    "XXL_234"                                 : NODE_NUM = 709 ;
+    "XXL_235"                                 : NODE_NUM = 709 ;
     "CPU_AA0"                                 : INPUT_PIN = 72 ;
-    "XXL_233"                                 : NODE_NUM = 710 ;
-    "XXL_236"                                 : NODE_NUM = 711 ;
+    "XXL_234"                                 : NODE_NUM = 710 ;
+    "XXL_233"                                 : NODE_NUM = 711 ;
     "TDO"                                     : INPUT_PIN = 73 ;
-    "XXL_235"                                 : NODE_NUM = 712 ;
+    "XXL_236"                                 : NODE_NUM = 712 ;
     "UNUSED2"                                 : INPUT_PIN = 75 ;
     "CPU_FC0"                                 : INPUT_PIN = 76 ;
     "CPU_FC1"                                 : INPUT_PIN = 77 ;

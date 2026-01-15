@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Tue Nov 04 22:22:49 2025 "}
+  {DBtime "Sat Jan 03 16:13:53 2026 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,41 +33,356 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
+   {P DOT_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 1100}}
+   {P VGA_ENAB {Pt "INPUT"}{Lq 0}{Ploc 100 1080}}
+   {P MODE0 {Pt "INPUT"}{Lq 0}{Ploc 100 1040}}
+   {P LATCH_SR {Pt "INPUT"}{Lq 0}{Ploc 100 1020}}
+   {P FONTRO0 {Pt "INPUT"}{Lq 0}{Ploc 100 1000}}
+   {P INVERT_S {Pt "INPUT"}{Lq 0}{Ploc 100 980}}
+   {P LATCH_VR {Pt "INPUT"}{Lq 0}{Ploc 100 960}}
+   {P SELECT1 {Pt "INPUT"}{Lq 0}{Ploc 100 940}}
+   {P SELECT0 {Pt "INPUT"}{Lq 0}{Ploc 100 920}}
+   {P VMEM_D0 {Pt "INPUT"}{Lq 0}{Ploc 100 900}}
+   {P FONTRO1 {Pt "INPUT"}{Lq 0}{Ploc 100 880}}
+   {P FONTRO2 {Pt "INPUT"}{Lq 0}{Ploc 100 860}}
+   {P VMEM_D1 {Pt "INPUT"}{Lq 0}{Ploc 100 840}}
+   {P VMEM_D2 {Pt "INPUT"}{Lq 0}{Ploc 100 820}}
+   {P SHIFT_SR {Pt "INPUT"}{Lq 0}{Ploc 100 800}}
+   {P VMEM_D3 {Pt "INPUT"}{Lq 0}{Ploc 100 780}}
+   {P VMEM_D4 {Pt "INPUT"}{Lq 0}{Ploc 100 760}}
+   {P VMEM_D5 {Pt "INPUT"}{Lq 0}{Ploc 100 740}}
+   {P VMEM_D6 {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
+   {P VMEM_D7 {Pt "INPUT"}{Lq 0}{Ploc 100 700}}
+   {P FONTRO3 {Pt "INPUT"}{Lq 0}{Ploc 100 680}}
+   {P VMEM_D8 {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
+   {P VMEM_D9 {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
+   {P VMEM_D10 {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
+   {P VMEM_D11 {Pt "INPUT"}{Lq 0}{Ploc 100 600}}
+   {P VMEM_D12 {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
+   {P VMEM_D13 {Pt "INPUT"}{Lq 0}{Ploc 100 560}}
+   {P VMEM_D14 {Pt "INPUT"}{Lq 0}{Ploc 100 540}}
+   {P VMEM_D15 {Pt "INPUT"}{Lq 0}{Ploc 100 520}}
+   {P VMEM_D16 {Pt "INPUT"}{Lq 0}{Ploc 100 500}}
+   {P VMEM_D17 {Pt "INPUT"}{Lq 0}{Ploc 100 480}}
+   {P FONTRO4 {Pt "INPUT"}{Lq 0}{Ploc 100 460}}
+   {P FONTRO5 {Pt "INPUT"}{Lq 0}{Ploc 100 440}}
+   {P FONTRO6 {Pt "INPUT"}{Lq 0}{Ploc 100 420}}
+   {P VMEM_D18 {Pt "INPUT"}{Lq 0}{Ploc 100 400}}
+   {P VMEM_D19 {Pt "INPUT"}{Lq 0}{Ploc 100 380}}
+   {P VMEM_D20 {Pt "INPUT"}{Lq 0}{Ploc 100 360}}
+   {P VMEM_D21 {Pt "INPUT"}{Lq 0}{Ploc 100 340}}
+   {P VMEM_D22 {Pt "INPUT"}{Lq 0}{Ploc 100 320}}
+   {P FONTRO7 {Pt "INPUT"}{Lq 0}{Ploc 100 300}}
+   {P VMEM_D23 {Pt "INPUT"}{Lq 0}{Ploc 100 280}}
+   {P VMEM_D24 {Pt "INPUT"}{Lq 0}{Ploc 100 260}}
+   {P VMEM_D25 {Pt "INPUT"}{Lq 0}{Ploc 100 240}}
+   {P VMEM_D26 {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
+   {P VMEM_D27 {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
+   {P VMEM_D28 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
+   {P VMEM_D29 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
+   {P VMEM_D30 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P VMEM_D31 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
+   {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
+   {P BLUE0 {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P BLUE1 {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
+   {P MODE1 {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P GREEN0 {Pt "I/O"}{Lq 0}{Ploc 360 20}}
+   {P GREEN1 {Pt "I/O"}{Lq 0}{Ploc 360 40}}
+   {P GREEN2 {Pt "I/O"}{Lq 0}{Ploc 360 60}}
+   {P RED0 {Pt "I/O"}{Lq 0}{Ploc 360 80}}
+   {P RED1 {Pt "I/O"}{Lq 0}{Ploc 360 100}}
+   {P RED2 {Pt "I/O"}{Lq 0}{Ploc 360 120}}
+   {P RED3 {Pt "I/O"}{Lq 0}{Ploc 360 140}}
+   {P GREEN3 {Pt "I/O"}{Lq 0}{Ploc 360 160}}
+   {P RED4 {Pt "I/O"}{Lq 0}{Ploc 360 180}}
+   {P GREEN4 {Pt "I/O"}{Lq 0}{Ploc 360 200}}
+   {P FONT_A10 {Pt "I/O"}{Lq 0}{Ploc 360 220}}
+   {P FONT_A9 {Pt "I/O"}{Lq 0}{Ploc 360 240}}
+   {P FONT_A8 {Pt "I/O"}{Lq 0}{Ploc 360 260}}
+   {P FONT_A7 {Pt "I/O"}{Lq 0}{Ploc 360 280}}
+   {P FONT_A6 {Pt "I/O"}{Lq 0}{Ploc 360 300}}
+   {P FONT_A5 {Pt "I/O"}{Lq 0}{Ploc 360 320}}
+   {P FONT_A4 {Pt "I/O"}{Lq 0}{Ploc 360 340}}
+   {P FONT_A3 {Pt "I/O"}{Lq 0}{Ploc 360 360}}
+   {P FONT_A2 {Pt "I/O"}{Lq 0}{Ploc 360 380}}
+   {P FONT_A1 {Pt "I/O"}{Lq 0}{Ploc 360 400}}
+   {P FONT_A0 {Pt "I/O"}{Lq 0}{Ploc 360 420}}
+   {P STATUS {Pt "I/O"}{Lq 0}{Ploc 360 440}}
+   {P BLUE2 {Pt "I/O"}{Lq 0}{Ploc 360 460}}
+   {P BLUE3 {Pt "I/O"}{Lq 0}{Ploc 360 480}}
+   {P BLUE4 {Pt "I/O"}{Lq 0}{Ploc 360 500}}
   }
 
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 190 1570}
+   {Rdl 230 1130}
 
    [Ly "PINNUM"]
    [Ts 15][Tj "RC"]
+   {Pnl 120 1110}
+   {Pnl 120 1090}
+   [Ts 15][Tj "RC"]
+   {Pnl 120 1050}
+   {Pnl 120 1030}
+   {Pnl 120 1010}
+   {Pnl 120 990}
+   {Pnl 120 970}
+   {Pnl 120 950}
+   {Pnl 120 930}
+   {Pnl 120 910}
+   {Pnl 120 890}
+   {Pnl 120 870}
+   {Pnl 120 850}
+   {Pnl 120 830}
+   {Pnl 120 810}
+   {Pnl 120 790}
+   {Pnl 120 770}
+   {Pnl 120 750}
+   {Pnl 120 730}
+   {Pnl 120 710}
+   {Pnl 120 690}
+   {Pnl 120 670}
+   {Pnl 120 650}
+   {Pnl 120 630}
+   {Pnl 120 610}
+   {Pnl 120 590}
+   {Pnl 120 570}
+   {Pnl 120 550}
+   {Pnl 120 530}
+   {Pnl 120 510}
+   {Pnl 120 490}
+   {Pnl 120 470}
+   {Pnl 120 450}
+   {Pnl 120 430}
+   {Pnl 120 410}
+   {Pnl 120 390}
+   {Pnl 120 370}
+   {Pnl 120 350}
+   {Pnl 120 330}
+   {Pnl 120 310}
+   {Pnl 120 290}
+   {Pnl 120 270}
+   {Pnl 120 250}
+   {Pnl 120 230}
+   {Pnl 120 210}
+   {Pnl 120 190}
+   {Pnl 120 170}
+   {Pnl 120 150}
+   {Pnl 120 130}
+   {Pnl 120 110}
+   {Pnl 120 90}
+   {Pnl 120 70}
+   {Pnl 120 50}
    [Ts 15][Tj "LC"]
+   {Pnl 340 30}
+   {Pnl 340 50}
+   {Pnl 340 70}
+   {Pnl 340 90}
+   {Pnl 340 110}
+   {Pnl 340 130}
+   {Pnl 340 150}
+   {Pnl 340 170}
+   {Pnl 340 190}
+   {Pnl 340 210}
+   {Pnl 340 230}
+   {Pnl 340 250}
+   {Pnl 340 270}
+   {Pnl 340 290}
+   {Pnl 340 310}
+   {Pnl 340 330}
+   {Pnl 340 350}
+   {Pnl 340 370}
+   {Pnl 340 390}
+   {Pnl 340 410}
+   {Pnl 340 430}
+   {Pnl 340 450}
+   {Pnl 340 470}
+   {Pnl 340 490}
+   {Pnl 340 510}
 
-   {Sd A}
+   {Sd A 87 90 1 2 6 8 10 12 13 17 20 22 23 24 25 29 31 32 33 35 36 37 40 41 42 44 45 46 48 52 63 64 65 67 68 69 70 71 72 75 76 77 78 79 80 81 83 84 85 89 92 93 100 5 7 9 14 16 19 21 27 28 30 47 49 50 53 54 55 56 57 58 60 61 94 96 97 98}
   }
 
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 1560 250 0}
+   {R 130 1120 330 0}
+   {L 130 1100 100 1100}
+   {L 130 1110 140 1100 130 1090}
+   {L 130 1080 100 1080}
+   {L 130 1090 140 1080 130 1070}
+   {L 130 1040 100 1040}
+   {L 130 1020 100 1020}
+   {L 130 1000 100 1000}
+   {L 130 980 100 980}
+   {L 130 960 100 960}
+   {L 130 940 100 940}
+   {L 130 920 100 920}
+   {L 130 900 100 900}
+   {L 130 880 100 880}
+   {L 130 860 100 860}
+   {L 130 840 100 840}
+   {L 130 820 100 820}
+   {L 130 800 100 800}
+   {L 130 780 100 780}
+   {L 130 760 100 760}
+   {L 130 740 100 740}
+   {L 130 720 100 720}
+   {L 130 700 100 700}
+   {L 130 680 100 680}
+   {L 130 660 100 660}
+   {L 130 640 100 640}
+   {L 130 620 100 620}
+   {L 130 600 100 600}
+   {L 130 580 100 580}
+   {L 130 560 100 560}
+   {L 130 540 100 540}
+   {L 130 520 100 520}
+   {L 130 500 100 500}
+   {L 130 480 100 480}
+   {L 130 460 100 460}
+   {L 130 440 100 440}
+   {L 130 420 100 420}
+   {L 130 400 100 400}
+   {L 130 380 100 380}
+   {L 130 360 100 360}
+   {L 130 340 100 340}
+   {L 130 320 100 320}
+   {L 130 300 100 300}
+   {L 130 280 100 280}
+   {L 130 260 100 260}
+   {L 130 240 100 240}
+   {L 130 220 100 220}
+   {L 130 200 100 200}
+   {L 130 180 100 180}
+   {L 130 160 100 160}
+   {L 130 140 100 140}
+   {L 130 120 100 120}
+   {L 130 100 100 100}
+   {L 130 80 100 80}
+   {L 130 60 100 60}
+   {L 130 40 100 40}
+   {L 330 20 360 20}
+   {L 330 40 360 40}
+   {L 330 60 360 60}
+   {L 330 80 360 80}
+   {L 330 100 360 100}
+   {L 330 120 360 120}
+   {L 330 140 360 140}
+   {L 330 160 360 160}
+   {L 330 180 360 180}
+   {L 330 200 360 200}
+   {L 330 220 360 220}
+   {L 330 240 360 240}
+   {L 330 260 360 260}
+   {L 330 280 360 280}
+   {L 330 300 360 300}
+   {L 330 320 360 320}
+   {L 330 340 360 340}
+   {L 330 360 360 360}
+   {L 330 380 360 380}
+   {L 330 400 360 400}
+   {L 330 420 360 420}
+   {L 330 440 360 440}
+   {L 330 460 360 460}
+   {L 330 480 360 480}
+   {L 330 500 360 500}
    [Ly "PINNAM"]
    [Tj "LC"]
+   {T "DOT_CLK" 140 1100}
+   {T "VGA_ENAB" 140 1080}
+   {T "MODE0" 140 1040}
+   {T "LATCH_SR" 140 1020}
+   {T "FONTRO0" 140 1000}
+   {T "INVERT_S" 140 980}
+   {T "LATCH_VR" 140 960}
+   {T "SELECT1" 140 940}
+   {T "SELECT0" 140 920}
+   {T "VMEM_D0" 140 900}
+   {T "FONTRO1" 140 880}
+   {T "FONTRO2" 140 860}
+   {T "VMEM_D1" 140 840}
+   {T "VMEM_D2" 140 820}
+   {T "SHIFT_SR" 140 800}
+   {T "VMEM_D3" 140 780}
+   {T "VMEM_D4" 140 760}
+   {T "VMEM_D5" 140 740}
+   {T "VMEM_D6" 140 720}
+   {T "VMEM_D7" 140 700}
+   {T "FONTRO3" 140 680}
+   {T "VMEM_D8" 140 660}
+   {T "VMEM_D9" 140 640}
+   {T "VMEM_D10" 140 620}
+   {T "VMEM_D11" 140 600}
+   {T "VMEM_D12" 140 580}
+   {T "VMEM_D13" 140 560}
+   {T "VMEM_D14" 140 540}
+   {T "VMEM_D15" 140 520}
+   {T "VMEM_D16" 140 500}
+   {T "VMEM_D17" 140 480}
+   {T "FONTRO4" 140 460}
+   {T "FONTRO5" 140 440}
+   {T "FONTRO6" 140 420}
+   {T "VMEM_D18" 140 400}
+   {T "VMEM_D19" 140 380}
+   {T "VMEM_D20" 140 360}
+   {T "VMEM_D21" 140 340}
+   {T "VMEM_D22" 140 320}
+   {T "FONTRO7" 140 300}
+   {T "VMEM_D23" 140 280}
+   {T "VMEM_D24" 140 260}
+   {T "VMEM_D25" 140 240}
+   {T "VMEM_D26" 140 220}
+   {T "VMEM_D27" 140 200}
+   {T "VMEM_D28" 140 180}
+   {T "VMEM_D29" 140 160}
+   {T "VMEM_D30" 140 140}
+   {T "VMEM_D31" 140 120}
+   {T "NSYS_RES" 140 100}
+   {T "BLUE0" 140 80}
+   {T "BLUE1" 140 60}
+   {T "MODE1" 140 40}
    [Tj "RC"]
+   {T "GREEN0" 320 20}
+   {T "GREEN1" 320 40}
+   {T "GREEN2" 320 60}
+   {T "RED0" 320 80}
+   {T "RED1" 320 100}
+   {T "RED2" 320 120}
+   {T "RED3" 320 140}
+   {T "GREEN3" 320 160}
+   {T "RED4" 320 180}
+   {T "GREEN4" 320 200}
+   {T "FONT_A10" 320 220}
+   {T "FONT_A9" 320 240}
+   {T "FONT_A8" 320 260}
+   {T "FONT_A7" 320 280}
+   {T "FONT_A6" 320 300}
+   {T "FONT_A5" 320 320}
+   {T "FONT_A4" 320 340}
+   {T "FONT_A3" 320 360}
+   {T "FONT_A2" 320 380}
+   {T "FONT_A1" 320 400}
+   {T "FONT_A0" 320 420}
+   {T "STATUS" 320 440}
+   {T "BLUE2" 320 460}
+   {T "BLUE3" 320 480}
+   {T "BLUE4" 320 500}
    [Ly "DEVICE"]
    [Tj "CT"]
-   {T "F1508ISPTQFP100" 190 -10}
+   {T "F1508ISPTQFP100" 230 -10}
   }
 
   {ATR
    {IN
-    {Org 100 1560}
+    {Org 100 40}
     {Ty 255}
    }
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VGA_BITPRO 190 1560}
+    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VGA_BITPRO 230 1120}
    }
   }
  }
@@ -77,6 +392,162 @@
   }
 
   {NET_DEF
+   {N DOT_CLK
+   }
+   {N VGA_ENAB
+   }
+   {N MODE0
+   }
+   {N LATCH_SR
+   }
+   {N FONTRO0
+   }
+   {N INVERT_S
+   }
+   {N LATCH_VR
+   }
+   {N SELECT1
+   }
+   {N SELECT0
+   }
+   {N VMEM_D0
+   }
+   {N FONTRO1
+   }
+   {N FONTRO2
+   }
+   {N VMEM_D1
+   }
+   {N VMEM_D2
+   }
+   {N SHIFT_SR
+   }
+   {N VMEM_D3
+   }
+   {N VMEM_D4
+   }
+   {N VMEM_D5
+   }
+   {N VMEM_D6
+   }
+   {N VMEM_D7
+   }
+   {N FONTRO3
+   }
+   {N VMEM_D8
+   }
+   {N VMEM_D9
+   }
+   {N VMEM_D10
+   }
+   {N VMEM_D11
+   }
+   {N VMEM_D12
+   }
+   {N VMEM_D13
+   }
+   {N VMEM_D14
+   }
+   {N VMEM_D15
+   }
+   {N VMEM_D16
+   }
+   {N VMEM_D17
+   }
+   {N FONTRO4
+   }
+   {N FONTRO5
+   }
+   {N FONTRO6
+   }
+   {N VMEM_D18
+   }
+   {N VMEM_D19
+   }
+   {N VMEM_D20
+   }
+   {N VMEM_D21
+   }
+   {N VMEM_D22
+   }
+   {N FONTRO7
+   }
+   {N VMEM_D23
+   }
+   {N VMEM_D24
+   }
+   {N VMEM_D25
+   }
+   {N VMEM_D26
+   }
+   {N VMEM_D27
+   }
+   {N VMEM_D28
+   }
+   {N VMEM_D29
+   }
+   {N VMEM_D30
+   }
+   {N VMEM_D31
+   }
+   {N NSYS_RES
+   }
+   {N BLUE0
+   }
+   {N BLUE1
+   }
+   {N MODE1
+   }
+   {N GREEN0
+   }
+   {N GREEN1
+   }
+   {N GREEN2
+   }
+   {N RED0
+   }
+   {N RED1
+   }
+   {N RED2
+   }
+   {N RED3
+   }
+   {N GREEN3
+   }
+   {N RED4
+   }
+   {N GREEN4
+   }
+   {N FONT_A10
+   }
+   {N FONT_A9
+   }
+   {N FONT_A8
+   }
+   {N FONT_A7
+   }
+   {N FONT_A6
+   }
+   {N FONT_A5
+   }
+   {N FONT_A4
+   }
+   {N FONT_A3
+   }
+   {N FONT_A2
+   }
+   {N FONT_A1
+   }
+   {N FONT_A0
+   }
+   {N STATUS
+   }
+   {N BLUE2
+   }
+   {N BLUE3
+   }
+   {N BLUE4
+   }
   }
 
   {SUBCOMP

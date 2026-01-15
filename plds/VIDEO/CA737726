@@ -11,7 +11,7 @@ Device   f1508isptqfp100;
 PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
-PROPERTY ATMEL {XOR_SYNTHESIS = ON};
+PROPERTY ATMEL (XOR_SYNTHESIS = ON);
 
 
 
@@ -20,7 +20,7 @@ Pin[87] = DOT_CLK;
 Pin[89] = nSYS_RESET;
 Pin[17,23,24,29,31,32,33,35,37,40,41,42,44,45,46,48,52,63,68,69,70,71,72,76,77,78,79,80,81,83,84,85] = [VMEM_D0..31];        // 16 bit input from video memory
 Pin[6,20,22,36,64,65,67,75] = [FONTROM_D0..7];      // 8 bit input from font rom
-Pin[1,100] = [MODE0..1];    // 00 = Text Mode   (MODE1==0)
+Pin[1,100] = [MODE0..1];           // 00 = Text Mode   (MODE1==0)
                             // 10 = Graphics Mode 640x480 16bpp
                             // 11 = Graphics Mode 648x480 8bpp
                             // 10 = Undefined
@@ -35,8 +35,8 @@ Pin[90] = VGA_ENABLE;           // If high, the data outputs are turned on.  If 
                             // of the shift register, and if we are in graphics mode the output is based on the 16 bit value in
                             // the VMEM registers.
 Pin[13,12] = [SELECT_SUB0..1];     // In text mode SELECT is not used.
-                            // In 16bpp graphics mode SELECT will pick one of 2 pixels. SUB0
-                            // In 8bpp graphics mode, SELECT will pick one of 4 pixels. SUB1:SUB0
+                            // In 16bpp graphics mode SELECT will pick one of 2 pixels.
+                            // In 8bpp graphics mode, SELECT will pick one of 4 pixels.
 
 Pin[8] = INVERT_SELECT;        // If high, the cursor effect should be turned on.  This will invert what is being displayed.
 Pin[94] = STATUS;
@@ -48,12 +48,11 @@ Pin[92,93,96,97,98] = [BLUE0..4];
 Pin[61,60,58,57,56,55,54,53,50,49,47] = [FONT_ADDRESS0..10];   // Output to address lines of font memory to select character
                             // 8 bits from the character itself, and 3 bits from the attribute
 
-Pin = BLINK_TIMER;
 // NODES
 
-PINNODE = [SREG_D0..7];      // Shift Register - Pixel Data
-PINNODE = [AREG_D0..23];     // Attribute register -save the attribute to use while SREG outputs
-PINNODE = [VREG_D0..31];     // Memory Register - In graphics mode all 16 bits are used for pixel data
+PINNODE [0..0] = [SREG_D0..7];     // Shift Register
+PINNODE [0..0] = [AREG_D0..23];     // Attribute register -save the attribute to use while SREG outputs
+PINNODE [0..0] = [VREG_D0..31];    // Memory Register - In graphics mode all 16 bits are used for pixel data
                             /*
                              
                              In text mode, we use all 32 bits for character and atribute
@@ -115,18 +114,7 @@ SREG_D7.d = (LATCH_SREG & FONTROM_D7) # (NO_SHIFT_CHANGE & SREG_D7) # (SHIFT_SRE
 [VREG_D0..31].ck = !DOT_CLK;
 [VREG_D0..31].ar = !nSYS_RESET;
 
-/*
-
-        FONT_ADDRESS goes to the FONT ROM bits 4-15.  The lowest 4 bits of the FONT ROM address 
-        comes from the FONT_ROW output from the SYNC CPLD.  The layout of the FONT ROM address space
-        is as follows:
-
-                bit 0-3:        4 bits to select the row of a given character.
-                bit 4-11;       8 bits to select the particular character we are displaying
-                bit 12-14;      3 bits to select the FONT family
-
-        This means the FONT ROM uses 32K of space
-*/
+// based on the SELECT_SUB0, we will send one of the two characters to the font rom for resolution
 
 [FONT_ADDRESS0..7] = [VREG_D0..7];
 [FONT_ADDRESS8..10] = [AREG_D18..20];
@@ -243,118 +231,110 @@ GRAPHICS_8BPP_MODE =  mode_field:['b'11];
     repeated for each bit of each color, and this allows the TEXT_MODE to have 32 background colors and 32 
     foreground colors.   
 
-    We still need to figure out how to do INVERT. 
+    We still need to figure out how to do inverstion. 
 
-    INVERTCHAR is used to INVERT a character to represent the cursor.  It uses an external BLINK_TIMER input
-    to turn it off and on - External pulse needs to be provided to the BLINK_TIMER. AREG_D23 is the bit to
-    indicate the location of the cursor.
 */
-
-
-PINNODE = INVERTCHAR;
-INVERTCHAR = (BLINK_TIMER & AREG_D23);
-
 RED0 = VGA_ENABLE & ( 
-                      ( TEXT_MODE & (((SREG_D7 & AREG_D0) # (!SREG_D7 & AREG_D9)) $ INVERTCHAR ))              // MODE=00, TEXT MODE
+                      ( TEXT_MODE & ((SREG_D7 & AREG_D0) # (!SREG_D7 & AREG_D9)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D0 ) # (select_field:['b'X1] & VREG_D16)))
                     # ( GRAPHICS_8BPP_MODE & (REDb0ORb1))
                     );
 
 RED1 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D0) # (!SREG_D7 & AREG_D9)) $ INVERTCHAR ))              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D0) # (!SREG_D7 & AREG_D9)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D1 ) # (select_field:['b'X1] & VREG_D17))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (REDb0))
                     );
 
 RED2 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D0) # (!SREG_D7 & AREG_D9))  $ INVERTCHAR ))              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D0) # (!SREG_D7 & AREG_D9)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D2 ) # (select_field:['b'X1] & VREG_D18))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (REDb1))
                     );
 
 RED3 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D1) # (!SREG_D7 & AREG_D10))  $ INVERTCHAR ))              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D1) # (!SREG_D7 & AREG_D10)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D3 ) # (select_field:['b'X1] & VREG_D19))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (REDb0))
                     );
 
 RED4 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D2) # (!SREG_D7 & AREG_D11))  $ INVERTCHAR ))  // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D2) # (!SREG_D7 & AREG_D11)) )  // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D4 ) # (select_field:['b'X1] & VREG_D20))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (REDb1))
                     );
 
 
 GREEN0 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D3) # (!SREG_D7 & AREG_D12))  $ INVERTCHAR ))              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D3) # (!SREG_D7 & AREG_D12)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D5 ) # (select_field:['b'X1] & VREG_D21))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (GREENb0ORb1)) 
                     );
 
 GREEN1 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D3) # (!SREG_D7 & AREG_D12)) $ INVERTCHAR ) )              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D3) # (!SREG_D7 & AREG_D12)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D6 ) # (select_field:['b'X1] & VREG_D22))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (GREENb0)) 
                     );
 
 GREEN2 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D3) # (!SREG_D7 & AREG_D12)) $ INVERTCHAR ))              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D3) # (!SREG_D7 & AREG_D12)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D7 ) # (select_field:['b'X1] & VREG_D23))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (GREENb1))
                     );
 
 GREEN3 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D4) # (!SREG_D7 & AREG_D13)) $ INVERTCHAR ) )              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D4) # (!SREG_D7 & AREG_D13)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D8 ) # (select_field:['b'X1] & VREG_D24))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (GREENb0))
                     );
 
 GREEN4 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D5) # (!SREG_D7 & AREG_D14))  $ INVERTCHAR ))   // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D5) # (!SREG_D7 & AREG_D14)) )   // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D9 ) # (select_field:['b'X1] & VREG_D25))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (GREENb0ORb1))
                     );
 
 BLUE0 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D6) # (!SREG_D7 & AREG_D15))$ INVERTCHAR ))              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D6) # (!SREG_D7 & AREG_D15)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D10 ) # (select_field:['b'X1] & VREG_D26))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (BLUEb0ORb1))
                     );
 
 BLUE1 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D6) # (!SREG_D7 & AREG_D15))$ INVERTCHAR ) )              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D6) # (!SREG_D7 & AREG_D15)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D11 ) # (select_field:['b'X1] & VREG_D27))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (BLUEb0)) 
                     );
 
 BLUE2 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D6) # (!SREG_D7 & AREG_D15))$ INVERTCHAR ) )              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D6) # (!SREG_D7 & AREG_D15)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D12 ) # (select_field:['b'X1] & VREG_D28))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (BLUEb1)) 
                     );
 
 BLUE3 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D7) # (!SREG_D7 & AREG_D16))$ INVERTCHAR ) )              // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D7) # (!SREG_D7 & AREG_D16)) )              // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D13 ) # (select_field:['b'X1] & VREG_D29))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (BLUEb0)) 
                     );
 
 BLUE4 = VGA_ENABLE & ( 
-                    ( TEXT_MODE & (((SREG_D7 & AREG_D8) # (!SREG_D7 & AREG_D17)) $ INVERTCHAR ))  // MODE=00, TEXT MODE
+                    ( TEXT_MODE & ((SREG_D7 & AREG_D8) # (!SREG_D7 & AREG_D17)) )  // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D14 ) # (select_field:['b'X1] & VREG_D30))) // MODE=10, 16bpp Graphics
                     # ( GRAPHICS_8BPP_MODE & (BLUEb1)) 
                     );
 
 
 /*
-Total dedicated input used:	3/4 	(75%)
+Total dedicated input used:	2/4 	(50%)
 Total I/O pins used		80/80 	(100%)
-Total Logic cells used 		110/128 	(85%)
+Total Logic cells used 		95/128 	(74%)
 Total Flip-Flop used 		64/128 	(50%)
-Total Foldback logic used 	8/128 	(6%)
-Total Nodes+FB/MCells 		118/128 	(92%)
-Total cascade used 		0
-Total input pins 		56
+Total Foldback logic used 	0/128 	(0%)
+Total Nodes+FB/MCells 		80/128 	(62%)
+Total cascade used 		15
+Total input pins 		55
 Total output pins 		27
-Total Pts 			332
+Total Pts 			264
 */

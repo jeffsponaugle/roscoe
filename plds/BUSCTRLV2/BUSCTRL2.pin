@@ -96,12 +96,12 @@ CPU_A18					: 68
 CPU_A17					: 69
 CPU_A16					: 70
 CPU_AA1					: 71
-XXL_234					: 709
+XXL_235					: 709
 CPU_AA0					: 72
-XXL_233					: 710
-XXL_236					: 711
+XXL_234					: 710
+XXL_233					: 711
 TDO					: 73
-XXL_235					: 712
+XXL_236					: 712
 UNUSED2					: 75
 CPU_FC0					: 76
 CPU_FC1					: 77
