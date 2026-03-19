@@ -17,8 +17,8 @@ PROPERTY ATMEL {open_collector=nCPU_DSACK0, nCPU_DSACK1};
 //      VERSION 25 - First 128MB support added, removed DRAM aliasing.
 //      64/128MB
 //      VERSION 26 - Cache Enabled
-//      VERSION 27 - Bus Error Signal enabled.
-
+//      VERSION 27 - Bus Error Signal enabled. [64/128 SIMM]
+//      VERSION 28 - nDEV_WAIT used for wait state addition. [64/128 SIMM]
 
 /* NOTE:  Active low values are designated with a starting n. */
 
@@ -73,7 +73,7 @@ Pin[98] = nSRAM_LH_SEL;
 Pin[99] = nSRAM_UL_SEL;
 Pin[100] = nSRAM_UH_SEL;
 
-// To Device Controller
+// To/From Device Controller
 Pin[1] = nDEV8BITCS;
 Pin[2] = nDEV16BITCS;
 Pin[5] = nDEV32BITCS;
