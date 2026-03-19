@@ -83,6 +83,10 @@ Pin[9] = nVRAM_LH_SEL;
 Pin[8] = nVRAM_UL_SEL;
 Pin[6] = nVRAM_UH_SEL;
 
+Pin[48] = nEXP_VRAM_ADDR_OE;
+Pin[47] = nEXP_VRAM_DIR;
+
+
 Pin[2,50,49] = DEBUG1,DEBUG2,DEBUG3;
 
 // Nodes
@@ -365,12 +369,17 @@ VMEM_ACCESS_BUSY_START_RESET.ar = !EXP_nSYS_RESET # VMEM_ACCESS_BUSY_START;
 
 CPU_ACCESS_IN_PROGRESS = (!nEXP_VMEM_CS & !VMEM_ACCESS_BUSY_START) # (!nEXP_VMEM_CS & !VRAM_BUSY);
 
+nEXP_VRAM_ADDR_OE = !CPU_ACCESS_IN_PROGRESS;
+nEXP_VRAM_DIR = !EXP_RW;
+
 /* nEXP_DEV_WAIT is the open collector signal we set to 0 to pause a CPU bus operation.
 
    IF VMEM_CS is low and the BUSY_START is low, we are doing a bus cycle with no wait, so make sure DEV_WAIT is kept high.
    IF VEMM_CS is low and the VRAM_BUSY is high, keep DEV_WAIT low.  As soon as VRAM_BUSY goes low DEV_WAIT will go high.
    If CS is high, keep the DEV_WAIT high (since there is no access request in process)
  */
+
+
 
 nEXP_CPU_DEV_WAIT = CPU_ACCESS_IN_PROGRESS
                 # (nEXP_VMEM_CS);
