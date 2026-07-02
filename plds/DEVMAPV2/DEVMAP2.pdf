@@ -1,11 +1,11 @@
-{COMPONENT C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAPV2\DEVMAP2.SYM
+{COMPONENT C:\SRC\DEVMAPV2\DEVMAP2.SYM
 
  {ENVIRONMENT
   {PDIFvrev 3.00}
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Wed Mar 18 20:14:18 2026 "}
+  {DBtime "Thu Jul 02 14:46:32 2026 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -329,7 +329,7 @@
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAPV2\DEVMAP2 230 760}
+    {At PLD C:\SRC\DEVMAPV2\DEVMAP2 230 760}
    }
   }
  }

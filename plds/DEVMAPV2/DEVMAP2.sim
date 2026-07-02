@@ -29,6 +29,9 @@ PIN  83 =  EXTRA_BC_DM1
 PIN  84 =  EXTRA_BC_DM2 
 PIN  21 =  EXTRA_DM_INT1 
 PIN  27 =  EXTRA_DM_INT2 
+PIN   0 =  IDE_WR_SIG 
+PIN   0 =  IDE_WR_SIG_A 
+PIN   0 =  IDE_WR_SIG_RESET 
 PIN  17 =  RTC_A_SEL 
 PIN  16 =  RTC_D_SEL 
 PIN  93 =  SYS_RESET_POS 
@@ -57,8 +60,6 @@ PIN  44 =  nIDE_BUFFER_EN2
 PIN   0 =  nIDE_WAITSTATE_DELAY 
 PIN   0 =  nIDE_WAITSTATE_DELAY_RESET 
 PIN  46 =  nIDE_WR 
-PIN   0 =  nIDE_WR_DELAY1 
-PIN   0 =  nIDE_WR_DELAY2 
 PIN  13 =  nINTCTRL_CS 
 PIN   0 =  nINTCTRL_CS_delay 
 PIN  28 =  nPTC_CS 
@@ -87,6 +88,37 @@ EXP_DM_CPLD1 =>
 
 EXP_DM_CPLD2 =>
     0 
+
+IDE_WR_SIG.d  =>
+    1 
+
+IDE_WR_SIG.ar  =>
+    !IDE_WR_SIG_A
+  # IDE_WR_SIG_RESET
+  # !nSYS_RESET
+
+IDE_WR_SIG.ck  =>
+    CPU_CLK
+
+IDE_WR_SIG_A.d  =>
+    1 
+
+IDE_WR_SIG_A.ar  =>
+    nIDE1_CSA & nIDE1_CSB
+  # !nSYS_RESET
+
+IDE_WR_SIG_A.ck  =>
+    !CPU_CLK
+
+IDE_WR_SIG_RESET.d  =>
+    IDE_WR_SIG
+
+IDE_WR_SIG_RESET.ar  =>
+    !nDEV_WAIT
+  # !nSYS_RESET
+
+IDE_WR_SIG_RESET.ck  =>
+    CPU_CLK
 
 RTC_A_SEL.d  =>
     1 
@@ -129,130 +161,130 @@ nEXP_DEV8BITCS =>
     nDEV8BITCS
 
 nEXP_VIO_CS =>
-    !CPU_A8
-  # CPU_A9
-  # !CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV8BITCS
   # CPU_A27
-  # nDEV8BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # !CPU_A10
+  # CPU_A9
+  # !CPU_A8
 
 nEXP_VMEM_CS =>
-    CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV32BITCS
   # CPU_A27
-  # nDEV32BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
 
 nIDE1_CSA =>
-    CPU_A8
-  # CPU_A9
-  # CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV16BITCS
   # CPU_A27
-  # nDEV16BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # CPU_A10
+  # CPU_A9
+  # CPU_A8
 
 nIDE1_CSB =>
-    !CPU_A8
-  # CPU_A9
-  # CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV16BITCS
   # CPU_A27
-  # nDEV16BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # CPU_A10
+  # CPU_A9
+  # !CPU_A8
 
 nIDE2_CSA =>
-    CPU_A8
-  # !CPU_A9
-  # CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV16BITCS
   # CPU_A27
-  # nDEV16BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # CPU_A10
+  # !CPU_A9
+  # CPU_A8
 
 nIDE2_CSB =>
-    !CPU_A8
-  # !CPU_A9
-  # CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV16BITCS
   # CPU_A27
-  # nDEV16BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # CPU_A10
+  # !CPU_A9
+  # !CPU_A8
 
 nIDE_BUFFER_EN1 =>
     nIDE1_CSA & nIDE1_CSB
@@ -283,50 +315,30 @@ nIDE_WAITSTATE_DELAY_RESET.ck  =>
 
 nIDE_WR =>
     CPU_RW
-  # nIDE_WR_DELAY2
-
-nIDE_WR_DELAY1.d  =>
-    1 
-
-nIDE_WR_DELAY1.ar  =>
-    nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2
-  # !nSYS_RESET
-
-nIDE_WR_DELAY1.ck  =>
-    CPU_CLK
-
-nIDE_WR_DELAY2.d  =>
-    nIDE_WR_DELAY1
-
-nIDE_WR_DELAY2.ar  =>
-    nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2
-  # !nSYS_RESET
-
-nIDE_WR_DELAY2.ck  =>
-    CPU_CLK
+  # !IDE_WR_SIG
 
 nINTCTRL_CS =>
-    CPU_A8
-  # !CPU_A9
-  # CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV8BITCS
   # CPU_A27
-  # nDEV8BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # CPU_A10
+  # !CPU_A9
+  # CPU_A8
   # nINTCTRL_CS_delay
 
 nINTCTRL_CS_delay.d  =>
@@ -383,164 +395,164 @@ nINTCTRL_CS_pre =>
   # CPU_A8
 
 nPTC_CS =>
-    CPU_A8
-  # CPU_A9
-  # !CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV16BITCS
   # CPU_A27
-  # nDEV16BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # !CPU_A10
+  # CPU_A9
+  # CPU_A8
 
 nRTC_CS =>
-    !CPU_A8
-  # !CPU_A9
-  # CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV8BITCS
   # CPU_A27
-  # nDEV8BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # CPU_A10
+  # !CPU_A9
+  # !CPU_A8
 
 nSEVENSEGA_WR =>
-    CPU_A8
-  # !CPU_A9
-  # !CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV8BITCS
   # CPU_A27
-  # nDEV8BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # !CPU_A10
+  # !CPU_A9
+  # CPU_A8
 
 nSEVENSEGB_WR =>
-    !CPU_A8
-  # !CPU_A9
-  # !CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV8BITCS
   # CPU_A27
-  # nDEV8BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # !CPU_A10
+  # !CPU_A9
+  # !CPU_A8
 
 nSTATUSLED_WR =>
-    CPU_A8
-  # CPU_A9
-  # CPU_A10
-  # !CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV8BITCS
   # CPU_A27
-  # nDEV8BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # !CPU_A11
+  # CPU_A10
+  # CPU_A9
+  # CPU_A8
 
 nUART_CSA =>
-    CPU_A8
-  # CPU_A9
-  # CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV8BITCS
   # CPU_A27
-  # nDEV8BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # CPU_A10
+  # CPU_A9
+  # CPU_A8
 
 nUART_CSB =>
-    !CPU_A8
-  # CPU_A9
-  # CPU_A10
-  # CPU_A11
-  # CPU_A12
-  # CPU_A13
-  # CPU_A14
-  # CPU_A15
-  # CPU_A16
-  # CPU_A17
-  # CPU_A18
-  # CPU_A19
-  # CPU_A20
-  # CPU_A21
-  # CPU_A22
-  # CPU_A23
-  # CPU_A24
-  # CPU_A25
-  # CPU_A26
+    nDEV8BITCS
   # CPU_A27
-  # nDEV8BITCS
+  # CPU_A26
+  # CPU_A25
+  # CPU_A24
+  # CPU_A23
+  # CPU_A22
+  # CPU_A21
+  # CPU_A20
+  # CPU_A19
+  # CPU_A18
+  # CPU_A17
+  # CPU_A16
+  # CPU_A15
+  # CPU_A14
+  # CPU_A13
+  # CPU_A12
+  # CPU_A11
+  # CPU_A10
+  # CPU_A9
+  # !CPU_A8
 
 %END

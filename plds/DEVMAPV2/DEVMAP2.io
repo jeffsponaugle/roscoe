@@ -1,4 +1,4 @@
-CHIP "C:\USERS\JEFF\SRC\ROSCOE\PLDS\DEVMAPV2\DEVMAP2"
+CHIP "C:\SRC\DEVMAPV2\DEVMAP2"
 BEGIN
 
     DEVICE = "TQFP100";
@@ -52,11 +52,12 @@ BEGIN
     "CPU_A22"                                 : INPUT_PIN = 57 ;
     "CPU_A21"                                 : INPUT_PIN = 58 ;
     "CPU_A20"                                 : INPUT_PIN = 60 ;
+    "IDE_WR_SIG_A"                            : NODE_NUM = 693 ;
     "CPU_A19"                                 : INPUT_PIN = 61 ;
-    "Com_Ctrl_105"                            : NODE_NUM = 694 ;
-    "nIDE_WR_DELAY1"                          : NODE_NUM = 695 ;
+    "IDE_WR_SIG_A_AR"                         : NODE_NUM = 694 ;
+    "IDE_WR_SIG"                              : NODE_NUM = 695 ;
     "TCK"                                     : INPUT_PIN = 62 ;
-    "nIDE_WR_DELAY2"                          : NODE_NUM = 696 ;
+    "IDE_WR_SIG_RESET"                        : NODE_NUM = 696 ;
     "CPU_A18"                                 : INPUT_PIN = 63 ;
     "CPU_A17"                                 : INPUT_PIN = 64 ;
     "CPU_A16"                                 : INPUT_PIN = 65 ;

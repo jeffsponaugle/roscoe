@@ -1,7 +1,7 @@
 Name	 DEVMAP;
 PartNo   DEVMAP;
 Date     03/30/2024;
-Revision 15;
+Revision 20;
 Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
@@ -12,7 +12,7 @@ PROPERTY ATMEL {TDI_PULLUP = ON};
 PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
-//      VERSION 19 - IDE Waitstate Fix/Test
+//      VERSION 20 - IDE Waitstate Fix/Test, plus IDE WR pin delaty
 
 /* 
                                                 Inputs
@@ -118,10 +118,11 @@ Pin[20] = UNUSED2;
 // ADD a CPU_AS signal to this device so we can have proper device bus cycle termination
 
 
-PINNODE = nIDE_WR_DELAY1, nIDE_WR_DELAY2;
+PINNODE = IDE_WR_SIG_A, IDE_WR_SIG_RESET, IDE_WR_SIG;
 PINNODE = nINTCTRL_CS_delay;
 PINNODE = nIDE_WAITSTATE_DELAY;
 PINNODE = nIDE_WAITSTATE_DELAY_RESET;
+
 
 // dummy expression to force the pins to be assigned.
 EXPANSION_EXTRA2 = nSYS_RESET & nDEV32BITCS & CPU_RW  & nEXP_DEV_WAIT & nEXP_CACHE_CTRL;
@@ -201,15 +202,30 @@ nEXP_VMEM_CS = nDEV32BITCS # !(field_CPU_ADDRESS:['h'00XXXXX]);   // 1MB of Vide
 nIDE_BUFFER_EN1 = (nIDE1_CSA & nIDE1_CSB);
 nIDE_BUFFER_EN2 = (nIDE2_CSA & nIDE2_CSB);
 
-nIDE_WR = CPU_RW # nIDE_WR_DELAY2;
+nIDE_WR = CPU_RW # !IDE_WR_SIG;
 
-nIDE_WR_DELAY1.d = 'b'1;
-nIDE_WR_DELAY1.ck = CPU_CLK;
-nIDE_WR_DELAY1.ar = (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2)  # !nSYS_RESET;
+// nIDE_WR_SIG is the Write signal (positive assertion).   It does not turn on until one full clock cycle after the CS starts.
+// SIG_A is held in reset until a IDE cycle is active by a CS assertion, then changes on the next falling edge.
 
-nIDE_WR_DELAY2.d = nIDE_WR_DELAY1;
-nIDE_WR_DELAY2.ck = CPU_CLK;
-nIDE_WR_DELAY2.ar = (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2)  # !nSYS_RESET;
+IDE_WR_SIG_A.d = 'b'1;
+IDE_WR_SIG_A.ck = !CPU_CLK;
+IDE_WR_SIG_A.ar = (nIDE1_CSA & nIDE1_CSB) # !nSYS_RESET;
+
+// the nIDE_WR_SIG_RESET is a signal used to reset the nIDE_WR_SIG after one full clock cycle being asserted.  This signal is asserted on the
+// risign clock if the WR_SIG is active AND we are not in a waitstate in more.   This menas the WR_SIG signal is 1 clock cycle long if we only
+// add one waitstate, but if we add more each of those will add to the length of the WR_SIG pulse.
+
+IDE_WR_SIG_RESET.d = IDE_WR_SIG;
+IDE_WR_SIG_RESET.ck = CPU_CLK;
+IDE_WR_SIG_RESET.ar = (!nDEV_WAIT) # !nSYS_RESET;
+
+// nISE_WR_SIG follows the SIG_A.  As soon as SIG_A is asserted (falling clock after start of IDE cycle), SIG is not held in reset and will
+//   assert on the next rising edge.  This should be halfway through the first waitstate cycle.
+
+IDE_WR_SIG.d = 'b'1;
+IDE_WR_SIG.ck = CPU_CLK;
+IDE_WR_SIG.ar = (!IDE_WR_SIG_A) # IDE_WR_SIG_RESET # !nSYS_RESET;
+
 
 /* 
     RTC Device custom signals 
