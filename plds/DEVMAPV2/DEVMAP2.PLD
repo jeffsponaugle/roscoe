@@ -121,7 +121,8 @@ Pin[20] = UNUSED2;
 PINNODE = IDE_WR_SIG_A, IDE_WR_SIG_RESET, IDE_WR_SIG;
 PINNODE = nINTCTRL_CS_delay;
 PINNODE = nIDE_WAITSTATE_DELAY;
-PINNODE = nIDE_WAITSTATE_DELAY_RESET;
+PINNODE = nIDE_WAITSTATE_DELAY_RESETw1;
+PINNODE = nIDE_WAITSTATE_DELAY_RESETw2;
 
 
 // dummy expression to force the pins to be assigned.
@@ -282,11 +283,21 @@ RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, thi
 
 nIDE_WAITSTATE_DELAY.d = 'b'1;
 nIDE_WAITSTATE_DELAY.ck = !(nIDE1_CSA & nIDE1_CSB);
-nIDE_WAITSTATE_DELAY.ar = nIDE_WAITSTATE_DELAY_RESET # !nSYS_RESET;
 
-nIDE_WAITSTATE_DELAY_RESET.d = 'b'1;
-nIDE_WAITSTATE_DELAY_RESET.ck = !CPU_CLK;
-nIDE_WAITSTATE_DELAY_RESET.ar = !nIDE_WAITSTATE_DELAY # !nSYS_RESET;
+// Change the 'nIDE_WAITSTATE_DELAY_RESETw2' below to w1 for a single waitstate. 
+nIDE_WAITSTATE_DELAY.ar = nIDE_WAITSTATE_DELAY_RESETw2 # !nSYS_RESET;
+
+// The w1 varient will assert on the next falling CPU CLK edge, which is right after the CPU detection of a waitstate insertion.
+
+nIDE_WAITSTATE_DELAY_RESETw1.d = 'b'1;
+nIDE_WAITSTATE_DELAY_RESETw1.ck = !CPU_CLK;
+nIDE_WAITSTATE_DELAY_RESETw1.ar = !nIDE_WAITSTATE_DELAY # !nSYS_RESET;
+
+// The w2 varient will assert one falling clock edge later then the w1 varient, this giving you an extra complete waitstate.
+
+nIDE_WAITSTATE_DELAY_RESETw2.d =  nIDE_WAITSTATE_DELAY_RESETw1;
+nIDE_WAITSTATE_DELAY_RESETw2.ck = !CPU_CLK;
+nIDE_WAITSTATE_DELAY_RESETw2.ar = !nIDE_WAITSTATE_DELAY # !nSYS_RESET;
 
 nDEV_WAIT = (!nIDE_WAITSTATE_DELAY) & nEXP_DEV_WAIT;       // 1 = No waitstates, 0 = add waitstates
                                                            // - so if IDE_WAITSTATE_DELAY is in reset, we will invert.
@@ -296,7 +307,7 @@ nDEV_WAIT = (!nIDE_WAITSTATE_DELAY) & nEXP_DEV_WAIT;       // 1 = No waitstates,
 // Test Pins used for debugging.
 TESTP0 = nDEV_WAIT;
 TESTP1 = nIDE_WAITSTATE_DELAY;
-TESTP2 = nIDE_WAITSTATE_DELAY_RESET;
+TESTP2 = nIDE_WAITSTATE_DELAY_RESETw2;
 
 /*
 Total dedicated input used:	2/4 	(50%)
