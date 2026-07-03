@@ -1,7 +1,7 @@
-Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Thu Jul 02 14:46:37 2026
+Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Thu Jul 02 18:41:22 2026
 
 
-fit1508 C:\SRC\DEVMAPV2\DEVMAP2.tt2 -CUPL -dev P1508T100 -JTAG ON
+fit1508 C:\USERS\JBS\SRC\ROSCOE\PLDS\DEVMAPV2\DEVMAP2.tt2 -CUPL -dev P1508T100 -JTAG ON
 
 
 ****** Initial fitting strategy and property ******
@@ -91,7 +91,7 @@ nDEV_WAIT is placed at pin 6 (MC 29)
 nDEV32BITCS is placed at pin 5 (MC 30)
 TDI is placed at pin 4 (MC 32)
 nINTCTRL_CS_delay is placed at feedback node 632 (MC 32)
-FB_107 is placed at foldback expander node 332 (MC 32)
+FB_105 is placed at foldback expander node 332 (MC 32)
 nUART_CSA is placed at pin 25 (MC 33)
 nUART_CSB is placed at pin 24 (MC 35)
 nEXP_VMEM_CS is placed at pin 23 (MC 37)
@@ -101,7 +101,7 @@ UNUSED1 is placed at pin 19 (MC 43)
 RTC_A_SEL is placed at pin 17 (MC 45)
 RTC_D_SEL is placed at pin 16 (MC 46)
 TMS is placed at pin 15 (MC 48)
-FB_111 is placed at foldback expander node 348 (MC 48)
+FB_109 is placed at foldback expander node 348 (MC 48)
 TESTP2 is placed at pin 37 (MC 49)
 TESTP1 is placed at pin 36 (MC 51)
 TESTP0 is placed at pin 35 (MC 53)
@@ -111,9 +111,9 @@ nEXP_DEV32BITCS is placed at pin 31 (MC 57)
 nEXP_DEV16BITCS is placed at pin 30 (MC 59)
 nEXP_DEV8BITCS is placed at pin 29 (MC 61)
 nPTC_CS is placed at pin 28 (MC 62)
-FB_110 is placed at foldback expander node 362 (MC 62)
-FB_109 is placed at foldback expander node 363 (MC 63)
-FB_108 is placed at foldback expander node 364 (MC 64)
+FB_108 is placed at foldback expander node 362 (MC 62)
+FB_107 is placed at foldback expander node 363 (MC 63)
+FB_106 is placed at foldback expander node 364 (MC 64)
 nIDE_BUFFER_EN2 is placed at pin 44 (MC 70)
 nIDE_BUFFER_EN1 is placed at pin 45 (MC 72)
 nIDE_WR is placed at pin 46 (MC 73)
@@ -133,10 +133,10 @@ IDE_WR_SIG_A is placed at feedback node 693 (MC 93)
 CPU_A19 is placed at pin 61 (MC 94)
 IDE_WR_SIG_A.AR is placed at feedback node 694 (MC 94)
 IDE_WR_SIG is placed at feedback node 695 (MC 95)
-FB_113 is placed at foldback expander node 395 (MC 95)
+FB_111 is placed at foldback expander node 395 (MC 95)
 TCK is placed at pin 62 (MC 96)
 IDE_WR_SIG_RESET is placed at feedback node 696 (MC 96)
-FB_112 is placed at foldback expander node 396 (MC 96)
+FB_110 is placed at foldback expander node 396 (MC 96)
 CPU_A18 is placed at pin 63 (MC 97)
 CPU_A17 is placed at pin 64 (MC 99)
 CPU_A16 is placed at pin 65 (MC 101)
@@ -323,38 +323,38 @@ nSYS_RESET		(MC23	FB)  : MUX 37		Ref (OE1)
 
 FanIn assignment for block D [29]
 {
-CPU_A15,CPU_A27,CPU_A11,CPU_A13,CPU_A16,CPU_A10,CPU_A9,CPU_A19,CPU_A14,CPU_A21,CPU_A17,CPU_A22,CPU_A26,CPU_A8,CPU_A18,CPU_A20,CPU_A12,CPU_A24,CPU_A25,CPU_A23,
+CPU_A17,CPU_A13,CPU_A15,CPU_A11,CPU_A18,CPU_A19,CPU_A8,CPU_A10,CPU_A9,CPU_A20,CPU_A26,CPU_A14,CPU_A21,CPU_A24,CPU_A22,CPU_A25,CPU_A12,CPU_A16,CPU_A27,CPU_A23,
 TESTP2,TESTP1,
-nDEV32BITCS,nIDE_BUFFER_EN1,nDEV8BITCS,nIDE_BUFFER_EN2,nDEV_WAIT,nDEV16BITCS,nSYS_RESET,
+nDEV_WAIT,nDEV8BITCS,nDEV32BITCS,nDEV16BITCS,nIDE1_CSB,nIDE1_CSA,nSYS_RESET,
 }
 Multiplexer assignment for block D
-CPU_A15			(MC13	P)   : MUX 1		Ref (G102p)
-CPU_A27			(MC25	P)   : MUX 3		Ref (F81p)
-nDEV32BITCS		(MC28	P)   : MUX 4		Ref (B30p)
+CPU_A17			(MC15	P)   : MUX 1		Ref (G99p)
+CPU_A13			(MC11	P)   : MUX 2		Ref (G105p)
+CPU_A15			(MC13	P)   : MUX 3		Ref (G102p)
+CPU_A11			(MC9	P)   : MUX 4		Ref (G109p)
 TESTP2			(MC2	P)   : MUX 5		Ref (D49p)
-CPU_A11			(MC9	P)   : MUX 6		Ref (G109p)
-nIDE_BUFFER_EN1		(MC5	P)   : MUX 7		Ref (E72p)
-CPU_A13			(MC11	P)   : MUX 8		Ref (G105p)
-CPU_A16			(MC14	P)   : MUX 9		Ref (G101p)
+CPU_A18			(MC16	P)   : MUX 7		Ref (G97p)
+CPU_A19			(MC17	P)   : MUX 8		Ref (F94p)
+CPU_A8			(MC6	P)   : MUX 9		Ref (H115p)
 CPU_A10			(MC8	P)   : MUX 10		Ref (G110p)
 CPU_A9			(MC7	P)   : MUX 11		Ref (H113p)
-TESTP1			(MC3	P)   : MUX 13		Ref (D51p)
-CPU_A19			(MC17	P)   : MUX 14		Ref (F94p)
+CPU_A20			(MC18	P)   : MUX 12		Ref (F93p)
+CPU_A26			(MC24	P)   : MUX 13		Ref (F83p)
+nDEV_WAIT		(MC1	P)   : MUX 14		Ref (B29p)
 CPU_A14			(MC12	P)   : MUX 15		Ref (G104p)
 CPU_A21			(MC19	P)   : MUX 16		Ref (F91p)
 nDEV8BITCS		(MC27	P)   : MUX 17		Ref (A3p)
-CPU_A17			(MC15	P)   : MUX 19		Ref (G99p)
+nDEV32BITCS		(MC28	P)   : MUX 18		Ref (B30p)
+CPU_A24			(MC22	P)   : MUX 19		Ref (F86p)
 CPU_A22			(MC20	P)   : MUX 20		Ref (F89p)
-CPU_A26			(MC24	P)   : MUX 21		Ref (F83p)
-CPU_A8			(MC6	P)   : MUX 23		Ref (H115p)
-CPU_A18			(MC16	P)   : MUX 25		Ref (G97p)
-CPU_A20			(MC18	P)   : MUX 26		Ref (F93p)
-nIDE_BUFFER_EN2		(MC4	P)   : MUX 27		Ref (E70p)
+nDEV16BITCS		(MC29	P)   : MUX 21		Ref (A1p)
+CPU_A25			(MC23	P)   : MUX 23		Ref (F85p)
 CPU_A12			(MC10	P)   : MUX 28		Ref (G107p)
-CPU_A24			(MC22	P)   : MUX 29		Ref (F86p)
-CPU_A25			(MC23	P)   : MUX 31		Ref (F85p)
-nDEV_WAIT		(MC1	P)   : MUX 32		Ref (B29p)
-nDEV16BITCS		(MC29	P)   : MUX 33		Ref (A1p)
+CPU_A16			(MC14	P)   : MUX 29		Ref (G101p)
+nIDE1_CSB		(MC4	P)   : MUX 30		Ref (E78p)
+TESTP1			(MC3	P)   : MUX 31		Ref (D51p)
+nIDE1_CSA		(MC5	P)   : MUX 32		Ref (E80p)
+CPU_A27			(MC25	P)   : MUX 33		Ref (F81p)
 CPU_A23			(MC21	P)   : MUX 35		Ref (F88p)
 nSYS_RESET		(MC26	FB)  : MUX 37		Ref (OE1)
 
@@ -410,7 +410,7 @@ nDEV_WAIT		(MC1	P)   : MUX 16		Ref (B29p)
 CPU_CLK			(MC9	FB)  : MUX 17		Ref (GCLK)
 IDE_WR_SIG		(MC6	FB)  : MUX 37		Ref (F95fb)
 
-Creating JEDEC file C:\SRC\DEVMAPV2\DEVMAP2.jed ...
+Creating JEDEC file C:\USERS\JBS\SRC\ROSCOE\PLDS\DEVMAPV2\DEVMAP2.jed ...
 
 TQFP100 programmed logic:
 -----------------------------------
@@ -486,23 +486,23 @@ TESTP0 = nDEV_WAIT;
 
 nIDE_BUFFER_EN2 = (nIDE2_CSA & nIDE2_CSB);
 
-!FB_107 = (!CPU_A26 & !CPU_A25 & !CPU_A24 & !CPU_A23 & !CPU_A22 & !CPU_A21 & !CPU_A20 & !CPU_A19 & !CPU_A18 & !CPU_A17 & !CPU_A16 & !CPU_A15 & !CPU_A14 & !CPU_A13 & !CPU_A12 & !CPU_A11 & !CPU_A10 & !CPU_A8 & CPU_A9 & !CPU_RW & !nDEV8BITCS & !CPU_A27);
+!FB_105 = (!CPU_A26 & !CPU_A25 & !CPU_A24 & !CPU_A23 & !CPU_A22 & !CPU_A21 & !CPU_A20 & !CPU_A19 & !CPU_A18 & !CPU_A17 & !CPU_A16 & !CPU_A15 & !CPU_A14 & !CPU_A13 & !CPU_A12 & !CPU_A11 & !CPU_A10 & !CPU_A8 & CPU_A9 & !CPU_RW & !nDEV8BITCS & !CPU_A27);
 
-!FB_108 = (nSYS_RESET & TESTP1.Q);
+!FB_106 = (nSYS_RESET & TESTP1.Q);
 
-!FB_109 = (nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2);
+!FB_107 = (nIDE1_CSA & nIDE1_CSB);
 
-!FB_110 = (nSYS_RESET & !TESTP2.Q);
+!FB_108 = (nSYS_RESET & !TESTP2.Q);
 
-!FB_111 = (nSYS_RESET & !nRTC_CS);
+!FB_109 = (nSYS_RESET & !nRTC_CS);
 
-!FB_112 = (nSYS_RESET & nDEV_WAIT);
+!FB_110 = (nSYS_RESET & nDEV_WAIT);
 
-!FB_113 = (nSYS_RESET & IDE_WR_SIG_A.Q & !IDE_WR_SIG_RESET.Q);
+!FB_111 = (nSYS_RESET & IDE_WR_SIG_A.Q & !IDE_WR_SIG_RESET.Q);
 
 IDE_WR_SIG.C = CPU_CLK;
 
-IDE_WR_SIG.AR = FB_113;
+IDE_WR_SIG.AR = FB_111;
 
 IDE_WR_SIG_A.C = !CPU_CLK;
 
@@ -511,23 +511,23 @@ IDE_WR_SIG_A.AR = (!nSYS_RESET
 
 IDE_WR_SIG_RESET.C = CPU_CLK;
 
-IDE_WR_SIG_RESET.AR = FB_112;
+IDE_WR_SIG_RESET.AR = FB_110;
 
 RTC_A_SEL.C = !CPU_CLK;
 
-RTC_A_SEL.AR = FB_111;
+RTC_A_SEL.AR = FB_109;
 
-TESTP1.C = FB_109;
+TESTP1.C = FB_107;
 
-TESTP1.AR = FB_110;
+TESTP1.AR = FB_108;
 
 TESTP2.C = !CPU_CLK;
 
-TESTP2.AR = FB_108;
+TESTP2.AR = FB_106;
 
 nINTCTRL_CS_delay.C = !CPU_CLK;
 
-nINTCTRL_CS_delay.AR = FB_107;
+nINTCTRL_CS_delay.AR = FB_105;
 
 
 TQFP100 Pin/Node Placement:
@@ -597,13 +597,13 @@ Pin 97 = nSEVENSEGB_WR; /* MC  9 */
 Pin 98 = nSTATUSLED_WR; /* MC  8 */
 Pin 99 = EXPANSION_EXTRA2; /* MC  6 */
 Pin 100 = CPU_RW; /* MC  5 */
-PINNODE 332 = FB_107; /* MC 32 Foldback */
-PINNODE 348 = FB_111; /* MC 48 Foldback */
-PINNODE 362 = FB_110; /* MC 62 Foldback */
-PINNODE 363 = FB_109; /* MC 63 Foldback */
-PINNODE 364 = FB_108; /* MC 64 Foldback */
-PINNODE 395 = FB_113; /* MC 95 Foldback */
-PINNODE 396 = FB_112; /* MC 96 Foldback */
+PINNODE 332 = FB_105; /* MC 32 Foldback */
+PINNODE 348 = FB_109; /* MC 48 Foldback */
+PINNODE 362 = FB_108; /* MC 62 Foldback */
+PINNODE 363 = FB_107; /* MC 63 Foldback */
+PINNODE 364 = FB_106; /* MC 64 Foldback */
+PINNODE 395 = FB_111; /* MC 95 Foldback */
+PINNODE 396 = FB_110; /* MC 96 Foldback */
 PINNODE 632 = nINTCTRL_CS_delay; /* MC 32 Feedback */
 PINNODE 693 = IDE_WR_SIG_A; /* MC 93 Feedback */
 PINNODE 694 = IDE_WR_SIG_A.AR; /* MC 94 Feedback */
@@ -659,7 +659,7 @@ MC28  0         --                      --                       --        --   
 MC29  6    on   nDEV_WAIT        C----  --                       --        --             1     slow
 MC30  5    --   nDEV32BITCS      INPUT  --                       --        --             0     slow
 MC31  0         --                      --                       --        --             0     slow
-MC32  4    --   TDI              INPUT  nINTCTRL_CS_delay Dg-r-  FB_107    --             2     slow
+MC32  4    --   TDI              INPUT  nINTCTRL_CS_delay Dg-r-  FB_105    --             2     slow
 MC33  25   on   nUART_CSA        C----  --                       --        --             1     slow
 MC34  0         --                      --                       --        --             0     slow
 MC35  24   on   nUART_CSB        C----  --                       --        --             1     slow
@@ -675,7 +675,7 @@ MC44  0         --                      --                       --        --   
 MC45  17   on   RTC_A_SEL        Dg-r-  --                       --        --             1     slow
 MC46  16   on   RTC_D_SEL        C----  --                       --        --             1     slow
 MC47  0         --                      --                       --        --             0     slow
-MC48  15   --   TMS              INPUT  --                       FB_111    --             1     slow
+MC48  15   --   TMS              INPUT  --                       FB_109    --             1     slow
 MC49  37   on   TESTP2           Dg-r-  --                       --        --             1     slow
 MC50  0         --                      --                       --        --             0     slow
 MC51  36   on   TESTP1           Dc-r-  --                       --        --             2     slow
@@ -689,9 +689,9 @@ MC58  0         --                      --                       --        --   
 MC59  30   on   nEXP_DEV16BITCS  C----  --                       --        --             1     slow
 MC60  0         --                      --                       --        --             0     slow
 MC61  29   on   nEXP_DEV8BITCS   C----  --                       --        --             1     slow
-MC62  28   on   nPTC_CS          C----  --                       FB_110    --             2     slow
-MC63  0         --                      --                       FB_109    --             1     slow
-MC64  27        --                      --                       FB_108    --             1     slow
+MC62  28   on   nPTC_CS          C----  --                       FB_108    --             2     slow
+MC63  0         --                      --                       FB_107    --             1     slow
+MC64  27        --                      --                       FB_106    --             1     slow
 MC65  40        --                      --                       --        --             0     slow
 MC66  0         --                      --                       --        --             0     slow
 MC67  41        --                      --                       --        --             0     slow
@@ -722,8 +722,8 @@ MC91  58   --   CPU_A21          INPUT  --                       --        --   
 MC92  0         --                      --                       --        --             0     slow
 MC93  60   --   CPU_A20          INPUT  IDE_WR_SIG_A      Dg-r-  --        --             1     slow
 MC94  61   --   CPU_A19          INPUT  IDE_WR_SIG_A.AR   C----  --        --             2     slow
-MC95  0         --                      IDE_WR_SIG        Dc-r-  FB_113    --             3     slow
-MC96  62   --   TCK              INPUT  IDE_WR_SIG_RESET  Dc-r-  FB_112    --             4     slow
+MC95  0         --                      IDE_WR_SIG        Dc-r-  FB_111    --             3     slow
+MC96  62   --   TCK              INPUT  IDE_WR_SIG_RESET  Dc-r-  FB_110    --             4     slow
 MC97  63   --   CPU_A18          INPUT  --                       --        --             0     slow
 MC98  0         --                      --                       --        --             0     slow
 MC99  64   --   CPU_A17          INPUT  --                       --        --             0     slow
@@ -781,7 +781,7 @@ Total cascade used 		0
 Total input pins 		33
 Total output pins 		32
 Total Pts 			46
-Creating pla file C:\SRC\DEVMAPV2\DEVMAP2.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
+Creating pla file C:\USERS\JBS\SRC\ROSCOE\PLDS\DEVMAPV2\DEVMAP2.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
 
 ----------------  End fitter, Design FITS
 $Device TQFP100 fits 

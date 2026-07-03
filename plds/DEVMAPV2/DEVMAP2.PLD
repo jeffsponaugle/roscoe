@@ -250,8 +250,8 @@ RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, thi
     We want to add one wait state for all IDE activity.
 
     There are two flip flops - The first is the signal that gets sent to the Bus controler CPLD asking for a waitstate.  This signal needs
-    to go to 0 shortly after the AS signal is decoded, and we do that with the nIDE_BUFFER_EN1/2 signals.  Those signals will go low if an IDE
-    cycle is starting.   That transition from high to low for one of them will clock in a '1' into the first flip flop.  This FF is used to 
+    to go to active shortly after the AS signal is decoded, and we do that with the nIDE1_CSA & nIDE1_CSB signals.  Those signals will go low 
+    if an IDE cycle is starting.   That transition from high to low for one of them will clock in a '1' into the first flip flop.  This FF is used to 
     ask for the wait state.  
     
     The nIDE_BUFFER_EN signals will go low at a bit past halfway into CLK S1. About 7ns later nIDE_WAITSTATE_DELAY will latch in a 1,
@@ -274,8 +274,14 @@ RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, thi
 
 */
 
+// nIDE_WAITSTATE_DELAY == 0 at reset, which indicates no request for a waitstate.
+//    It is set to one as soon as either IDE Buffer Enable signal is asserted(==0). 
+//    It is held at one until the following falling CPU clock, which is also the same falling clock from the CPU
+//    that samples the DSACK lines to see if a waitstate has been requested.
+//    This should create a single waitstate. 
+
 nIDE_WAITSTATE_DELAY.d = 'b'1;
-nIDE_WAITSTATE_DELAY.ck = !(nIDE_BUFFER_EN1 & nIDE_BUFFER_EN2);
+nIDE_WAITSTATE_DELAY.ck = !(nIDE1_CSA & nIDE1_CSB);
 nIDE_WAITSTATE_DELAY.ar = nIDE_WAITSTATE_DELAY_RESET # !nSYS_RESET;
 
 nIDE_WAITSTATE_DELAY_RESET.d = 'b'1;
