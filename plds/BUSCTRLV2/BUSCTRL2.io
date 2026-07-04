@@ -1,4 +1,4 @@
-CHIP "C:\USERS\JEFF\SRC\ROSCOE\PLDS\BUSCTRLV2\BUSCTRL2"
+CHIP "C:\USERS\JBS\SRC\ROSCOE\PLDS\BUSCTRLV2\BUSCTRL2"
 BEGIN
 
     DEVICE = "TQFP100";
@@ -16,7 +16,7 @@ BEGIN
     "DRAM_REGION_ACCESS_WAITSTATE"            : NODE_NUM = 612 ;
     "nSRAM_BANK3_CE"                          : OUTPUT_PIN = 94 ;
     "nSRAM_BANK2_CE"                          : OUTPUT_PIN = 93 ;
-    "XXL_232"                                 : NODE_NUM = 615 ;
+    "XXL_237"                                 : NODE_NUM = 615 ;
     "nSRAM_BANK1_CE"                          : OUTPUT_PIN = 92 ;
     "nDRAM_CAS2"                              : OUTPUT_PIN = 14 ;
     "nDRAM_CAS3"                              : OUTPUT_PIN = 13 ;
@@ -88,9 +88,9 @@ BEGIN
     "REFRESH_TIMER4"                          : NODE_NUM = 693 ;
     "CPU_A23"                                 : INPUT_PIN = 61 ;
     "REFRESH_TIMER3"                          : NODE_NUM = 694 ;
-    "XXL_230"                                 : NODE_NUM = 695 ;
+    "XXL_235"                                 : NODE_NUM = 695 ;
     "TCK"                                     : INPUT_PIN = 62 ;
-    "XXL_231"                                 : NODE_NUM = 696 ;
+    "XXL_236"                                 : NODE_NUM = 696 ;
     "CPU_A22"                                 : INPUT_PIN = 63 ;
     "CPU_A21"                                 : INPUT_PIN = 64 ;
     "CPU_A20"                                 : INPUT_PIN = 65 ;
@@ -99,12 +99,12 @@ BEGIN
     "CPU_A17"                                 : INPUT_PIN = 69 ;
     "CPU_A16"                                 : INPUT_PIN = 70 ;
     "CPU_AA1"                                 : INPUT_PIN = 71 ;
-    "XXL_235"                                 : NODE_NUM = 709 ;
+    "XXL_240"                                 : NODE_NUM = 709 ;
     "CPU_AA0"                                 : INPUT_PIN = 72 ;
-    "XXL_234"                                 : NODE_NUM = 710 ;
-    "XXL_233"                                 : NODE_NUM = 711 ;
+    "XXL_241"                                 : NODE_NUM = 710 ;
+    "XXL_239"                                 : NODE_NUM = 711 ;
     "TDO"                                     : INPUT_PIN = 73 ;
-    "XXL_236"                                 : NODE_NUM = 712 ;
+    "XXL_238"                                 : NODE_NUM = 712 ;
     "UNUSED2"                                 : INPUT_PIN = 75 ;
     "CPU_FC0"                                 : INPUT_PIN = 76 ;
     "CPU_FC1"                                 : INPUT_PIN = 77 ;

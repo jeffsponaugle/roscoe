@@ -48,7 +48,7 @@ Pin[92,93,96,97,98] = [BLUE0..4];
 Pin[61,60,58,57,56,55,54,53,50,49,47] = [FONT_ADDRESS0..10];   // Output to address lines of font memory to select character
                             // 8 bits from the character itself, and 3 bits from the attribute
 
-Pin = BLINK_TIMER;
+Pin[99] = BLINK_TIMER;
 // NODES
 
 PINNODE = [SREG_D0..7];      // Shift Register - Pixel Data
@@ -351,10 +351,10 @@ Total dedicated input used:	3/4 	(75%)
 Total I/O pins used		80/80 	(100%)
 Total Logic cells used 		110/128 	(85%)
 Total Flip-Flop used 		64/128 	(50%)
-Total Foldback logic used 	8/128 	(6%)
-Total Nodes+FB/MCells 		118/128 	(92%)
+Total Foldback logic used 	7/128 	(5%)
+Total Nodes+FB/MCells 		117/128 	(91%)
 Total cascade used 		0
 Total input pins 		56
 Total output pins 		27
-Total Pts 			332
+Total Pts 			331
 */

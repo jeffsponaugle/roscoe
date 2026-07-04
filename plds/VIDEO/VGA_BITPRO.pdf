@@ -1,11 +1,11 @@
-{COMPONENT C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VGA_BITPRO.SYM
+{COMPONENT C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_BITPRO.SYM
 
  {ENVIRONMENT
   {PDIFvrev 3.00}
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Sat Jan 03 16:13:53 2026 "}
+  {DBtime "Fri Jul 03 16:02:16 2026 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -85,7 +85,8 @@
    {P NSYS_RES {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
    {P BLUE0 {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
    {P BLUE1 {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
-   {P MODE1 {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P BLINK_TI {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P MODE1 {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
    {P GREEN0 {Pt "I/O"}{Lq 0}{Ploc 360 20}}
    {P GREEN1 {Pt "I/O"}{Lq 0}{Ploc 360 40}}
    {P GREEN2 {Pt "I/O"}{Lq 0}{Ploc 360 60}}
@@ -174,6 +175,7 @@
    {Pnl 120 90}
    {Pnl 120 70}
    {Pnl 120 50}
+   {Pnl 120 30}
    [Ts 15][Tj "LC"]
    {Pnl 340 30}
    {Pnl 340 50}
@@ -201,7 +203,7 @@
    {Pnl 340 490}
    {Pnl 340 510}
 
-   {Sd A 87 90 1 2 6 8 10 12 13 17 20 22 23 24 25 29 31 32 33 35 36 37 40 41 42 44 45 46 48 52 63 64 65 67 68 69 70 71 72 75 76 77 78 79 80 81 83 84 85 89 92 93 100 5 7 9 14 16 19 21 27 28 30 47 49 50 53 54 55 56 57 58 60 61 94 96 97 98}
+   {Sd A 87 90 1 2 6 8 10 12 13 17 20 22 23 24 25 29 31 32 33 35 36 37 40 41 42 44 45 46 48 52 63 64 65 67 68 69 70 71 72 75 76 77 78 79 80 81 83 84 85 89 92 93 99 100 5 7 9 14 16 19 21 27 28 30 47 49 50 53 54 55 56 57 58 60 61 94 96 97 98}
   }
 
   {PIC
@@ -263,6 +265,7 @@
    {L 130 80 100 80}
    {L 130 60 100 60}
    {L 130 40 100 40}
+   {L 130 20 100 20}
    {L 330 20 360 20}
    {L 330 40 360 40}
    {L 330 60 360 60}
@@ -342,7 +345,8 @@
    {T "NSYS_RES" 140 100}
    {T "BLUE0" 140 80}
    {T "BLUE1" 140 60}
-   {T "MODE1" 140 40}
+   {T "BLINK_TI" 140 40}
+   {T "MODE1" 140 20}
    [Tj "RC"]
    {T "GREEN0" 320 20}
    {T "GREEN1" 320 40}
@@ -376,13 +380,13 @@
 
   {ATR
    {IN
-    {Org 100 40}
+    {Org 100 20}
     {Ty 255}
    }
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VGA_BITPRO 230 1120}
+    {At PLD C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_BITPRO 230 1120}
    }
   }
  }
@@ -495,6 +499,8 @@
    {N BLUE0
    }
    {N BLUE1
+   }
+   {N BLINK_TI
    }
    {N MODE1
    }

@@ -1,7 +1,7 @@
 Name	 BUSCTRL;
 PartNo   BUSCTRL;
 Date     03/30/2024;
-Revision 16;
+Revision 29;
 Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
@@ -19,6 +19,7 @@ PROPERTY ATMEL {open_collector=nCPU_DSACK0, nCPU_DSACK1};
 //      VERSION 26 - Cache Enabled
 //      VERSION 27 - Bus Error Signal enabled. [64/128 SIMM]
 //      VERSION 28 - nDEV_WAIT used for wait state addition. [64/128 SIMM]
+//      VERSION 29 - nCPU_RD delayed.
 
 /* NOTE:  Active low values are designated with a starting n. */
 
@@ -133,9 +134,17 @@ PINNODE = nDRAM_ACCESS_CAS;
 /* Unused pin defauts */
 nCPU_HALT = 'b'1;   
 nCPU_STERM = 'b'1;
-nCPU_RD = !CPU_RW;
 EXP_BC_CPLD1 = 'b'0;
 EXP_BC_CPLD2 = 'b'0;
+
+
+// nCPU_RD = !CPU_RW;
+// Patch to delay the nCPU_RD signal.
+
+nCPU_RD.d = !CPU_RW;
+nCPU_RD.ck = !CPU_CLK;
+nCPU_RD.ap = nCPU_AS # !nSYS_RESET;
+
 
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
 
