@@ -489,7 +489,7 @@ VMEM_ADDR_OE.d = !((hsync_counter_field:['d'10..'d'648]));  // ALL MODES Output 
 VMEM_ADDR_OE.ck = DOT_CLK;
 VMEM_ADDR_OE.ar = !EXP_nSYS_RESET;
 
-VMEM_ADDR_RESET.d = !((hsync_counter_field:['d'0]) & vsync_counter_field:['d'0]);     // ALL MODES: Reset the address at the start of the screen.
+VMEM_ADDR_RESET.d = ((hsync_counter_field:['d'0]) & vsync_counter_field:['d'0]);     // ALL MODES: Reset the address at the start of the screen.
 VMEM_ADDR_RESET.ck = DOT_CLK;
 VMEM_ADDR_RESET.ar = !EXP_nSYS_RESET;
 
