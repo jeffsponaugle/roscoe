@@ -58,8 +58,8 @@ FIELD address_mode_field = [VMEM_ADDR_MODE1..0];
     the address reset to start at the beginning of a specific line, and would not be possible in this CPLD if the text lines were all
     spaced 40 dwords apart.
 
-    This means a standard 80x30 text display mode uses 25*128 dwords of memory (1600 dwords, or 6400 bytes), even though each text 
-    row only uses 160 bytes of that memory.  The rest of the memory for each row is left unused.
+    This means a standard 80x25 text display mode uses 25*128 dwords of memory (1600 dwords, or 6400 bytes), even though each text 
+    row only uses 80 dwords of memory plus 40 dwords of extra unused space. 
 
 */
 
@@ -147,7 +147,7 @@ C6 = G5 # (P5&C5);
 
 P6 = S6 $ B6;
 G6 = S6 & B6;
-S6.d = (!VMEM_ADDR_RESET & (P6 $ C6) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET0 );
+S6.d = (!VMEM_ADDR_RESET & (P6 $ C6) & !NEXT_TEXT_LINE ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET0 );
 C7 = G6 # (P6&C6);
 
 P7 = S7 $ B7;

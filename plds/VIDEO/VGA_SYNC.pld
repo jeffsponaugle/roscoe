@@ -112,11 +112,21 @@ PINNODE = VGA_VSYNC_PRE;
 
 
 // Font Address Generation
+// The FONTROW0-3 specifies the row inside the font we are one, which corresponds with the lower
+// 4 bits of the verticlal counter.  That gives us 16 rows for each character.
 
 FONTROW0 = VSYNC_COUNTER0;
 FONTROW1 = VSYNC_COUNTER1;
 FONTROW2 = VSYNC_COUNTER2;
 FONTROW3 = VSYNC_COUNTER3;
+
+// We need to know if we are on the last row of the font because we will increment the vram address
+// differently so we roll over to the next text line.
+
+
+FIELD fontrow_field = [VSYNC_COUNTER3..0];
+LAST_FONT_ROW = fontrow_field:['d'15];
+
 
 // Interface to host CPU
 // Writes to the config register
@@ -291,9 +301,9 @@ VGA_HSYNC_PRE.d = !((hsync_counter_field:['d'672..'d'767]));
 VGA_HSYNC_PRE.ck = DOT_CLK;
 VGA_HSYNC_PRE.ap = !EXP_nSYS_RESET;
 
-VGA_VSYNC_PRE.d = !((vsync_counter_field:['d'490..'d'491]));
+VGA_VSYNC_PRE.d = !((vsync_counter_field:['d'491..'d'492]));
 VGA_VSYNC_PRE.ck = DOT_CLK;
-VGA_VSYNC_PRE.ar = !EXP_nSYS_RESET;
+VGA_VSYNC_PRE.ap = !EXP_nSYS_RESET;
 
 VGA_HSYNC.d = VGA_HSYNC_PRE;
 VGA_HSYNC.ck = !DOT_CLK;
@@ -426,8 +436,6 @@ nVRAM_LL_SEL = !(VRAM_READ # (CPU_ACCESS_IN_PROGRESS & EXP_RW) # (CPU_ACCESS_IN_
 
 
 // The signals that go to the video processor ALL ARE ACTIVE HIGH
-// THESE ARE SETUP TO ESTIMATE RESOURCE USAGE BUT NOT DEFINED CORRECTLY.  THESE NEED TO BE DEFINED CORRECTLY.
-
 
 MODE_IS_TEXT = !cfg_TEXT_OR_GRAPHICS;
 MODE_IS_GRAPH8 = cfg_TEXT_OR_GRAPHICS & !cfg_GRAPHICS_DEPTH;
@@ -502,7 +510,8 @@ ADDR_MODE1.d = (MODE_IS_TEXT & ((hsync_counter_field:['d'656])));               
 ADDR_MODE1.ck = DOT_CLK;
 ADDR_MODE1.ar = !EXP_nSYS_RESET;
 
-ADDR_MODE0.d = (MODE_IS_TEXT & hsync_counter_3_field:['d'0] & ADDR_MODE_ENABLE)                    // TEXT MODE: increment once every 8 dot clocks, on h656 add 512
+ADDR_MODE0.d = (MODE_IS_TEXT & hsync_counter_3_field:['d'0] & ADDR_MODE_ENABLE)  
+             # (MODE_IS_TEXT & (hsync_counter_field:['d'656]) & !LAST_FONT_ROW)   // TEXT MODE: increment once every 8 dot clocks, on h656 add 512
              # (MODE_IS_GRAPH16 & hsync_counter_3_field:['d'0,'d'2,'d'4,'d'6] & ADDR_MODE_ENABLE)  // GRAPHICS MODE 16bpp
              # (MODE_IS_GRAPH8 & (hsync_counter_3_field:['d'0,'d'4] & ADDR_MODE_ENABLE));          // GRAPHICS MODE 8bpp
 ADDR_MODE0.ck = DOT_CLK;
