@@ -312,7 +312,7 @@ GREEN3 = VGA_ENABLE & (
 GREEN4 = VGA_ENABLE & ( 
                     ( TEXT_MODE & (((SREG_D7 & AREG_D5) # (!SREG_D7 & AREG_D14))  $ INVERTCHAR ))   // MODE=00, TEXT MODE
                     # ( GRAPHICS_16BPP_MODE & ((select_field:['b'X0] & VREG_D9 ) # (select_field:['b'X1] & VREG_D25))) // MODE=10, 16bpp Graphics
-                    # ( GRAPHICS_8BPP_MODE & (GREENb0ORb1))
+                    # ( GRAPHICS_8BPP_MODE & (GREENb1))
                     );
 
 BLUE0 = VGA_ENABLE & ( 

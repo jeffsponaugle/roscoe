@@ -528,7 +528,7 @@ BIT_PROC_SELECT_SUB0.d = (MODE_IS_GRAPH16 & hsync_counter_3_field:['d'1,'d'3,'d'
 BIT_PROC_SELECT_SUB0.ck = DOT_CLK;
 BIT_PROC_SELECT_SUB0.ar = !EXP_nSYS_RESET;
  
-BIT_PROC_SELECT_SUB1.d = (MODE_IS_GRAPH8 & hsync_counter_3_field:['d'2,'d'3]);
+BIT_PROC_SELECT_SUB1.d = (MODE_IS_GRAPH8 & hsync_counter_3_field:['d'2,'d'3,'d'6,'d'7]);
 BIT_PROC_SELECT_SUB1.ck = DOT_CLK;
 BIT_PROC_SELECT_SUB1.ar = !EXP_nSYS_RESET;
 
