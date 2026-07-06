@@ -1,4 +1,4 @@
-Atmel ATF1504AS Fitter Version 1.8.7.8 ,running Sun Jul 05 19:50:15 2026
+Atmel ATF1504AS Fitter Version 1.8.7.8 ,running Sun Jul 05 22:32:13 2026
 
 
 fit1504 C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_ADDR.tt2 -CUPL -dev P1504T44 -JTAG ON
