@@ -322,12 +322,12 @@ VGA_VSYNC.ap = !EXP_nSYS_RESET;
     could be a problem if you try to run the CPU at super slow speeds.
 
 */
-VRAM_BUSY.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;   // This will turn on for every horizontal line, but off for the refreshes
+VRAM_BUSY.d = (hsync_counter_field:['d'0..'d'650]) & VSYNC_DISPLAY_ACTIVE;   // This will turn on for every horizontal line, but off for the refreshes
 VRAM_BUSY.ck = DOT_CLK;
 VRAM_BUSY.ar = !EXP_nSYS_RESET;
 
 
-// for now this mirrors VRAM_BUSY, but it may need a difference range   VRAM_READ is used to enable the VRAM memory for video generation.
+// VRAM_READ is used to enable the VRAM memory for video generation.  This must fit inside the window above (VRAM_BUSY).
 
 VRAM_READ.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;
 VRAM_READ.ck = DOT_CLK;
@@ -462,10 +462,16 @@ BA32_UH = (   (EXP_A1 & EXP_CPU_SIZE1)
             # (EXP_A0 & EXP_A1)
           );
 
+ 
+
+/*
+
+These definitions are not needed since this device only appears as a 32 bit device to the CPU
 BA16_LL = !EXP_A0;
 BA16_LH = !(!EXP_A0 & EXP_CPU_SIZE0 & !EXP_CPU_SIZE1);
-
 BA8 = 'b'1;
+*/
+
 
 /* 
    The individual Bx enables allow access to single byte sections of a 4 byte address.  On read (either CPU or Video card) 

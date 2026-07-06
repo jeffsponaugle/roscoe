@@ -1,11 +1,11 @@
-{COMPONENT C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VGA_SYNC.SYM
+{COMPONENT C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_SYNC.SYM
 
  {ENVIRONMENT
   {PDIFvrev 3.00}
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Thu Jan 15 23:07:45 2026 "}
+  {DBtime "Sun Jul 05 19:40:21 2026 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,42 +33,42 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
-   {P DOT_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 760}}
-   {P NEXP_VME {Pt "INPUT"}{Lq 0}{Ploc 100 740}}
-   {P BIT_PROC {Pt "INPUT"}{Lq 0}{Ploc 100 700}}
-   {P VMEM_AD {Pt "INPUT"}{Lq 0}{Ploc 100 680}}
-   {P BIT_P1 {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
-   {P ADDR_M0 {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
-   {P BIT_PR {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
-   {P VMEM_O0 {Pt "INPUT"}{Lq 0}{Ploc 100 600}}
-   {P VMEM_O1 {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
-   {P VMEM_O2 {Pt "INPUT"}{Lq 0}{Ploc 100 560}}
-   {P VMEM_O3 {Pt "INPUT"}{Lq 0}{Ploc 100 540}}
-   {P VMEM_O4 {Pt "INPUT"}{Lq 0}{Ploc 100 520}}
-   {P VMEM_O5 {Pt "INPUT"}{Lq 0}{Ploc 100 500}}
-   {P VMEM_ADD {Pt "INPUT"}{Lq 0}{Ploc 100 480}}
-   {P ADDR_M1 {Pt "INPUT"}{Lq 0}{Ploc 100 460}}
-   {P NEXP_VIO {Pt "INPUT"}{Lq 0}{Ploc 100 440}}
-   {P EXP_A0 {Pt "INPUT"}{Lq 0}{Ploc 100 420}}
-   {P EXP_A1 {Pt "INPUT"}{Lq 0}{Ploc 100 400}}
-   {P EXP_D0 {Pt "INPUT"}{Lq 0}{Ploc 100 380}}
-   {P EXP_D1 {Pt "INPUT"}{Lq 0}{Ploc 100 360}}
-   {P EXP_CP0 {Pt "INPUT"}{Lq 0}{Ploc 100 340}}
-   {P EXP_CP1 {Pt "INPUT"}{Lq 0}{Ploc 100 320}}
-   {P EXP_RW {Pt "INPUT"}{Lq 0}{Ploc 100 300}}
-   {P EXP_D2 {Pt "INPUT"}{Lq 0}{Ploc 100 280}}
-   {P EXP_D3 {Pt "INPUT"}{Lq 0}{Ploc 100 260}}
-   {P DOT_CLK2 {Pt "INPUT"}{Lq 0}{Ploc 100 240}}
-   {P EXP_D4 {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
-   {P EXP_D5 {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
-   {P EXP_D6 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
-   {P EXP_D7 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
-   {P EXP_NSYS {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
-   {P BIT_PRO {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
-   {P FONTROW0 {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
-   {P VGA_HSYN {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
-   {P VGA_VSYN {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
-   {P BIT_P0 {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P DOT_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 740}}
+   {P NEXP_VME {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
+   {P BIT_PROC {Pt "INPUT"}{Lq 0}{Ploc 100 680}}
+   {P VMEM_AD {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
+   {P BIT_P1 {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
+   {P ADDR_M0 {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
+   {P BIT_PR {Pt "INPUT"}{Lq 0}{Ploc 100 600}}
+   {P VMEM_O0 {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
+   {P VMEM_O1 {Pt "INPUT"}{Lq 0}{Ploc 100 560}}
+   {P VMEM_O2 {Pt "INPUT"}{Lq 0}{Ploc 100 540}}
+   {P VMEM_O3 {Pt "INPUT"}{Lq 0}{Ploc 100 520}}
+   {P VMEM_O4 {Pt "INPUT"}{Lq 0}{Ploc 100 500}}
+   {P VMEM_O5 {Pt "INPUT"}{Lq 0}{Ploc 100 480}}
+   {P VMEM_ADD {Pt "INPUT"}{Lq 0}{Ploc 100 460}}
+   {P ADDR_M1 {Pt "INPUT"}{Lq 0}{Ploc 100 440}}
+   {P NEXP_VIO {Pt "INPUT"}{Lq 0}{Ploc 100 420}}
+   {P EXP_A0 {Pt "INPUT"}{Lq 0}{Ploc 100 400}}
+   {P EXP_A1 {Pt "INPUT"}{Lq 0}{Ploc 100 380}}
+   {P EXP_D0 {Pt "INPUT"}{Lq 0}{Ploc 100 360}}
+   {P EXP_D1 {Pt "INPUT"}{Lq 0}{Ploc 100 340}}
+   {P EXP_CP0 {Pt "INPUT"}{Lq 0}{Ploc 100 320}}
+   {P EXP_CP1 {Pt "INPUT"}{Lq 0}{Ploc 100 300}}
+   {P EXP_RW {Pt "INPUT"}{Lq 0}{Ploc 100 280}}
+   {P EXP_D2 {Pt "INPUT"}{Lq 0}{Ploc 100 260}}
+   {P EXP_D3 {Pt "INPUT"}{Lq 0}{Ploc 100 240}}
+   {P DOT_CLK2 {Pt "INPUT"}{Lq 0}{Ploc 100 220}}
+   {P EXP_D4 {Pt "INPUT"}{Lq 0}{Ploc 100 200}}
+   {P EXP_D5 {Pt "INPUT"}{Lq 0}{Ploc 100 180}}
+   {P EXP_D6 {Pt "INPUT"}{Lq 0}{Ploc 100 160}}
+   {P EXP_D7 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
+   {P EXP_NSYS {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
+   {P BIT_PRO {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
+   {P FONTROW0 {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P VGA_HSYN {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
+   {P VGA_VSYN {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
+   {P BIT_P0 {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
    {P VMEM_RES {Pt "I/O"}{Lq 0}{Ploc 360 20}}
    {P DEBUG1 {Pt "I/O"}{Lq 0}{Ploc 360 40}}
    {P NVRAM_UH {Pt "I/O"}{Lq 0}{Ploc 360 60}}
@@ -84,24 +84,24 @@
    {P NVRAM_CS {Pt "I/O"}{Lq 0}{Ploc 360 260}}
    {P NEXP_DAT {Pt "I/O"}{Lq 0}{Ploc 360 280}}
    {P NEXP_VRA {Pt "I/O"}{Lq 0}{Ploc 360 300}}
-   {P DEBUG3 {Pt "I/O"}{Lq 0}{Ploc 360 320}}
-   {P DEBUG2 {Pt "I/O"}{Lq 0}{Ploc 360 340}}
-   {P FONTROW1 {Pt "I/O"}{Lq 0}{Ploc 360 360}}
-   {P FONTROW2 {Pt "I/O"}{Lq 0}{Ploc 360 380}}
-   {P FONTROW3 {Pt "I/O"}{Lq 0}{Ploc 360 400}}
+   {P NEXP_VRA {Pt "I/O"}{Lq 0}{Ploc 360 320}}
+   {P DEBUG3 {Pt "I/O"}{Lq 0}{Ploc 360 340}}
+   {P DEBUG2 {Pt "I/O"}{Lq 0}{Ploc 360 360}}
+   {P FONTROW1 {Pt "I/O"}{Lq 0}{Ploc 360 380}}
+   {P FONTROW2 {Pt "I/O"}{Lq 0}{Ploc 360 400}}
+   {P FONTROW3 {Pt "I/O"}{Lq 0}{Ploc 360 420}}
   }
 
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 230 790}
+   {Rdl 230 770}
 
    [Ly "PINNUM"]
    [Ts 15][Tj "RC"]
-   {Pnl 120 770}
    {Pnl 120 750}
+   {Pnl 120 730}
    [Ts 15][Tj "RC"]
-   {Pnl 120 710}
    {Pnl 120 690}
    {Pnl 120 670}
    {Pnl 120 650}
@@ -135,6 +135,7 @@
    {Pnl 120 90}
    {Pnl 120 70}
    {Pnl 120 50}
+   {Pnl 120 30}
    [Ts 15][Tj "LC"]
    {Pnl 340 30}
    {Pnl 340 50}
@@ -156,19 +157,19 @@
    {Pnl 340 370}
    {Pnl 340 390}
    {Pnl 340 410}
+   {Pnl 340 430}
 
-   {Sd A 87 90 5 7 12 16 17 20 21 22 23 24 25 27 29 35 36 37 52 53 54 55 56 57 58 60 63 64 67 68 89 92 93 98 99 100 1 2 6 8 9 10 13 14 19 28 30 31 32 33 48 49 50 94 96 97}
+   {Sd A 87 90 5 7 12 16 17 20 21 22 23 24 25 27 29 35 36 37 52 53 54 55 56 57 58 60 63 64 67 68 89 92 93 98 99 100 1 2 6 8 9 10 13 14 19 28 30 31 32 33 47 48 49 50 94 96 97}
   }
 
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 780 330 0}
-   {L 130 760 100 760}
-   {L 130 770 140 760 130 750}
+   {R 130 760 330 0}
    {L 130 740 100 740}
    {L 130 750 140 740 130 730}
-   {L 130 700 100 700}
+   {L 130 720 100 720}
+   {L 130 730 140 720 130 710}
    {L 130 680 100 680}
    {L 130 660 100 660}
    {L 130 640 100 640}
@@ -202,6 +203,7 @@
    {L 130 80 100 80}
    {L 130 60 100 60}
    {L 130 40 100 40}
+   {L 130 20 100 20}
    {L 330 20 360 20}
    {L 330 40 360 40}
    {L 330 60 360 60}
@@ -222,44 +224,45 @@
    {L 330 360 360 360}
    {L 330 380 360 380}
    {L 330 400 360 400}
+   {L 330 420 360 420}
    [Ly "PINNAM"]
    [Tj "LC"]
-   {T "DOT_CLK" 140 760}
-   {T "NEXP_VME" 140 740}
-   {T "BIT_PROC" 140 700}
-   {T "VMEM_AD" 140 680}
-   {T "BIT_P1" 140 660}
-   {T "ADDR_M0" 140 640}
-   {T "BIT_PR" 140 620}
-   {T "VMEM_O0" 140 600}
-   {T "VMEM_O1" 140 580}
-   {T "VMEM_O2" 140 560}
-   {T "VMEM_O3" 140 540}
-   {T "VMEM_O4" 140 520}
-   {T "VMEM_O5" 140 500}
-   {T "VMEM_ADD" 140 480}
-   {T "ADDR_M1" 140 460}
-   {T "NEXP_VIO" 140 440}
-   {T "EXP_A0" 140 420}
-   {T "EXP_A1" 140 400}
-   {T "EXP_D0" 140 380}
-   {T "EXP_D1" 140 360}
-   {T "EXP_CP0" 140 340}
-   {T "EXP_CP1" 140 320}
-   {T "EXP_RW" 140 300}
-   {T "EXP_D2" 140 280}
-   {T "EXP_D3" 140 260}
-   {T "DOT_CLK2" 140 240}
-   {T "EXP_D4" 140 220}
-   {T "EXP_D5" 140 200}
-   {T "EXP_D6" 140 180}
-   {T "EXP_D7" 140 160}
-   {T "EXP_NSYS" 140 140}
-   {T "BIT_PRO" 140 120}
-   {T "FONTROW0" 140 100}
-   {T "VGA_HSYN" 140 80}
-   {T "VGA_VSYN" 140 60}
-   {T "BIT_P0" 140 40}
+   {T "DOT_CLK" 140 740}
+   {T "NEXP_VME" 140 720}
+   {T "BIT_PROC" 140 680}
+   {T "VMEM_AD" 140 660}
+   {T "BIT_P1" 140 640}
+   {T "ADDR_M0" 140 620}
+   {T "BIT_PR" 140 600}
+   {T "VMEM_O0" 140 580}
+   {T "VMEM_O1" 140 560}
+   {T "VMEM_O2" 140 540}
+   {T "VMEM_O3" 140 520}
+   {T "VMEM_O4" 140 500}
+   {T "VMEM_O5" 140 480}
+   {T "VMEM_ADD" 140 460}
+   {T "ADDR_M1" 140 440}
+   {T "NEXP_VIO" 140 420}
+   {T "EXP_A0" 140 400}
+   {T "EXP_A1" 140 380}
+   {T "EXP_D0" 140 360}
+   {T "EXP_D1" 140 340}
+   {T "EXP_CP0" 140 320}
+   {T "EXP_CP1" 140 300}
+   {T "EXP_RW" 140 280}
+   {T "EXP_D2" 140 260}
+   {T "EXP_D3" 140 240}
+   {T "DOT_CLK2" 140 220}
+   {T "EXP_D4" 140 200}
+   {T "EXP_D5" 140 180}
+   {T "EXP_D6" 140 160}
+   {T "EXP_D7" 140 140}
+   {T "EXP_NSYS" 140 120}
+   {T "BIT_PRO" 140 100}
+   {T "FONTROW0" 140 80}
+   {T "VGA_HSYN" 140 60}
+   {T "VGA_VSYN" 140 40}
+   {T "BIT_P0" 140 20}
    [Tj "RC"]
    {T "VMEM_RES" 320 20}
    {T "DEBUG1" 320 40}
@@ -276,11 +279,12 @@
    {T "NVRAM_CS" 320 260}
    {T "NEXP_DAT" 320 280}
    {T "NEXP_VRA" 320 300}
-   {T "DEBUG3" 320 320}
-   {T "DEBUG2" 320 340}
-   {T "FONTROW1" 320 360}
-   {T "FONTROW2" 320 380}
-   {T "FONTROW3" 320 400}
+   {T "NEXP_VRA" 320 320}
+   {T "DEBUG3" 320 340}
+   {T "DEBUG2" 320 360}
+   {T "FONTROW1" 320 380}
+   {T "FONTROW2" 320 400}
+   {T "FONTROW3" 320 420}
    [Ly "DEVICE"]
    [Tj "CT"]
    {T "F1508ISPTQFP100" 230 -10}
@@ -288,13 +292,13 @@
 
   {ATR
    {IN
-    {Org 100 40}
+    {Org 100 20}
     {Ty 255}
    }
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VGA_SYNC 230 780}
+    {At PLD C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_SYNC 230 760}
    }
   }
  }
@@ -403,6 +407,8 @@
    {N NVRAM_CS
    }
    {N NEXP_DAT
+   }
+   {N NEXP_VRA
    }
    {N NEXP_VRA
    }

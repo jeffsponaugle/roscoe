@@ -1,11 +1,11 @@
-{COMPONENT C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VGA_ADDR.SYM
+{COMPONENT C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_ADDR.SYM
 
  {ENVIRONMENT
   {PDIFvrev 3.00}
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Sat Jan 03 17:12:15 2026 "}
+  {DBtime "Sun Jul 05 19:40:03 2026 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -193,7 +193,7 @@
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JEFF\SRC\ROSCOE\PLDS\VIDEO\VGA_ADDR 220 400}
+    {At PLD C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_ADDR 220 400}
    }
   }
  }
