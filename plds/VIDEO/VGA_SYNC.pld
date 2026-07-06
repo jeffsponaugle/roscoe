@@ -138,11 +138,11 @@ LAST_FONT_ROW = fontrow_field:['d'15];
 //      b0-b5 = Memory OFFSET (for text lines, or page selection in graphics)
 
 [CONFIG_REGA0..7].d = [EXP_D0..7];
-[CONFIG_REGA0..7].ck = (nEXP_VIO_CS & !EXP_RW & !EXP_A0);   // Write to address 0
+[CONFIG_REGA0..7].ck = (nEXP_VIO_CS # EXP_RW # !EXP_A0);   // Write to address 0, latch when CS goes high
 [CONFIG_REGA0..7].ar = !EXP_nSYS_RESET;
 
 [VMEM_OFFSET5..0].d = [EXP_D5..0];
-[VMEM_OFFSET5..0].ck = (nEXP_VIO_CS & !EXP_RW & EXP_A0);    // Write to address 1
+[VMEM_OFFSET5..0].ck = (nEXP_VIO_CS # EXP_RW # !EXP_A0);    // Write to address 1
 [VMEM_OFFSET5..0].ar = !EXP_nSYS_RESET;
 
 // Shorthands for the register bits
@@ -318,15 +318,16 @@ VGA_VSYNC.ap = !EXP_nSYS_RESET;
     4 CPU clock cycles BEFORE the video controller needs access to video memory.  This allows a currently running CPU access cycle
     to complete, but a new one can't start.   This signal is set to start at the beginning of the HSYNC counter cycle, which is 16 
     dot clocks before the actual start of the first pixel.   Note the first memory access starts before the actual first pixel.  
-    The exact timing depends on the mode.
+    The exact timing depends on the mode.  Note you do have to make sure that 16 dot clocks is at least 4 CPU clock cycles... so this
+    could be a problem if you try to run the CPU at super slow speeds.
 
 */
-VRAM_BUSY.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;
+VRAM_BUSY.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;   // This will turn on for every horizontal line, but off for the refreshes
 VRAM_BUSY.ck = DOT_CLK;
 VRAM_BUSY.ar = !EXP_nSYS_RESET;
 
 
-// for now this mirrors VRAM_BUSY, but it may need a difference range 
+// for now this mirrors VRAM_BUSY, but it may need a difference range   VRAM_READ is used to enable the VRAM memory for video generation.
 
 VRAM_READ.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;
 VRAM_READ.ck = DOT_CLK;
@@ -343,7 +344,7 @@ VRAM_READ.ar = !EXP_nSYS_RESET;
 
 VMEM_ACCESS_BUSY_START.d = VRAM_BUSY;     // 0 = VRAM AVAILABLE, 1 = VRAM BUSY
 VMEM_ACCESS_BUSY_START.ck = !nEXP_VMEM_CS;   // Falling edge of CS, so the start of a CPU access.
-VMEM_ACCESS_BUSY_START.ap = !EXP_nSYS_RESET # VMEM_ACCESS_BUSY_START_RESET;      // Defaults to 1, VRAM BUSY
+VMEM_ACCESS_BUSY_START.ap = !EXP_nSYS_RESET # VMEM_ACCESS_BUSY_START_RESET;      // Defaults to 1, VRAM BUSY on reset.
 
 /* 
    The Reset flip flop below starts out at 0 (in reset).  On the rising edge of VMEM_CS it is set to 1.  That value of 1 will
@@ -353,6 +354,21 @@ VMEM_ACCESS_BUSY_START.ap = !EXP_nSYS_RESET # VMEM_ACCESS_BUSY_START_RESET;     
    flip flop there will never be a condition where AS goes low a bit before this sees the VRAM_BUSY flag.
    
    The reset flipflop is then reset by the above flip flop, preventing it from holding the above flipflop in reset.
+
+   At system reset, the BUSY_START FF is at 1, and the BUSY_START_RESET is at 0 and held at zero.  If a VMEM_CS falling edge comes along
+   which indicated the system wants to access the VRAM, that triggers the BUSY_START to capture the value of VRAM_BUSY.
+
+   Condition 1:  Assume when the system tries to access the VRAM_BUSY is 0 (not busy):   In this case the BUSY_START will capture the VRAM_BUSY
+   value (0), and BUSY_START will go to 0.  At this point the CPU will complete the transaction.  At the completion of the transaction the 
+   BUSY_START_RESET ff will no long be held in reset so it will sense the rising edge of the CS (which is the CPU indicating it is done).  That 
+   rising edge will clock in a 1, and that value will then reset the BUSY_START to 1, which will then reset the BUSY_START_RESET back to 0.   
+   At that point the system is back to the system reset state and ready for another access.
+
+   Condition 2:  Assume when the system tries to access the VRAM_BUSY is 1 (VRAM busy):   In this case the BUSY_START will capture the VRAM_BUSY
+   (1) and thus BUSY_START will stay at 1.  At this point the CPU will be paused waiting for access.  
+
+   The CPU_ACCESS_IN_PROGRESS flag below handles things from this point forward, since that variable is active (1) once the actual 
+   VRAM_BUSY flag goes low.
 */
 VMEM_ACCESS_BUSY_START_RESET.d = 'b'1;
 VMEM_ACCESS_BUSY_START_RESET.ck = nEXP_VMEM_CS;    // Rising edge of CS, so the END of a CPU access cycle
@@ -376,6 +392,40 @@ VMEM_ACCESS_BUSY_START_RESET.ar = !EXP_nSYS_RESET # VMEM_ACCESS_BUSY_START;
             a currently running cycle to complete, but not start a new one.
 */
 
+/*
+     A few other notes - The buffers that seperate the system bus from the video memory bus have to be enabled when a system access is
+     happening.
+
+     nEXP_VRAM_ADDR_OE is used to enable those buffers (both for the address bus and the data bus).   That variable is set to the 
+     inverese of the CPU_ACCESS_IN_PROGRESS.   That means as soon that the CPU cycle starts those buffers get enabled.
+     The dataline buffers also have a direction that is set by the CPUs RW flag, which is 0 for writes, 1 for reads.
+
+     The are two timing considerations:   
+       (1)  A normal access cycle that does not have any waitstates - In this case the buffers get enabled slightly after the CS line goes 
+       low.  For a read this means the address lines are passed thru to the VRAM, and the VRAMs OE and CS lines are also selected.  Close to 
+       the end of the CPU cycle (state 5) the CPU will latch what is on the databus.  Given the video memory is 12ns, it is more than fast enough
+       for any clock speed we would use.   For a write cycle the address and data lines are passed thru to the video memory, and the VRAMs CS and WE
+       lines will also be pulled low.  At the end of the cycle when the CS line goes high that will pull the CS and the WE lines high, which tells 
+       the VRAM to latch what it sees on the databus.  The buffers are also turned off at the same time.  It is worth noting that the VRAM SRAMs used
+       work in that use case.  There are some SRAMS tha require the WE go high BEFORE the CS line is unasserted.
+
+       (2) A access cycle that has been paused (waitstates) becuse the VRAM is busy.  The waitstates will be added by the CPU while it samples
+       the DSACK line.  One issue that does need some confirmation is that we are fast enough in signaling the nEXP_CPU_DEV_WAIT signal.  That signal
+       has to go thru the DEV Controller CPLD, then the BUS Controller CPLD in order to delay the DSACK lines.  It should be fast enough given the 7ns
+       CPLD times, but a bit more analysis might be warrented.
+
+       The other area of concern is the release of waitstates.  When the VRAM becomes available, the VRAM_BUSY will be changed to 0.  This event
+       will happen asynchronous to the CPU clock, as it is based on the DOT clock.  The CPU looks for the DSACK signals on the falling edge of 
+       the system clock, and will do that indefinatly.  That means the time from when the VRAM_BUSY goes to 0 and the CPU sees the signl to continue
+       could be short.   From a pratical point of view the VRAM_BUSY going to 0 has to propegate through the ACCESS_IN_PROGRAM variable, then to 
+       the DEV Controller CPLD, then to the BUS controller CPLD, then to the CPU, so it will take at least 21ns for that to happen.  In parallel to 
+       that happening the VRAM/CPU buffers will be enabled and the VRAM CS/OE/WE lines asserted.  In the worst case the CPU will start the finishing 
+       of the CPU cycle 21ns later, which is in CPU state 4.  That would mean the CPU would be latching data only 1/2 CPU clock cycle later for a read.
+       This should be sufficient time, but if it turns out to be too close the solution would be to add a delay before releaseing the DEV_WAIT signal
+       by one clock cycle (or a few dot cycles) to give the VRAM buffers and VRAM time to do the work.
+
+       Some experimenation might be required here.
+*/
 
 CPU_ACCESS_IN_PROGRESS = (!nEXP_VMEM_CS & !VMEM_ACCESS_BUSY_START) # (!nEXP_VMEM_CS & !VRAM_BUSY);
 
@@ -389,12 +439,7 @@ nEXP_VRAM_DIR = !EXP_RW;
    If CS is high, keep the DEV_WAIT high (since there is no access request in process)
  */
 
-
-
-nEXP_CPU_DEV_WAIT = CPU_ACCESS_IN_PROGRESS
-                # (nEXP_VMEM_CS);
-
-
+nEXP_CPU_DEV_WAIT = CPU_ACCESS_IN_PROGRESS # (nEXP_VMEM_CS);
 
 // If VRAM_READ is 1 or if CPU_ACCESS_IN_PROGRESS is 1, lets enable the Video memory.
 nVRAM_CS = !(VRAM_READ # CPU_ACCESS_IN_PROGRESS);
@@ -497,12 +542,24 @@ VMEM_ADDR_RESET.ar = !EXP_nSYS_RESET;
    ADDR_MODE tell the address generation CPLD what to do on the next clock cycle.
 
 
-   In TEXT MODE, every character is a 32bit value, so uses 1 address location.
+   In TEXT MODE, every character is a 32bit value, so uses 1 address location (32bit wide memory)
 
     MODE 00(0) = Do Nothing
-    MODE 01(1) = Increment by 1 (1 DWORD, since memory is 32 bits wide )
+    MODE 01(1) = Increment by 1
     MODE 11(3) = Decrement by 80 ( 320 bytes or 80 characters, since memory is 32 bits wide )
     MODE 10(2) = Increment to the next /128 multiple ( zero out bits 0-7, add 0x0000 0000 1000 0000)
+
+    Note Decrement by 80 is selected by the mode high bit set from increment by 1.  This makes the generation logic for these bits easy to compute
+    since the decrement by 40 happens on each font line until the last one.
+
+    For Mode 2, the idea is to get to the next text mode line.  This assumes each text line that is 80 dwords of memory actually uses
+    up 128 dwords of actual memory space.  The extra space after the 40 dwords is unused.  The reason for having each text line take a 
+    power of 2 number of dwords is so we can use the VMEM_OFFSET variable to scroll a line at a time.   The VMEM_OFFSET is used during
+    the address reset to start at the beginning of a specific line, and would not be possible in this CPLD if the text lines were all
+    spaced 40 dwords apart.
+
+    This means a standard 80x25 text display mode uses 25*128 dwords of memory (1600 dwords, or 6400 bytes), even though each text 
+    row only uses 80 dwords of memory plus 40 dwords of extra unused space. 
 */
 
 ADDR_MODE1.d = (MODE_IS_TEXT & ((hsync_counter_field:['d'656])));                                // TEXT MODE: increment on h656 add 512

@@ -27,7 +27,7 @@ Pin[38] = nVMEM_ADDR_OE;           // Output enable for the address lines to the
 Pin[37] = DOT_CLK;
 Pin[39] = nRESET;
 Pin[40] = VMEM_RESET_MODE;       //   What to do on mem_reset - 0 = RESET with OFFSET applied to bits 6-12
-                             //                           - 1 = RESET with OFFSET applied to bits 17
+                                 //                           - 1 = RESET with OFFSET applied to bits 17
 
 Pin[3,43] = [VMEM_ADDR_MODE1..0];
 Pin[2,5,6,8,14,15] = [VMEM_OFFSET5..0];        // 6 bits of memory address offset used for text mode and graphics mode.
@@ -85,10 +85,10 @@ RESTART_THIS_TEXT_LINE = address_mode_field:['d'3];
 /* Carry IN is 1 for increment by 1 mode, MODE=001 */
 C0 = INCREMENT_BY_ONE;
 
-/* First 3 bits of add are always 0. */
+/* First 4 bits of add are always 0. */
 [B0..3] = 'b'0;
 
-/* Next 4 bits are 1011 */
+/* Next 3 bits are 011 */
 B4 = RESTART_THIS_TEXT_LINE;
 B5 = RESTART_THIS_TEXT_LINE;
 B6 = 'b'0;
@@ -100,9 +100,6 @@ B7 = RESTART_THIS_TEXT_LINE # NEXT_TEXT_LINE;
 /* Remaining bits are on for -80  */
 
 B8 = RESTART_THIS_TEXT_LINE;
-
-/* For bit 9 we need to set this to 1 so we add 128 to the current address while reseting the lower bits */
-
 B9 = RESTART_THIS_TEXT_LINE;
 B10 = RESTART_THIS_TEXT_LINE;
 B11 = RESTART_THIS_TEXT_LINE;
@@ -147,37 +144,37 @@ C6 = G5 # (P5&C5);
 
 P6 = S6 $ B6;
 G6 = S6 & B6;
-S6.d = (!VMEM_ADDR_RESET & (P6 $ C6) & !NEXT_TEXT_LINE ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET0 );
+S6.d = (!VMEM_ADDR_RESET & (P6 $ C6) & !NEXT_TEXT_LINE );
 C7 = G6 # (P6&C6);
 
 P7 = S7 $ B7;
 G7 = S7 & B7;
-S7.d = (!VMEM_ADDR_RESET & (P7 $ C7) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET1 );
+S7.d = (!VMEM_ADDR_RESET & (P7 $ C7) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET0 );
 C8 = G7 # (P7&C7);
 
 P8 = S8 $ B8;
 G8 = S8 & B8;
-S8.d = (!VMEM_ADDR_RESET & (P8 $ C8) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET2 );
+S8.d = (!VMEM_ADDR_RESET & (P8 $ C8) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET1 );
 C9 = G8 # (P8&C8);
 
 P9 = S9 $ B9;
 G9 = S9 & B9;
-S9.d = (!VMEM_ADDR_RESET & (P9 $ C9) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET3 );
+S9.d = (!VMEM_ADDR_RESET & (P9 $ C9) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET2 );
 C10 = G9 # (P9&C9);
 
 P10 = S10 $ B10;
 G10 = S10 & B10;
-S10.d = (!VMEM_ADDR_RESET & (P10 $ C10) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET4 );
+S10.d = (!VMEM_ADDR_RESET & (P10 $ C10) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET3 );
 C11 = G10 # (P10&C10);
 
 P11 = S11 $ B11;
 G11 = S11 & B11;
-S11.d = (!VMEM_ADDR_RESET & (P11 $ C11) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET5 );
+S11.d = (!VMEM_ADDR_RESET & (P11 $ C11) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET4 );
 C12 = G11 # (P11&C11);
 
 P12 = S12 $ B12;
 G12 = S12 & B12;
-S12.d = (!VMEM_ADDR_RESET & (P12 $ C12) );
+S12.d = (!VMEM_ADDR_RESET & (P12 $ C12) ) # (VMEM_ADDR_RESET & !VMEM_RESET_MODE & VMEM_OFFSET5 );;
 C13 = G12 # (P12&C12);
 
 P13 = S13 $ B13;
