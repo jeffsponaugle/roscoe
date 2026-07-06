@@ -589,14 +589,14 @@ DEBUG3 = BIT_PROC_LATCH_SREG;
 /*
 
 Total dedicated input used:	3/4 	(75%)
-Total I/O pins used		55/80 	(68%)
-Total Logic cells used 		93/128 	(72%)
-Total Flip-Flop used 		52/128 	(40%)
-Total Foldback logic used 	2/128 	(1%)
-Total Nodes+FB/MCells 		95/128 	(74%)
+Total I/O pins used		58/80 	(72%)
+Total Logic cells used 		98/128 	(76%)
+Total Flip-Flop used 		54/128 	(42%)
+Total Foldback logic used 	4/128 	(3%)
+Total Nodes+FB/MCells 		102/128 	(79%)
 Total cascade used 		0
 Total input pins 		22
-Total output pins 		36
-Total Pts 			301
+Total output pins 		39
+Total Pts 			318
 */
 

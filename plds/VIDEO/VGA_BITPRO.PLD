@@ -347,6 +347,7 @@ BLUE4 = VGA_ENABLE & (
 
 
 /*
+
 Total dedicated input used:	3/4 	(75%)
 Total I/O pins used		80/80 	(100%)
 Total Logic cells used 		110/128 	(85%)

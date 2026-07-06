@@ -209,12 +209,12 @@ S17.d = (!VMEM_ADDR_RESET & (P17 $ C17) )# (VMEM_ADDR_RESET & VMEM_RESET_MODE & 
 /*
 Total dedicated input used:	4/4 	(100%)
 Total I/O pins used		32/32 	(100%)
-Total Logic cells used 		61/64 	(95%)
+Total Logic cells used 		59/64 	(92%)
 Total Flip-Flop used 		18/64 	(28%)
 Total Foldback logic used 	1/64 	(1%)
-Total Nodes+FB/MCells 		62/64 	(96%)
-Total cascade used 		0
+Total Nodes+FB/MCells 		43/64 	(67%)
+Total cascade used 		17
 Total input pins 		17
 Total output pins 		19
-Total Pts 			194
+Total Pts 			177
 */
