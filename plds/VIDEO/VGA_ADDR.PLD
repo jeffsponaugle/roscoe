@@ -34,7 +34,7 @@ Pin[2,5,6,8,14,15] = [VMEM_OFFSET5..0];        // 6 bits of memory address offse
                                 //  In text mode this offset is in 512 byte lines, so you can use it for
                                 //  scrolling up to 64 lines.
                                 //  In graphics mode OFFSET0 it is used for page selection.
-Pin = DEBUG1;
+Pin[27] = DEBUG1;
 
 PINNODE = [C11..6];          /* Optimizing - Creating nodes for carry elements that are very large */
 PINNODE = [S17..0];          /* Internal 17 bit counter for the memory address generation */

@@ -41,6 +41,9 @@ PIN  93 =  FONTROW0
 PIN  94 =  FONTROW1 
 PIN  96 =  FONTROW2 
 PIN  97 =  FONTROW3 
+PIN  40 =  FONT_SELECT0 
+PIN  41 =  FONT_SELECT1 
+PIN  44 =  FONT_SELECT2 
 PIN   0 =  HSYNC_COUNTER0 
 PIN   0 =  HSYNC_COUNTER1 
 PIN   0 =  HSYNC_COUNTER2 
@@ -539,6 +542,42 @@ FONTROW2 =>
 FONTROW3 =>
     VSYNC_COUNTER3
 
+FONT_SELECT0.d  =>
+    EXP_D0
+
+FONT_SELECT0.ar  =>
+    !EXP_nSYS_RESET
+
+FONT_SELECT0.ck  =>
+    nEXP_VIO_CS
+  # EXP_RW
+  # EXP_A1
+  # !EXP_A0
+
+FONT_SELECT1.d  =>
+    EXP_D1
+
+FONT_SELECT1.ar  =>
+    !EXP_nSYS_RESET
+
+FONT_SELECT1.ck  =>
+    nEXP_VIO_CS
+  # EXP_RW
+  # EXP_A1
+  # !EXP_A0
+
+FONT_SELECT2.d  =>
+    EXP_D2
+
+FONT_SELECT2.ar  =>
+    !EXP_nSYS_RESET
+
+FONT_SELECT2.ck  =>
+    nEXP_VIO_CS
+  # EXP_RW
+  # EXP_A1
+  # !EXP_A0
+
 HSYNC_COUNTER0.d  =>
     !HSYNC_COUNTER0
 
@@ -875,7 +914,7 @@ VMEM_OFFSET0.ar  =>
 VMEM_OFFSET0.ck  =>
     nEXP_VIO_CS
   # EXP_RW
-  # !EXP_A0
+  # EXP_A0
 
 VMEM_OFFSET1.d  =>
     EXP_D1
@@ -886,7 +925,7 @@ VMEM_OFFSET1.ar  =>
 VMEM_OFFSET1.ck  =>
     nEXP_VIO_CS
   # EXP_RW
-  # !EXP_A0
+  # EXP_A0
 
 VMEM_OFFSET2.d  =>
     EXP_D2
@@ -897,7 +936,7 @@ VMEM_OFFSET2.ar  =>
 VMEM_OFFSET2.ck  =>
     nEXP_VIO_CS
   # EXP_RW
-  # !EXP_A0
+  # EXP_A0
 
 VMEM_OFFSET3.d  =>
     EXP_D3
@@ -908,7 +947,7 @@ VMEM_OFFSET3.ar  =>
 VMEM_OFFSET3.ck  =>
     nEXP_VIO_CS
   # EXP_RW
-  # !EXP_A0
+  # EXP_A0
 
 VMEM_OFFSET4.d  =>
     EXP_D4
@@ -919,7 +958,7 @@ VMEM_OFFSET4.ar  =>
 VMEM_OFFSET4.ck  =>
     nEXP_VIO_CS
   # EXP_RW
-  # !EXP_A0
+  # EXP_A0
 
 VMEM_OFFSET5.d  =>
     EXP_D5
@@ -930,7 +969,7 @@ VMEM_OFFSET5.ar  =>
 VMEM_OFFSET5.ck  =>
     nEXP_VIO_CS
   # EXP_RW
-  # !EXP_A0
+  # EXP_A0
 
 VMEM_RESET_MODE =>
     CONFIG_REGA0

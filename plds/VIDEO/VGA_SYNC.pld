@@ -86,6 +86,9 @@ Pin[6] = nVRAM_UH_SEL;
 Pin[48] = nEXP_VRAM_ADDR_OE;
 Pin[47] = nEXP_VRAM_DIR;
 
+Pin[40,41,44] = [FONT_SELECT0..2];
+
+
 
 Pin[2,50,49] = DEBUG1,DEBUG2,DEBUG3;
 
@@ -138,12 +141,16 @@ LAST_FONT_ROW = fontrow_field:['d'15];
 //      b0-b5 = Memory OFFSET (for text lines, or page selection in graphics)
 
 [CONFIG_REGA0..7].d = [EXP_D0..7];
-[CONFIG_REGA0..7].ck = (nEXP_VIO_CS # EXP_RW # !EXP_A0);   // Write to address 0, latch when CS goes high
+[CONFIG_REGA0..7].ck = (nEXP_VIO_CS # EXP_RW # !EXP_A0);   // Write to address 00, latch when CS goes high
 [CONFIG_REGA0..7].ar = !EXP_nSYS_RESET;
 
 [VMEM_OFFSET5..0].d = [EXP_D5..0];
-[VMEM_OFFSET5..0].ck = (nEXP_VIO_CS # EXP_RW # !EXP_A0);    // Write to address 1
+[VMEM_OFFSET5..0].ck = (nEXP_VIO_CS # EXP_RW # EXP_A0);    // Write to address 01
 [VMEM_OFFSET5..0].ar = !EXP_nSYS_RESET;
+
+[FONT_SELECT2..0].d = [EXP_D2..0];
+[FONT_SELECT2..0].ck = (nEXP_VIO_CS # EXP_RW # EXP_A1 # !EXP_A0);    // Write to address 10
+[FONT_SELECT2..0].ar = !EXP_nSYS_RESET;
 
 // Shorthands for the register bits
 cfg_TEXT_OR_GRAPHICS = CONFIG_REGA0;      // 0 = TEXT, 1 = GRAPHICS

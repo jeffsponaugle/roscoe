@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Sun Jul 05 22:32:28 2026 "}
+  {DBtime "Mon Jul 06 17:57:36 2026 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -33,24 +33,27 @@
  {SYMBOL
   {PIN_DEF
    [Ly "PINCON"]
-   {P DOT_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 740}}
-   {P NEXP_VME {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
-   {P BIT_PROC {Pt "INPUT"}{Lq 0}{Ploc 100 680}}
-   {P VMEM_AD {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
-   {P BIT_P1 {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
-   {P ADDR_M0 {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
-   {P BIT_PR {Pt "INPUT"}{Lq 0}{Ploc 100 600}}
-   {P VMEM_O0 {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
-   {P VMEM_O1 {Pt "INPUT"}{Lq 0}{Ploc 100 560}}
-   {P VMEM_O2 {Pt "INPUT"}{Lq 0}{Ploc 100 540}}
-   {P VMEM_O3 {Pt "INPUT"}{Lq 0}{Ploc 100 520}}
-   {P VMEM_O4 {Pt "INPUT"}{Lq 0}{Ploc 100 500}}
-   {P VMEM_O5 {Pt "INPUT"}{Lq 0}{Ploc 100 480}}
-   {P VMEM_ADD {Pt "INPUT"}{Lq 0}{Ploc 100 460}}
-   {P ADDR_M1 {Pt "INPUT"}{Lq 0}{Ploc 100 440}}
-   {P NEXP_VIO {Pt "INPUT"}{Lq 0}{Ploc 100 420}}
-   {P EXP_A0 {Pt "INPUT"}{Lq 0}{Ploc 100 400}}
-   {P EXP_A1 {Pt "INPUT"}{Lq 0}{Ploc 100 380}}
+   {P DOT_CLK {Pt "INPUT"}{Lq 0}{Ploc 100 800}}
+   {P NEXP_VME {Pt "INPUT"}{Lq 0}{Ploc 100 780}}
+   {P BIT_PROC {Pt "INPUT"}{Lq 0}{Ploc 100 740}}
+   {P VMEM_AD {Pt "INPUT"}{Lq 0}{Ploc 100 720}}
+   {P BIT_P1 {Pt "INPUT"}{Lq 0}{Ploc 100 700}}
+   {P ADDR_M0 {Pt "INPUT"}{Lq 0}{Ploc 100 680}}
+   {P BIT_PR {Pt "INPUT"}{Lq 0}{Ploc 100 660}}
+   {P VMEM_O0 {Pt "INPUT"}{Lq 0}{Ploc 100 640}}
+   {P VMEM_O1 {Pt "INPUT"}{Lq 0}{Ploc 100 620}}
+   {P VMEM_O2 {Pt "INPUT"}{Lq 0}{Ploc 100 600}}
+   {P VMEM_O3 {Pt "INPUT"}{Lq 0}{Ploc 100 580}}
+   {P VMEM_O4 {Pt "INPUT"}{Lq 0}{Ploc 100 560}}
+   {P VMEM_O5 {Pt "INPUT"}{Lq 0}{Ploc 100 540}}
+   {P VMEM_ADD {Pt "INPUT"}{Lq 0}{Ploc 100 520}}
+   {P ADDR_M1 {Pt "INPUT"}{Lq 0}{Ploc 100 500}}
+   {P NEXP_VIO {Pt "INPUT"}{Lq 0}{Ploc 100 480}}
+   {P EXP_A0 {Pt "INPUT"}{Lq 0}{Ploc 100 460}}
+   {P EXP_A1 {Pt "INPUT"}{Lq 0}{Ploc 100 440}}
+   {P FONT_S0 {Pt "INPUT"}{Lq 0}{Ploc 100 420}}
+   {P FONT_S1 {Pt "INPUT"}{Lq 0}{Ploc 100 400}}
+   {P FONT_S2 {Pt "INPUT"}{Lq 0}{Ploc 100 380}}
    {P EXP_D0 {Pt "INPUT"}{Lq 0}{Ploc 100 360}}
    {P EXP_D1 {Pt "INPUT"}{Lq 0}{Ploc 100 340}}
    {P EXP_CP0 {Pt "INPUT"}{Lq 0}{Ploc 100 320}}
@@ -95,13 +98,16 @@
   {PKG
    [Ly "REFDES"]
    [Ts 25][Tj "CB"][Tr 0][Tm "N"]
-   {Rdl 230 770}
+   {Rdl 230 830}
 
    [Ly "PINNUM"]
    [Ts 15][Tj "RC"]
+   {Pnl 120 810}
+   {Pnl 120 790}
+   [Ts 15][Tj "RC"]
    {Pnl 120 750}
    {Pnl 120 730}
-   [Ts 15][Tj "RC"]
+   {Pnl 120 710}
    {Pnl 120 690}
    {Pnl 120 670}
    {Pnl 120 650}
@@ -159,17 +165,20 @@
    {Pnl 340 410}
    {Pnl 340 430}
 
-   {Sd A 87 90 5 7 12 16 17 20 21 22 23 24 25 27 29 35 36 37 52 53 54 55 56 57 58 60 63 64 67 68 89 92 93 98 99 100 1 2 6 8 9 10 13 14 19 28 30 31 32 33 47 48 49 50 94 96 97}
+   {Sd A 87 90 5 7 12 16 17 20 21 22 23 24 25 27 29 35 36 37 40 41 44 52 53 54 55 56 57 58 60 63 64 67 68 89 92 93 98 99 100 1 2 6 8 9 10 13 14 19 28 30 31 32 33 47 48 49 50 94 96 97}
   }
 
   {PIC
    [Ly "GATE"]
    [Ts 15][Tj "LC"][Tr 0][Tm "N"]
-   {R 130 760 330 0}
+   {R 130 820 330 0}
+   {L 130 800 100 800}
+   {L 130 810 140 800 130 790}
+   {L 130 780 100 780}
+   {L 130 790 140 780 130 770}
    {L 130 740 100 740}
-   {L 130 750 140 740 130 730}
    {L 130 720 100 720}
-   {L 130 730 140 720 130 710}
+   {L 130 700 100 700}
    {L 130 680 100 680}
    {L 130 660 100 660}
    {L 130 640 100 640}
@@ -227,24 +236,27 @@
    {L 330 420 360 420}
    [Ly "PINNAM"]
    [Tj "LC"]
-   {T "DOT_CLK" 140 740}
-   {T "NEXP_VME" 140 720}
-   {T "BIT_PROC" 140 680}
-   {T "VMEM_AD" 140 660}
-   {T "BIT_P1" 140 640}
-   {T "ADDR_M0" 140 620}
-   {T "BIT_PR" 140 600}
-   {T "VMEM_O0" 140 580}
-   {T "VMEM_O1" 140 560}
-   {T "VMEM_O2" 140 540}
-   {T "VMEM_O3" 140 520}
-   {T "VMEM_O4" 140 500}
-   {T "VMEM_O5" 140 480}
-   {T "VMEM_ADD" 140 460}
-   {T "ADDR_M1" 140 440}
-   {T "NEXP_VIO" 140 420}
-   {T "EXP_A0" 140 400}
-   {T "EXP_A1" 140 380}
+   {T "DOT_CLK" 140 800}
+   {T "NEXP_VME" 140 780}
+   {T "BIT_PROC" 140 740}
+   {T "VMEM_AD" 140 720}
+   {T "BIT_P1" 140 700}
+   {T "ADDR_M0" 140 680}
+   {T "BIT_PR" 140 660}
+   {T "VMEM_O0" 140 640}
+   {T "VMEM_O1" 140 620}
+   {T "VMEM_O2" 140 600}
+   {T "VMEM_O3" 140 580}
+   {T "VMEM_O4" 140 560}
+   {T "VMEM_O5" 140 540}
+   {T "VMEM_ADD" 140 520}
+   {T "ADDR_M1" 140 500}
+   {T "NEXP_VIO" 140 480}
+   {T "EXP_A0" 140 460}
+   {T "EXP_A1" 140 440}
+   {T "FONT_S0" 140 420}
+   {T "FONT_S1" 140 400}
+   {T "FONT_S2" 140 380}
    {T "EXP_D0" 140 360}
    {T "EXP_D1" 140 340}
    {T "EXP_CP0" 140 320}
@@ -298,7 +310,7 @@
    {EX
     [Ly "ATTR2"]
     [Ts 12][Tj "CT"][Tr 0][Tm "N"]
-    {At PLD C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_SYNC 230 760}
+    {At PLD C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_SYNC 230 820}
    }
   }
  }
@@ -343,6 +355,12 @@
    {N EXP_A0
    }
    {N EXP_A1
+   }
+   {N FONT_S0
+   }
+   {N FONT_S1
+   }
+   {N FONT_S2
    }
    {N EXP_D0
    }
