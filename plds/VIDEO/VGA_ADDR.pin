@@ -56,5 +56,5 @@ VM_A15					: 34
 VM_A16					: 35
 VMEM_RESET_MODE					: 40
 DOT_CLK					: 37
-nRESET					: 39
+nEXP_SYS_RESET					: 39
 nVMEM_ADDR_OE					: 38

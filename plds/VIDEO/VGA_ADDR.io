@@ -59,6 +59,6 @@ BEGIN
     "VM_A16"                                  : OUTPUT_PIN = 35 ;
     "VMEM_RESET_MODE"                         : INPUT_PIN = 40 ;
     "DOT_CLK"                                 : INPUT_PIN = 37 ;
-    "nRESET"                                  : INPUT_PIN = 39 ;
+    "nEXP_SYS_RESET"                          : INPUT_PIN = 39 ;
     "nVMEM_ADDR_OE"                           : INPUT_PIN = 38 ;
 END;

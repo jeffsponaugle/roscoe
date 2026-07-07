@@ -1,4 +1,4 @@
-Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Sun Jul 05 22:30:51 2026
+Atmel ATF1508AS Fitter Version 1.8.7.8 ,running Mon Jul 06 21:55:35 2026
 
 
 fit1508 C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_BITPRO.tt2 -CUPL -dev P1508T100 -JTAG ON

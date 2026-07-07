@@ -25,7 +25,7 @@ Pin[44] = VMEM_ADDR_RESET;      // Signal to reset the vidoe memory address.  Th
 
 Pin[38] = nVMEM_ADDR_OE;           // Output enable for the address lines to the VRAM
 Pin[37] = DOT_CLK;
-Pin[39] = nRESET;
+Pin[39] = nEXP_SYS_RESET;
 Pin[40] = VMEM_RESET_MODE;       //   What to do on mem_reset - 0 = RESET with OFFSET applied to bits 6-12
                                  //                           - 1 = RESET with OFFSET applied to bits 17
 
@@ -67,7 +67,7 @@ FIELD address_mode_field = [VMEM_ADDR_MODE1..0];
 // The adder for the memory address
 
 [S0..17].ck = !DOT_CLK;      // ADDRESS changes on falling DOT_CLK, since control signals change on rising DOT_CLK.
-[S0..17].ar = nRESET;
+[S0..17].ar = !nEXP_SYS_RESET;
 
 [VM_A17..0] = [S17..0];
 [VM_A17..0].oe = !nVMEM_ADDR_OE;

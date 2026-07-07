@@ -5,7 +5,7 @@ PIN   0 =  C8
 PIN   0 =  C9 
 PIN   0 =  C10 
 PIN   0 =  C11 
-PIN   0 =  DEBUG1 
+PIN  27 =  DEBUG1 
 PIN  37 =  DOT_CLK 
 PIN   0 =  S0 
 PIN   0 =  S1 
@@ -53,7 +53,7 @@ PIN  33 =  VM_A14
 PIN  34 =  VM_A15 
 PIN  35 =  VM_A16 
 PIN  42 =  VM_A17 
-PIN  39 =  nRESET 
+PIN  39 =  nEXP_SYS_RESET 
 PIN  38 =  nVMEM_ADDR_OE 
 %END
 
@@ -368,7 +368,7 @@ S0.d  =>
   # !S0 & VMEM_ADDR_MODE0 & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET
 
 S0.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S0.ck  =>
     !DOT_CLK
@@ -381,7 +381,7 @@ S1.d  =>
   # S1 & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET
 
 S1.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S1.ck  =>
     !DOT_CLK
@@ -396,7 +396,7 @@ S2.d  =>
   # !S1 & S2 & VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET
 
 S2.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S2.ck  =>
     !DOT_CLK
@@ -413,7 +413,7 @@ S3.d  =>
   # !S2 & S3 & VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET
 
 S3.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S3.ck  =>
     !DOT_CLK
@@ -428,7 +428,7 @@ S4.d  =>
   # S0 & S1 & S2 & S3 & !S4 & VMEM_ADDR_MODE0 & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET
 
 S4.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S4.ck  =>
     !DOT_CLK
@@ -445,7 +445,7 @@ S5.d  =>
   # S0 & S1 & S2 & S3 & S4 & !S5 & VMEM_ADDR_MODE0 & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET
 
 S5.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S5.ck  =>
     !DOT_CLK
@@ -457,7 +457,7 @@ S6.d  =>
   # C6 & !S6 & VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET
 
 S6.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S6.ck  =>
     !DOT_CLK
@@ -470,7 +470,7 @@ S7.d  =>
   # VMEM_ADDR_RESET & VMEM_OFFSET0 & !VMEM_RESET_MODE
 
 S7.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S7.ck  =>
     !DOT_CLK
@@ -485,7 +485,7 @@ S8.d  =>
   # VMEM_ADDR_RESET & VMEM_OFFSET1 & !VMEM_RESET_MODE
 
 S8.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S8.ck  =>
     !DOT_CLK
@@ -500,7 +500,7 @@ S9.d  =>
   # VMEM_ADDR_RESET & VMEM_OFFSET2 & !VMEM_RESET_MODE
 
 S9.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S9.ck  =>
     !DOT_CLK
@@ -515,7 +515,7 @@ S10.d  =>
   # VMEM_ADDR_RESET & VMEM_OFFSET3 & !VMEM_RESET_MODE
 
 S10.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S10.ck  =>
     !DOT_CLK
@@ -530,7 +530,7 @@ S11.d  =>
   # VMEM_ADDR_RESET & VMEM_OFFSET4 & !VMEM_RESET_MODE
 
 S11.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S11.ck  =>
     !DOT_CLK
@@ -548,7 +548,7 @@ S12.d  =>
   # VMEM_ADDR_RESET & VMEM_OFFSET5 & !VMEM_RESET_MODE
 
 S12.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S12.ck  =>
     !DOT_CLK
@@ -568,7 +568,7 @@ S13.d  =>
   # !S12 & S13 & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET
 
 S13.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S13.ck  =>
     !DOT_CLK
@@ -591,7 +591,7 @@ S14.d  =>
   # !S13 & S14 & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET
 
 S14.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S14.ck  =>
     !DOT_CLK
@@ -617,7 +617,7 @@ S15.d  =>
   # !S14 & S15 & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET
 
 S15.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S15.ck  =>
     !DOT_CLK
@@ -646,7 +646,7 @@ S16.d  =>
   # !S15 & S16 & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET
 
 S16.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S16.ck  =>
     !DOT_CLK
@@ -679,7 +679,7 @@ S17.d  =>
   # VMEM_ADDR_RESET & VMEM_OFFSET0 & VMEM_RESET_MODE
 
 S17.ar  =>
-    nRESET
+    !nEXP_SYS_RESET
 
 S17.ck  =>
     !DOT_CLK

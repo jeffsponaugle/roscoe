@@ -1,4 +1,4 @@
-Atmel ATF1504AS Fitter Version 1.8.7.8 ,running Sun Jul 05 22:32:13 2026
+Atmel ATF1504AS Fitter Version 1.8.7.8 ,running Mon Jul 06 21:55:15 2026
 
 
 fit1504 C:\USERS\JBS\SRC\ROSCOE\PLDS\VIDEO\VGA_ADDR.tt2 -CUPL -dev P1504T44 -JTAG ON
@@ -68,7 +68,7 @@ Performing global pin assignments ...
 Final global control pins assignment (if applicable)...
 -------------------------------------------------------
 DOT_CLK assigned to pin  37
-nRESET assigned to pin  39
+nEXP_SYS_RESET assigned to pin  39
 nVMEM_ADDR_OE assigned to pin  38
 
 
@@ -77,7 +77,7 @@ Performing input pin pre-assignments ...
 ------------------------------------
 VMEM_RESET_MODE assigned to pin  40
 DOT_CLK assigned to pin  37
-nRESET assigned to pin  39
+nEXP_SYS_RESET assigned to pin  39
 nVMEM_ADDR_OE assigned to pin  38
 
 Attempt to place floating signals ...
@@ -144,12 +144,12 @@ VM_A16 is placed at pin 35 (MC 64)
                                                                  
                                                                  
                                       D                          
-                       V        n     O     V  V                 
-                       M        R     T     M  M                 
-                       _        E     _     _  _                 
-                       A  V     S     C  G  A  A                 
-                       1  C     E     L  N  1  1                 
-                       7  C     T     K  D  6  5                 
+                       V              O     V  V                 
+                       M              T     M  M                 
+                       _              _     _  _                 
+                       A  V           C  G  A  A                 
+                       1  C           L  N  1  1                 
+                       7  C           K  D  6  5                 
                ____________________________________              
               /  44 43 42 41 40 39 38 37 36 35 34  \             
          TDI |  1                                33 | VM_A14     
@@ -397,10 +397,6 @@ S7.D = ((S7.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & C7)
 	# (!S7.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & C6 & S6.Q)
 	# (S7.Q & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & C6 & S6.Q));
 
-C9 = ((VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & C8)
-	# (S8.Q & C8)
-	# (S8.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1));
-
 S8.D = ((C8 & !S8.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
 	# (C8 & !S8.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET)
 	# (!C8 & !S8.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
@@ -408,6 +404,10 @@ S8.D = ((C8 & !S8.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
 	# (!C8 & S8.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET)
 	# (VMEM_ADDR_RESET & VMEM_OFFSET1 & !VMEM_RESET_MODE)
 	# (C8 & S8.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET));
+
+C9 = ((VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & C8)
+	# (S8.Q & C8)
+	# (S8.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1));
 
 C10 = ((VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & C9)
 	# (S9.Q & C9)
@@ -433,25 +433,6 @@ S10.D = ((C10 & !S10.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
 	# (VMEM_ADDR_RESET & VMEM_OFFSET3 & !VMEM_RESET_MODE)
 	# (C10 & S10.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET));
 
-S12.D = ((S12.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & C11)
-	# (S11.Q & !S12.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET & C11)
-	# (S11.Q & !S12.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & C11)
-	# (!S11.Q & !S12.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & !C11)
-	# (S12.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & !C11)
-	# (S12.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET & !C11)
-	# (!S11.Q & S12.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET)
-	# (!S11.Q & S12.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
-	# (VMEM_ADDR_RESET & VMEM_OFFSET5 & !VMEM_RESET_MODE)
-	# (S11.Q & S12.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET));
-
-S11.D = ((C11 & !S11.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
-	# (C11 & !S11.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET)
-	# (!C11 & !S11.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
-	# (!C11 & S11.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
-	# (!C11 & S11.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET)
-	# (VMEM_ADDR_RESET & VMEM_OFFSET4 & !VMEM_RESET_MODE)
-	# (C11 & S11.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET));
-
 S13.D = ((S13.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & S11.Q)
 	# (S13.Q & !VMEM_ADDR_RESET & !S11.Q & C11)
 	# (S12.Q & !S13.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & S11.Q & C11)
@@ -462,6 +443,25 @@ S13.D = ((S13.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & S11.Q)
 	# (!S12.Q & S13.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET)
 	# (!S12.Q & S13.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
 	# (S12.Q & S13.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET));
+
+S11.D = ((C11 & !S11.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
+	# (C11 & !S11.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET)
+	# (!C11 & !S11.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
+	# (!C11 & S11.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
+	# (!C11 & S11.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET)
+	# (VMEM_ADDR_RESET & VMEM_OFFSET4 & !VMEM_RESET_MODE)
+	# (C11 & S11.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET));
+
+S12.D = ((S12.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & C11)
+	# (S11.Q & !S12.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET & C11)
+	# (S11.Q & !S12.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & C11)
+	# (!S11.Q & !S12.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & !C11)
+	# (S12.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & !C11)
+	# (S12.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET & !C11)
+	# (!S11.Q & S12.Q & !VMEM_ADDR_MODE0 & !VMEM_ADDR_RESET)
+	# (!S11.Q & S12.Q & !VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET)
+	# (VMEM_ADDR_RESET & VMEM_OFFSET5 & !VMEM_RESET_MODE)
+	# (S11.Q & S12.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET));
 
 S14.D = ((S14.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & S12.Q)
 	# (S14.Q & !VMEM_ADDR_RESET & !S12.Q & S11.Q)
@@ -520,27 +520,27 @@ S17.D = ((S17.Q & VMEM_ADDR_MODE0 & VMEM_ADDR_MODE1 & !VMEM_ADDR_RESET & S15.Q)
 
 S0.C = !DOT_CLK;
 
-S0.AR = nRESET;
+S0.AR = !nEXP_SYS_RESET;
 
 S1.C = !DOT_CLK;
 
-S1.AR = nRESET;
+S1.AR = !nEXP_SYS_RESET;
 
 S2.C = !DOT_CLK;
 
-S2.AR = nRESET;
+S2.AR = !nEXP_SYS_RESET;
 
 S3.C = !DOT_CLK;
 
-S3.AR = nRESET;
+S3.AR = !nEXP_SYS_RESET;
 
 S4.C = !DOT_CLK;
 
-S4.AR = nRESET;
+S4.AR = !nEXP_SYS_RESET;
 
 S5.C = !DOT_CLK;
 
-S5.AR = nRESET;
+S5.AR = !nEXP_SYS_RESET;
 
 VM_A0.OE = !nVMEM_ADDR_OE;
 
@@ -580,51 +580,51 @@ VM_A17.OE = !nVMEM_ADDR_OE;
 
 S6.C = !DOT_CLK;
 
-S6.AR = nRESET;
+S6.AR = !nEXP_SYS_RESET;
 
 S7.C = !DOT_CLK;
 
-S7.AR = nRESET;
+S7.AR = !nEXP_SYS_RESET;
 
 S8.C = !DOT_CLK;
 
-S8.AR = nRESET;
+S8.AR = !nEXP_SYS_RESET;
 
 S9.C = !DOT_CLK;
 
-S9.AR = nRESET;
+S9.AR = !nEXP_SYS_RESET;
 
 S10.C = !DOT_CLK;
 
-S10.AR = nRESET;
-
-S12.C = !DOT_CLK;
-
-S12.AR = nRESET;
-
-S11.C = !DOT_CLK;
-
-S11.AR = nRESET;
+S10.AR = !nEXP_SYS_RESET;
 
 S13.C = !DOT_CLK;
 
-S13.AR = nRESET;
+S13.AR = !nEXP_SYS_RESET;
+
+S11.C = !DOT_CLK;
+
+S11.AR = !nEXP_SYS_RESET;
+
+S12.C = !DOT_CLK;
+
+S12.AR = !nEXP_SYS_RESET;
 
 S14.C = !DOT_CLK;
 
-S14.AR = nRESET;
+S14.AR = !nEXP_SYS_RESET;
 
 S15.C = !DOT_CLK;
 
-S15.AR = nRESET;
+S15.AR = !nEXP_SYS_RESET;
 
 S16.C = !DOT_CLK;
 
-S16.AR = nRESET;
+S16.AR = !nEXP_SYS_RESET;
 
 S17.C = !DOT_CLK;
 
-S17.AR = nRESET;
+S17.AR = !nEXP_SYS_RESET;
 
 
 TQFP44 Pin/Node Placement:
@@ -660,7 +660,7 @@ Pin 34 = VM_A15; /* MC 62 */
 Pin 35 = VM_A16; /* MC 64 */ 
 Pin 37 = DOT_CLK;
 Pin 38 = nVMEM_ADDR_OE;
-Pin 39 = nRESET;
+Pin 39 = nEXP_SYS_RESET;
 Pin 40 = VMEM_RESET_MODE;
 Pin 42 = VM_A17; /* MC 16 */ 
 Pin 43 = VMEM_ADDR_MODE0; /* MC 14 */ 
@@ -773,7 +773,7 @@ MC62  34   OE0  VM_A15          C----  --              --        --             
 MC63  0         --                     --              --        --             0     slow
 MC64  35   OE0  VM_A16          C----  --              --        --             1     slow
 MC0   40        VMEM_RESET_MODE INPUT  --              --        --             0     slow
-MC0   39        nRESET          INPUT  --              --        --             0     slow
+MC0   39        nEXP_SYS_RESET  INPUT  --              --        --             0     slow
 MC0   38        nVMEM_ADDR_OE   INPUT  --              --        --             0     slow
 MC0   37        DOT_CLK         INPUT  --              --        --             0     slow
 

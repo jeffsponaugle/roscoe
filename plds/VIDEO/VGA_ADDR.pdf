@@ -5,7 +5,7 @@
   {Program "CUPL(WM) Version 5.0a"}
   {DBtype "Schematic"}
   {DBvrev 1.01}
-  {DBtime "Sun Jul 05 22:32:08 2026 "}
+  {DBtime "Mon Jul 06 21:55:10 2026 "}
   {DBunit "MIL"}
   {DBgrid 10}
   {Lyrstr "WIRES" 1 "BUS" 1 "GATE" 2 "IEEE" 2 "PINFUN" 3 "PINNUM" 1 
@@ -42,7 +42,7 @@
    {P VMEM_O1 {Pt "INPUT"}{Lq 0}{Ploc 100 140}}
    {P VMEM_O0 {Pt "INPUT"}{Lq 0}{Ploc 100 120}}
    {P NVMEM_AD {Pt "INPUT"}{Lq 0}{Ploc 100 100}}
-   {P NRESET {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
+   {P NEXP_SYS {Pt "INPUT"}{Lq 0}{Ploc 100 80}}
    {P VMEM_RES {Pt "INPUT"}{Lq 0}{Ploc 100 60}}
    {P VMEM_A0 {Pt "INPUT"}{Lq 0}{Ploc 100 40}}
    {P VMEM_ADD {Pt "INPUT"}{Lq 0}{Ploc 100 20}}
@@ -57,13 +57,14 @@
    {P VM_A9 {Pt "I/O"}{Lq 0}{Ploc 340 180}}
    {P VM_A8 {Pt "I/O"}{Lq 0}{Ploc 340 200}}
    {P VM_A10 {Pt "I/O"}{Lq 0}{Ploc 340 220}}
-   {P VM_A11 {Pt "I/O"}{Lq 0}{Ploc 340 240}}
-   {P VM_A12 {Pt "I/O"}{Lq 0}{Ploc 340 260}}
-   {P VM_A13 {Pt "I/O"}{Lq 0}{Ploc 340 280}}
-   {P VM_A14 {Pt "I/O"}{Lq 0}{Ploc 340 300}}
-   {P VM_A15 {Pt "I/O"}{Lq 0}{Ploc 340 320}}
-   {P VM_A16 {Pt "I/O"}{Lq 0}{Ploc 340 340}}
-   {P VM_A17 {Pt "I/O"}{Lq 0}{Ploc 340 360}}
+   {P DEBUG1 {Pt "I/O"}{Lq 0}{Ploc 340 240}}
+   {P VM_A11 {Pt "I/O"}{Lq 0}{Ploc 340 260}}
+   {P VM_A12 {Pt "I/O"}{Lq 0}{Ploc 340 280}}
+   {P VM_A13 {Pt "I/O"}{Lq 0}{Ploc 340 300}}
+   {P VM_A14 {Pt "I/O"}{Lq 0}{Ploc 340 320}}
+   {P VM_A15 {Pt "I/O"}{Lq 0}{Ploc 340 340}}
+   {P VM_A16 {Pt "I/O"}{Lq 0}{Ploc 340 360}}
+   {P VM_A17 {Pt "I/O"}{Lq 0}{Ploc 340 380}}
   }
 
   {PKG
@@ -106,8 +107,9 @@
    {Pnl 320 330}
    {Pnl 320 350}
    {Pnl 320 370}
+   {Pnl 320 390}
 
-   {Sd A 37 2 3 5 6 8 14 15 38 39 40 43 44 10 11 12 13 18 19 20 21 22 23 25 28 30 31 33 34 35 42}
+   {Sd A 37 2 3 5 6 8 14 15 38 39 40 43 44 10 11 12 13 18 19 20 21 22 23 25 27 28 30 31 33 34 35 42}
   }
 
   {PIC
@@ -146,6 +148,7 @@
    {L 310 320 340 320}
    {L 310 340 340 340}
    {L 310 360 340 360}
+   {L 310 380 340 380}
    [Ly "PINNAM"]
    [Tj "LC"]
    {T "DOT_CLK" 140 280}
@@ -157,7 +160,7 @@
    {T "VMEM_O1" 140 140}
    {T "VMEM_O0" 140 120}
    {T "NVMEM_AD" 140 100}
-   {T "NRESET" 140 80}
+   {T "NEXP_SYS" 140 80}
    {T "VMEM_RES" 140 60}
    {T "VMEM_A0" 140 40}
    {T "VMEM_ADD" 140 20}
@@ -173,13 +176,14 @@
    {T "VM_A9" 300 180}
    {T "VM_A8" 300 200}
    {T "VM_A10" 300 220}
-   {T "VM_A11" 300 240}
-   {T "VM_A12" 300 260}
-   {T "VM_A13" 300 280}
-   {T "VM_A14" 300 300}
-   {T "VM_A15" 300 320}
-   {T "VM_A16" 300 340}
-   {T "VM_A17" 300 360}
+   {T "DEBUG1" 300 240}
+   {T "VM_A11" 300 260}
+   {T "VM_A12" 300 280}
+   {T "VM_A13" 300 300}
+   {T "VM_A14" 300 320}
+   {T "VM_A15" 300 340}
+   {T "VM_A16" 300 360}
+   {T "VM_A17" 300 380}
    [Ly "DEVICE"]
    [Tj "CT"]
    {T "F1504ISPTQFP44" 220 -10}
@@ -221,7 +225,7 @@
    }
    {N NVMEM_AD
    }
-   {N NRESET
+   {N NEXP_SYS
    }
    {N VMEM_RES
    }
@@ -250,6 +254,8 @@
    {N VM_A8
    }
    {N VM_A10
+   }
+   {N DEBUG1
    }
    {N VM_A11
    }

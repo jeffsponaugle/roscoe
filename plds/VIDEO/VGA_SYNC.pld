@@ -141,15 +141,15 @@ LAST_FONT_ROW = fontrow_field:['d'15];
 //      b0-b5 = Memory OFFSET (for text lines, or page selection in graphics)
 
 [CONFIG_REGA0..7].d = [EXP_D0..7];
-[CONFIG_REGA0..7].ck = (nEXP_VIO_CS # EXP_RW # !EXP_A0);   // Write to address 00, latch when CS goes high
+[CONFIG_REGA0..7].ck = (nEXP_VIO_CS # EXP_RW # EXP_A1 # EXP_A0);   // Write to address 00, latch when CS goes high
 [CONFIG_REGA0..7].ar = !EXP_nSYS_RESET;
 
 [VMEM_OFFSET5..0].d = [EXP_D5..0];
-[VMEM_OFFSET5..0].ck = (nEXP_VIO_CS # EXP_RW # EXP_A0);    // Write to address 01
+[VMEM_OFFSET5..0].ck = (nEXP_VIO_CS # EXP_RW # EXP_A1 # !EXP_A0);    // Write to address 01
 [VMEM_OFFSET5..0].ar = !EXP_nSYS_RESET;
 
 [FONT_SELECT2..0].d = [EXP_D2..0];
-[FONT_SELECT2..0].ck = (nEXP_VIO_CS # EXP_RW # EXP_A1 # !EXP_A0);    // Write to address 10
+[FONT_SELECT2..0].ck = (nEXP_VIO_CS # EXP_RW # !EXP_A1 # EXP_A0);    // Write to address 10
 [FONT_SELECT2..0].ar = !EXP_nSYS_RESET;
 
 // Shorthands for the register bits
@@ -507,11 +507,14 @@ BIT_PROC_VGA_ENABLE = VGA_DISPLAY_ACTIVE;
 
 // Shift Register only used for TEXT MODE
 
-BIT_PROC_LATCH_SREG.d = (MODE_IS_TEXT & (!((hsync_counter_3_field:['d'0]) & ADDR_MODE_ENABLE )));        // TEXT MODE: Load Shift reg every 8 cycles
+// These two signals are active high,  LATCH_SREG will tell the bitpro cpld to latch from video memory, and SHIFT_SREG will shift the character
+// bitpattern by one bit.
+
+BIT_PROC_LATCH_SREG.d = (MODE_IS_TEXT & (((hsync_counter_3_field:['d'0]) & ADDR_MODE_ENABLE )));        // TEXT MODE: Load Shift reg every 8 cycles
 BIT_PROC_LATCH_SREG.ck = DOT_CLK;
 BIT_PROC_LATCH_SREG.ar = !EXP_nSYS_RESET;
 
-BIT_PROC_SHIFT_SREG.d = (MODE_IS_TEXT & (!((hsync_counter_3_field:['d'1..'d'7]) & ADDR_MODE_ENABLE )));  // TEXT MODE: Shift Shift reg every 7/8 cycles
+BIT_PROC_SHIFT_SREG.d = (MODE_IS_TEXT & (((hsync_counter_3_field:['d'1..'d'7]) & ADDR_MODE_ENABLE )));  // TEXT MODE: Shift Shift reg every 7/8 cycles
 BIT_PROC_SHIFT_SREG.ck = DOT_CLK;
 BIT_PROC_SHIFT_SREG.ar = !EXP_nSYS_RESET;
 

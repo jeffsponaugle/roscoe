@@ -91,7 +91,7 @@ PINNODE = [VREG_D0..31];     // Memory Register - In graphics mode all 16 bits a
 STATUS = INVERT_SELECT;
 
 FIELD mode_field = [MODE0..1];
-FIELD select_field = [SELECT_SUB0..1];
+FIELD select_field = [SELECT_SUB1..0];
 
 NO_SHIFT_CHANGE = !(LATCH_SREG # SHIFT_SREG);
 SREG_D0.d = (LATCH_SREG & FONTROM_D0) # (NO_SHIFT_CHANGE & SREG_D0);
