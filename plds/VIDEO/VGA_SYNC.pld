@@ -294,7 +294,7 @@ FIELD vsync_counter_4_field = [VSYNC_COUNTER3..0];
 VSYNC_ZERO = !(vsync_counter_field:['d'524]);
 
 VSYNC_DISPLAY_ACTIVE = (vsync_counter_field:[0..'d'479]);
-HSYNC_DISPLAY_ACTIVE = (hsync_counter_field:[16..'d'656]);
+HSYNC_DISPLAY_ACTIVE = (hsync_counter_field:['d'16..'d'654]);
 
 VGA_DISPLAY_ACTIVE.d = (HSYNC_DISPLAY_ACTIVE) & (VSYNC_DISPLAY_ACTIVE);
 VGA_DISPLAY_ACTIVE.ck = DOT_CLK;
@@ -329,14 +329,18 @@ VGA_VSYNC.ap = !EXP_nSYS_RESET;
     could be a problem if you try to run the CPU at super slow speeds.
 
 */
-VRAM_BUSY.d = (hsync_counter_field:['d'0..'d'650]) & VSYNC_DISPLAY_ACTIVE;   // This will turn on for every horizontal line, but off for the refreshes
+
+// The actual display output starts at clock 16 and continues for 640 pixes at clock 654.  The VRAM busy covers that entire range
+// even though in graphics mode (16bpp) the last read happens 2 pixes before the of the line.  T
+
+VRAM_BUSY.d = (hsync_counter_field:['d'0..'d'656]) & VSYNC_DISPLAY_ACTIVE;   // This will turn on for every horizontal line, but off for the refreshes
 VRAM_BUSY.ck = DOT_CLK;
 VRAM_BUSY.ar = !EXP_nSYS_RESET;
 
 
 // VRAM_READ is used to enable the VRAM memory for video generation.  This must fit inside the window above (VRAM_BUSY).
 
-VRAM_READ.d = (hsync_counter_field:['d'0..'d'639]) & VSYNC_DISPLAY_ACTIVE;
+VRAM_READ.d = (hsync_counter_field:['d'0..'d'654]) & VSYNC_DISPLAY_ACTIVE;
 VRAM_READ.ck = DOT_CLK;
 VRAM_READ.ar = !EXP_nSYS_RESET;
 
