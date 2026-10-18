@@ -24,7 +24,7 @@ There is no presence detect and no parity, so software has to size memory by pro
 
 ### 1.2 Address multiplexer (sheet 8)
 
-U26, U27 and U28 are 74AHCT157 quad 2:1 multiplexers with OE grounded. Their select input is `DRAM_MUX` from BUSCTRL: 0 passes the row address (A inputs), 1 passes the column address (B inputs).
+U26, U27 and U28 are SN74AHC157 quad 2:1 multiplexers (part per the netlist) with OE grounded. Their select input is `DRAM_MUX` from BUSCTRL: 0 passes the row address (A inputs), 1 passes the column address (B inputs).
 
 | DRAM pin | Row (MUX = 0) | Column (MUX = 1) |
 |---|---|---|
@@ -55,7 +55,7 @@ At all other times the transceivers drive the CPU's data towards the DRAMs, so w
 
 ### 1.4 Loading
 
-The address, CAS and WE nets are shared by every socket. With four double-sided SIMMs built from x4 chips, each address line and WE sees around 64 DRAM inputs (several hundred pF), and each CAS line about 16. The address lines are driven by 74AHCT157s, and WE and CAS straight from slow-slew CPLD pins. Expect slow edges with all sockets populated. **Check** RAS-to-address and CAS edges at the far socket with a scope before relying on the margins in Section 3.3.
+The address, CAS and WE nets are shared by every socket. With four double-sided SIMMs built from x4 chips, each address line and WE sees around 64 DRAM inputs (several hundred pF), and each CAS line about 16. The address lines are driven by the AHC157s, and WE and CAS straight from slow-slew CPLD pins. Expect slow edges with all sockets populated. **Check** RAS-to-address and CAS edges at the far socket with a scope before relying on the margins in Section 3.3.
 
 ## 2 Address map
 
@@ -120,7 +120,7 @@ Writes are early writes: `nDRAM_WE` falls with `DRAM_REGION_ACCESS`, long before
 
 ### 3.3 Timing budget at 20 MHz
 
-These are worst-case CPU numbers (AS valid 25-45 ns into the cycle, address valid by 25 ns, write data by 75 ns) with a -10 CPLD with slow-slew outputs. They are estimates from the data-sheet maxima, with roughly 9 ns per internal level, 14 ns per pin, 8 ns for array-clocked flops, about 7 ns for the 74AHCT157 and up to about 20 ns for the 245. Board delays are ignored. Times are measured from the rising clock edge that starts S0.
+These are worst-case CPU numbers (AS valid 25-45 ns into the cycle, address valid by 25 ns, write data by 75 ns) with a -10 CPLD with slow-slew outputs. They are estimates from the data-sheet maxima, with roughly 9 ns per internal level, 14 ns per pin, 8 ns for array-clocked flops, about 7 ns for the AHC157 and up to about 20 ns for the 74HCT245. Board delays are ignored. Times are measured from the rising clock edge that starts S0.
 
 | Event | Time (ns) |
 |---|---|

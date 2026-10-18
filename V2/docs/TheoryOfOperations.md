@@ -5,6 +5,7 @@ This document explains how the Roscoe V2 main board works, with the emphasis on 
 | Item | Version used |
 |---|---|
 | Main board schematic | `RoscoeMainboardV2Final.pdf` (17 sheets) |
+| Main board netlist | `schematic/RoscoeMainboardV2Final.net` (DipTrace 5.3.5.1 export), checked 2026-10-18 |
 | SRAM riser schematic | `RoscoeSRAMboardV2.pdf` (2 sheets) |
 | Bus controller CPLD, U58 | `plds/BUSCTRLV2/BUSCTRL2.PLD`, revision 29 ("nCPU_RD delayed"), fitted 2026-07-04 |
 | Device decoder CPLD, U59 | `plds/DEVMAPV2/DEVMAP2.PLD`, revision 20 (newest JED in the folder: `REV21-DEVMAP2-2WS.jed`) |
@@ -20,7 +21,7 @@ Companion documents:
 * [changes.md](changes.md) - the agreed and proposed changes (rework, CPLD edits, expansion-bus definition), grouped into change sets.
 * [timing/](timing/) - every timing diagram in these documents, as WaveDrom source plus rendered SVG.
 
-**Conventions.** Signal names are the schematic and CUPL names; a leading `n` means active low. BUSCTRL, DEVMAP and INTCTRL are the three ATF1508AS parts, and PTC is the ATF1504AS. Addresses are physical. Timing is quoted for a 20 MHz CPU clock (50 ns period), the schematic value, unless stated otherwise. The boards currently run at 12 or 16 MHz with a different Y1 oscillator. At those clocks each CPLD delay takes a smaller share of the clock, so most margins are larger; anything decided at a clock edge, such as DSACK sampling, behaves the same. Everything here comes from the schematic PDFs and the CUPL sources. Where a statement is an inference (a timing margin, for example) the text says so. Items that should be confirmed against the netlist, a scope or the logic analyser are marked **Check**.
+**Conventions.** Signal names are the schematic and CUPL names; a leading `n` means active low. BUSCTRL, DEVMAP and INTCTRL are the three ATF1508AS parts, and PTC is the ATF1504AS. Addresses are physical. Timing is quoted for a 20 MHz CPU clock (50 ns period), the schematic value, unless stated otherwise. The boards currently run at 12 or 16 MHz with a different Y1 oscillator. At those clocks each CPLD delay takes a smaller share of the clock, so most margins are larger; anything decided at a clock edge, such as DSACK sampling, behaves the same. Everything here comes from the schematic PDFs and the CUPL sources, cross-checked against the netlist: every CPLD pin assignment in the four CUPL sources matches the net it is wired to. Where a statement is an inference (a timing margin, for example) the text says so. Items that still need a scope, the logic analyser or a look at the fitted parts are marked **Check**.
 
 ## Contents
 
@@ -49,7 +50,7 @@ Everything hangs off one 32-bit bus. The MC68030's address bus, data bus and con
 
 ```mermaid
 flowchart LR
-    OSC["20 MHz Y1 + U1 74x04"] --> CPU["MC68030 U2"]
+    OSC["20 MHz Y1 + U1 74HC04"] --> CPU["MC68030 U2"]
     CPU === BUS(["CPU bus: A31-A0, D31-D0, AS, R/W, SIZ, FC"])
     FPU["68881/2 U22"] === BUS
     BUS === BC["BUSCTRL U58"]
@@ -93,13 +94,13 @@ flowchart LR
 | 5 | SRAM riser connector U6 |
 | 6 | PTC CPLD U11 (ATF1504), its JTAG header J11, 32.768 kHz oscillator U12 |
 | 7 | Four 72-pin SIMM sockets U18-U21 ("BANK 1-4") |
-| 8 | DRAM address multiplexers U26-U28 (74AHCT157), jumper J3, DRAM data transceivers U29-U32 |
+| 8 | DRAM address multiplexers U26-U28 (SN74AHC157), jumper J3, DRAM data transceivers U29-U32 (74HCT245) |
 | 9 | RTC U33 (DS12887; the symbol says DS12877) with address buffer U34 and data transceiver U35 |
 | 10 | Dual UART U36 (ST16C2550, 44-PLCC), 18.432 MHz oscillator U13, serial headers J301 (A) and J20 (B) |
 | 11 | Two IDE ports: J4 (IDE1) with U37/U38/U39, J6 (IDE2) with U40/U41/U42 |
 | 12 | ATX connector U64, ATtiny power controller U65, power and reset buttons, PWR jumpers |
 | 13 | Expansion connectors U46-U48 |
-| 14 | Expansion buffers: address/control U49-U53 and U68 (244), data U54-U57 (245), pull-ups |
+| 14 | Expansion buffers: address/control U49-U53 and U68 (74AHC244), data U54-U57 (SN74AHC245), pull-ups |
 | 15 | Seven 20-pin logic-analyser headers (U4, U5, U23, U24, U25, U69, U70) |
 | 16 | BUSCTRL U58 |
 | 17 | DEVMAP U59 and INTCTRL U60, JTAG chain jumpers J8/J9, test headers J27/J28 |
@@ -110,9 +111,9 @@ flowchart LR
 
 | Clock | Source | Destinations |
 |---|---|---|
-| `CPU_CLK` | Y1 20 MHz oscillator -> U1 (one 74x04 inverter section; four sections share the oscillator input) | CPU, FPU, all three ATF1508s (global clock pin 87), logic header U70, test point U8 |
+| `CPU_CLK` | Y1 20 MHz oscillator -> U1 (one 74HC04 inverter section; four sections share the oscillator input) | CPU, FPU, all three ATF1508s (global clock pin 87), logic header U70, test point U8 |
 | `EBUS_CPU_CLK` | separate U1 section | expansion connectors, pin B27 |
-| `CPU_CLK_2`, `CPU_CLK_3` | separate U1 sections | no other connection visible on the PDF. **Check** against the netlist. |
+| `CPU_CLK_2`, `CPU_CLK_3` | separate U1 sections | none: the netlist shows nothing else on either net (U1 pins 6 and 2), so they are spare outputs |
 | `CPU_CLK_DIV16` | BUSCTRL ripple divider (div2 -> div4 -> div8 -> div16), pin 47 | PTC timer B clock (`PTCB_CLOCK`) |
 | `CPU_CLK_div8` | BUSCTRL internal | DRAM refresh timer |
 | 32.768 kHz | U12 | PTC timer A clock (`PTCA_CLOCK`) |
@@ -143,10 +144,10 @@ The MC68030 needs RESET held for at least 520 clocks after Vcc is in tolerance. 
 
 | Bit | Name | Effect |
 |---|---|---|
-| 0 | `POWER_CONTROL_STATE` | 1 = INTCTRL actively drives `POWER_CONTROL_OUT` high. That net is `PWR_REQGR`, which the ATtiny reads as a power-off request. When the bit is 0 the pin is tri-stated, and R9 and R46 (10K each) pull the net low. |
+| 0 | `POWER_CONTROL_STATE` | 1 = INTCTRL actively drives `POWER_CONTROL_OUT` high. That net goes to the ATtiny's `PWR_REQGR` pin (U65 pin 5), which reads it as a power-off request. When the bit is 0 the pin is tri-stated, and R9 and R46 (10K each) pull the net low. |
 | 1 | `RESET_CONTROL_OUT` | 1 = reset the system, but see the problem below. |
 
-The same `PWR_REQGR` net is also INTCTRL input `vINT1B`, intended as the "power button pressed" interrupt from the ATtiny. J24 can strap it high or low.
+The same net is also INTCTRL input `vINT1B` (pin 30), intended as the "power button pressed" interrupt from the ATtiny. J24 can strap it high or low.
 
 **Problem: the software reset is about one clock long** (see [timing/11-software-reset.svg](timing/11-software-reset.svg)). `RESET_CONTROL_OUT` asynchronously resets `nSYS_RESET` in BUSCTRL. INTCTRL then clears `RESET_CONTROL_OUT` with `.ar = !nSYS_RESET`, so BUSCTRL's asynchronous reset input goes away and `nSYS_RESET` returns high on the next falling clock edge. The pulse is far shorter than the 10 clocks the CPU needs (520 recommended) and the 25 us ATA devices need. The source comment ("set to zero to disable the function") and the file `INTCTRL2-RSTFIX.jed` suggest this was already noticed. To fix it, stretch the pulse with a counter (for example clear the bit only after `CPU_CLK_DIV16` has counted several hundred clocks), or hand the request to the ATtiny instead.
 
@@ -252,7 +253,7 @@ A fast pull-up does not make "retracting" a DSACK a way to add wait states: the 
 | /AVEC | nCPU_AVEC | R49 10K only | autovectors never used |
 | /BR, /BGACK | nCPU_BR, nCPU_BGACK | R50, R11 10K only | no other bus masters |
 | /RMC | nCPU_RMC | BUSCTRL 7 | input, not used in any equation |
-| /OCS, /ECS | nCPU_OCS, nCPU_ECS | labelled nets, no other connection seen | **Check** |
+| /OCS, /ECS | nCPU_OCS, nCPU_ECS | labelled nets, nothing else connected (netlist) | outputs, fine |
 | /BG, /DBEN, /CIOUT, /CBREQ, /IPEND, /STATUS, /REFILL | - | not connected | outputs, fine |
 | **/CDIS, /MMUDIS, /CBACK** | - | **not connected** | **floating inputs**, see below |
 
@@ -425,7 +426,7 @@ I checked all 16 SIZ/A1/A0 combinations against the MC68030 table and they match
 The DRAM logic is in BUSCTRL and is documented in [DRAM.md](DRAM.md). In brief:
 
 * RAS for the selected rank falls when `DRAM_REGION_ACCESS` clocks `nDRAM_ACCESS_RAS`.
-* `DRAM_MUX` switches the 74AHCT157s to the column address when any RAS pin falls.
+* `DRAM_MUX` switches the 157s to the column address when any RAS pin falls.
 * CAS (masked per byte lane on writes) starts on the first falling edge after RAS.
 * RAS ends on the second falling edge.
 * DSACK comes from a one-wait-state flop, so DRAM cycles take 4 clocks.
@@ -492,8 +493,8 @@ INTCTRL clocks its registers on the rising edge of (`nINTCTRL_CS` OR R/W OR addr
 
 The DS12887 has a multiplexed AD7-AD0 bus and runs in Motorola mode (MOT tied high). DEVMAP and two buffers turn it into a directly addressed device:
 
-* U34 (74x244, both halves enabled by `RTC_A_SEL` low) drives CPU A7-A0 onto AD7-AD0 whenever no RTC data phase is in progress.
-* U35 (74x245, `/OE` = `RTC_D_SEL`, DIR = `CPU_RW`) connects AD7-AD0 to D31-D24 during the data phase.
+* U34 (74AHC244, both halves enabled by `RTC_A_SEL` low) drives CPU A7-A0 onto AD7-AD0 whenever no RTC data phase is in progress.
+* U35 (SN74AHC245, `/OE` = `RTC_D_SEL`, DIR = `CPU_RW`) connects AD7-AD0 to D31-D24 during the data phase.
 * RTC AS and /CS are both `nRTC_CS`. Its falling edge latches the address that U34 is driving.
 * `RTC_A_SEL` is a flop: `.d = 1`, `.ck = !CPU_CLK`, `.ar = nRTC_CS`. It sets on the first falling edge after the select, which turns U34 off, raises the RTC's DS (data strobe) and enables U35 through `RTC_D_SEL = !RTC_A_SEL`. When the cycle ends, `nRTC_CS` clears it.
 
@@ -717,11 +718,11 @@ There are two identical 40-pin ports, IDE1 on J4 and IDE2 on J6.
 
 | Function | IDE1 (J4) | IDE2 (J6) |
 |---|---|---|
-| Data DD7-DD0 <-> CPU D23-D16 | U38 (245) | U41 |
-| Data DD15-DD8 <-> CPU D31-D24 | U37 (245) | U40 |
+| Data DD7-DD0 <-> CPU D23-D16 | U38 (SN74AHC245) | U41 |
+| Data DD15-DD8 <-> CPU D31-D24 | U37 (SN74AHC245) | U40 |
 | Transceiver /OE | `nIDE_BUFFER_EN1` | `nIDE_BUFFER_EN2` |
 | Transceiver DIR | `CPU_RW` (read = drive -> CPU) | same |
-| Address/control buffer, always enabled | U39 (244) | U42 |
+| Address/control buffer, always enabled | U39 (74AHC244) | U42 |
 | A2, A1, A0 | CPU A7, A6, A5 | same |
 | /CS0, /CS1 | `nIDE1_CSA`, `nIDE1_CSB` | `nIDE2_CSA`, `nIDE2_CSB` |
 | /IOR | `nCPU_RD` | same |
@@ -732,6 +733,8 @@ There are two identical 40-pin ports, IDE1 on J4 and IDE2 on J6.
 | IORDY, /IOCS16, DASP, PDIAG, CSEL | not connected | not connected |
 
 `nCPU_RD` and `nIDE_WR` reach **both** ports. A drive only acts when its own /CS is asserted, so that is fine, but /IOR pulses on every read cycle in the system.
+
+**Input thresholds.** The netlist gives the data transceivers as SN74AHC245, and AHC inputs have CMOS thresholds: at 5 V a valid high is at least about 3.5 V (0.7 VCC). ATA only promises VOH of 2.4 V from a drive, and many later drives and some CF cards drive 3.3 V levels. In the read direction (drive to CPU) such a high sits in the transceiver's undefined band. It usually still reads correctly, because AHC actually switches near 2.5 V, but with little noise margin. SN74AHCT245 is a drop-in replacement with TTL thresholds (VIH 2.0 V); see [changes.md](changes.md) P7. **Check** which parts are actually fitted.
 
 ### 12.2 Register map
 
@@ -852,8 +855,8 @@ Changing the handshake means reprogramming **both** CPLDs together. Keep the cur
 
 | Pin | Signal | Dir (from the board) | Source and notes |
 |---|---|---|---|
-| A1-A9, A11-A15, A17, A18 / B1-B9, B11-B15, B17, B18 | `EXP_A0`-`EXP_A31` (even on A, odd on B) | out | U49-U52 (244), always enabled |
-| C1-C4, C6-C13, C15-C18 / D1-D4, D6-D13, D15-D18 | `EXP_D0`-`EXP_D31` (even on C, odd on D) | bidir | U54-U57 (245), always enabled |
+| A1-A9, A11-A15, A17, A18 / B1-B9, B11-B15, B17, B18 | `EXP_A0`-`EXP_A31` (even on A, odd on B) | out | U49-U52 (74AHC244), always enabled |
+| C1-C4, C6-C13, C15-C18 / D1-D4, D6-D13, D15-D18 | `EXP_D0`-`EXP_D31` (even on C, odd on D) | bidir | U54-U57 (SN74AHC245), always enabled. CMOS input thresholds: a card must drive reads with 5 V CMOS levels (13.2). |
 | A10, B10, C14, D14 | +5 V | | no 3.3 V or 12 V |
 | A16, B16, C5, D5 | GND | | |
 | A19 | `EXP_RW` | out | U53 |
@@ -873,7 +876,7 @@ Changing the handshake means reprogramming **both** CPLDs together. Keep the cur
 | A24, B23 | `nEXP_INT2A`, `nEXP_INT2B` | in | level 2. A24's symbol pin is named `EXP_nVIDRFSH_INT`. |
 | B26, B30 | `EXP_BC_CPLD1/2` | BUSCTRL 28/29 | currently **driven low**. CS1 makes them the VMEM hold-off pair, `nEXP_VMEM_BUSY` (in, needs a pull-up) and `nEXP_VMEM_GNT` (out) ([changes.md](changes.md) 1.4). |
 | A31, B31 | `EXP_DM_CPLD1/2` | DEVMAP 7/8 | currently **driven low** |
-| B29 | `EXP_INT_CPLD2` | INTCTRL 32 | currently **driven low**. `EXP_INT_CPLD1` (INTCTRL 31) does not appear on the connector. **Check** |
+| B29 | `EXP_INT_CPLD2` | INTCTRL 32 | currently **driven low**. `EXP_INT_CPLD1` (INTCTRL 31) is not on the connector; the netlist shows it going only to logic header U24 (CLK1). |
 
 All interrupt inputs have 10K pull-ups (R18-R22, R58, R59) and pass through U53/U68 to INTCTRL. They are active-low and level-sensitive, so a card should pull the line low (open-drain is fine) until software services it.
 
@@ -883,6 +886,7 @@ Address and control are one-way 244s, so cards cannot master the bus. The data 2
 
 * During every CPU write, and every read from an on-board device, the 245s drive the CPU's data onto `EXP_D`. Cards must keep `EXP_D` tri-stated unless they are being read.
 * To answer a read, a card drives `EXP_D` and pulls `nEXP_DATA_EN` low. It must release both as soon as its select goes away. **Drive `nEXP_DATA_EN` high actively** (a tri-state driver that drives high, then lets go), or use a much stronger pull-up. With only R48 (10K) and the capacitance of the connectors and four DIR inputs, the 245s stay pointed at the CPU bus for hundreds of nanoseconds and fight the next cycle ([timing/10](timing/10-expansion-read.svg)).
+* The 245s are SN74AHC245, with CMOS input thresholds: a high must reach about 3.5 V. Drive `EXP_D` and `nEXP_DATA_EN` from 5 V CMOS outputs (HC, HCT, AC, ACT, or a 5 V CPLD), not from LS or F parts or 3.3 V logic. Fitting SN74AHCT245 in U54-U57 would remove the restriction.
 
 ### 13.3 Port size
 
@@ -942,6 +946,7 @@ Confidence: **high** means read directly from the source or schematic, **medium*
 | 15 | RTC | DS pulse about 50 ns with no wait states; /CS rises before DS falls (8.4) | possible RTC read/write errors | low | compare with the DS12887 data sheet |
 | 16 | Clock | The boards run at 12 or 16 MHz; 12 MHz is just under the data sheet's 12.5 MHz minimum for the 20 and 25 MHz grades | none seen | informational | prefer 16 MHz when chasing marginal behaviour |
 | 17 | Docs | Small mismatches: PTC address comment; memory-map PDF (PTC 512 B, TL16C2552, DS12887 vs DS12877); refresh comment says 15 us (the actual interval is 128 CPU clocks); the hardware manual is a stub; `.chn` paths point to the old tree | confusion | high | tidy as you go |
+| 18 | Buffers | Per the netlist, the receivers that take data from outside are SN74AHC245 with CMOS thresholds (about 3.5 V for a high at 5 V): IDE data U37/U38/U40/U41, expansion data U54-U57, RTC data U35 (12.1, 13.2) | IDE drives with TTL-level or 3.3 V outputs read with little or no noise margin; cards must drive 5 V CMOS levels | medium (check the fitted parts) | SN74AHCT245, pin-compatible, at least in the IDE data path ([changes.md](changes.md) P7) |
 
 ---
 
@@ -964,6 +969,7 @@ These are board-level changes suggested by the analysis. None is needed for the 
 | CS1 items: route `nCPU_AS` to a DEVMAP dedicated input; name connector A26 `nEXP_ACK` (1K pull-up), B26 `nEXP_VMEM_BUSY` (4.7K pull-up) and B30 `nEXP_VMEM_GNT` | removes the CS1 rework wires and pull-ups | [changes.md](changes.md) 1.13 |
 | 10K pull-downs on IDE INTRQ (J4/J6 pin 31) and DD7 (pin 3) | INTRQ floats when the drive tri-states it; DD7 must read low with no drive fitted. Reworked by CS2 P5/P6 on the current boards. | 9.6, [changes.md](changes.md) 2.3 |
 | Series resistors (22-33 ohm) on IDE /IOR, /IOW, /CS0, /CS1 and A2-A0 | damp ringing on the cable, which can double-clock a strobe | [changes.md](changes.md) 2.10 |
+| SN74AHCT245 (TTL thresholds) instead of SN74AHC245 for the IDE data (U37/U38/U40/U41) and expansion data (U54-U57) transceivers | drives and cards only guarantee TTL output levels | 12.1, 13.2, finding 18 |
 | Bring CPU A2/A3 into the bus controller, and route two CPLD outputs to the SRAM's A0/A1 (riser pins A18/B18), plus `/CBREQ` and `/CBACK` | allows 2-1-1-1 burst fills without rework | [SRAMBurstProposal.md](SRAMBurstProposal.md) |
 | Drive IDE `/IOR` (U39/U42 pin 8) from a DEVMAP pin instead of `nCPU_RD` | gives the IDE sequencer full control of address setup (ATA t1) and strobe width | 12.5, 12.7 |
 | Route IDE IORDY (pin 27) to a DEVMAP input | lets slow devices stretch cycles | 12.1 |

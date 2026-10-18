@@ -10,7 +10,7 @@ Nothing in this file has been compiled or programmed yet. CS1's CUPL is written 
 |---|---|---|
 | CS0 | Pull-up rework already on the boards | Done on current boards; fix on next PCB |
 | CS1 | Device-cycle acknowledge (replaces `nDEV_WAIT`), fast VMEM window with card hold-off, bus timeout, refresh during long cycles | **Agreed in principle; details under discussion (1.14)** |
-| CS2 | IDE timing on both ports, /IOR window, interrupts, pull-downs, reset length | **Agreed (2.11)**; implement after CS1 is verified |
+| CS2 | IDE timing on both ports, /IOR window, interrupts, pull-downs, reset length | **Agreed (2.11)**; implement after CS1 is verified. P7 (buffer swap) proposed. |
 
 ---
 
@@ -138,6 +138,11 @@ The window is 2 MB, 0x5000_0000-0x501F_FFFF (agreed). That covers the display an
 
 The DSACK pull-ups need no change. R51/R52 are 1K on the boards (the schematic says 10K), which returns DSACK above 2.0 V in roughly 15-25 ns. The schematic gets corrected on the next PCB (1.13).
 
+All three rework points were checked against the netlist (2026-10-18):
+* `nCPU_AS` is on U70 pin 4.
+* J28 pin 3 is DEVMAP pin 35.
+* `EXP_BC_CPLD1` is BUSCTRL pin 28, connector B26 on all three slots, and U69 pin 3.
+
 ### 1.6 Expansion bus after CS1
 
 The card acknowledge, `nEXP_ACK`, is connector pin **A26**. It is today's `nEXP_DEV_WAIT` net (sheet 14): pulled up by R10 and wired straight to DEVMAP pin 32. CS1 changes only its meaning (low now means "done" rather than "wait"); there is no new wiring.
@@ -167,6 +172,8 @@ Rules for `nEXP_ACK`:
 * Read data must be valid at the connector no later than one clock after you assert it. The simplest rule is to drive the data first.
 * Release it promptly: actively drive it high, or rely on the 1K pull-up (P2).
 * Acknowledge within 10 us at most. The bus timeout fires after 224-240 CPU clocks (18.7 us at 12 MHz, 14 us at 16 MHz).
+
+Drive read data (`EXP_D`) and `nEXP_DATA_EN` from 5 V CMOS outputs. The board's data transceivers U54-U57 are SN74AHC245, whose inputs need about 3.5 V for a high (TheoryOfOperations 13.2).
 
 ### 1.7 BUSCTRL (U58) - rev 30
 
@@ -539,6 +546,7 @@ It builds on CS1: the AS wire, `nDEV_ACK`, and DEVMAP's timing counter.
 | 10 | The software reset gives the drives about one clock of /RESET; ATA needs 25 us | drives may not reset on a soft reboot | B10 |
 | 11 | CSEL (pin 28) is not grounded; IORDY (27) and DASP (39) are not connected | cable select cannot work; no flow control; no activity LED | notes in 2.3; next PCB (2.10) |
 | 12 | /IOR, /IOW and /CS drive the cable with no series termination | ringing can double-clock a strobe | check with a scope (2.8); next PCB |
+| 13 | The IDE data transceivers are SN74AHC245 (per the netlist), with CMOS input thresholds; ATA drives only promise 2.4 V for a high | read data from drives with TTL-level or 3.3 V outputs has little or no noise margin | P7 (proposed) |
 
 ### 2.2 Timing
 
@@ -598,8 +606,9 @@ The counts are set for 16 MHz, so at 12 MHz everything is simply slower. Above 1
 |---|---|---|---|
 | P5 | **10K pull-down on INTRQ**: J4 pin 31 to J4 pin 30 (GND), and J6 pin 31 to J6 pin 30 | before enabling IDE interrupts (I1, I2) | A drive tri-states INTRQ while nIEN is set or the other drive is selected. Without the pull-down the line floats, and INTCTRL's pin keeper holds whatever level it last had. |
 | P6 | **10K pull-down on DD7**: J4 pin 3 to J4 pin 2 (GND), and J6 pin 3 to J6 pin 2 | with CS2 | The usual host-side pull-down. With no drive fitted, Status then reads with BSY clear, so probe code cannot hang on an empty port. |
+| P7 | *Proposed:* **replace U37, U38, U40, U41 (SN74AHC245) with SN74AHCT245** | with CS2, or as soon as a drive misreads | Same SOIC-20 package and pinout. AHCT has TTL input thresholds (a high from 2.0 V), which matches what ATA drives promise (2.4 V). The AHC parts want about 3.5 V, which drives with 3.3 V or TTL outputs may not reach. Check which parts are fitted first; if they are already AHCT, P7 is done. |
 
-Both are single resistors between neighbouring pins on the back of the connectors.
+P5 and P6 are single resistors between neighbouring pins on the back of the connectors. All the pins in this table were checked against the netlist (2026-10-18): neither INTRQ nor DD7 has a resistor today, and pins 2 and 30 are GND.
 
 No wire is needed for /IOR. DEVMAP sends the /IOR window to BUSCTRL over the spare net `EXTRA_BC_DM1` (DEVMAP pin 83 to BUSCTRL pin 81), which already exists and is unused. It also appears on logic header U5 (D15, pin 4). The alternative is a rework: lift pin 8 of U39 and U42 (their /IOR inputs) off `nCPU_RD`, and drive them from a DEVMAP pin. That gives the same timing with one CPLD fewer in the path, so it is listed for the next PCB instead (2.10).
 
@@ -1025,6 +1034,7 @@ Program the CS1 JEDs (DEVMAP rev 22, BUSCTRL rev 30) and INTCTRL rev 16. P5 and 
 * Series resistors (22-33 ohm) at the drivers for /IOR, /IOW, /CS0, /CS1 and A2-A0, and ideally the data lines.
 * CSEL (pin 28) to GND through a jumper, for cable select.
 * DASP (pin 39) to an activity LED, with a pull-up.
+* SN74AHCT245 for the IDE data transceivers (P7) and for the expansion data transceivers U54-U57.
 
 ### 2.11 Decisions
 
@@ -1035,6 +1045,7 @@ Program the CS1 JEDs (DEVMAP rev 22, BUSCTRL rev 30) and INTCTRL rev 16. P5 and 
 | 3 | /IOR through BUSCTRL and `EXTRA_BC_DM1` (no rework), rather than lifting U39/U42 pin 8 | **Agreed 2026-10-18** |
 | 4 | Stretch every reset to about 490 clocks (B10; affects the whole board) | **Agreed 2026-10-18** |
 | 5 | Fit P5 and P6 now | **Agreed 2026-10-18** |
+| 6 | P7: SN74AHCT245 in the IDE data path | Proposed (added after the netlist check) |
 
 ---
 
@@ -1046,3 +1057,4 @@ Program the CS1 JEDs (DEVMAP rev 22, BUSCTRL rev 30) and INTCTRL rev 16. P5 and 
 | 2026-10-18 | CS1 decisions recorded: 2 MB VMEM window, RTC 2 wait states, empty on-board windows unchanged. Added the VMEM hold-off (`nEXP_VMEM_BUSY` on B26, `nEXP_VMEM_GNT` on B30, BUSCTRL B4a), excluded VMEM from the bus timeout, and let refresh start during non-DRAM cycles (B8). P3 is now required for CS1. P4 dropped: the DSACK pull-ups are already 1K. |
 | 2026-10-18 | Hold-off decided. CS1 DEVMAP: binary wait-state counter replaced by a thermometer counter, and the interim /IOW made a register (the decoded version could glitch). CS2 written: PIO mode 0 base timing plus a mode 2 Data-register alias, /IOR window through BUSCTRL, /CS hold, IDE interrupts, INTRQ and DD7 pull-downs (P5, P6), reset stretch. |
 | 2026-10-18 | CS2 agreed as proposed: all five decisions in 2.11. |
+| 2026-10-18 | Checked against the netlist (`schematic/RoscoeMainboardV2Final.net`): every CPLD pin assignment and every rework point in CS1 and CS2 matches. Proposed P7 (SN74AHCT245 in the IDE data path), after the netlist showed SN74AHC245 there. Added the 5 V CMOS rule for card read data. |
