@@ -1,0 +1,31 @@
+{
+  "head": { "text": "DRAM write (early write) - byte lanes masked through CAS" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p.....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.3.3.2.2.2.4.4.4.4.", "data": "S0 S1 S2 Sw Sw S3 S4 S5 S0 S1 S2 S3" },
+    {},
+    ["CPU",
+      { "name": "A31-A0 SIZ", "wave": "x=...............=......", "data": ["0x8xxxxxx1, word", "next (read)"] },
+      { "name": "CPU_RW", "wave": "x0...............1......" },
+      { "name": "nCPU_AS", "wave": "1..0...........1...0...." },
+      { "name": "D31-D0 (CPU out)", "wave": "z...x.=.........x.z.....", "data": ["write data"] }
+    ],
+    {},
+    ["DRAM signals",
+      { "name": "nDRAM_SxA_RAS", "wave": "1.....0......1.........." },
+      { "name": "DRAM_A11-A0", "wave": "x.=.....=.........=.....", "data": ["row", "column", "row (next)"] },
+      { "name": "nDRAM_WE", "wave": "1...0...........1......." },
+      { "name": "nDRAM_CAS2,1 (written)", "wave": "1........0........1....." },
+      { "name": "nDRAM_CAS3,0 (masked)", "wave": "1......................." },
+      { "name": "nDRAM_DATA_EN", "wave": "0......................." },
+      { "name": "DRAM DQ (via 245)", "wave": "x......=.........x......", "data": ["write data"] },
+      { "name": "nCPU_DSACK0/1", "wave": "1........0.......u......" }
+    ]
+  ],
+  "markers": [
+    { "at": 9, "label": "CAS falls: data written" },
+    { "at": 14, "label": "S4 ends" }
+  ],
+  "foot": { "text": "nDRAM_WE falls with DRAM_REGION_ACCESS, well before CAS, so the SIMMs see an early-write cycle and keep their outputs off. Byte lanes come from the same BA32 terms as the SRAM selects: unwritten lanes simply never get CAS. The 74HC245s face the DRAM by default (nDRAM_DATA_EN = 0), so the write data reaches the SIMMs about one buffer delay after the CPU drives it." },
+  "config": { "hscale": 1.5 }
+}

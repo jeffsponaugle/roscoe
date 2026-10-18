@@ -1,0 +1,30 @@
+{
+  "head": { "text": "SRAM write - 68030 asynchronous cycle, 0 wait states (BUSCTRL rev 29)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.2.4.4.4.4.", "data": "S0 S1 S2 S3 S4 S5 S0 S1 S2 S3" },
+    {},
+    ["CPU",
+      { "name": "A31-A0 FC SIZ", "wave": "x=...........=......", "data": ["0x1xxxxxxx (SRAM), byte at +1", "next cycle (read)"] },
+      { "name": "CPU_RW (SRAM /WE)", "wave": "x0...........1......" },
+      { "name": "nCPU_AS", "wave": "1..0.......1...0...." },
+      { "name": "D31-D0 (CPU out)", "wave": "z...x.=.....x.z.....", "data": ["write data"] }
+    ],
+    {},
+    ["BUSCTRL",
+      { "name": "nSRAM_LH_SEL (written)", "wave": "x.0................." },
+      { "name": "nSRAM_UH_SEL (not written)", "wave": "x.1...........0....." },
+      { "name": "nSRAM_BANKx_CE", "wave": "1...0.......1......." },
+      { "name": "nCPU_DSACK0/1", "wave": "1....0.......u......" }
+    ],
+    {},
+    { "name": "SRAM write (CE.WE.BE)", "wave": "0...1.......0......." }
+  ],
+  "markers": [
+    { "at": 6, "label": "DSACK sampled" },
+    { "at": 11, "label": "AS negated" },
+    { "at": 12, "label": "CE rises: write ends" }
+  ],
+  "foot": { "text": "SRAM /WE is CPU_RW itself and the byte selects do not include AS, so the write is CE-controlled: it begins when nSRAM_BANKx_CE falls and ends when CE rises, one CPLD delay after AS negates. The 68030 only guarantees write data for 10 ns after AS negates (#25 at 20 MHz), so the end of the write relies on the data bus holding its charge." },
+  "config": { "hscale": 1.6 }
+}

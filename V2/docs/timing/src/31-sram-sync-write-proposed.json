@@ -1,0 +1,29 @@
+{
+  "head": { "text": "PROPOSED: 3-clock synchronous SRAM write (AS-qualified)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p...", "period": 4 },
+    { "name": "state", "wave": "2.2.2.3.3.2.4.4.", "data": "S0 S1 S2 Sw Sw S3 S0 S1" },
+    {},
+    ["CPU",
+      { "name": "A31-A0 SIZ", "wave": "x=...........=..", "data": ["0x1xxxxxxx", "next"] },
+      { "name": "CPU_RW (SRAM /WE)", "wave": "x0...........1.." },
+      { "name": "nCPU_AS", "wave": "1..0.......1...." },
+      { "name": "D31-D0 (CPU out)", "wave": "z...x.=.....x.z.", "data": ["write data"] }
+    ],
+    {},
+    ["BUSCTRL",
+      { "name": "nSRAM_BANKx_CE", "wave": "1...0.......1..." },
+      { "name": "nSRAM_xx_SEL (written)", "wave": "x.0......1......" },
+      { "name": "nCPU_STERM", "wave": "1......0...1...." }
+    ],
+    {},
+    { "name": "SRAM write (CE.WE.BE)", "wave": "0...1....0......" }
+  ],
+  "markers": [
+    { "at": 4, "label": "STERM sampled: no" },
+    { "at": 8, "label": "STERM recognised" },
+    { "at": 9, "label": "write ends (SEL)" }
+  ],
+  "foot": { "text": "Proposal. A falling-edge flop asserts STERM during S3 for AS-qualified SRAM writes, so the CPU recognises it on the next rising edge and the write takes 3 clocks, the same as today. The byte selects end the SRAM write at that same rising edge, about 3 slots before AS negates, so the write no longer depends on the 10 ns data hold after AS." },
+  "config": { "hscale": 1.6 }
+}

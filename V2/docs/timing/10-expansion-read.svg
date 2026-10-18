@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="888" height="584" viewBox="0 0 888 584" font-family="Helvetica, Arial, sans-serif">
+<title>10-expansion-read</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="234" y="0" width="640" height="584"/></clipPath>
+</defs>
+<rect width="888" height="584" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">Expansion card read (32-bit region, current logic, 20 MHz)</text>
+<line x1="234" y1="62" x2="234" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="298" y1="62" x2="298" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="362" y1="62" x2="362" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="426" y1="62" x2="426" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="490" y1="62" x2="490" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="554" y1="62" x2="554" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="618" y1="62" x2="618" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="682" y1="62" x2="682" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="746" y1="62" x2="746" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="810" y1="62" x2="810" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="874" y1="62" x2="874" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<path d="M14,156 h-4 V268 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="212" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 212)">connector</text>
+<path d="M14,306 h-4 V418 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="362" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 362)">card</text>
+<path d="M14,456 h-4 V508 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="482" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 482)">CPU side</text>
+<g clip-path="url(#wave)">
+<path d="M234,85 V69 H298 V85 H362 M362,85 V69 H426 V85 H490 M490,85 V69 H554 V85 H618 M618,85 V69 H682 V85 H746 M746,85 V69 H810 V85 H874" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="234,99 295,99 298,107 295,115 234,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="266" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="298,107 301,99 359,99 362,107 359,115 301,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="330" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="362,107 365,99 423,99 426,107 423,115 365,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="394" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="426,107 429,99 487,99 490,107 487,115 429,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="458" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="490,107 493,99 551,99 554,107 551,115 493,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="522" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="554,107 557,99 615,99 618,107 615,115 557,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="586" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="618,107 621,99 679,99 682,107 679,115 621,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="650" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="682,107 685,99 743,99 746,107 743,115 685,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="714" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="746,107 749,99 807,99 810,107 807,115 749,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="778" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="810,107 813,99 874,99 874,115 813,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="842" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="234,159 295,159 298,167 295,175 234,175" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="298,167 301,159 679,159 682,167 679,175 301,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="490" y="170.96" font-size="11" fill="#222222" text-anchor="middle">0x5xxxxxxx</text>
+<polygon points="682,167 685,159 874,159 874,175 685,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="778" y="170.96" font-size="11" fill="#222222" text-anchor="middle">next</text>
+<polygon points="234,189 298,189 298,189 295,205 234,205" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M298,189 H874" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M234,219 H362" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M362,219 L365,235 H618" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M618,235 L621,219 H746" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M746,219 L749,235 H874" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M234,249 H394" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M394,249 L397,265 H650" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M650,265 L653,249 H874" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M234,309 H426" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M426,309 L429,325 H682" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M682,325 L685,309 H874" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M234,339 H426" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M426,339 L429,355 H682" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M682,355 L694,352.26 L706,350 L718,348.12 L730,346.56 L742,345.27 L754,344.19 L766,343.31 L778,342.57 L790,341.96 L802,341.45 L814,341.03 L826,340.69 L838,340.4 L850,340.16 L862,339.96 L874,339.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M234,377 H426" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="426,377 429,369 487,369 490,377 487,385 429,385" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="490,377 493,369 647,369 650,377 647,385 493,385" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="570" y="380.96" font-size="11" fill="#222222" text-anchor="middle">card data</text>
+<path d="M650,377 H874" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<path d="M234,399 H874" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M234,467 H458" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="458,467 461,459 519,459 522,467 519,475 461,475" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="522,467 525,459 647,459 650,467 647,475 525,475" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="586" y="470.96" font-size="11" fill="#222222" text-anchor="middle">data</text>
+<polygon points="650,467 653,459 711,459 714,467 711,475 653,475" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M714,467 H874" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<path d="M234,489 H394" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M394,489 L397,505 H650" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M650,505 L664,502.26 L678,500 L692,498.12 L706,496.56 L720,495.27 L734,494.19 L748,493.31 L762,492.57 L776,491.96 L790,491.45 L804,491.03 L818,490.69 L832,490.4 L846,490.16 L860,489.96 L874,489.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+</g>
+<text x="226" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="226" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">state</text>
+<text x="226" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">EXP_A31-A0</text>
+<text x="226" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">EXP_RW</text>
+<text x="226" y="231" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nEXP_CPU_AS</text>
+<text x="226" y="261" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nEXP_32BDEV</text>
+<text x="226" y="321" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nEXP_DATA_EN (driven high)</text>
+<text x="226" y="351" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nEXP_DATA_EN (pull-up only)</text>
+<text x="226" y="381" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">EXP_D31-D0 (card)</text>
+<text x="226" y="411" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nEXP_DEV_WAIT</text>
+<text x="226" y="471" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">D31-D0 (via U54-U57)</text>
+<text x="226" y="501" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_DSACK0/1</text>
+
+<line x1="426" y1="46" x2="426" y2="512" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="426" y="43" font-size="10" fill="#c0392b" text-anchor="middle">DSACK sampled</text>
+<line x1="554" y1="59" x2="554" y2="512" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="554" y="56" font-size="10" fill="#c0392b" text-anchor="middle">data latched</text>
+<line x1="810" y1="46" x2="810" y2="512" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="810" y="43" font-size="10" fill="#c0392b" text-anchor="middle">next cycle may drive D31-D0</text>
+<text x="8" y="528" font-size="11" fill="#555">BUSCTRL acknowledges the whole 8/16/32-bit region two levels after AS, so a card gets no wait states whatever it does with nEXP_DEV_WAIT. It has</text>
+<text x="8" y="542" font-size="11" fill="#555">about 4 slots (50 ns at 20 MHz) from nEXP_xxBDEV to valid data at the connector. U54-U57 are always enabled and nEXP_DATA_EN only sets their</text>
+<text x="8" y="556" font-size="11" fill="#555">direction. A card must drive it high again as soon as its select ends: with only the 10K pull-up the buffers keep driving the CPU data bus into the</text>
+<text x="8" y="570" font-size="11" fill="#555">next cycle.</text>
+</svg>

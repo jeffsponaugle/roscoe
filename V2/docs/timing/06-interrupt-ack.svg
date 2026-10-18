@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1075" height="660" viewBox="0 0 1075 660" font-family="Helvetica, Arial, sans-serif">
+<title>06-interrupt-ack</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="197" y="0" width="864" height="660"/></clipPath>
+</defs>
+<rect width="1075" height="660" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">Interrupt request and acknowledge - PTC timer A (INT6A, edge-triggered, vector 0xE1)</text>
+<line x1="197" y1="62" x2="197" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="245" y1="62" x2="245" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="293" y1="62" x2="293" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="341" y1="62" x2="341" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="389" y1="62" x2="389" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="437" y1="62" x2="437" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="485" y1="62" x2="485" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="533" y1="62" x2="533" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="581" y1="62" x2="581" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="629" y1="62" x2="629" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="677" y1="62" x2="677" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="725" y1="62" x2="725" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="773" y1="62" x2="773" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="821" y1="62" x2="821" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="869" y1="62" x2="869" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="917" y1="62" x2="917" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="965" y1="62" x2="965" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="1013" y1="62" x2="1013" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="1061" y1="62" x2="1061" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<path d="M14,156 h-4 V298 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="227" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 227)">request path</text>
+<path d="M14,336 h-4 V508 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="422" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 422)">acknowledge cycle</text>
+<path d="M14,546 h-4 V598 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="572" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 572)">clear</text>
+<g clip-path="url(#wave)">
+<path d="M197,85 V69 H245 V85 H293 M293,85 V69 H341 V85 H389 M389,85 V69 H437 V85 H485 M485,85 V69 H533 V85 H581 M581,85 V69 H629 V85 H677 M677,85 V69 H725 V85 H773 M773,85 V69 H821 V85 H869 M869,85 V69 H917 V85 H965 M965,85 V69 H1013 V85 H1061" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="197,99 482,99 485,107 482,115 197,115" fill="#cfe6ff" stroke="#222222" stroke-width="1.2"/>
+<text x="341" y="110.96" font-size="11" fill="#222222" text-anchor="middle">instruction finishing</text>
+<polygon points="485,107 488,99 530,99 533,107 530,115 488,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="509" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="533,107 536,99 578,99 581,107 578,115 536,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="557" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="581,107 584,99 626,99 629,107 626,115 584,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="605" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="629,107 632,99 674,99 677,107 674,115 632,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="653" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="677,107 680,99 722,99 725,107 722,115 680,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="701" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="725,107 728,99 770,99 773,107 770,115 728,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="749" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="773,107 776,99 1061,99 1061,115 776,115" fill="#cfe6ff" stroke="#222222" stroke-width="1.2"/>
+<text x="917" y="110.96" font-size="11" fill="#222222" text-anchor="middle">following cycles</text>
+<path d="M469,96 l4,22 M474,96 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,96 l4,22 M476,96 l4,22" stroke="#222222" stroke-width="1"/>
+<path d="M197,159 H221" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M221,159 L224,175 H485" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M485,175 L488,159 H1061" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M469,156 l4,22 M474,156 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,156 l4,22 M476,156 l4,22" stroke="#222222" stroke-width="1"/>
+<path d="M197,205 H245" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M245,205 L248,189 H917" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M917,189 L920,205 H1061" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M469,186 l4,22 M474,186 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,186 l4,22 M476,186 l4,22" stroke="#222222" stroke-width="1"/>
+<path d="M197,235 H317" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M317,235 L320,219 H989" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M989,219 L992,235 H1061" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M469,216 l4,22 M474,216 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,216 l4,22 M476,216 l4,22" stroke="#222222" stroke-width="1"/>
+<path d="M197,265 H365" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M365,265 L368,249 H1037" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M1037,249 L1040,265 H1061" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M469,246 l4,22 M474,246 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,246 l4,22 M476,246 l4,22" stroke="#222222" stroke-width="1"/>
+<polygon points="197,279 410,279 413,287 410,295 197,295" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="305" y="290.96" font-size="11" fill="#222222" text-anchor="middle">111 (none)</text>
+<polygon points="413,287 416,279 1061,279 1061,295 416,295" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="737" y="290.96" font-size="11" fill="#222222" text-anchor="middle">001 = level 6</text>
+<path d="M469,276 l4,22 M474,276 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,276 l4,22 M476,276 l4,22" stroke="#222222" stroke-width="1"/>
+<polygon points="197,339 506,339 509,347 506,355 197,355" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="509,347 512,339 794,339 797,347 794,355 512,355" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="653" y="350.96" font-size="11" fill="#222222" text-anchor="middle">FC=7  A19-16=F  A3-1=6</text>
+<polygon points="797,347 800,339 1061,339 1061,355 800,355" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M469,336 l4,22 M474,336 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,336 l4,22 M476,336 l4,22" stroke="#222222" stroke-width="1"/>
+<path d="M197,369 H557" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M557,369 L560,385 H749" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M749,385 L752,369 H1061" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M469,366 l4,22 M474,366 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,366 l4,22 M476,366 l4,22" stroke="#222222" stroke-width="1"/>
+<path d="M197,399 H581" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M581,399 L584,415 H773" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M773,415 L776,399 H1061" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M469,396 l4,22 M474,396 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,396 l4,22 M476,396 l4,22" stroke="#222222" stroke-width="1"/>
+<polygon points="197,429 602,429 605,437 602,445 197,445" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="401" y="440.96" font-size="11" fill="#222222" text-anchor="middle">previous</text>
+<polygon points="605,437 608,429 1061,429 1061,445 608,445" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="833" y="440.96" font-size="11" fill="#222222" text-anchor="middle">6</text>
+<path d="M469,426 l4,22 M474,426 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,426 l4,22 M476,426 l4,22" stroke="#222222" stroke-width="1"/>
+<path d="M197,467 H605" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="605,467 608,459 626,459 629,467 626,475 608,475" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="629,467 632,459 794,459 797,467 794,475 632,475" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="713" y="470.96" font-size="11" fill="#222222" text-anchor="middle">0xE1</text>
+<path d="M797,467 H1061" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<path d="M469,456 l4,22 M474,456 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,456 l4,22 M476,456 l4,22" stroke="#222222" stroke-width="1"/>
+<path d="M197,489 H605" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M605,489 L608,505 H797" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M797,505 L813.5,502.26 L830,500 L846.5,498.12 L863,496.56 L879.5,495.27 L896,494.19 L912.5,493.31 L929,492.57 L945.5,491.96 L962,491.45 L978.5,491.03 L995,490.69 L1011.5,490.4 L1028,490.16 L1044.5,489.96 L1061,489.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M469,486 l4,22 M474,486 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,486 l4,22 M476,486 l4,22" stroke="#222222" stroke-width="1"/>
+<path d="M197,565 H797" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M797,565 L800,549 H917" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M917,549 L920,565 H1061" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M469,546 l4,22 M474,546 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,546 l4,22 M476,546 l4,22" stroke="#222222" stroke-width="1"/>
+<path d="M197,595 H893" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M893,595 L896,579 H989" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M989,579 L992,595 H1061" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M469,576 l4,22 M474,576 l4,22" stroke="#ffffff" stroke-width="4"/>
+<path d="M467,576 l4,22 M476,576 l4,22" stroke="#222222" stroke-width="1"/>
+</g>
+<text x="189" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="189" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU bus</text>
+<text x="189" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">vINT6A (PTC nINTA_OUT)</text>
+<text x="189" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">INT6A_REQUEST</text>
+<text x="189" y="231" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">INT6A_REQUEST_LATCHED</text>
+<text x="189" y="261" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">INTL6_REQUEST_PE</text>
+<text x="189" y="291" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_IPL2..0</text>
+<text x="189" y="351" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">FC2-0 A19-A16 A3-A1</text>
+<text x="189" y="381" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_AS</text>
+<text x="189" y="411" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nINT_ACK_CYCLE</text>
+<text x="189" y="441" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">INT_ACK_LEVEL2..0</text>
+<text x="189" y="471" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">D31-D24 (INTCTRL out)</text>
+<text x="189" y="501" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_DSACK0</text>
+<text x="189" y="561" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">INT_ACK_RESET_PRE</text>
+<text x="189" y="591" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">INT_ACK_RESET</text>
+
+<line x1="629" y1="46" x2="629" y2="602" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="629" y="43" font-size="10" fill="#c0392b" text-anchor="middle">DSACK sampled</text>
+<line x1="725" y1="59" x2="725" y2="602" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="725" y="56" font-size="10" fill="#c0392b" text-anchor="middle">vector latched</text>
+<text x="8" y="618" font-size="11" fill="#555">The request is re-timed twice (rising edge into *_LATCHED, falling edge into INTLx_REQUEST_PE) before it reaches CPU_IPL on a rising edge, so IPL changes about two clocks after</text>
+<text x="8" y="632" font-size="11" fill="#555">the source. During the acknowledge, BUSCTRL decodes FC=7/A19-A16=F as nINT_ACK_CYCLE and returns an 8-bit DSACK0. INTCTRL latches A3-A1 and drives the vector {1, level, source</text>
+<text x="8" y="646" font-size="11" fill="#555">bits} on D31-D24. INT_ACK_RESET, a pulse of about one clock after the cycle, clears the edge-triggered flop that was acknowledged.</text>
+</svg>

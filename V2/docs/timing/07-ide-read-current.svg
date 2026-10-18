@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="836" height="704" viewBox="0 0 836 704" font-family="Helvetica, Arial, sans-serif">
+<title>07-ide-read-current</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="182" y="0" width="640" height="704"/></clipPath>
+</defs>
+<rect width="836" height="704" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">IDE read with the current logic - the wait-state request loses the race (20 MHz)</text>
+<line x1="182" y1="62" x2="182" y2="632" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="246" y1="62" x2="246" y2="632" stroke="#ececec" stroke-width="1"/>
+<line x1="310" y1="62" x2="310" y2="632" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="374" y1="62" x2="374" y2="632" stroke="#ececec" stroke-width="1"/>
+<line x1="438" y1="62" x2="438" y2="632" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="502" y1="62" x2="502" y2="632" stroke="#ececec" stroke-width="1"/>
+<line x1="566" y1="62" x2="566" y2="632" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="630" y1="62" x2="630" y2="632" stroke="#ececec" stroke-width="1"/>
+<line x1="694" y1="62" x2="694" y2="632" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="758" y1="62" x2="758" y2="632" stroke="#ececec" stroke-width="1"/>
+<line x1="822" y1="62" x2="822" y2="632" stroke="#d5d5d5" stroke-width="1"/>
+<path d="M14,156 h-4 V208 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="182" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 182)">CPU</text>
+<path d="M14,246 h-4 V328 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="287" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 287)">BUSCTRL</text>
+<path d="M14,366 h-4 V478 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="422" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 422)">DEVMAP</text>
+<path d="M14,516 h-4 V628 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="572" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 572)">IDE side</text>
+<g clip-path="url(#wave)">
+<path d="M182,85 V69 H246 V85 H310 M310,85 V69 H374 V85 H438 M438,85 V69 H502 V85 H566 M566,85 V69 H630 V85 H694 M694,85 V69 H758 V85 H822" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="182,99 243,99 246,107 243,115 182,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="214" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="246,107 249,99 307,99 310,107 307,115 249,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="278" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="310,107 313,99 371,99 374,107 371,115 313,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="342" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="374,107 377,99 435,99 438,107 435,115 377,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="406" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="438,107 441,99 499,99 502,107 499,115 441,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="470" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="502,107 505,99 563,99 566,107 563,115 505,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="534" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="566,107 569,99 627,99 630,107 627,115 569,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="598" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="630,107 633,99 691,99 694,107 691,115 633,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="662" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="694,107 697,99 755,99 758,107 755,115 697,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="726" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="758,107 761,99 822,99 822,115 761,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="790" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="182,159 211,159 214,167 211,175 182,175" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="214,167 217,159 595,159 598,167 595,175 217,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="406" y="170.96" font-size="11" fill="#222222" text-anchor="middle">0x400000E1 (IDE1 status)</text>
+<polygon points="598,167 601,159 822,159 822,175 601,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="710" y="170.96" font-size="11" fill="#222222" text-anchor="middle">next</text>
+<path d="M182,189 H278" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M278,189 L281,205 H534" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M534,205 L537,189 H662" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M662,189 L665,205 H822" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,249 H310" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M310,249 L313,265 H566" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M566,265 L569,249 H822" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,279 H342" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M342,279 L345,295 H470" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M470,295 L492,292.26 L514,290 L536,288.12 L558,286.56 L580,285.27 L602,284.19 L624,283.31 L646,282.57 L668,281.96 L690,281.45 L712,281.03 L734,280.69 L756,280.4 L778,280.16 L800,279.96 L822,279.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,309 H406" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M406,309 L409,325 H566" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M566,325 L569,309 H822" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,369 H342" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M342,369 L345,385 H598" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M598,385 L601,369 H822" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,399 H342" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M342,399 L345,415 H598" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M598,415 L601,399 H822" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,445 H374" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M374,445 L377,429 H694" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M694,429 L697,445 H822" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,459 H406" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M406,459 L409,475 H726" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M726,475 L729,459 H822" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,519 H374" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M374,519 L377,535 H630" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M630,535 L633,519 H822" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,549 H438" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M438,549 L441,565 H598" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M598,565 L601,549 H822" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,587 H438" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="438,587 441,579 531,579 534,587 531,595 441,595" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="534,587 537,579 595,579 598,587 595,595 537,595" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="566" y="590.96" font-size="11" fill="#222222" text-anchor="middle">data</text>
+<path d="M598,587 H822" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<path d="M182,617 H374" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="374,617 377,609 563,609 566,617 563,625 377,625" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="566,617 569,609 595,609 598,617 595,625 569,625" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="582" y="620.96" font-size="11" fill="#222222" text-anchor="middle">late</text>
+<path d="M598,617 H822" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+</g>
+<text x="174" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="174" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">state</text>
+<text x="174" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">A31-A0</text>
+<text x="174" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_AS</text>
+<text x="174" y="261" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDEV16BITCS</text>
+<text x="174" y="291" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_DSACK1</text>
+<text x="174" y="321" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_RD</text>
+<text x="174" y="381" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nIDE1_CSA</text>
+<text x="174" y="411" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nIDE_BUFFER_EN1</text>
+<text x="174" y="441" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nIDE_WAITSTATE_DELAY</text>
+<text x="174" y="471" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDEV_WAIT</text>
+<text x="174" y="531" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">/CS0 (after U39)</text>
+<text x="174" y="561" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">/IOR (after U39)</text>
+<text x="174" y="591" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">DD15-DD0 (drive)</text>
+<text x="174" y="621" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">D31-D16 (CPU side)</text>
+
+<line x1="374" y1="46" x2="374" y2="632" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="374" y="43" font-size="10" fill="#c0392b" text-anchor="middle">DSACK1 sampled: 0 wait states</text>
+<line x1="502" y1="59" x2="502" y2="632" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="502" y="56" font-size="10" fill="#c0392b" text-anchor="middle">data latched</text>
+<path d="M407.5,467 L471.5,287" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
+<polygon points="471.5,287 466.33,292.59 471.98,294.6" fill="#1f6fb2"/>
+<rect x="414.5" y="367" width="50" height="13" fill="#ffffff" fill-opacity="0.85"/>
+<text x="439.5" y="377" font-size="10" fill="#1f6fb2" text-anchor="middle">too late</text>
+<text x="8" y="648" font-size="11" fill="#555">BUSCTRL asserts DSACK1 for the whole 16-bit region two CPLD levels after AS. DEVMAP only raises nDEV_WAIT after decoding the IDE select</text>
+<text x="8" y="662" font-size="11" fill="#555">and clocking a flop, so BUSCTRL tries to retract an already-asserted open-collector DSACK1 after the CPU has sampled it. The cycle ends</text>
+<text x="8" y="676" font-size="11" fill="#555">with no wait states: /IOR is about one clock long and the drive has well under 50 ns to put data on the bus. The DEVMAP wait flop then</text>
+<text x="8" y="690" font-size="11" fill="#555">stays set into the next bus cycle.</text>
+</svg>

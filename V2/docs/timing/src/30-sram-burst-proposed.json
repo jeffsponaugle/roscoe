@@ -1,0 +1,38 @@
+{
+  "head": { "text": "PROPOSED: 2-1-1-1 synchronous burst cache fill from the SRAM (20 MHz)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p.....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.2.2.2.2.2.4.4.", "data": "S0 S1 S2 S3 S4 S5 S6 S7 S8 S9 S0 S1" },
+    {},
+    ["CPU",
+      { "name": "A31-A0 (held)", "wave": "x=...................=..", "data": ["0x1xxxxxx4: line offset 1", "next"] },
+      { "name": "CPU_RW", "wave": "x1......................" },
+      { "name": "nCPU_AS", "wave": "1..0...............1...." },
+      { "name": "nCPU_CBREQ", "wave": "1..0...........1........" }
+    ],
+    {},
+    { "name": "nCPU_CBACK (tied low)", "wave": "0......................." },
+    {},
+    ["BUSCTRL",
+      { "name": "nCPU_STERM", "wave": "1.0...................1." },
+      { "name": "nSRAM_BANKx_CE", "wave": "1.0...................1." },
+      { "name": "nCPU_RD (SRAM /OE)", "wave": "1.0...................1." }
+    ],
+    {},
+    ["INTCTRL",
+      { "name": "burst count C", "wave": "=......=...=...=....=...", "data": ["0", "1", "2", "3", "0"] },
+      { "name": "SRAM A1:A0 = A3:A2 + C", "wave": "x.=.....=...=...=...=...", "data": ["01", "10", "11", "00", "next"] }
+    ],
+    {},
+    { "name": "D31-D0 (SRAM)", "wave": "z..x=....=...=...=....z.", "data": ["LW1", "LW2", "LW3", "LW0"] }
+  ],
+  "markers": [
+    { "at": 4, "label": "STERM sampled" },
+    { "at": 6, "label": "latch LW1" },
+    { "at": 10, "label": "latch LW2" },
+    { "at": 14, "label": "latch LW3" },
+    { "at": 18, "label": "latch LW0" }
+  ],
+  "foot": { "text": "Proposal. BUSCTRL decodes STERM, CE and OE for SRAM reads from the address alone, so the first long word meets the S2 rising edge. INTCTRL drives SRAM A1:A0 with CPU A3:A2 plus a burst count that advances on each falling edge after a long word is latched, wrapping inside the 16-byte line. CBACK is tied low, as in the MC68030 UM 2-1-1-1 example. Four long words take 5 clocks, against 12 today." },
+  "config": { "hscale": 1.5 }
+}

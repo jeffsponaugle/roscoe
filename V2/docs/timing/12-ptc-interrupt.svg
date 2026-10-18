@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1003" height="300" viewBox="0 0 1003 300" font-family="Helvetica, Arial, sans-serif">
+<title>12-ptc-interrupt</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="189" y="0" width="800" height="300"/></clipPath>
+</defs>
+<rect width="1003" height="300" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">PTC interrupt pulse (timer B shown; PTCB_CLOCK = CPU_CLK / 16)</text>
+<line x1="189" y1="32" x2="189" y2="242" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="239" y1="32" x2="239" y2="242" stroke="#ececec" stroke-width="1"/>
+<line x1="289" y1="32" x2="289" y2="242" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="339" y1="32" x2="339" y2="242" stroke="#ececec" stroke-width="1"/>
+<line x1="389" y1="32" x2="389" y2="242" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="439" y1="32" x2="439" y2="242" stroke="#ececec" stroke-width="1"/>
+<line x1="489" y1="32" x2="489" y2="242" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="539" y1="32" x2="539" y2="242" stroke="#ececec" stroke-width="1"/>
+<line x1="589" y1="32" x2="589" y2="242" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="639" y1="32" x2="639" y2="242" stroke="#ececec" stroke-width="1"/>
+<line x1="689" y1="32" x2="689" y2="242" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="739" y1="32" x2="739" y2="242" stroke="#ececec" stroke-width="1"/>
+<line x1="789" y1="32" x2="789" y2="242" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="839" y1="32" x2="839" y2="242" stroke="#ececec" stroke-width="1"/>
+<line x1="889" y1="32" x2="889" y2="242" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="939" y1="32" x2="939" y2="242" stroke="#ececec" stroke-width="1"/>
+<line x1="989" y1="32" x2="989" y2="242" stroke="#d5d5d5" stroke-width="1"/>
+<g clip-path="url(#wave)">
+<path d="M189,55 V39 H239 V55 H289 M289,55 V39 H339 V55 H389 M389,55 V39 H439 V55 H489 M489,55 V39 H539 V55 H589 M589,55 V39 H639 V55 H689 M689,55 V39 H739 V55 H789 M789,55 V39 H839 V55 H889 M889,55 V39 H939 V55 H989" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="189,69 586,69 589,77 586,85 189,85" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="389" y="80.96" font-size="11" fill="#222222" text-anchor="middle">counting up to bit N</text>
+<polygon points="589,77 592,69 786,69 789,77 786,85 592,85" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="689" y="80.96" font-size="11" fill="#222222" text-anchor="middle">held at 0</text>
+<polygon points="789,77 792,69 989,69 989,85 792,85" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="889" y="80.96" font-size="11" fill="#222222" text-anchor="middle">0, 1, 2 ...</text>
+<path d="M189,115 H439" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M439,115 L442,99 H639" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M639,99 L642,115 H989" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M189,129 H489" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M489,129 L492,145 H689" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M689,145 L692,129 H989" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M189,159 H589" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M589,159 L592,175 H789" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M789,175 L792,159 H989" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M189,235 H539" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M539,235 L542,219 H989" fill="none" stroke="#222222" stroke-width="1.5"/>
+</g>
+<text x="181" y="51" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">PTCB_CLOCK</text>
+<text x="181" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">PTCB_TIMER[11:0]</text>
+<text x="181" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">selected bit N</text>
+<text x="181" y="141" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nINTB_OUT (vINT6B)</text>
+<text x="181" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nINTB_OUT_DELAYED</text>
+<text x="181" y="231" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">INT6B_REQUEST (INTCTRL)</text>
+
+<path d="M490.5,137 L590.5,167" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
+<polygon points="590.5,167 584.66,162.12 582.93,167.86" fill="#1f6fb2"/>
+<rect x="504.5" y="142" width="72" height="13" fill="#ffffff" fill-opacity="0.85"/>
+<text x="540.5" y="152" font-size="10" fill="#1f6fb2" text-anchor="middle">falling edge</text>
+<path d="M590.5,167 C690.5,167 690.5,167 790.5,167" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
+<polygon points="790.5,167 783.5,164 783.5,170" fill="#1f6fb2"/>
+<text x="8" y="258" font-size="11" fill="#555">The selected counter bit drives nINTx_OUT low. On the next falling PTCB_CLOCK edge nINTx_OUT_DELAYED goes low and asynchronously clears the counter, which ends the</text>
+<text x="8" y="272" font-size="11" fill="#555">pulse, and the edge after that releases the counter. INTCTRL triggers on the falling edge of vINT6A/6B, so each period produces one level-6 request; it is cleared by</text>
+<text x="8" y="286" font-size="11" fill="#555">the acknowledge. Timer A counts the 32.768 kHz clock, but its pulse is also timed by PTCB_CLOCK.</text>
+</svg>

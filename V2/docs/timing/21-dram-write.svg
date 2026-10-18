@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="931" height="600" viewBox="0 0 931 600" font-family="Helvetica, Arial, sans-serif">
+<title>21-dram-write</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="197" y="0" width="720" height="600"/></clipPath>
+</defs>
+<rect width="931" height="600" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">DRAM write (early write) - byte lanes masked through CAS</text>
+<line x1="197" y1="62" x2="197" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="257" y1="62" x2="257" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="317" y1="62" x2="317" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="377" y1="62" x2="377" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="437" y1="62" x2="437" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="497" y1="62" x2="497" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="557" y1="62" x2="557" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="617" y1="62" x2="617" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="677" y1="62" x2="677" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="737" y1="62" x2="737" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="797" y1="62" x2="797" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="857" y1="62" x2="857" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="917" y1="62" x2="917" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<path d="M14,156 h-4 V268 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="212" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 212)">CPU</text>
+<path d="M14,306 h-4 V538 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="422" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 422)">DRAM signals</text>
+<g clip-path="url(#wave)">
+<path d="M197,85 V69 H257 V85 H317 M317,85 V69 H377 V85 H437 M437,85 V69 H497 V85 H557 M557,85 V69 H617 V85 H677 M677,85 V69 H737 V85 H797 M797,85 V69 H857 V85 H917" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="197,99 254,99 257,107 254,115 197,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="227" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="257,107 260,99 314,99 317,107 314,115 260,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="287" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="317,107 320,99 374,99 377,107 374,115 320,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="347" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="377,107 380,99 434,99 437,107 434,115 380,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="407" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="437,107 440,99 494,99 497,107 494,115 440,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="467" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="497,107 500,99 554,99 557,107 554,115 500,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="527" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="557,107 560,99 614,99 617,107 614,115 560,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="587" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="617,107 620,99 674,99 677,107 674,115 620,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="647" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="677,107 680,99 734,99 737,107 734,115 680,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="707" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="737,107 740,99 794,99 797,107 794,115 740,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="767" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="797,107 800,99 854,99 857,107 854,115 800,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="827" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="857,107 860,99 917,99 917,115 860,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="887" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="197,159 224,159 227,167 224,175 197,175" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="227,167 230,159 704,159 707,167 704,175 230,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="467" y="170.96" font-size="11" fill="#222222" text-anchor="middle">0x8xxxxxx1, word</text>
+<polygon points="707,167 710,159 917,159 917,175 710,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="812" y="170.96" font-size="11" fill="#222222" text-anchor="middle">next (read)</text>
+<polygon points="197,189 224,189 227,205 227,205 197,205" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M227,205 H707" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M707,205 L710,189 H917" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M197,219 H287" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M287,219 L290,235 H647" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M647,235 L650,219 H767" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M767,219 L770,235 H917" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M197,257 H317" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="317,257 320,249 374,249 377,257 374,265 320,265" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="377,257 380,249 674,249 677,257 674,265 380,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="527" y="260.96" font-size="11" fill="#222222" text-anchor="middle">write data</text>
+<polygon points="677,257 680,249 734,249 737,257 734,265 680,265" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M737,257 H917" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<path d="M197,309 H377" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M377,309 L380,325 H587" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M587,325 L590,309 H917" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="197,339 254,339 257,347 254,355 197,355" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="257,347 260,339 434,339 437,347 434,355 260,355" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="347" y="350.96" font-size="11" fill="#222222" text-anchor="middle">row</text>
+<polygon points="437,347 440,339 734,339 737,347 734,355 440,355" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="587" y="350.96" font-size="11" fill="#222222" text-anchor="middle">column</text>
+<polygon points="737,347 740,339 917,339 917,355 740,355" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="827" y="350.96" font-size="11" fill="#222222" text-anchor="middle">row (next)</text>
+<path d="M197,369 H317" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M317,369 L320,385 H677" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M677,385 L680,369 H917" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M197,399 H467" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M467,399 L470,415 H737" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M737,415 L740,399 H917" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M197,429 H917" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M197,475 H917" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="197,489 404,489 407,497 404,505 197,505" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="407,497 410,489 704,489 707,497 704,505 410,505" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="557" y="500.96" font-size="11" fill="#222222" text-anchor="middle">write data</text>
+<polygon points="707,497 710,489 917,489 917,505 710,505" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M197,519 H467" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M467,519 L470,535 H707" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M707,535 L720.13,532.26 L733.25,530 L746.38,528.12 L759.5,526.56 L772.63,525.27 L785.75,524.19 L798.88,523.31 L812,522.57 L825.13,521.96 L838.25,521.45 L851.38,521.03 L864.5,520.69 L877.63,520.4 L890.75,520.16 L903.88,519.96 L917,519.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+</g>
+<text x="189" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="189" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">state</text>
+<text x="189" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">A31-A0 SIZ</text>
+<text x="189" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_RW</text>
+<text x="189" y="231" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_AS</text>
+<text x="189" y="261" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">D31-D0 (CPU out)</text>
+<text x="189" y="321" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDRAM_SxA_RAS</text>
+<text x="189" y="351" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">DRAM_A11-A0</text>
+<text x="189" y="381" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDRAM_WE</text>
+<text x="189" y="411" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDRAM_CAS2,1 (written)</text>
+<text x="189" y="441" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDRAM_CAS3,0 (masked)</text>
+<text x="189" y="471" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDRAM_DATA_EN</text>
+<text x="189" y="501" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">DRAM DQ (via 245)</text>
+<text x="189" y="531" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_DSACK0/1</text>
+
+<line x1="467" y1="46" x2="467" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="467" y="43" font-size="10" fill="#c0392b" text-anchor="middle">CAS falls: data written</text>
+<line x1="617" y1="59" x2="617" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="617" y="56" font-size="10" fill="#c0392b" text-anchor="middle">S4 ends</text>
+<text x="8" y="558" font-size="11" fill="#555">nDRAM_WE falls with DRAM_REGION_ACCESS, well before CAS, so the SIMMs see an early-write cycle and keep their outputs off. Byte lanes come from the same</text>
+<text x="8" y="572" font-size="11" fill="#555">BA32 terms as the SRAM selects: unwritten lanes simply never get CAS. The 74HC245s face the DRAM by default (nDRAM_DATA_EN = 0), so the write data reaches</text>
+<text x="8" y="586" font-size="11" fill="#555">the SIMMs about one buffer delay after the CPU drives it.</text>
+</svg>

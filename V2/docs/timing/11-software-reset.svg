@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="948" height="390" viewBox="0 0 948 390" font-family="Helvetica, Arial, sans-serif">
+<title>11-software-reset</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="166" y="0" width="768" height="390"/></clipPath>
+</defs>
+<rect width="948" height="390" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">Software reset (write bit 1 of 0x30000202) - the reset pulse cancels itself</text>
+<line x1="166" y1="62" x2="166" y2="332" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="230" y1="62" x2="230" y2="332" stroke="#ececec" stroke-width="1"/>
+<line x1="294" y1="62" x2="294" y2="332" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="358" y1="62" x2="358" y2="332" stroke="#ececec" stroke-width="1"/>
+<line x1="422" y1="62" x2="422" y2="332" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="486" y1="62" x2="486" y2="332" stroke="#ececec" stroke-width="1"/>
+<line x1="550" y1="62" x2="550" y2="332" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="614" y1="62" x2="614" y2="332" stroke="#ececec" stroke-width="1"/>
+<line x1="678" y1="62" x2="678" y2="332" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="742" y1="62" x2="742" y2="332" stroke="#ececec" stroke-width="1"/>
+<line x1="806" y1="62" x2="806" y2="332" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="870" y1="62" x2="870" y2="332" stroke="#ececec" stroke-width="1"/>
+<line x1="934" y1="62" x2="934" y2="332" stroke="#d5d5d5" stroke-width="1"/>
+<g clip-path="url(#wave)">
+<path d="M166,85 V69 H230 V85 H294 M294,85 V69 H358 V85 H422 M422,85 V69 H486 V85 H550 M550,85 V69 H614 V85 H678 M678,85 V69 H742 V85 H806 M806,85 V69 H870 V85 H934" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="166,99 227,99 230,107 227,115 166,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="198" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="230,107 233,99 291,99 294,107 291,115 233,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="262" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="294,107 297,99 355,99 358,107 355,115 297,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="326" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="358,107 361,99 419,99 422,107 419,115 361,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="390" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="422,107 425,99 483,99 486,107 483,115 425,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="454" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="486,107 489,99 934,99 934,115 489,115" fill="#cfe6ff" stroke="#222222" stroke-width="1.2"/>
+<text x="710" y="110.96" font-size="11" fill="#222222" text-anchor="middle">CPU bus cycle cut short</text>
+<path d="M166,159 H262" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M262,159 L265,175 H486" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="486,175 489,159 934,159 934,175 486,175" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M166,189 H326" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M326,189 L329,205 H422" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M422,205 L425,189 H934" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M166,235 H454" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M454,235 L457,219 H518" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M518,219 L521,235 H934" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M166,249 H486" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M486,249 L489,265 H646" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M646,265 L649,249 H934" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M166,295 H518" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M518,295 L521,279 H678" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M678,279 L681,295 H934" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M166,309 H518" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M518,309 L521,325 H678" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M678,325 L681,309 H934" fill="none" stroke="#222222" stroke-width="1.5"/>
+</g>
+<text x="158" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="158" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">state</text>
+<text x="158" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_AS</text>
+<text x="158" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nINTCTRL_CS</text>
+<text x="158" y="231" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">RESET_CONTROL_OUT</text>
+<text x="158" y="261" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nSYS_RESET</text>
+<text x="158" y="291" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">SYS_RESET_POS (UART)</text>
+<text x="158" y="321" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">IDE /RESET</text>
+
+<line x1="422" y1="46" x2="422" y2="332" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="422" y="43" font-size="10" fill="#c0392b" text-anchor="middle">INTCTRL latches bit 1</text>
+<line x1="614" y1="59" x2="614" y2="332" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="614" y="56" font-size="10" fill="#c0392b" text-anchor="middle">falling edge releases reset</text>
+<path d="M455.5,227 L487.5,257" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
+<polygon points="487.5,257 484.45,250.02 480.34,254.4" fill="#1f6fb2"/>
+<path d="M487.5,257 L519.5,227" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
+<polygon points="519.5,227 512.34,229.6 516.45,233.98" fill="#1f6fb2"/>
+<path d="M519.5,227 C583.5,227 583.5,257 647.5,257" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
+<polygon points="647.5,257 640.5,254 640.5,260" fill="#1f6fb2"/>
+<rect x="533.75" y="232" width="99.5" height="13" fill="#ffffff" fill-opacity="0.85"/>
+<text x="583.5" y="242" font-size="10" fill="#1f6fb2" text-anchor="middle">next falling edge</text>
+<text x="8" y="348" font-size="11" fill="#555">RESET_CONTROL_OUT forces nSYS_RESET low asynchronously in BUSCTRL, but INTCTRL clears RESET_CONTROL_OUT with that same nSYS_RESET, so reset ends at the next</text>
+<text x="8" y="362" font-size="11" fill="#555">falling CPU_CLK edge. The pulse is about one clock long. The MC68030 needs RESET for at least 10 clocks to reset its logic (520 recommended), and ATA devices</text>
+<text x="8" y="376" font-size="11" fill="#555">need 25 us.</text>
+</svg>

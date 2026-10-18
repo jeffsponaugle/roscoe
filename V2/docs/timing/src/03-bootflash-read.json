@@ -1,0 +1,30 @@
+{
+  "head": { "text": "Boot flash read - 8-bit port, 0 wait states (one byte of a dynamically sized access)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.2.4.4.4.4.", "data": "S0 S1 S2 S3 S4 S5 S0 S1 S2 S3" },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=...........=......", "data": ["0x0xxxxxxx (boot flash)", "next byte"] },
+      { "name": "nCPU_AS", "wave": "1..0.......1...0...." }
+    ],
+    {},
+    ["BUSCTRL",
+      { "name": "nBFLASH_CE", "wave": "1...0.......1...0..." },
+      { "name": "nCPU_RD (/OE)", "wave": "1......0....1.....0." },
+      { "name": "nCPU_DSACK0", "wave": "1....0.......u...0.." },
+      { "name": "nCPU_DSACK1", "wave": "1..................." }
+    ],
+    {},
+    ["flash",
+      { "name": "D31-D24 (-55 part)", "wave": "z......x.=...z......", "data": ["byte"] },
+      { "name": "D31-D24 (-70 part)", "wave": "z......x..=..z......", "data": ["byte"] }
+    ]
+  ],
+  "markers": [
+    { "at": 6, "label": "DSACK sampled" },
+    { "at": 10, "label": "data latched" }
+  ],
+  "foot": { "text": "Only DSACK0 is asserted, so the CPU treats the flash as an 8-bit port on D31-D24 and runs four of these cycles per long word. Worst case at 20 MHz the flash gets about 62 ns from CE and 32 ns from OE (nCPU_RD) before the latch: an SST39SF040-55 fits, a -70 part does not on paper." },
+  "config": { "hscale": 1.6 }
+}

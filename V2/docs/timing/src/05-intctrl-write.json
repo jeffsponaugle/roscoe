@@ -1,0 +1,28 @@
+{
+  "head": { "text": "Interrupt controller register write - DEVMAP shortens nINTCTRL_CS on writes" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.2.4.4.4.4.", "data": "S0 S1 S2 S3 S4 S5 S0 S1 S2 S3" },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=...........=......", "data": ["0x30000200 (mask high byte)", "next"] },
+      { "name": "CPU_RW", "wave": "x0...........1......" },
+      { "name": "nCPU_AS", "wave": "1..0.......1...0...." },
+      { "name": "D31-D24 (CPU out)", "wave": "z...x.=.....x.z.....", "data": ["new mask"] }
+    ],
+    {},
+    ["CPLDs",
+      { "name": "nDEV8BITCS", "wave": "1...0.......1......." },
+      { "name": "nINTCTRL_CS_delay", "wave": "0......1.....0......" },
+      { "name": "nINTCTRL_CS", "wave": "1....0..1..........." },
+      { "name": "INT_MSK15..8", "wave": "=........=..........", "data": ["old mask", "new mask"] },
+      { "name": "nCPU_DSACK0", "wave": "1....0.......u......" }
+    ]
+  ],
+  "markers": [
+    { "at": 6, "label": "DSACK sampled" },
+    { "at": 8, "label": "mask register clocks" }
+  ],
+  "foot": { "text": "The INTCTRL registers are clocked by the rising edge of (nINTCTRL_CS OR R/W OR address). DEVMAP's nINTCTRL_CS_delay flop ends the chip select at the first falling clock edge of a write, so the edge lands mid-cycle while the CPU is still driving the data. The same pattern would help the PTC and the 7-segment latches, which are clocked at the end of the cycle." },
+  "config": { "hscale": 1.6 }
+}

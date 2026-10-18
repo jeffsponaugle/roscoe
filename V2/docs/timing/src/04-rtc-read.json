@@ -1,0 +1,32 @@
+{
+  "head": { "text": "RTC read - DEVMAP multiplexes CPU A7-A0 and D31-D24 onto the DS12887 AD bus" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.2.4.4.4.4.", "data": "S0 S1 S2 S3 S4 S5 S0 S1 S2 S3" },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=...........=......", "data": ["0x300003nn (RTC register nn)", "next"] },
+      { "name": "CPU_RW", "wave": "x1.................." },
+      { "name": "nCPU_AS", "wave": "1..0.......1...0...." }
+    ],
+    {},
+    ["CPLDs",
+      { "name": "nDEV8BITCS", "wave": "1...0.......1......." },
+      { "name": "nRTC_CS (RTC AS, /CS)", "wave": "1....0.......1......" },
+      { "name": "RTC_A_SEL (RTC DS)", "wave": "0......1......0....." },
+      { "name": "RTC_D_SEL (U35 /OE)", "wave": "1.......0......1...." },
+      { "name": "nCPU_DSACK0", "wave": "1....0.......u......" }
+    ],
+    {},
+    ["buses",
+      { "name": "RTC AD7-AD0", "wave": "=.......x=....=.....", "data": ["address from U34", "RTC data", "address"] },
+      { "name": "D31-D24", "wave": "z.......x.=...z.....", "data": ["data"] }
+    ]
+  ],
+  "markers": [
+    { "at": 6, "label": "DSACK sampled" },
+    { "at": 10, "label": "data latched" }
+  ],
+  "foot": { "text": "The RTC runs in Motorola mode (MOT tied high). Its address strobe falls with nRTC_CS while U34 drives CPU A7-A0, so each RTC register is directly addressable at 0x30000300 + n. On the first falling clock edge RTC_A_SEL turns U34 off, raises DS and enables U35 towards D31-D24. With no wait states, DS is high for only about one clock (50 ns at 20 MHz). Check that against the DS12887 bus-timing table (not in datasheets/) if RTC accesses misbehave." },
+  "config": { "hscale": 1.6 }
+}

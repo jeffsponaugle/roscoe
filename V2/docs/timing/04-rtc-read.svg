@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="844" height="584" viewBox="0 0 844 584" font-family="Helvetica, Arial, sans-serif">
+<title>04-rtc-read</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="190" y="0" width="640" height="584"/></clipPath>
+</defs>
+<rect width="844" height="584" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">RTC read - DEVMAP multiplexes CPU A7-A0 and D31-D24 onto the DS12887 AD bus</text>
+<line x1="190" y1="62" x2="190" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="254" y1="62" x2="254" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="318" y1="62" x2="318" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="382" y1="62" x2="382" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="446" y1="62" x2="446" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="510" y1="62" x2="510" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="574" y1="62" x2="574" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="638" y1="62" x2="638" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="702" y1="62" x2="702" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="766" y1="62" x2="766" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="830" y1="62" x2="830" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<path d="M14,156 h-4 V238 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="197" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 197)">CPU</text>
+<path d="M14,276 h-4 V418 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="347" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 347)">CPLDs</text>
+<path d="M14,456 h-4 V508 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="482" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 482)">buses</text>
+<g clip-path="url(#wave)">
+<path d="M190,85 V69 H254 V85 H318 M318,85 V69 H382 V85 H446 M446,85 V69 H510 V85 H574 M574,85 V69 H638 V85 H702 M702,85 V69 H766 V85 H830" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="190,99 251,99 254,107 251,115 190,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="222" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="254,107 257,99 315,99 318,107 315,115 257,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="286" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="318,107 321,99 379,99 382,107 379,115 321,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="350" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="382,107 385,99 443,99 446,107 443,115 385,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="414" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="446,107 449,99 507,99 510,107 507,115 449,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="478" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="510,107 513,99 571,99 574,107 571,115 513,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="542" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="574,107 577,99 635,99 638,107 635,115 577,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="606" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="638,107 641,99 699,99 702,107 699,115 641,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="670" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="702,107 705,99 763,99 766,107 763,115 705,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="734" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="766,107 769,99 830,99 830,115 769,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="798" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="190,159 219,159 222,167 219,175 190,175" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="222,167 225,159 603,159 606,167 603,175 225,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="414" y="170.96" font-size="11" fill="#222222" text-anchor="middle">0x300003nn (RTC register nn)</text>
+<polygon points="606,167 609,159 830,159 830,175 609,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="718" y="170.96" font-size="11" fill="#222222" text-anchor="middle">next</text>
+<polygon points="190,189 222,189 222,189 219,205 190,205" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M222,189 H830" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M190,219 H286" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M286,219 L289,235 H542" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M542,235 L545,219 H670" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M670,219 L673,235 H830" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M190,279 H318" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M318,279 L321,295 H574" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M574,295 L577,279 H830" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M190,309 H350" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M350,309 L353,325 H606" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M606,325 L609,309 H830" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M190,355 H414" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M414,355 L417,339 H638" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M638,339 L641,355 H830" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M190,369 H446" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M446,369 L449,385 H670" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M670,385 L673,369 H830" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M190,399 H350" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M350,399 L353,415 H606" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M606,415 L620,412.26 L634,410 L648,408.12 L662,406.56 L676,405.27 L690,404.19 L704,403.31 L718,402.57 L732,401.96 L746,401.45 L760,401.03 L774,400.69 L788,400.4 L802,400.16 L816,399.96 L830,399.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="190,459 443,459 446,467 443,475 190,475" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="318" y="470.96" font-size="11" fill="#222222" text-anchor="middle">address from U34</text>
+<polygon points="446,467 449,459 475,459 478,467 475,475 449,475" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="478,467 481,459 635,459 638,467 635,475 481,475" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="558" y="470.96" font-size="11" fill="#222222" text-anchor="middle">RTC data</text>
+<polygon points="638,467 641,459 830,459 830,475 641,475" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="734" y="470.96" font-size="11" fill="#222222" text-anchor="middle">address</text>
+<path d="M190,497 H446" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="446,497 449,489 507,489 510,497 507,505 449,505" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="510,497 513,489 635,489 638,497 635,505 513,505" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="574" y="500.96" font-size="11" fill="#222222" text-anchor="middle">data</text>
+<path d="M638,497 H830" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+</g>
+<text x="182" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="182" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">state</text>
+<text x="182" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">A31-A0</text>
+<text x="182" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_RW</text>
+<text x="182" y="231" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_AS</text>
+<text x="182" y="291" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDEV8BITCS</text>
+<text x="182" y="321" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nRTC_CS (RTC AS, /CS)</text>
+<text x="182" y="351" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">RTC_A_SEL (RTC DS)</text>
+<text x="182" y="381" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">RTC_D_SEL (U35 /OE)</text>
+<text x="182" y="411" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_DSACK0</text>
+<text x="182" y="471" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">RTC AD7-AD0</text>
+<text x="182" y="501" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">D31-D24</text>
+
+<line x1="382" y1="46" x2="382" y2="512" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="382" y="43" font-size="10" fill="#c0392b" text-anchor="middle">DSACK sampled</text>
+<line x1="510" y1="59" x2="510" y2="512" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="510" y="56" font-size="10" fill="#c0392b" text-anchor="middle">data latched</text>
+<text x="8" y="528" font-size="11" fill="#555">The RTC runs in Motorola mode (MOT tied high). Its address strobe falls with nRTC_CS while U34 drives CPU A7-A0, so each RTC register is</text>
+<text x="8" y="542" font-size="11" fill="#555">directly addressable at 0x30000300 + n. On the first falling clock edge RTC_A_SEL turns U34 off, raises DS and enables U35 towards D31-D24.</text>
+<text x="8" y="556" font-size="11" fill="#555">With no wait states, DS is high for only about one clock (50 ns at 20 MHz). Check that against the DS12887 bus-timing table (not in</text>
+<text x="8" y="570" font-size="11" fill="#555">datasheets/) if RTC accesses misbehave.</text>
+</svg>

@@ -1,0 +1,38 @@
+{
+  "head": { "text": "CAS-before-RAS refresh, with a CPU DRAM read arriving during the refresh" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p..........", "period": 4 },
+    {},
+    ["refresh",
+      { "name": "REFRESH_REQUESTED", "wave": "01........................0................." },
+      { "name": "REFRESH_ACTIVE", "wave": "0....1......................0..............." },
+      { "name": "REFRESH_STATE_MACHINE", "wave": "=......=...=...=...=...=..=.................", "data": ["0", "1", "2", "3", "4", "5", "0"] },
+      { "name": "nREFRESH_CAS", "wave": "1........0...........1......................" },
+      { "name": "nREFRESH_RAS", "wave": "1................0.......1.................." },
+      { "name": "REFRESH_COMPLETE", "wave": "0........................1...0.............." },
+      { "name": "REFRESH_COMPLETE_DELAY", "wave": "0..........................1...0............" }
+    ],
+    {},
+    ["CPU access",
+      { "name": "nCPU_AS", "wave": "1..........0...........................1...." },
+      { "name": "DRAM_REGION_ACCESS", "wave": "0............................1..........0..." },
+      { "name": "nCPU_DSACK0/1", "wave": "1................................0.......u.." }
+    ],
+    {},
+    ["DRAM pins",
+      { "name": "nDRAM_S1A_RAS (accessed)", "wave": "1.................0.......1....0.........1.." },
+      { "name": "nDRAM_S2A..S4B_RAS", "wave": "1.................0.......1................." },
+      { "name": "nDRAM_CAS3..0", "wave": "1.........0...........1.............0.....1." },
+      { "name": "nDRAM_WE", "wave": "1..........................................." }
+    ]
+  ],
+  "markers": [
+    { "at": 4, "label": "AS high: refresh starts" },
+    { "at": 18, "label": "RAS after CAS (CBR)" },
+    { "at": 28, "label": "ACTIVE cleared" },
+    { "at": 34, "label": "DSACK sampled" },
+    { "at": 38, "label": "data latched" }
+  ],
+  "foot": { "text": "REFRESH_ACTIVE is set on a rising edge where AS is high, so a refresh never starts inside a bus cycle. While it is set, DRAM_REGION_ACCESS is held off, and a DRAM cycle that starts meanwhile just collects wait states. The state machine counts falling edges: CAS is low in states 1-3 and RAS (all eight rank selects) in states 3-4. COMPLETE resets the machine, and COMPLETE_DELAY clears ACTIVE on the next falling edge, which lets the waiting access start." },
+  "config": { "hscale": 1.2 }
+}

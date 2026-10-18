@@ -1,0 +1,15 @@
+{
+  "head": { "text": "PTC interrupt pulse (timer B shown; PTCB_CLOCK = CPU_CLK / 16)" },
+  "signal": [
+    { "name": "PTCB_CLOCK", "wave": "p.......", "period": 2 },
+    { "name": "PTCB_TIMER[11:0]", "wave": "=.......=...=...", "data": ["counting up to bit N", "held at 0", "0, 1, 2 ..."] },
+    { "name": "selected bit N", "wave": "0....1...0......" },
+    { "name": "nINTB_OUT (vINT6B)", "wave": "1.....0...1.....", "node": "......a........." },
+    { "name": "nINTB_OUT_DELAYED", "wave": "1.......0...1...", "node": "........b...c..." },
+    {},
+    { "name": "INT6B_REQUEST (INTCTRL)", "wave": "0......1........" }
+  ],
+  "edge": [ "a->b falling edge", "b~>c" ],
+  "foot": { "text": "The selected counter bit drives nINTx_OUT low. On the next falling PTCB_CLOCK edge nINTx_OUT_DELAYED goes low and asynchronously clears the counter, which ends the pulse, and the edge after that releases the counter. INTCTRL triggers on the falling edge of vINT6A/6B, so each period produces one level-6 request; it is cleared by the acknowledge. Timer A counts the 32.768 kHz clock, but its pulse is also timed by PTCB_CLOCK." },
+  "config": { "hscale": 2.5 }
+}

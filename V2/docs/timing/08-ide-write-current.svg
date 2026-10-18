@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="822" height="674" viewBox="0 0 822 674" font-family="Helvetica, Arial, sans-serif">
+<title>08-ide-write-current</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="168" y="0" width="640" height="674"/></clipPath>
+</defs>
+<rect width="822" height="674" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">IDE write with the current logic (20 MHz, no wait states in practice)</text>
+<line x1="168" y1="62" x2="168" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="232" y1="62" x2="232" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="296" y1="62" x2="296" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="360" y1="62" x2="360" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="424" y1="62" x2="424" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="488" y1="62" x2="488" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="552" y1="62" x2="552" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="616" y1="62" x2="616" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="680" y1="62" x2="680" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="744" y1="62" x2="744" y2="602" stroke="#ececec" stroke-width="1"/>
+<line x1="808" y1="62" x2="808" y2="602" stroke="#d5d5d5" stroke-width="1"/>
+<path d="M14,156 h-4 V268 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="212" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 212)">CPU</text>
+<path d="M14,306 h-4 V448 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="377" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 377)">DEVMAP</text>
+<path d="M14,486 h-4 V598 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="542" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 542)">IDE connector</text>
+<g clip-path="url(#wave)">
+<path d="M168,85 V69 H232 V85 H296 M296,85 V69 H360 V85 H424 M424,85 V69 H488 V85 H552 M552,85 V69 H616 V85 H680 M680,85 V69 H744 V85 H808" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="168,99 229,99 232,107 229,115 168,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="200" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="232,107 235,99 293,99 296,107 293,115 235,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="264" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="296,107 299,99 357,99 360,107 357,115 299,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="328" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="360,107 363,99 421,99 424,107 421,115 363,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="392" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="424,107 427,99 485,99 488,107 485,115 427,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="456" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="488,107 491,99 549,99 552,107 549,115 491,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="520" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="552,107 555,99 613,99 616,107 613,115 555,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="584" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="616,107 619,99 677,99 680,107 677,115 619,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="648" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="680,107 683,99 741,99 744,107 741,115 683,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="712" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="744,107 747,99 808,99 808,115 747,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="776" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="168,159 197,159 200,167 197,175 168,175" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="200,167 203,159 581,159 584,167 581,175 203,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="392" y="170.96" font-size="11" fill="#222222" text-anchor="middle">0x400000E0 (IDE1 command)</text>
+<polygon points="584,167 587,159 808,159 808,175 587,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="696" y="170.96" font-size="11" fill="#222222" text-anchor="middle">next (read)</text>
+<polygon points="168,189 197,189 200,205 200,205 168,205" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M200,205 H584" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M584,205 L587,189 H808" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M168,219 H264" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M264,219 L267,235 H520" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M520,235 L523,219 H648" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M648,219 L651,235 H808" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M168,257 H296" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="296,257 299,249 357,249 360,257 357,265 299,265" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="360,257 363,249 549,249 552,257 549,265 363,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="456" y="260.96" font-size="11" fill="#222222" text-anchor="middle">data</text>
+<polygon points="552,257 555,249 613,249 616,257 613,265 555,265" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M616,257 H808" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<path d="M168,309 H328" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M328,309 L331,325 H584" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M584,325 L587,309 H808" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M168,339 H328" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M328,339 L331,355 H584" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M584,355 L587,339 H808" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M168,385 H392" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M392,385 L395,369 H616" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M616,369 L619,385 H808" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M168,415 H456" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M456,415 L459,399 H648" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M648,399 L651,415 H808" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M168,429 H488" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M488,429 L491,445 H616" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M616,445 L619,429 H808" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M168,489 H360" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M360,489 L363,505 H616" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M616,505 L619,489 H808" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M168,519 H520" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M520,519 L523,535 H648" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M648,535 L651,519 H808" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M168,557 H360" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="360,557 363,549 389,549 392,557 389,565 363,565" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="392,557 395,549 581,549 584,557 581,565 395,565" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="488" y="560.96" font-size="11" fill="#222222" text-anchor="middle">data</text>
+<polygon points="584,557 587,549 645,549 648,557 645,565 587,565" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M648,557 H808" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<path d="M168,579 H328" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M328,579 L331,595 H456" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M456,595 L478,592.26 L500,590 L522,588.12 L544,586.56 L566,585.27 L588,584.19 L610,583.31 L632,582.57 L654,581.96 L676,581.45 L698,581.03 L720,580.69 L742,580.4 L764,580.16 L786,579.96 L808,579.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+</g>
+<text x="160" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="160" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">state</text>
+<text x="160" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">A31-A0</text>
+<text x="160" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_RW</text>
+<text x="160" y="231" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_AS</text>
+<text x="160" y="261" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">D31-D16 (CPU out)</text>
+<text x="160" y="321" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nIDE1_CSA</text>
+<text x="160" y="351" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nIDE_BUFFER_EN1</text>
+<text x="160" y="381" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">IDE_WR_SIG_A</text>
+<text x="160" y="411" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">IDE_WR_SIG</text>
+<text x="160" y="441" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nIDE_WR</text>
+<text x="160" y="501" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">/CS0 (after U39)</text>
+<text x="160" y="531" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">/IOW (after U39)</text>
+<text x="160" y="561" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">DD15-DD0 (via 245)</text>
+<text x="160" y="591" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_DSACK1</text>
+
+<line x1="360" y1="46" x2="360" y2="602" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="360" y="43" font-size="10" fill="#c0392b" text-anchor="middle">DSACK1 sampled</text>
+<line x1="616" y1="59" x2="616" y2="602" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="616" y="56" font-size="10" fill="#c0392b" text-anchor="middle">CS0 high, buffers off</text>
+<line x1="648" y1="46" x2="648" y2="602" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="648" y="43" font-size="10" fill="#c0392b" text-anchor="middle">/IOW rises</text>
+<path d="M617.5,557 L649.5,527" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
+<polygon points="649.5,527 642.34,529.6 646.45,533.98" fill="#1f6fb2"/>
+<text x="8" y="618" font-size="11" fill="#555">nIDE_WR = CPU_RW OR NOT IDE_WR_SIG. IDE_WR_SIG is armed by the first falling edge after the IDE1 select and sets on the next rising</text>
+<text x="8" y="632" font-size="11" fill="#555">edge. With no wait states it only clears when R/W changes in the next cycle or the select goes away, so /IOW rises after /CS0 and after</text>
+<text x="8" y="646" font-size="11" fill="#555">the data buffers are disabled. ATA latches on the rising edge of /IOW and needs CS and data held after it. IDE_WR_SIG_A and the</text>
+<text x="8" y="660" font-size="11" fill="#555">wait-state clock only look at nIDE1_CSA/CSB, so IDE2 writes never produce /IOW.</text>
+</svg>

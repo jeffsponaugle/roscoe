@@ -1,0 +1,36 @@
+{
+  "head": { "text": "PROPOSED (not implemented): IDE write with a registered device acknowledge" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p........", "period": 4 },
+    { "name": "state", "wave": "2.2.2.3...................2.2.2.4.4.", "data": ["S0", "S1", "S2", "5 wait states", "S3", "S4", "S5", "S0", "S1"] },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=...............................=..", "data": ["0x400000E0 (IDE1 command)", "next"] },
+      { "name": "CPU_RW", "wave": "x0...............................1.." },
+      { "name": "nCPU_AS", "wave": "1..0...........................1...." }
+    ],
+    {},
+    ["DEVMAP",
+      { "name": "nIDE1_CSA", "wave": "1....0...........................1.." },
+      { "name": "IDE_T (falling-edge count)", "wave": "=......=...=...=...=..............=.", "data": ["0", "1", "2", "3", "4 (hold)", "0"] },
+      { "name": "nIDE_WR (T = 1..3)", "wave": "1.......0...........1..............." },
+      { "name": "nDEV_WAIT (T < 4)", "wave": "1.....0.............1..............." }
+    ],
+    {},
+    ["BUSCTRL",
+      { "name": "DEV_SEEN", "wave": "0......1........................0..." },
+      { "name": "DEV_ACK", "wave": "0......................1........0..." },
+      { "name": "nCPU_DSACK1", "wave": "1.......................0........u.." }
+    ],
+    {},
+    { "name": "DD15-DD0 (via 245)", "wave": "z.....x=..........................z.", "data": ["write data held while /IOW rises"] }
+  ],
+  "markers": [
+    { "at": 6, "label": "DSACK sampled: no" },
+    { "at": 20, "label": "/IOW rises, CS and data still held" },
+    { "at": 26, "label": "DSACK recognised" },
+    { "at": 30, "label": "AS negates" }
+  ],
+  "foot": { "text": "Proposal. BUSCTRL never asserts DSACK combinationally for the device regions: DEV_SEEN waits one falling edge, then DEV_ACK samples nDEV_WAIT on each falling edge, so a request that arrives late can no longer race the CPU. DEVMAP counts falling edges during an IDE select, keeps nDEV_WAIT low until the count expires and places /IOW inside the cycle. Shown with /IOW = 3 clocks (150 ns) and an 8-clock cycle at 20 MHz; the compare values set the ATA PIO timing. /IOR stays on nCPU_RD and so covers the whole cycle from S3." },
+  "config": { "hscale": 1.2 }
+}

@@ -1,0 +1,30 @@
+{
+  "head": { "text": "SRAM read - 68030 asynchronous cycle, 0 wait states (BUSCTRL rev 29)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.2.4.4.4.4.", "data": "S0 S1 S2 S3 S4 S5 S0 S1 S2 S3" },
+    {},
+    ["CPU",
+      { "name": "A31-A0 FC SIZ", "wave": "x=...........=......", "data": ["0x1xxxxxxx (SRAM)", "next cycle"] },
+      { "name": "CPU_RW", "wave": "x1.................." },
+      { "name": "nCPU_AS", "wave": "1..0.......1...0....", "node": "...a.......d........" }
+    ],
+    {},
+    ["BUSCTRL",
+      { "name": "nSRAM_BANKx_CE", "wave": "1...0.......1.......", "node": "....b..............." },
+      { "name": "nSRAM_xx_SEL", "wave": "x0.................." },
+      { "name": "nCPU_RD (/OE)", "wave": "1......0....1......." },
+      { "name": "nCPU_DSACK0/1", "wave": "1....0.......u......", "node": ".....c.......e......" }
+    ],
+    {},
+    { "name": "D31-D0", "wave": "z......x=....z......", "data": ["SRAM data"] }
+  ],
+  "edge": [ "a->b", "a->c", "d->e" ],
+  "markers": [
+    { "at": 6, "label": "DSACK sampled" },
+    { "at": 10, "label": "data latched" },
+    { "at": 18, "label": "next DSACK sample" }
+  ],
+  "foot": { "text": "20 MHz shown; 1 slot = 1/4 clock = 12.5 ns, about one ATF1508 delay. DSACKx are open-collector (10K pull-ups), so release is an RC curve." },
+  "config": { "hscale": 1.6 }
+}

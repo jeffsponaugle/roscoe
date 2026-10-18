@@ -1,0 +1,21 @@
+{
+  "head": { "text": "Software reset (write bit 1 of 0x30000202) - the reset pulse cancels itself" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p.....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.5.............", "data": ["S0", "S1", "S2", "S3", "S4", "CPU bus cycle cut short"] },
+    {},
+    { "name": "nCPU_AS", "wave": "1..0......x............." },
+    { "name": "nINTCTRL_CS", "wave": "1....0..1..............." },
+    { "name": "RESET_CONTROL_OUT", "wave": "0........1.0............", "node": ".........a.c............" },
+    { "name": "nSYS_RESET", "wave": "1.........0....1........", "node": "..........b....d........" },
+    { "name": "SYS_RESET_POS (UART)", "wave": "0..........1....0......." },
+    { "name": "IDE /RESET", "wave": "1..........0....1......." }
+  ],
+  "edge": [ "a->b", "b->c", "c~>d next falling edge" ],
+  "markers": [
+    { "at": 8, "label": "INTCTRL latches bit 1" },
+    { "at": 14, "label": "falling edge releases reset" }
+  ],
+  "foot": { "text": "RESET_CONTROL_OUT forces nSYS_RESET low asynchronously in BUSCTRL, but INTCTRL clears RESET_CONTROL_OUT with that same nSYS_RESET, so reset ends at the next falling CPU_CLK edge. The pulse is about one clock long. The MC68030 needs RESET for at least 10 clocks to reset its logic (520 recommended), and ATA devices need 25 us." },
+  "config": { "hscale": 1.6 }
+}

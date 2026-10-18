@@ -1,0 +1,37 @@
+{
+  "head": { "text": "IDE write with the current logic (20 MHz, no wait states in practice)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.2.4.4.4.4.", "data": "S0 S1 S2 S3 S4 S5 S0 S1 S2 S3" },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=...........=......", "data": ["0x400000E0 (IDE1 command)", "next (read)"] },
+      { "name": "CPU_RW", "wave": "x0...........1......" },
+      { "name": "nCPU_AS", "wave": "1..0.......1...0...." },
+      { "name": "D31-D16 (CPU out)", "wave": "z...x.=.....x.z.....", "data": ["data"] }
+    ],
+    {},
+    ["DEVMAP",
+      { "name": "nIDE1_CSA", "wave": "1....0.......1......" },
+      { "name": "nIDE_BUFFER_EN1", "wave": "1....0.......1......" },
+      { "name": "IDE_WR_SIG_A", "wave": "0......1......0....." },
+      { "name": "IDE_WR_SIG", "wave": "0........1.....0...." },
+      { "name": "nIDE_WR", "wave": "1.........0...1....." }
+    ],
+    {},
+    ["IDE connector",
+      { "name": "/CS0 (after U39)", "wave": "1.....0.......1....." },
+      { "name": "/IOW (after U39)", "wave": "1..........0...1....", "node": "...............b...." },
+      { "name": "DD15-DD0 (via 245)", "wave": "z.....x=.....x.z....", "data": ["data"], "node": "..............a....." },
+      { "name": "nCPU_DSACK1", "wave": "1....0...u.........." }
+    ]
+  ],
+  "edge": [ "a->b" ],
+  "markers": [
+    { "at": 6, "label": "DSACK1 sampled" },
+    { "at": 14, "label": "CS0 high, buffers off" },
+    { "at": 15, "label": "/IOW rises" }
+  ],
+  "foot": { "text": "nIDE_WR = CPU_RW OR NOT IDE_WR_SIG. IDE_WR_SIG is armed by the first falling edge after the IDE1 select and sets on the next rising edge. With no wait states it only clears when R/W changes in the next cycle or the select goes away, so /IOW rises after /CS0 and after the data buffers are disabled. ATA latches on the rising edge of /IOW and needs CS and data held after it. IDE_WR_SIG_A and the wait-state clock only look at nIDE1_CSA/CSB, so IDE2 writes never produce /IOW." },
+  "config": { "hscale": 1.6 }
+}

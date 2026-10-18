@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="881" height="540" viewBox="0 0 881 540" font-family="Helvetica, Arial, sans-serif">
+<title>02-sram-write-async</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="227" y="0" width="640" height="540"/></clipPath>
+</defs>
+<rect width="881" height="540" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">SRAM write - 68030 asynchronous cycle, 0 wait states (BUSCTRL rev 29)</text>
+<line x1="227" y1="62" x2="227" y2="482" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="291" y1="62" x2="291" y2="482" stroke="#ececec" stroke-width="1"/>
+<line x1="355" y1="62" x2="355" y2="482" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="419" y1="62" x2="419" y2="482" stroke="#ececec" stroke-width="1"/>
+<line x1="483" y1="62" x2="483" y2="482" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="547" y1="62" x2="547" y2="482" stroke="#ececec" stroke-width="1"/>
+<line x1="611" y1="62" x2="611" y2="482" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="675" y1="62" x2="675" y2="482" stroke="#ececec" stroke-width="1"/>
+<line x1="739" y1="62" x2="739" y2="482" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="803" y1="62" x2="803" y2="482" stroke="#ececec" stroke-width="1"/>
+<line x1="867" y1="62" x2="867" y2="482" stroke="#d5d5d5" stroke-width="1"/>
+<path d="M14,156 h-4 V268 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="212" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 212)">CPU</text>
+<path d="M14,306 h-4 V418 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="362" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 362)">BUSCTRL</text>
+<g clip-path="url(#wave)">
+<path d="M227,85 V69 H291 V85 H355 M355,85 V69 H419 V85 H483 M483,85 V69 H547 V85 H611 M611,85 V69 H675 V85 H739 M739,85 V69 H803 V85 H867" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="227,99 288,99 291,107 288,115 227,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="259" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="291,107 294,99 352,99 355,107 352,115 294,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="323" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="355,107 358,99 416,99 419,107 416,115 358,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="387" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="419,107 422,99 480,99 483,107 480,115 422,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="451" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="483,107 486,99 544,99 547,107 544,115 486,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="515" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="547,107 550,99 608,99 611,107 608,115 550,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="579" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="611,107 614,99 672,99 675,107 672,115 614,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="643" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="675,107 678,99 736,99 739,107 736,115 678,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="707" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="739,107 742,99 800,99 803,107 800,115 742,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="771" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="803,107 806,99 867,99 867,115 806,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="835" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="227,159 256,159 259,167 256,175 227,175" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="259,167 262,159 640,159 643,167 640,175 262,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="451" y="170.96" font-size="11" fill="#222222" text-anchor="middle">0x1xxxxxxx (SRAM), byte at +1</text>
+<polygon points="643,167 646,159 867,159 867,175 646,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="755" y="170.96" font-size="11" fill="#222222" text-anchor="middle">next cycle (read)</text>
+<polygon points="227,189 256,189 259,205 259,205 227,205" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M259,205 H643" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M643,205 L646,189 H867" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M227,219 H323" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M323,219 L326,235 H579" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M579,235 L582,219 H707" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M707,219 L710,235 H867" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M227,257 H355" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="355,257 358,249 416,249 419,257 416,265 358,265" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="419,257 422,249 608,249 611,257 608,265 422,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="515" y="260.96" font-size="11" fill="#222222" text-anchor="middle">write data</text>
+<polygon points="611,257 614,249 672,249 675,257 672,265 614,265" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M675,257 H867" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="227,309 288,309 291,325 291,325 227,325" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M291,325 H867" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="227,339 291,339 291,339 288,355 227,355" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M291,339 H675" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M675,339 L678,355 H867" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M227,369 H355" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M355,369 L358,385 H611" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M611,385 L614,369 H867" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M227,399 H387" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M387,399 L390,415 H643" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M643,415 L657,412.26 L671,410 L685,408.12 L699,406.56 L713,405.27 L727,404.19 L741,403.31 L755,402.57 L769,401.96 L783,401.45 L797,401.03 L811,400.69 L825,400.4 L839,400.16 L853,399.96 L867,399.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M227,475 H355" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M355,475 L358,459 H611" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M611,459 L614,475 H867" fill="none" stroke="#222222" stroke-width="1.5"/>
+</g>
+<text x="219" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="219" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">state</text>
+<text x="219" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">A31-A0 FC SIZ</text>
+<text x="219" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_RW (SRAM /WE)</text>
+<text x="219" y="231" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_AS</text>
+<text x="219" y="261" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">D31-D0 (CPU out)</text>
+<text x="219" y="321" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nSRAM_LH_SEL (written)</text>
+<text x="219" y="351" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nSRAM_UH_SEL (not written)</text>
+<text x="219" y="381" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nSRAM_BANKx_CE</text>
+<text x="219" y="411" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_DSACK0/1</text>
+<text x="219" y="471" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">SRAM write (CE.WE.BE)</text>
+
+<line x1="419" y1="46" x2="419" y2="482" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="419" y="43" font-size="10" fill="#c0392b" text-anchor="middle">DSACK sampled</text>
+<line x1="579" y1="59" x2="579" y2="482" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="579" y="56" font-size="10" fill="#c0392b" text-anchor="middle">AS negated</text>
+<line x1="611" y1="46" x2="611" y2="482" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="611" y="43" font-size="10" fill="#c0392b" text-anchor="middle">CE rises: write ends</text>
+<text x="8" y="498" font-size="11" fill="#555">SRAM /WE is CPU_RW itself and the byte selects do not include AS, so the write is CE-controlled: it begins when nSRAM_BANKx_CE falls and ends when</text>
+<text x="8" y="512" font-size="11" fill="#555">CE rises, one CPLD delay after AS negates. The 68030 only guarantees write data for 10 ns after AS negates (#25 at 20 MHz), so the end of the</text>
+<text x="8" y="526" font-size="11" fill="#555">write relies on the data bus holding its charge.</text>
+</svg>

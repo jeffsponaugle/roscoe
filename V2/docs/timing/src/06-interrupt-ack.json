@@ -1,0 +1,35 @@
+{
+  "head": { "text": "Interrupt request and acknowledge - PTC timer A (INT6A, edge-triggered, vector 0xE1)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p........", "period": 4 },
+    { "name": "CPU bus", "wave": "5..........|2.2.2.2.2.2.5...........", "data": ["instruction finishing", "S0", "S1", "S2", "S3", "S4", "S5", "following cycles"] },
+    {},
+    ["request path",
+      { "name": "vINT6A (PTC nINTA_OUT)", "wave": "10.........|1......................." },
+      { "name": "INT6A_REQUEST", "wave": "0.1........|..................0....." },
+      { "name": "INT6A_REQUEST_LATCHED", "wave": "0....1.....|.....................0.." },
+      { "name": "INTL6_REQUEST_PE", "wave": "0......1...|.......................0" },
+      { "name": "nCPU_IPL2..0", "wave": "=........=.|........................", "data": ["111 (none)", "001 = level 6"] }
+    ],
+    {},
+    ["acknowledge cycle",
+      { "name": "FC2-0 A19-A16 A3-A1", "wave": "x..........|.=...........x..........", "data": ["FC=7  A19-16=F  A3-1=6"] },
+      { "name": "nCPU_AS", "wave": "1..........|...0.......1............" },
+      { "name": "nINT_ACK_CYCLE", "wave": "1..........|....0.......1..........." },
+      { "name": "INT_ACK_LEVEL2..0", "wave": "=..........|.....=..................", "data": ["previous", "6"] },
+      { "name": "D31-D24 (INTCTRL out)", "wave": "z..........|.....x=......z..........", "data": ["0xE1"] },
+      { "name": "nCPU_DSACK0", "wave": "1..........|.....0.......u.........." }
+    ],
+    {},
+    ["clear",
+      { "name": "INT_ACK_RESET_PRE", "wave": "0..........|.............1....0....." },
+      { "name": "INT_ACK_RESET", "wave": "0..........|.................1...0.." }
+    ]
+  ],
+  "markers": [
+    { "at": 18, "label": "DSACK sampled" },
+    { "at": 22, "label": "vector latched" }
+  ],
+  "foot": { "text": "The request is re-timed twice (rising edge into *_LATCHED, falling edge into INTLx_REQUEST_PE) before it reaches CPU_IPL on a rising edge, so IPL changes about two clocks after the source. During the acknowledge, BUSCTRL decodes FC=7/A19-A16=F as nINT_ACK_CYCLE and returns an 8-bit DSACK0. INTCTRL latches A3-A1 and drives the vector {1, level, source bits} on D31-D24. INT_ACK_RESET, a pulse of about one clock after the cycle, clears the edge-triggered flop that was acknowledged." },
+  "config": { "hscale": 1.2 }
+}

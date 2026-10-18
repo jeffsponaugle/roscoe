@@ -1,0 +1,39 @@
+{
+  "head": { "text": "IDE read with the current logic - the wait-state request loses the race (20 MHz)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.2.4.4.4.4.", "data": "S0 S1 S2 S3 S4 S5 S0 S1 S2 S3" },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=...........=......", "data": ["0x400000E1 (IDE1 status)", "next"] },
+      { "name": "nCPU_AS", "wave": "1..0.......1...0...." }
+    ],
+    {},
+    ["BUSCTRL",
+      { "name": "nDEV16BITCS", "wave": "1...0.......1......." },
+      { "name": "nCPU_DSACK1", "wave": "1....0...u..........", "node": ".........r.........." },
+      { "name": "nCPU_RD", "wave": "1......0....1......." }
+    ],
+    {},
+    ["DEVMAP",
+      { "name": "nIDE1_CSA", "wave": "1....0.......1......" },
+      { "name": "nIDE_BUFFER_EN1", "wave": "1....0.......1......" },
+      { "name": "nIDE_WAITSTATE_DELAY", "wave": "0.....1.........0..." },
+      { "name": "nDEV_WAIT", "wave": "1......0.........1..", "node": ".......w............" }
+    ],
+    {},
+    ["IDE side",
+      { "name": "/CS0 (after U39)", "wave": "1.....0.......1....." },
+      { "name": "/IOR (after U39)", "wave": "1.......0....1......" },
+      { "name": "DD15-DD0 (drive)", "wave": "z.......x..=.z......", "data": ["data"] },
+      { "name": "D31-D16 (CPU side)", "wave": "z.....x.....=z......", "data": ["late"] }
+    ]
+  ],
+  "edge": [ "w->r too late" ],
+  "markers": [
+    { "at": 6, "label": "DSACK1 sampled: 0 wait states" },
+    { "at": 10, "label": "data latched" }
+  ],
+  "foot": { "text": "BUSCTRL asserts DSACK1 for the whole 16-bit region two CPLD levels after AS. DEVMAP only raises nDEV_WAIT after decoding the IDE select and clocking a flop, so BUSCTRL tries to retract an already-asserted open-collector DSACK1 after the CPU has sampled it. The cycle ends with no wait states: /IOR is about one clock long and the drive has well under 50 ns to put data on the bus. The DEVMAP wait flop then stays set into the next bus cycle." },
+  "config": { "hscale": 1.6 }
+}

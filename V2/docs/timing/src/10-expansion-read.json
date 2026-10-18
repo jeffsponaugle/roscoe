@@ -1,0 +1,33 @@
+{
+  "head": { "text": "Expansion card read (32-bit region, current logic, 20 MHz)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.2.4.4.4.4.", "data": "S0 S1 S2 S3 S4 S5 S0 S1 S2 S3" },
+    {},
+    ["connector",
+      { "name": "EXP_A31-A0", "wave": "x.=...........=.....", "data": ["0x5xxxxxxx", "next"] },
+      { "name": "EXP_RW", "wave": "x.1................." },
+      { "name": "nEXP_CPU_AS", "wave": "1...0.......1...0..." },
+      { "name": "nEXP_32BDEV", "wave": "1....0.......1......" }
+    ],
+    {},
+    ["card",
+      { "name": "nEXP_DATA_EN (driven high)", "wave": "1.....0.......1....." },
+      { "name": "nEXP_DATA_EN (pull-up only)", "wave": "1.....0.......u....." },
+      { "name": "EXP_D31-D0 (card)", "wave": "z.....x.=....z......", "data": ["card data"] },
+      { "name": "nEXP_DEV_WAIT", "wave": "1..................." }
+    ],
+    {},
+    ["CPU side",
+      { "name": "D31-D0 (via U54-U57)", "wave": "z......x.=...x.z....", "data": ["data"] },
+      { "name": "nCPU_DSACK0/1", "wave": "1....0.......u......" }
+    ]
+  ],
+  "markers": [
+    { "at": 6, "label": "DSACK sampled" },
+    { "at": 10, "label": "data latched" },
+    { "at": 18, "label": "next cycle may drive D31-D0" }
+  ],
+  "foot": { "text": "BUSCTRL acknowledges the whole 8/16/32-bit region two levels after AS, so a card gets no wait states whatever it does with nEXP_DEV_WAIT. It has about 4 slots (50 ns at 20 MHz) from nEXP_xxBDEV to valid data at the connector. U54-U57 are always enabled and nEXP_DATA_EN only sets their direction. A card must drive it high again as soon as its select ends: with only the 10K pull-up the buffers keep driving the CPU data bus into the next cycle." },
+  "config": { "hscale": 1.6 }
+}

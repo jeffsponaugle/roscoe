@@ -1,0 +1,42 @@
+{
+  "head": { "text": "DRAM read - BUSCTRL rev 29, one wait state (20 MHz)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p.....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.3.3.2.2.2.4.4.4.4.", "data": "S0 S1 S2 Sw Sw S3 S4 S5 S0 S1 S2 S3" },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=...............=......", "data": ["0x8xxxxxxx (DRAM)", "next"] },
+      { "name": "nCPU_AS", "wave": "1..0...........1...0...." }
+    ],
+    {},
+    ["BUSCTRL internal",
+      { "name": "DRAM_REGION_ACCESS", "wave": "0...1...........0......." },
+      { "name": "nDRAM_ACCESS_RAS", "wave": "1....0......1..........." },
+      { "name": "..._RAS_RESET1", "wave": "0......1.....0.........." },
+      { "name": "..._RAS_RESET2", "wave": "0..........1.0.........." },
+      { "name": "..._REGION_ACCESS_WAITSTATE", "wave": "0......1........0......." }
+    ],
+    {},
+    ["DRAM signals",
+      { "name": "nDRAM_SxA_RAS", "wave": "1.....0......1.........." },
+      { "name": "DRAM_MUX", "wave": "0......1.........0......" },
+      { "name": "DRAM_A11-A0 (157 out)", "wave": "x.=.....=.........=.....", "data": ["row", "column", "row (next)"] },
+      { "name": "nDRAM_CAS3..0", "wave": "1........0........1....." },
+      { "name": "nDRAM_WE", "wave": "1......................." },
+      { "name": "nDRAM_DATA_EN (245 DIR)", "wave": "0...1...........0......." },
+      { "name": "DRAM DQ", "wave": "z........x.=.......z....", "data": ["data out"] }
+    ],
+    {},
+    ["CPU side",
+      { "name": "D31-D0", "wave": "z....x......=....z......", "data": ["data"] },
+      { "name": "nCPU_DSACK0/1", "wave": "1........0.......u......" }
+    ]
+  ],
+  "markers": [
+    { "at": 6, "label": "DSACK sampled: no" },
+    { "at": 10, "label": "DSACK sampled: yes" },
+    { "at": 14, "label": "data latched" }
+  ],
+  "foot": { "text": "RAS falls when DRAM_REGION_ACCESS clocks nDRAM_ACCESS_RAS. DRAM_MUX is clocked by the RAS pins falling, so the row address is held about 2 slots. CAS starts from RAS_RESET1 on the first falling edge after RAS, and RAS_RESET2 ends RAS one clock later while CAS stays low until AS negates. DSACK comes from the falling-edge WAITSTATE flop, giving 4-clock DRAM cycles. Diagram is schematic (1 slot = 12.5 ns, about one CPLD step); see docs/DRAM.md for the nanosecond budget." },
+  "config": { "hscale": 1.5 }
+}
