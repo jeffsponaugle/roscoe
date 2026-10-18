@@ -515,6 +515,7 @@ Power off and **remove the P1 wire first**: the old DEVMAP drives pin 35. Then p
 | 5 | Longest hold-off a card may use | Open. Proposed: at most one scan line (about 32 us) at a time. Optional: a much longer VMEM watchdog in BUSCTRL (about 4 more macrocells), so a stuck card bus-errors instead of hanging the machine. |
 | 6 | Bus-timeout length | Open. 224-240 clocks proposed. |
 | 7 | P2 (R10 to 1K) | Open: now, or with the first card. |
+| 8 | AS to DEVMAP: rework wire P1, or relay AS through BUSCTRL on the spare `EXTRA_BC_DM2` | **Decided 2026-10-18: the wire (P1).** A relay passes through one BUSCTRL level, exactly like today's AS-qualified region selects. That gives no gain: the fast on-board devices would still take 1 wait state at 16 MHz. |
 
 ---
 
@@ -1058,3 +1059,4 @@ Program the CS1 JEDs (DEVMAP rev 22, BUSCTRL rev 30) and INTCTRL rev 16. P5 and 
 | 2026-10-18 | Hold-off decided. CS1 DEVMAP: binary wait-state counter replaced by a thermometer counter, and the interim /IOW made a register (the decoded version could glitch). CS2 written: PIO mode 0 base timing plus a mode 2 Data-register alias, /IOR window through BUSCTRL, /CS hold, IDE interrupts, INTRQ and DD7 pull-downs (P5, P6), reset stretch. |
 | 2026-10-18 | CS2 agreed as proposed: all five decisions in 2.11. |
 | 2026-10-18 | Checked against the netlist (`schematic/RoscoeMainboardV2Final.net`): every CPLD pin assignment and every rework point in CS1 and CS2 matches. Proposed P7 (SN74AHCT245 in the IDE data path), after the netlist showed SN74AHC245 there. Added the 5 V CMOS rule for card read data. |
+| 2026-10-18 | CS1 decision 8: keep the P1 wire rather than relaying AS through BUSCTRL. |
