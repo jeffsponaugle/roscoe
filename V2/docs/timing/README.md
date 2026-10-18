@@ -1,6 +1,6 @@
 # Timing diagrams
 
-The `src/*.json` files are WaveDrom WaveJSON sources, and the `*.svg` files next to this README are rendered from them. The diagrams are used in [TheoryOfOperations.md](../TheoryOfOperations.md), [DRAM.md](../DRAM.md) and [SRAMBurstProposal.md](../SRAMBurstProposal.md).
+The `src/*.json` files are WaveDrom WaveJSON sources, and the `*.svg` files next to this README are rendered from them. The diagrams are used in [TheoryOfOperations.md](../TheoryOfOperations.md), [DRAM.md](../DRAM.md), [SRAMBurstProposal.md](../SRAMBurstProposal.md) and [changes.md](../changes.md).
 
 To regenerate the SVGs after editing a source:
 

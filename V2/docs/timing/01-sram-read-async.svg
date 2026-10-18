@@ -94,6 +94,6 @@
 <polygon points="299.5,377 299.51,369.38 293.99,371.74" fill="#1f6fb2"/>
 <path d="M491.5,227 L555.5,377" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
 <polygon points="555.5,377 555.51,369.38 549.99,371.74" fill="#1f6fb2"/>
-<text x="8" y="468" font-size="11" fill="#555">20 MHz shown; 1 slot = 1/4 clock = 12.5 ns, about one ATF1508 delay. DSACKx are open-collector (10K pull-ups), so release is an RC</text>
-<text x="8" y="482" font-size="11" fill="#555">curve.</text>
+<text x="8" y="468" font-size="11" fill="#555">20 MHz shown; 1 slot = 1/4 clock = 12.5 ns, about one ATF1508 delay. DSACKx are open-collector (1K pull-ups fitted), so release is</text>
+<text x="8" y="482" font-size="11" fill="#555">an RC curve that crosses 2.0 V in about 15-25 ns.</text>
 </svg>

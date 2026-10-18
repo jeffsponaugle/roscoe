@@ -197,6 +197,12 @@ REFRESH_ACTIVE.ar = !nSYS_RESET # REFRESH_COMPLETE_DELAY;
 
 A pending request becomes active on a **rising** edge where AS is high. In a stream of back-to-back cycles that is the rising edge that starts S0, before the next AS. A refresh therefore never cuts into a DRAM cycle. While `REFRESH_ACTIVE` is set, `DRAM_REGION_ACCESS` is held low, so a DRAM cycle that starts during refresh gets no RAS and no DSACK. The CPU just inserts wait states, and the access starts as soon as refresh finishes. Non-DRAM cycles (SRAM, flash, devices) run normally during a refresh.
 
+The flip side is that a refresh cannot start while one long bus cycle is in progress. Today no cycle lasts long, but the CS1 VMEM hold-off and slow card cycles could last tens of microseconds. [changes.md](changes.md) CS1 (B8) therefore also lets a request start during any cycle that cannot be a DRAM cycle (A31 = 0, or CPU space):
+
+```
+REFRESH_ACTIVE.d = (REFRESH_REQUESTED & (nCPU_AS # !CPU_A31 # FC_CPU_SPACE)) # REFRESH_ACTIVE;
+```
+
 ### 4.3 CBR sequence
 
 A 3-bit counter, `REFRESH_STATE_MACHINE`, counts falling CPU_CLK edges while `REFRESH_ACTIVE` is set. `nREFRESH_CAS` and `nREFRESH_RAS` are registered on rising edges:

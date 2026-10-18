@@ -1,0 +1,35 @@
+{
+  "head": { "text": "PROPOSED (changes.md CS2): IDE register write, base window (PIO mode 0), 10-clock cycle" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p..........", "period": 4 },
+    { "name": "state", "wave": "2.2.2.3.3.3.3.3.3.3.3.3.3.3.3.3.3.2.2.2.4.4.", "data": "S0 S1 S2 Sw Sw Sw Sw Sw Sw Sw Sw Sw Sw Sw Sw Sw Sw S3 S4 S5 S0 S1" },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=.......................................=..", "data": ["0x400000C1 write (IDE1 Device/Head)", "next"] },
+      { "name": "CPU_RW", "wave": "10.......................................1.." },
+      { "name": "nCPU_AS", "wave": "1..0...................................1...0" }
+    ],
+    {},
+    ["DEVMAP",
+      { "name": "count (T1..T8)", "wave": "=......=...=...=...=...=...=...=...=....=...", "data": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "0"] },
+      { "name": "nIDE1_CSA (/CS0)", "wave": "1...0....................................1.." },
+      { "name": "nIDE_BUFFER_EN1", "wave": "1...0...................................1..." },
+      { "name": "nIDE_WR (/IOW)", "wave": "1..........0...................1............" },
+      { "name": "nDEV_ACK", "wave": "1...............................0.......1..." }
+    ],
+    {},
+    ["BUSCTRL",
+      { "name": "nCPU_DSACK1", "wave": "1................................0......u..." }
+    ],
+    {},
+    { "name": "DD15-DD0 (at the drive)", "wave": "z....x.=.................................z..", "data": ["0x00A0"] }
+  ],
+  "markers": [
+    { "at": 10, "label": "/IOW on" },
+    { "at": 30, "label": "/IOW off: drive latches" },
+    { "at": 34, "label": "DSACK seen" },
+    { "at": 40, "label": "/CS0 released" }
+  ],
+  "foot": { "text": "Proposed. Drawn at 16 MHz (1 slot = 15.6 ns). nIDE_WR is a falling-edge register fed by the counter, so it cannot glitch: low from edge 2 to edge 7, 312 ns. The drive latches the data on the rising edge of /IOW, two clocks before AS negates, with /CS0 and the data still valid (t9 113 ns and t4 116 ns at 16 MHz). nIDE_RD_INH stays high in write cycles, so nCPU_RD never asserts. IDE2 uses the same strobe; only the selects differ. A fast-window write has /IOW from edge 1 to edge 3 and a 5-clock cycle." },
+  "config": { "hscale": 1 }
+}

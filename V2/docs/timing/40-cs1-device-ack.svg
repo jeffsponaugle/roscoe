@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="953" height="584" viewBox="0 0 953 584" font-family="Helvetica, Arial, sans-serif">
+<title>40-cs1-device-ack</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="219" y="0" width="720" height="584"/></clipPath>
+</defs>
+<rect width="953" height="584" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">PROPOSED (changes.md CS1): RTC read with the device acknowledge - 2 wait states</text>
+<line x1="219" y1="62" x2="219" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="279" y1="62" x2="279" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="339" y1="62" x2="339" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="399" y1="62" x2="399" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="459" y1="62" x2="459" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="519" y1="62" x2="519" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="579" y1="62" x2="579" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="639" y1="62" x2="639" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="699" y1="62" x2="699" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="759" y1="62" x2="759" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="819" y1="62" x2="819" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="879" y1="62" x2="879" y2="512" stroke="#ececec" stroke-width="1"/>
+<line x1="939" y1="62" x2="939" y2="512" stroke="#d5d5d5" stroke-width="1"/>
+<path d="M14,156 h-4 V208 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="182" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 182)">CPU</text>
+<path d="M14,246 h-4 V298 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="272" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 272)">BUSCTRL</text>
+<path d="M14,336 h-4 V448 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="392" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 392)">DEVMAP</text>
+<g clip-path="url(#wave)">
+<path d="M219,85 V69 H279 V85 H339 M339,85 V69 H399 V85 H459 M459,85 V69 H519 V85 H579 M579,85 V69 H639 V85 H699 M699,85 V69 H759 V85 H819 M819,85 V69 H879 V85 H939" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="219,99 276,99 279,107 276,115 219,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="249" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="279,107 282,99 336,99 339,107 336,115 282,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="309" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="339,107 342,99 396,99 399,107 396,115 342,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="369" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="399,107 402,99 456,99 459,107 456,115 402,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="429" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="459,107 462,99 516,99 519,107 516,115 462,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="489" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="519,107 522,99 576,99 579,107 576,115 522,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="549" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="579,107 582,99 636,99 639,107 636,115 582,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="609" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="639,107 642,99 696,99 699,107 696,115 642,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="669" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="699,107 702,99 756,99 759,107 756,115 702,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="729" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="759,107 762,99 816,99 819,107 816,115 762,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="789" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="819,107 822,99 876,99 879,107 876,115 822,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="849" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="879,107 882,99 939,99 939,115 882,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="909" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="219,159 246,159 249,167 246,175 219,175" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="249,167 252,159 846,159 849,167 846,175 252,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="549" y="170.96" font-size="11" fill="#222222" text-anchor="middle">0x300003nn (RTC register)</text>
+<polygon points="849,167 852,159 939,159 939,175 852,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="894" y="170.96" font-size="11" fill="#222222" text-anchor="middle">next</text>
+<path d="M219,189 H309" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M309,189 L312,205 H789" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M789,205 L792,189 H939" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="219,249 276,249 279,265 279,265 219,265" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<path d="M279,265 H879" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M879,265 L882,249 H939" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M219,279 H609" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M609,279 L612,295 H819" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M819,295 L826.5,292.26 L834,290 L841.5,288.12 L849,286.56 L856.5,285.27 L864,284.19 L871.5,283.31 L879,282.57 L886.5,281.96 L894,281.45 L901.5,281.03 L909,280.69 L916.5,280.4 L924,280.16 L931.5,279.96 L939,279.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M219,339 H339" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M339,339 L342,355 H819" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M819,355 L822,339 H939" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="219,369 426,369 429,377 426,385 219,385" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="324" y="380.96" font-size="11" fill="#222222" text-anchor="middle">0</text>
+<polygon points="429,377 432,369 546,369 549,377 546,385 432,385" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="489" y="380.96" font-size="11" fill="#222222" text-anchor="middle">1</text>
+<polygon points="549,377 552,369 666,369 669,377 666,385 552,385" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="609" y="380.96" font-size="11" fill="#222222" text-anchor="middle">2</text>
+<polygon points="669,377 672,369 786,369 789,377 786,385 672,385" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="729" y="380.96" font-size="11" fill="#222222" text-anchor="middle">3</text>
+<polygon points="789,377 792,369 939,369 939,385 792,385" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="864" y="380.96" font-size="11" fill="#222222" text-anchor="middle">0</text>
+<path d="M219,399 H579" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M579,399 L582,415 H819" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M819,415 L822,399 H939" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M219,445 H429" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M429,445 L432,429 H849" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M849,429 L852,445 H939" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M219,497 H459" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="459,497 462,489 516,489 519,497 516,505 462,505" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="519,497 522,489 786,489 789,497 786,505 522,505" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="654" y="500.96" font-size="11" fill="#222222" text-anchor="middle">RTC data</text>
+<path d="M789,497 H939" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+</g>
+<text x="211" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="211" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">state</text>
+<text x="211" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">A31-A0</text>
+<text x="211" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_AS</text>
+<text x="211" y="261" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDEV8BITCS (address only)</text>
+<text x="211" y="291" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_DSACK0</text>
+<text x="211" y="351" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nRTC_CS (RTC AS, /CS)</text>
+<text x="211" y="381" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">WS counter</text>
+<text x="211" y="411" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDEV_ACK</text>
+<text x="211" y="441" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">RTC_A_SEL (RTC DS)</text>
+<text x="211" y="501" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">D31-D24</text>
+
+<line x1="399" y1="46" x2="399" y2="512" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="399" y="43" font-size="10" fill="#c0392b" text-anchor="middle">sample: no</text>
+<line x1="519" y1="59" x2="519" y2="512" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="519" y="56" font-size="10" fill="#c0392b" text-anchor="middle">sample: no</text>
+<line x1="639" y1="46" x2="639" y2="512" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="639" y="43" font-size="10" fill="#c0392b" text-anchor="middle">DSACK0 seen</text>
+<line x1="759" y1="59" x2="759" y2="512" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="759" y="56" font-size="10" fill="#c0392b" text-anchor="middle">data latched</text>
+<path d="M310.5,197 L340.5,347" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
+<polygon points="340.5,347 342.07,339.55 336.19,340.72" fill="#1f6fb2"/>
+<rect x="270.25" y="262" width="110.5" height="13" fill="#ffffff" fill-opacity="0.85"/>
+<text x="325.5" y="272" font-size="10" fill="#1f6fb2" text-anchor="middle">1 level (direct AS)</text>
+<path d="M580.5,407 L610.5,287" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
+<polygon points="610.5,287 605.89,293.06 611.71,294.52" fill="#1f6fb2"/>
+<text x="8" y="528" font-size="11" fill="#555">Proposed. DEVMAP gets AS directly (rework wire) and BUSCTRL&apos;s region select early (address only), so device selects follow AS by one CPLD level. A</text>
+<text x="8" y="542" font-size="11" fill="#555">falling-edge counter starts with AS. nDEV_ACK stays high (not ready) until the selected device&apos;s count is reached; for the RTC that is count 2, giving 2 wait</text>
+<text x="8" y="556" font-size="11" fill="#555">states. UART, INTCTRL, LEDs and PTC acknowledge at count 0 (no wait states). Cards acknowledge through nEXP_ACK. BUSCTRL turns nDEV_ACK into DSACK and never</text>
+<text x="8" y="570" font-size="11" fill="#555">retracts it.</text>
+</svg>

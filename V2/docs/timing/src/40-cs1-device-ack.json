@@ -1,0 +1,35 @@
+{
+  "head": { "text": "PROPOSED (changes.md CS1): RTC read with the device acknowledge - 2 wait states" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p.....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.3.3.3.3.2.2.2.4.4.", "data": "S0 S1 S2 Sw Sw Sw Sw S3 S4 S5 S0 S1" },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=...................=..", "data": ["0x300003nn (RTC register)", "next"] },
+      { "name": "nCPU_AS", "wave": "1..0...............1....", "node": "...a...................." }
+    ],
+    {},
+    ["BUSCTRL",
+      { "name": "nDEV8BITCS (address only)", "wave": "x.0...................1." },
+      { "name": "nCPU_DSACK0", "wave": "1............0......u...", "node": ".............d.........." }
+    ],
+    {},
+    ["DEVMAP",
+      { "name": "nRTC_CS (RTC AS, /CS)", "wave": "1...0...............1...", "node": "....b..................." },
+      { "name": "WS counter", "wave": "=......=...=...=...=....", "data": ["0", "1", "2", "3", "0"] },
+      { "name": "nDEV_ACK", "wave": "1...........0.......1...", "node": "............c..........." },
+      { "name": "RTC_A_SEL (RTC DS)", "wave": "0......1.............0.." }
+    ],
+    {},
+    { "name": "D31-D24", "wave": "z.......x.=........z....", "data": ["RTC data"] }
+  ],
+  "edge": [ "a->b 1 level (direct AS)", "c->d" ],
+  "markers": [
+    { "at": 6, "label": "sample: no" },
+    { "at": 10, "label": "sample: no" },
+    { "at": 14, "label": "DSACK0 seen" },
+    { "at": 18, "label": "data latched" }
+  ],
+  "foot": { "text": "Proposed. DEVMAP gets AS directly (rework wire) and BUSCTRL's region select early (address only), so device selects follow AS by one CPLD level. A falling-edge counter starts with AS. nDEV_ACK stays high (not ready) until the selected device's count is reached; for the RTC that is count 2, giving 2 wait states. UART, INTCTRL, LEDs and PTC acknowledge at count 0 (no wait states). Cards acknowledge through nEXP_ACK. BUSCTRL turns nDEV_ACK into DSACK and never retracts it." },
+  "config": { "hscale": 1.5 }
+}

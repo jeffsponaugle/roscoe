@@ -17,6 +17,7 @@ Companion documents:
 
 * [DRAM.md](DRAM.md) - the DRAM controller: SIMM wiring, address multiplexing, access cycles and refresh.
 * [SRAMBurstProposal.md](SRAMBurstProposal.md) - what it would take to run the SRAM with synchronous (STERM) cycles and 2-1-1-1 burst cache fills.
+* [changes.md](changes.md) - the agreed and proposed changes (rework, CPLD edits, expansion-bus definition), grouped into change sets.
 * [timing/](timing/) - every timing diagram in these documents, as WaveDrom source plus rendered SVG.
 
 **Conventions.** Signal names are the schematic and CUPL names; a leading `n` means active low. BUSCTRL, DEVMAP and INTCTRL are the three ATF1508AS parts, and PTC is the ATF1504AS. Addresses are physical. Timing is quoted for a 20 MHz CPU clock (50 ns period), the schematic value, unless stated otherwise. The boards currently run at 12 or 16 MHz with a different Y1 oscillator. At those clocks each CPLD delay takes a smaller share of the clock, so most margins are larger; anything decided at a clock edge, such as DSACK sampling, behaves the same. Everything here comes from the schematic PDFs and the CUPL sources. Where a statement is an inference (a timing margin, for example) the text says so. Items that should be confirmed against the netlist, a scope or the logic analyser are marked **Check**.
@@ -226,11 +227,11 @@ All values are in ns. All four Roscoe fits use slow slew everywhere (`Output_fas
 
 ### 4.5 DSACK is open-collector
 
-BUSCTRL drives `nCPU_DSACK0/1` as open-collector outputs (`PROPERTY ATMEL {open_collector=...}`), because the FPU drives the same lines. R51 and R52 (10K) pull them up. The CPLD therefore only ever pulls DSACK low; returning it high at the end of a cycle is left to the 10K resistors, against the capacitance of the CPU, FPU and CPLD pins, the traces, the U70 logic header, and the BUSCTRL pin keeper, which holds the last level.
+BUSCTRL drives `nCPU_DSACK0/1` as open-collector outputs (`PROPERTY ATMEL {open_collector=...}`), because the FPU drives the same lines. R51 and R52 pull them up. The CPLD therefore only ever pulls DSACK low; returning it high at the end of a cycle is left to the resistors, against the capacitance of the CPU, FPU and CPLD pins, the traces, the U70 logic header, and the BUSCTRL pin keeper, which holds the last level.
 
-Spec #28 requires DSACK negated within 50 ns of AS negating at 20 MHz (20 ns at 40 MHz). In practice the hard limit is that DSACK must read high again before the next cycle samples it, about 2 clocks after AS negates. With 10K and an estimated 25-50 pF, the RC time constant is 250-500 ns, so reaching 2.0 V (about 0.5 RC) takes on the order of 120-250 ns. That is longer than the 100 ns gap at 20 MHz. **Check** the real rise time with a scope: the board evidently works at the speeds tested, so the actual capacitance or threshold may be more forgiving. A stale DSACK would make the next cycle terminate immediately, at the wrong port size, and the problem gets worse with clock speed and with probes attached. Options: drop R51/R52 to about 1-2.2K (within the CPLD and FPU sink capability), or add active negation (briefly drive high after AS negates, but never during FPU cycles).
+**R51/R52 are 1K on the boards.** The schematic says 10K; the fitted value was lowered for exactly this rise-time problem, and the schematic should be corrected on the next PCB (Section 15.2). With 1K and an estimated 25-50 pF, the time constant is 25-50 ns, so DSACK reaches 2.0 V (about 0.5 RC) some 15-25 ns after the CPLD lets go. Spec #28 asks for DSACK negated within 50 ns of AS negating at 20 MHz (20 ns at 40 MHz). In practice the hard limit is that DSACK must read high again before the next cycle samples it, about 2 clocks after AS negates, and 1K meets that easily at every clock the board can run. Each pull-up draws about 5 mA while DSACK is held low, by the CPLD or by the FPU. With the schematic's 10K the rise would take 120-250 ns, longer than the gap between cycles at 20 MHz.
 
-The same mechanism is what makes "retracting" a DSACK to add wait states ineffective (Section 12.5).
+A fast pull-up does not make "retracting" a DSACK a way to add wait states: the CPU may already have sampled it (Section 12.5).
 
 ### 4.6 How the CPU pins are terminated (sheet 3)
 
@@ -241,7 +242,7 @@ The same mechanism is what makes "retracting" a DSACK to add wait states ineffec
 | R/W | CPU_RW | many | also SRAM /WE, UART /IOW, RTC/IDE transceiver direction |
 | /AS | nCPU_AS | BUSCTRL 41, FPU; U53 -> expansion | **DEVMAP and INTCTRL never see AS** |
 | /DS | nCPU_DS | FPU only | |
-| /DSACK1-0 | nCPU_DSACK1..0 | BUSCTRL 48/50 (open collector), FPU, R52/R51 10K | Section 4.5 |
+| /DSACK1-0 | nCPU_DSACK1..0 | BUSCTRL 48/50 (open collector), FPU, R52/R51 (1K fitted; the schematic says 10K) | Section 4.5 |
 | /STERM | nCPU_STERM | BUSCTRL 45 | driven high (unused) |
 | /BERR | nCPU_BERR | BUSCTRL 46 | asserted only for 0x2xxx_xxxx |
 | /HALT | nCPU_HALT | BUSCTRL 42 (driven high), R2 10K, U1 -> HALT LED | input-only on the 68030 |
@@ -779,7 +780,7 @@ The intent (DEVMAP comments) is two wait states for IDE: `nIDE_WAITSTATE_DELAY` 
    | 16 MHz | 57-74 ns | 94 ns | 95-112 ns |
    | 12 MHz | 68-85 ns | 125 ns | 106-123 ns |
 
-   At 12 MHz the release only just beats the sample edge, and then the 10K pull-up has a few nanoseconds to raise the open-collector line (Section 4.5), which it cannot do. **Every IDE cycle therefore runs with zero wait states, at all three clock speeds.**
+   At 12 MHz the release only just beats the sample edge, and then the 1K pull-up would need roughly 15-25 ns to raise the open-collector line above 2.0 V (Section 4.5). It has a few nanoseconds. **Every IDE cycle therefore runs with zero wait states, at all three clock speeds.**
 2. **The captures confirm it.** In `ide1.JPG` and `ide2.JPG` (writes of 0xA0 to Device/Head and 0xEC, IDENTIFY, to Command, at 12 MHz), `DSACK1` goes low at the instant `nIDE1_CSA` falls and stays low, and AS is low for only two clocks: a 3-clock cycle. Those captures also show `nIDE_WR` falling before AS and CS, plus a short glitch after the cycle. That behaviour comes from an older DEVMAP revision; the current one is different, but no better (point 4).
 3. **/IOR is too short for slow devices.** Since BUSCTRL rev 29, /IOR (`nCPU_RD`) starts at S3 and ends when AS negates: about one clock (50 ns at 20 MHz, 62 ns at 16 MHz, 83 ns at 12 MHz). After allowing for the CPLD, U39 and the data transceiver, a drive gets roughly 15 ns (20 MHz), 25 ns (16 MHz) or 45 ns (12 MHz) from /IOR falling at the connector to valid data. Mode 0 allows a drive 115 ns (t2 - t5), and even mode 4 allows 50 ns. Fast CF cards cope; older drives will return stale data. Before rev 29 the opposite problem existed: /IOR asserted in S0, ahead of /CS (violating t1).
 4. **/IOW ends after CS and data are gone.** `nIDE_WR = CPU_RW # !IDE_WR_SIG`. `IDE_WR_SIG_A` arms on the first falling edge after the select and `IDE_WR_SIG` sets on the next rising edge, so /IOW falls in S4. With no wait states, `IDE_WR_SIG_RESET` is held off by `nDEV_WAIT` for the whole cycle. /IOW therefore only rises when R/W changes in the next cycle or the select disappears: at or after the moment /CS0 rises and the 245s turn off. ATA latches the write on the rising edge of /IOW and needs CS and data held afterwards (t9, t4), so writes can be lost or written to the wrong register.
@@ -797,7 +798,8 @@ The intent (DEVMAP comments) is two wait states for IDE: `nIDE_WAITSTATE_DELAY` 
 |---|---|
 | `nIDE1_CSA`, `nIDE1_BUFFER_EN`, `nIDE_WR`, `nPTC_CS` | logic header U4 (D4, D3, D2, D1) |
 | `nCPU_AS`, `CPU_RW`, `nCPU_DSACK0/1`, `CPU_CLK` | logic header U70 (D15, D14, D11, D10, CLK1) |
-| `nDEV_WAIT`, `nIDE_WAITSTATE_DELAY`, `RESETw2` | DEVMAP test header J28 (pins 3, 2, 1) |
+| `nDEV_WAIT`, `nIDE_WAITSTATE_DELAY`, `RESETw2` | DEVMAP test header J28 (pins 3, 2, 1). After CS1: `nCPU_AS` (rework wire), `nDEV_ACK`, `T1`. |
+| `nIDE_RD_INH` (after CS2) | logic header U5 (D15, pin 4), net `EXTRA_BC_DM1` |
 | /IOR, /IOW, /CS0 at the drive | J4 pins 25, 23, 37 |
 
 Useful checks:
@@ -808,6 +810,8 @@ Useful checks:
 * At the IDE connector, check /IOW rising against /CS0 and against the data lines.
 
 ### 12.7 Proposed fix (not implemented)
+
+> **Superseded.** The fix is now change sets CS1 and CS2 in [changes.md](changes.md). CS1 keeps the idea below (never assert and then retract DSACK), but adds a direct AS wire to DEVMAP and makes the device acknowledge combinational, so fast devices keep 0 wait states. CS2 sets the IDE timing to PIO mode 0, with a mode 2 alias for the Data register. It shapes /IOR through BUSCTRL, holds /CS after the strobes, and fixes the interrupts, the missing pull-downs and the reset length. This section is kept for the reasoning.
 
 The robust approach is never to assert DSACK for a device region and then try to retract it. Make the acknowledge registered, and let DEVMAP decide when each device is ready:
 
@@ -859,15 +863,15 @@ Changing the handshake means reprogramming **both** CPLDs together. Keep the cur
 | B28 | `nEXP_SYS_RESET` | out | U53 |
 | B19, A20, B20 | `nEXP_8BDEV`, `nEXP_16BDEV`, `nEXP_32BDEV` | out | DEVMAP: whole-region selects |
 | A30 | `nEXP_VIO_CS` | out | DEVMAP: 0x3000_0500-0x3000_05FF |
-| A21 | `nEXP_VMEM_CS` | out | DEVMAP: 0x5000_0000-0x500F_FFFF |
+| A21 | `nEXP_VMEM_CS` | out | DEVMAP: 0x5000_0000-0x500F_FFFF. CS1 widens it to 2 MB, with a 0-wait-state motherboard acknowledge ([changes.md](changes.md) 1.4). |
 | A27 | `nEXP_DATA_EN` | in (card drives) | 10K pull-up R48. Sets the U54-U57 direction: 0 = card drives the CPU. |
-| A26 | `nEXP_DEV_WAIT` | in | 10K pull-up R10, into DEVMAP pin 32 (13.6) |
+| A26 | `nEXP_DEV_WAIT` | in | 10K pull-up R10, into DEVMAP pin 32 (13.6). CS1 renames it `nEXP_ACK`: the card's "cycle may end" ([changes.md](changes.md) 1.6). |
 | A28 | `nEXP_CACHE_CTRL` | in | 10K pull-up R12, into DEVMAP pin 33 (unused) |
 | A29, A22 | `nEXP_INT5A`, `nEXP_INT5D` | in | level 5 |
 | B22 | `nEXP_INT4C` | in | level 4 |
 | B21, A23 | `nEXP_INT3A`, `nEXP_INT3B` | in | level 3 |
 | A24, B23 | `nEXP_INT2A`, `nEXP_INT2B` | in | level 2. A24's symbol pin is named `EXP_nVIDRFSH_INT`. |
-| B26, B30 | `EXP_BC_CPLD1/2` | BUSCTRL 28/29 | currently **driven low** |
+| B26, B30 | `EXP_BC_CPLD1/2` | BUSCTRL 28/29 | currently **driven low**. CS1 makes them the VMEM hold-off pair, `nEXP_VMEM_BUSY` (in, needs a pull-up) and `nEXP_VMEM_GNT` (out) ([changes.md](changes.md) 1.4). |
 | A31, B31 | `EXP_DM_CPLD1/2` | DEVMAP 7/8 | currently **driven low** |
 | B29 | `EXP_INT_CPLD2` | INTCTRL 32 | currently **driven low**. `EXP_INT_CPLD1` (INTCTRL 31) does not appear on the connector. **Check** |
 
@@ -901,7 +905,7 @@ With the current BUSCTRL, every expansion cycle is a zero-wait-state cycle:
 
 ### 13.6 Wait states
 
-`nEXP_DEV_WAIT` cannot stretch a cycle today, for the same race as IDE (Section 12.5). The request would have to arrive before BUSCTRL sees the select. With the registered acknowledge proposed in 12.7, a card would hold `nEXP_DEV_WAIT` low from within about one clock of its select until it is ready, and the cycle would end one or two clocks after release. Until then, design cards for zero wait states, or use them for slow devices that can be written through latches and polled.
+`nEXP_DEV_WAIT` cannot stretch a cycle today, for the same race as IDE (Section 12.5). The request would have to arrive before BUSCTRL sees the select. [changes.md](changes.md) CS1 replaces it with an acknowledge on the same pin (A26): `nEXP_ACK`, which a card pulls low when its cycle may end. The VMEM window instead gets a 0-wait-state motherboard acknowledge, which a video card can hold off with the busy/grant pair on B26/B30. Until CS1 is programmed, design cards for zero wait states, or use them for slow devices that can be written through latches and polled.
 
 ### 13.7 Checklist for a new card
 
@@ -910,7 +914,7 @@ With the current BUSCTRL, every expansion cycle is a zero-wait-state cycle:
 * Keep `EXP_D` tri-stated except during your own read cycles. Drive `nEXP_DATA_EN` low only while selected and reading, and drive it high again promptly.
 * Assume zero wait states for now: about 50 ns from select to data at 20 MHz.
 * Interrupts: open-drain, active-low on one of the 7 lines. The INTCTRL masks for every expansion line are currently forced to 0, so INTCTRL needs a source change before any card interrupt can reach the CPU.
-* Leave the `EXP_*_CPLD*` pins alone until the CPLD equations are changed; they are driven low today.
+* Leave the `EXP_*_CPLD*` pins alone until the CPLD equations are changed; they are driven low today. CS1 assigns B26 and B30 to the VMEM hold-off.
 * Only +5 V is available on the connector.
 
 ---
@@ -921,13 +925,13 @@ Confidence: **high** means read directly from the source or schematic, **medium*
 
 | # | Area | Finding | Impact | Confidence | Suggested action |
 |---|---|---|---|---|---|
-| 1 | IDE | Wait states are never actually inserted: DSACK1 is asserted before `nDEV_WAIT` arrives (12.5) | IDE cycles run at 3 clocks, too short for many devices | high (logic plus captures) | registered device acknowledge (12.7) |
-| 2 | IDE | /IOW rises after /CS0 and the data buffers are released (12.5 point 4) | lost or misdirected writes | high | sequencer that places /IOW inside the cycle |
-| 3 | IDE | IDE2 never gets /IOW or wait states | IDE2 writes do not work | high | include `nIDE2_CSA/CSB` |
-| 4 | IDE | INTRQ treated as active low; masks forced off | no IDE interrupts | high | fix polarity, add pull-downs, enable masks |
-| 5 | Bus | Open-collector DSACK with 10K pull-ups is far slower than #28 (4.5) | stale DSACK at higher clocks or with probes attached | medium | measure; lower R51/R52 or add active negation |
+| 1 | IDE | Wait states are never actually inserted: DSACK1 is asserted before `nDEV_WAIT` arrives (12.5) | IDE cycles run at 3 clocks, too short for many devices | high (logic plus captures) | device acknowledge, [changes.md](changes.md) CS1 |
+| 2 | IDE | /IOW rises after /CS0 and the data buffers are released (12.5 point 4) | lost or misdirected writes | high | /IOW inside the cycle, CS1 and CS2 |
+| 3 | IDE | IDE2 never gets /IOW or wait states | IDE2 writes do not work | high | all four selects, CS1 |
+| 4 | IDE | INTRQ treated as active low; masks forced off | no IDE interrupts | high | polarity, masks and pull-downs, CS2 |
+| 5 | Bus | The schematic gives the open-collector DSACK lines 10K pull-ups, far slower than #28 (4.5) | none on the current boards, which have 1K fitted | confirmed | fix the R51/R52 value on the schematic (15.1) |
 | 6 | CPU | `/CDIS`, `/MMUDIS`, `/CBACK` unconnected on the PCB (4.6) | random cache or MMU disable | confirmed | reworked with pull-ups on current boards; fix on the next PCB (15) |
-| 7 | Reset | Software reset pulse about 1 clock (3.2) | unreliable CPU/peripheral reset | high | stretch the pulse |
+| 7 | Reset | Software reset pulse about 1 clock (3.2) | unreliable CPU/peripheral reset; IDE drives need 25 us | high | stretch the pulse, [changes.md](changes.md) CS2 B10 |
 | 8 | Reset | `nSYS_RESET` push-pull vs the `RESET` instruction (3.2) | contention if software uses `RESET` | high | avoid `RESET`, or make the output open-collector |
 | 9 | Bus | No bus timeout; 0x6/0x7 region, `BKPT` and a missing FPU hang (5.1) | hard hangs during OS bring-up | high | BERR timeout counter in BUSCTRL |
 | 10 | INTCTRL | `INT2A_REQUEST_PE` uses INT3A (9.6) | wrong vector for video interrupt | high | one-line fix |
@@ -949,6 +953,7 @@ Confidence: **high** means read directly from the source or schematic, **medium*
 |---|---|---|---|
 | 1 | MC68030 `/CDIS` (PGA H12), `/MMUDIS` (F13) and `/CBACK` (J1) are unconnected, so they float (4.6) | wires from the three pins to a pull-up resistor | add pull-ups (10K to Vcc) on `/CDIS` and `/MMUDIS`. For `/CBACK`, decide first whether burst cache fills are wanted: if so, connect it to a CPLD output, or to GND through a jumper, instead of a fixed pull-up ([SRAMBurstProposal.md](SRAMBurstProposal.md) Section 4.1) |
 | 2 | DS12887 RTC `/IRQ` (U33 pin 19, net `vINT1A`) is open-drain with no pull-up (9.6) | pull-up added. **Confirm on the board** that the rework is on `/IRQ`. | add a pull-up (10K to Vcc) on `vINT1A` |
+| 3 | DSACK0/1 pull-ups R51/R52 are 10K on the schematic, too slow for the open-collector release (4.5) | 1K fitted | change the schematic value to 1K |
 
 ### 15.2 Candidates from this review (not yet decided)
 
@@ -956,8 +961,9 @@ These are board-level changes suggested by the analysis. None is needed for the 
 
 | Change | Why | Reference |
 |---|---|---|
-| Revisit the DSACK0/1 pull-ups R51/R52 (10K) once the rise time has been measured | open-collector release is slow against spec #28 | 4.5 |
-| 10K pull-downs on IDE INTRQ (J4/J6 pin 31) | the lines float when the drive tri-states them; needed before IDE interrupts are enabled (the INTCTRL polarity must be fixed too) | 9.6 |
+| CS1 items: route `nCPU_AS` to a DEVMAP dedicated input; name connector A26 `nEXP_ACK` (1K pull-up), B26 `nEXP_VMEM_BUSY` (4.7K pull-up) and B30 `nEXP_VMEM_GNT` | removes the CS1 rework wires and pull-ups | [changes.md](changes.md) 1.13 |
+| 10K pull-downs on IDE INTRQ (J4/J6 pin 31) and DD7 (pin 3) | INTRQ floats when the drive tri-states it; DD7 must read low with no drive fitted. Reworked by CS2 P5/P6 on the current boards. | 9.6, [changes.md](changes.md) 2.3 |
+| Series resistors (22-33 ohm) on IDE /IOR, /IOW, /CS0, /CS1 and A2-A0 | damp ringing on the cable, which can double-clock a strobe | [changes.md](changes.md) 2.10 |
 | Bring CPU A2/A3 into the bus controller, and route two CPLD outputs to the SRAM's A0/A1 (riser pins A18/B18), plus `/CBREQ` and `/CBACK` | allows 2-1-1-1 burst fills without rework | [SRAMBurstProposal.md](SRAMBurstProposal.md) |
 | Drive IDE `/IOR` (U39/U42 pin 8) from a DEVMAP pin instead of `nCPU_RD` | gives the IDE sequencer full control of address setup (ATA t1) and strobe width | 12.5, 12.7 |
 | Route IDE IORDY (pin 27) to a DEVMAP input | lets slow devices stretch cycles | 12.1 |
@@ -1019,3 +1025,7 @@ The script needs no external tools. Diagrams use a quarter-clock grid at 20 MHz 
 | 12-ptc-interrupt | PTC interrupt pulse |
 | 20-22 | DRAM read, write and refresh ([DRAM.md](DRAM.md)) |
 | 30-31 | proposed synchronous SRAM ([SRAMBurstProposal.md](SRAMBurstProposal.md)) |
+| 40-cs1-device-ack | proposed device acknowledge, CS1 ([changes.md](changes.md)) |
+| 41-cs1-vmem-holdoff | proposed VMEM window grant and card hold-off, CS1 ([changes.md](changes.md) 1.4) |
+| 42-cs2-ide-read, 43-cs2-ide-write | proposed IDE register read and write, base window, CS2 ([changes.md](changes.md) 2.2) |
+| 44-cs2-ide-read-fast | proposed Data-register read through the fast window, CS2 |

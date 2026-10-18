@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1276" height="628" viewBox="0 0 1276 628" font-family="Helvetica, Arial, sans-serif">
+<title>41-cs1-vmem-holdoff</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="182" y="0" width="1080" height="628"/></clipPath>
+</defs>
+<rect width="1276" height="628" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">PROPOSED (changes.md CS1): VMEM window, 0 wait states with card hold-off (BUSY / GNT)</text>
+<line x1="182" y1="62" x2="182" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="242" y1="62" x2="242" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="302" y1="62" x2="302" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="362" y1="62" x2="362" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="422" y1="62" x2="422" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="482" y1="62" x2="482" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="542" y1="62" x2="542" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="602" y1="62" x2="602" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="662" y1="62" x2="662" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="722" y1="62" x2="722" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="782" y1="62" x2="782" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="842" y1="62" x2="842" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="902" y1="62" x2="902" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="962" y1="62" x2="962" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="1022" y1="62" x2="1022" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="1082" y1="62" x2="1082" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="1142" y1="62" x2="1142" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="1202" y1="62" x2="1202" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="1262" y1="62" x2="1262" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<path d="M14,156 h-4 V208 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="182" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 182)">CPU</text>
+<path d="M14,246 h-4 V268 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="257" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 257)">DEVMAP</text>
+<path d="M14,306 h-4 V328 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="317" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 317)">card</text>
+<path d="M14,366 h-4 V418 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="392" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 392)">BUSCTRL</text>
+<path d="M14,456 h-4 V478 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="467" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 467)">card memory</text>
+<g clip-path="url(#wave)">
+<path d="M182,85 V69 H242 V85 H302 M302,85 V69 H362 V85 H422 M422,85 V69 H482 V85 H542 M542,85 V69 H602 V85 H662 M662,85 V69 H722 V85 H782 M782,85 V69 H842 V85 H902 M902,85 V69 H962 V85 H1022 M1022,85 V69 H1082 V85 H1142 M1142,85 V69 H1202 V85 H1262" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="182,99 239,99 242,107 239,115 182,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="212" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="242,107 245,99 299,99 302,107 299,115 245,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="272" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="302,107 305,99 359,99 362,107 359,115 305,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="332" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="362,107 365,99 419,99 422,107 419,115 365,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="392" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="422,107 425,99 479,99 482,107 479,115 425,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="452" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="482,107 485,99 539,99 542,107 539,115 485,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="512" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="542,107 545,99 599,99 602,107 599,115 545,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="572" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="602,107 605,99 659,99 662,107 659,115 605,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="632" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="662,107 665,99 719,99 722,107 719,115 665,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="692" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="722,107 725,99 779,99 782,107 779,115 725,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="752" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="782,107 785,99 839,99 842,107 839,115 785,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="812" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="842,107 845,99 899,99 902,107 899,115 845,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="872" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="902,107 905,99 959,99 962,107 959,115 905,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="932" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="962,107 965,99 1019,99 1022,107 1019,115 965,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="992" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="1022,107 1025,99 1079,99 1082,107 1079,115 1025,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="1052" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="1082,107 1085,99 1139,99 1142,107 1139,115 1085,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="1112" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="1142,107 1145,99 1199,99 1202,107 1199,115 1145,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="1172" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="1202,107 1205,99 1262,99 1262,115 1205,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="1232" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="182,159 209,159 212,167 209,175 182,175" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="212,167 215,159 569,159 572,167 569,175 215,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="392" y="170.96" font-size="11" fill="#222222" text-anchor="middle">0x5000_0000 read (A)</text>
+<polygon points="572,167 575,159 1169,159 1172,167 1169,175 575,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="872" y="170.96" font-size="11" fill="#222222" text-anchor="middle">0x5000_0004 read (B)</text>
+<polygon points="1172,167 1175,159 1262,159 1262,175 1175,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="1217" y="170.96" font-size="11" fill="#222222" text-anchor="middle">next</text>
+<path d="M182,189 H272" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M272,189 L275,205 H512" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M512,205 L515,189 H632" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M632,189 L635,205 H1112" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M1112,205 L1115,189 H1232" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M1232,189 L1235,205 H1262" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,249 H302" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M302,249 L305,265 H542" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M542,265 L545,249 H662" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M662,249 L665,265 H1142" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M1142,265 L1145,249 H1262" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,309 H332" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M332,309 L335,325 H812" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M812,325 L815,309 H1262" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,369 H332" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M332,369 L335,385 H542" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M542,385 L545,369 H932" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M932,369 L935,385 H1142" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M1142,385 L1145,369 H1262" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M182,399 H332" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M332,399 L335,415 H542" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M542,415 L555.13,412.26 L568.25,410 L581.38,408.12 L594.5,406.56 L607.63,405.27 L620.75,404.19 L633.88,403.31 L647,402.57 L660.13,401.96 L673.25,401.45 L686.38,401.03 L699.5,400.69 L712.63,400.4 L725.75,400.16 L738.88,399.96 L752,399.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M752,399 H932" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M932,399 L935,415 H1142" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M1142,415 L1149.5,412.26 L1157,410 L1164.5,408.12 L1172,406.56 L1179.5,405.27 L1187,404.19 L1194.5,403.31 L1202,402.57 L1209.5,401.96 L1217,401.45 L1224.5,401.03 L1232,400.69 L1239.5,400.4 L1247,400.16 L1254.5,399.96 L1262,399.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="182,459 659,459 662,467 659,475 182,475" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="422" y="470.96" font-size="11" fill="#222222" text-anchor="middle">CPU path</text>
+<polygon points="662,467 665,459 899,459 902,467 899,475 665,475" fill="#cfe6ff" stroke="#222222" stroke-width="1.2"/>
+<text x="782" y="470.96" font-size="11" fill="#222222" text-anchor="middle">video fetch</text>
+<polygon points="902,467 905,459 1262,459 1262,475 905,475" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="1082" y="470.96" font-size="11" fill="#222222" text-anchor="middle">CPU path</text>
+<path d="M182,527 H362" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="362,527 365,519 419,519 422,527 419,535 365,535" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="422,527 425,519 539,519 542,527 539,535 425,535" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="482" y="530.96" font-size="11" fill="#222222" text-anchor="middle">VMEM data</text>
+<path d="M542,527 H932" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="932,527 935,519 989,519 992,527 989,535 935,535" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="992,527 995,519 1139,519 1142,527 1139,535 995,535" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="1067" y="530.96" font-size="11" fill="#222222" text-anchor="middle">VMEM data</text>
+<path d="M1142,527 H1262" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+</g>
+<text x="174" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="174" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">state</text>
+<text x="174" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">A31-A0</text>
+<text x="174" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_AS</text>
+<text x="174" y="261" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nEXP_VMEM_CS (A21)</text>
+<text x="174" y="321" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nEXP_VMEM_BUSY (B26)</text>
+<text x="174" y="381" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nEXP_VMEM_GNT (B30)</text>
+<text x="174" y="411" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_DSACK0/1</text>
+<text x="174" y="471" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">owner</text>
+<text x="174" y="531" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">D31-D0</text>
+
+<line x1="302" y1="46" x2="302" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="302" y="43" font-size="10" fill="#c0392b" text-anchor="middle">GNT (not busy)</text>
+<line x1="362" y1="59" x2="362" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="362" y="56" font-size="10" fill="#c0392b" text-anchor="middle">DSACK seen</text>
+<line x1="422" y1="46" x2="422" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="422" y="43" font-size="10" fill="#c0392b" text-anchor="middle">card sees GNT</text>
+<line x1="482" y1="59" x2="482" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="482" y="56" font-size="10" fill="#c0392b" text-anchor="middle">latched</text>
+<line x1="662" y1="46" x2="662" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="662" y="43" font-size="10" fill="#c0392b" text-anchor="middle">busy: no GNT</text>
+<line x1="902" y1="59" x2="902" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="902" y="56" font-size="10" fill="#c0392b" text-anchor="middle">GNT</text>
+<line x1="962" y1="46" x2="962" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="962" y="43" font-size="10" fill="#c0392b" text-anchor="middle">DSACK seen</text>
+<line x1="1082" y1="59" x2="1082" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="1082" y="56" font-size="10" fill="#c0392b" text-anchor="middle">latched</text>
+<path d="M813.5,317 L933.5,377" fill="none" stroke="#1f6fb2" stroke-width="1.2"/>
+<polygon points="933.5,377 928.58,371.19 925.9,376.55" fill="#1f6fb2"/>
+<rect x="810" y="337" width="127" height="13" fill="#ffffff" fill-opacity="0.85"/>
+<text x="873.5" y="347" font-size="10" fill="#1f6fb2" text-anchor="middle">grant on the next edge</text>
+<text x="8" y="558" font-size="11" fill="#555">Proposed. Drawn at 16 MHz (1 slot = 15.6 ns). BUSCTRL decides the VMEM grant on rising CPU_CLK edges, starting with the edge that begins S2: it grants if the card&apos;s nEXP_VMEM_BUSY is high, then holds GNT and DSACK</text>
+<text x="8" y="572" font-size="11" fill="#555">until AS negates, so an acknowledge is never withdrawn. Cycle A: the card asks for the memory (BUSY low) on the same edge that grants the CPU. It sees GNT on the next edge, so it leaves the memory on the CPU path</text>
+<text x="8" y="586" font-size="11" fill="#555">and waits for GNT to clear; here it starts its fetch on the S2 edge of cycle B (worst case the video side waits 3 clocks). Cycle B: BUSY is low at every decision edge, so the CPU collects wait states while the</text>
+<text x="8" y="600" font-size="11" fill="#555">card fetches. The card releases BUSY one clock before its fetch ends; BUSCTRL grants on the next edge and the read completes with 2 wait states. With no card fitted the pull-up keeps BUSY high and every VMEM cycle</text>
+<text x="8" y="614" font-size="11" fill="#555">has 0 wait states.</text>
+</svg>

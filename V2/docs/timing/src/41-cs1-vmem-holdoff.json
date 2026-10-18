@@ -1,0 +1,44 @@
+{
+  "head": { "text": "PROPOSED (changes.md CS1): VMEM window, 0 wait states with card hold-off (BUSY / GNT)" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p........", "period": 4 },
+    { "name": "state", "wave": "2.2.2.2.2.2.2.2.2.3.3.3.3.2.2.2.4.4.", "data": "S0 S1 S2 S3 S4 S5 S0 S1 S2 Sw Sw Sw Sw S3 S4 S5 S0 S1" },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=...........=...................=..", "data": ["0x5000_0000 read (A)", "0x5000_0004 read (B)", "next"] },
+      { "name": "nCPU_AS", "wave": "1..0.......1...0...............1...0" }
+    ],
+    {},
+    ["DEVMAP",
+      { "name": "nEXP_VMEM_CS (A21)", "wave": "1...0.......1...0...............1..." }
+    ],
+    {},
+    ["card",
+      { "name": "nEXP_VMEM_BUSY (B26)", "wave": "1....0...............1..............", "node": ".....b...............r.............." }
+    ],
+    {},
+    ["BUSCTRL",
+      { "name": "nEXP_VMEM_GNT (B30)", "wave": "1....0......1............0......1...", "node": ".....c...................g.........." },
+      { "name": "nCPU_DSACK0/1", "wave": "1....0......u......1.....0......u..." }
+    ],
+    {},
+    ["card memory",
+      { "name": "owner", "wave": "2...............5.......2...........", "data": ["CPU path", "video fetch", "CPU path"] }
+    ],
+    {},
+    { "name": "D31-D0", "wave": "z.....x.=...z............x.=....z...", "data": ["VMEM data", "VMEM data"] }
+  ],
+  "edge": [ "r->g grant on the next edge" ],
+  "markers": [
+    { "at": 4, "label": "GNT (not busy)" },
+    { "at": 6, "label": "DSACK seen" },
+    { "at": 8, "label": "card sees GNT" },
+    { "at": 10, "label": "latched" },
+    { "at": 16, "label": "busy: no GNT" },
+    { "at": 24, "label": "GNT" },
+    { "at": 26, "label": "DSACK seen" },
+    { "at": 30, "label": "latched" }
+  ],
+  "foot": { "text": "Proposed. Drawn at 16 MHz (1 slot = 15.6 ns). BUSCTRL decides the VMEM grant on rising CPU_CLK edges, starting with the edge that begins S2: it grants if the card's nEXP_VMEM_BUSY is high, then holds GNT and DSACK until AS negates, so an acknowledge is never withdrawn. Cycle A: the card asks for the memory (BUSY low) on the same edge that grants the CPU. It sees GNT on the next edge, so it leaves the memory on the CPU path and waits for GNT to clear; here it starts its fetch on the S2 edge of cycle B (worst case the video side waits 3 clocks). Cycle B: BUSY is low at every decision edge, so the CPU collects wait states while the card fetches. The card releases BUSY one clock before its fetch ends; BUSCTRL grants on the next edge and the read completes with 2 wait states. With no card fitted the pull-up keeps BUSY high and every VMEM cycle has 0 wait states." },
+  "config": { "hscale": 1.5 }
+}

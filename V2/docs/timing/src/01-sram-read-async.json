@@ -25,6 +25,6 @@
     { "at": 10, "label": "data latched" },
     { "at": 18, "label": "next DSACK sample" }
   ],
-  "foot": { "text": "20 MHz shown; 1 slot = 1/4 clock = 12.5 ns, about one ATF1508 delay. DSACKx are open-collector (10K pull-ups), so release is an RC curve." },
+  "foot": { "text": "20 MHz shown; 1 slot = 1/4 clock = 12.5 ns, about one ATF1508 delay. DSACKx are open-collector (1K pull-ups fitted), so release is an RC curve that crosses 2.0 V in about 15-25 ns." },
   "config": { "hscale": 1.6 }
 }

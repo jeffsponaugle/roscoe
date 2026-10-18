@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1047" height="614" viewBox="0 0 1047 614" font-family="Helvetica, Arial, sans-serif">
+<title>42-cs2-ide-read</title>
+<defs>
+<pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#f2f2f2"/><line x1="0" y1="0" x2="0" y2="5" stroke="#b0b0b0" stroke-width="1.4"/></pattern>
+<clipPath id="wave"><rect x="153" y="0" width="880" height="614"/></clipPath>
+</defs>
+<rect width="1047" height="614" fill="#ffffff"/>
+<text x="8" y="22" font-size="14" font-weight="bold" fill="#222222">PROPOSED (changes.md CS2): IDE register read, base window (PIO mode 0), 10-clock cycle</text>
+<line x1="153" y1="62" x2="153" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="193" y1="62" x2="193" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="233" y1="62" x2="233" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="273" y1="62" x2="273" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="313" y1="62" x2="313" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="353" y1="62" x2="353" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="393" y1="62" x2="393" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="433" y1="62" x2="433" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="473" y1="62" x2="473" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="513" y1="62" x2="513" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="553" y1="62" x2="553" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="593" y1="62" x2="593" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="633" y1="62" x2="633" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="673" y1="62" x2="673" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="713" y1="62" x2="713" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="753" y1="62" x2="753" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="793" y1="62" x2="793" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="833" y1="62" x2="833" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="873" y1="62" x2="873" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="913" y1="62" x2="913" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="953" y1="62" x2="953" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<line x1="993" y1="62" x2="993" y2="542" stroke="#ececec" stroke-width="1"/>
+<line x1="1033" y1="62" x2="1033" y2="542" stroke="#d5d5d5" stroke-width="1"/>
+<path d="M14,156 h-4 V208 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="182" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 182)">CPU</text>
+<path d="M14,246 h-4 V388 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="317" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 317)">DEVMAP</text>
+<path d="M14,426 h-4 V478 h4" fill="none" stroke="#777" stroke-width="1"/>
+<text x="7" y="452" font-size="10" fill="#555" text-anchor="middle" transform="rotate(-90 7 452)">BUSCTRL</text>
+<g clip-path="url(#wave)">
+<path d="M153,85 V69 H193 V85 H233 M233,85 V69 H273 V85 H313 M313,85 V69 H353 V85 H393 M393,85 V69 H433 V85 H473 M473,85 V69 H513 V85 H553 M553,85 V69 H593 V85 H633 M633,85 V69 H673 V85 H713 M713,85 V69 H753 V85 H793 M793,85 V69 H833 V85 H873 M873,85 V69 H913 V85 H953 M953,85 V69 H993 V85 H1033" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="153,99 190,99 193,107 190,115 153,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="173" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="193,107 196,99 230,99 233,107 230,115 196,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="213" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="233,107 236,99 270,99 273,107 270,115 236,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="253" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S2</text>
+<polygon points="273,107 276,99 310,99 313,107 310,115 276,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="293" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="313,107 316,99 350,99 353,107 350,115 316,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="333" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="353,107 356,99 390,99 393,107 390,115 356,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="373" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="393,107 396,99 430,99 433,107 430,115 396,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="413" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="433,107 436,99 470,99 473,107 470,115 436,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="453" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="473,107 476,99 510,99 513,107 510,115 476,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="493" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="513,107 516,99 550,99 553,107 550,115 516,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="533" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="553,107 556,99 590,99 593,107 590,115 556,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="573" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="593,107 596,99 630,99 633,107 630,115 596,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="613" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="633,107 636,99 670,99 673,107 670,115 636,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="653" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="673,107 676,99 710,99 713,107 710,115 676,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="693" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="713,107 716,99 750,99 753,107 750,115 716,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="733" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="753,107 756,99 790,99 793,107 790,115 756,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="773" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="793,107 796,99 830,99 833,107 830,115 796,115" fill="#fff4b0" stroke="#222222" stroke-width="1.2"/>
+<text x="813" y="110.96" font-size="11" fill="#222222" text-anchor="middle">Sw</text>
+<polygon points="833,107 836,99 870,99 873,107 870,115 836,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="853" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S3</text>
+<polygon points="873,107 876,99 910,99 913,107 910,115 876,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="893" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S4</text>
+<polygon points="913,107 916,99 950,99 953,107 950,115 916,115" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="933" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S5</text>
+<polygon points="953,107 956,99 990,99 993,107 990,115 956,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="973" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S0</text>
+<polygon points="993,107 996,99 1033,99 1033,115 996,115" fill="#ffd9b0" stroke="#222222" stroke-width="1.2"/>
+<text x="1013" y="110.96" font-size="11" fill="#222222" text-anchor="middle">S1</text>
+<polygon points="153,159 170,159 173,167 170,175 153,175" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="173,167 176,159 970,159 973,167 970,175 176,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="573" y="170.96" font-size="11" fill="#222222" text-anchor="middle">0x400000E1 read (IDE1 Status)</text>
+<polygon points="973,167 976,159 1033,159 1033,175 976,175" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="1003" y="170.96" font-size="11" fill="#222222" text-anchor="middle">next</text>
+<path d="M153,189 H213" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M213,189 L216,205 H933" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M933,205 L936,189 H1013" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M1013,189 L1016,205 H1033" fill="none" stroke="#222222" stroke-width="1.5"/>
+<polygon points="153,249 290,249 293,257 290,265 153,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="223" y="260.96" font-size="11" fill="#222222" text-anchor="middle">0</text>
+<polygon points="293,257 296,249 370,249 373,257 370,265 296,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="333" y="260.96" font-size="11" fill="#222222" text-anchor="middle">1</text>
+<polygon points="373,257 376,249 450,249 453,257 450,265 376,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="413" y="260.96" font-size="11" fill="#222222" text-anchor="middle">2</text>
+<polygon points="453,257 456,249 530,249 533,257 530,265 456,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="493" y="260.96" font-size="11" fill="#222222" text-anchor="middle">3</text>
+<polygon points="533,257 536,249 610,249 613,257 610,265 536,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="573" y="260.96" font-size="11" fill="#222222" text-anchor="middle">4</text>
+<polygon points="613,257 616,249 690,249 693,257 690,265 616,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="653" y="260.96" font-size="11" fill="#222222" text-anchor="middle">5</text>
+<polygon points="693,257 696,249 770,249 773,257 770,265 696,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="733" y="260.96" font-size="11" fill="#222222" text-anchor="middle">6</text>
+<polygon points="773,257 776,249 850,249 853,257 850,265 776,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="813" y="260.96" font-size="11" fill="#222222" text-anchor="middle">7</text>
+<polygon points="853,257 856,249 950,249 953,257 950,265 856,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="903" y="260.96" font-size="11" fill="#222222" text-anchor="middle">8</text>
+<polygon points="953,257 956,249 1033,249 1033,265 956,265" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="993" y="260.96" font-size="11" fill="#222222" text-anchor="middle">0</text>
+<path d="M153,279 H233" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M233,279 L236,295 H973" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M973,295 L976,279 H1033" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M153,309 H233" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M233,309 L236,325 H953" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M953,325 L956,309 H1033" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M153,339 H233" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M233,339 L236,355 H313" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M313,355 L316,339 H873" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M873,339 L876,355 H953" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M953,355 L956,339 H1033" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M153,369 H793" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M793,369 L796,385 H953" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M953,385 L956,369 H1033" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M153,429 H373" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M373,429 L376,445 H933" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M933,445 L936,429 H1033" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M153,459 H813" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M813,459 L816,475 H953" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M953,475 L958,472.26 L963,470 L968,468.12 L973,466.56 L978,465.27 L983,464.19 L988,463.31 L993,462.57 L998,461.96 L1003,461.45 L1008,461.03 L1013,460.69 L1018,460.4 L1023,460.16 L1028,459.96 L1033,459.8" fill="none" stroke="#222222" stroke-width="1.5"/>
+<path d="M153,527 H253" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+<polygon points="253,527 256,519 450,519 453,527 450,535 256,535" fill="url(#hatch)" stroke="#222222" stroke-width="1.2"/>
+<polygon points="453,527 456,519 970,519 973,527 970,535 456,535" fill="#ffffff" stroke="#222222" stroke-width="1.2"/>
+<text x="713" y="530.96" font-size="11" fill="#222222" text-anchor="middle">Status</text>
+<path d="M973,527 H1033" fill="none" stroke="#2a5db0" stroke-width="1.5"/>
+</g>
+<text x="145" y="81" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">CPU_CLK</text>
+<text x="145" y="111" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">state</text>
+<text x="145" y="171" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">A31-A0</text>
+<text x="145" y="201" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_AS</text>
+<text x="145" y="261" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">count (T1..T8)</text>
+<text x="145" y="291" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nIDE1_CSA (/CS0)</text>
+<text x="145" y="321" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nIDE_BUFFER_EN1</text>
+<text x="145" y="351" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nIDE_RD_INH</text>
+<text x="145" y="381" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nDEV_ACK</text>
+<text x="145" y="441" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_RD (/IOR)</text>
+<text x="145" y="471" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">nCPU_DSACK1</text>
+<text x="145" y="531" font-size="12" font-family="Consolas, Menlo, monospace" fill="#222222" text-anchor="end">D31-D16</text>
+
+<line x1="273" y1="46" x2="273" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="273" y="43" font-size="10" fill="#c0392b" text-anchor="middle">1st DSACK sample</text>
+<line x1="353" y1="59" x2="353" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="353" y="56" font-size="10" fill="#c0392b" text-anchor="middle">/IOR on</text>
+<line x1="833" y1="46" x2="833" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="833" y="43" font-size="10" fill="#c0392b" text-anchor="middle">DSACK seen</text>
+<line x1="913" y1="59" x2="913" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="913" y="56" font-size="10" fill="#c0392b" text-anchor="middle">latched, /IOR off</text>
+<line x1="953" y1="46" x2="953" y2="542" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3"/>
+<text x="953" y="43" font-size="10" fill="#c0392b" text-anchor="middle">/CS0 released</text>
+<text x="8" y="558" font-size="11" fill="#555">Proposed. Drawn at 16 MHz (1 slot = 15.6 ns). DEVMAP&apos;s thermometer counter steps on each falling edge after AS. nIDE_RD_INH is low for the first clock and again from T8, and</text>
+<text x="8" y="572" font-size="11" fill="#555">BUSCTRL&apos;s nCPU_RD flop samples it on falling edges, so /IOR is low from edge 2 to edge 9: 437 ns at 16 MHz. DEVMAP acknowledges at T7, so the CPU sees DSACK1 on edge 8 and</text>
+<text x="8" y="586" font-size="11" fill="#555">latches the data on edge 9, the same edge that ends /IOR. The IDEH flop keeps /CS0 asserted until the next rising edge, after /IOR has risen, while the data transceivers turn</text>
+<text x="8" y="600" font-size="11" fill="#555">off with AS. A fast-window read (0x4000_0800) uses the same logic with T3 and T2 for a 5-clock cycle.</text>
+</svg>

@@ -1,0 +1,35 @@
+{
+  "head": { "text": "PROPOSED (changes.md CS2): Data-register read, fast window (PIO mode 2), 5-clock cycle" },
+  "signal": [
+    { "name": "CPU_CLK", "wave": "p.....", "period": 4 },
+    { "name": "state", "wave": "2.2.2.3.3.3.3.2.2.2.4.4.", "data": "S0 S1 S2 Sw Sw Sw Sw S3 S4 S5 S0 S1" },
+    {},
+    ["CPU",
+      { "name": "A31-A0", "wave": "x=...................=..", "data": ["0x40000800 read (IDE1 Data, fast)", "next"] },
+      { "name": "nCPU_AS", "wave": "1..0...............1...0" }
+    ],
+    {},
+    ["DEVMAP",
+      { "name": "count (T1..T3)", "wave": "=......=...=...=....=...", "data": ["0", "1", "2", "3", "0"] },
+      { "name": "nIDE1_CSA (/CS0)", "wave": "1...0................1.." },
+      { "name": "nIDE_BUFFER_EN1", "wave": "1...0...............1..." },
+      { "name": "nIDE_RD_INH", "wave": "1...............0...1..." },
+      { "name": "nDEV_ACK", "wave": "1...........0.......1..." }
+    ],
+    {},
+    ["BUSCTRL",
+      { "name": "nCPU_RD (/IOR)", "wave": "1......0...........1...." },
+      { "name": "nCPU_DSACK1", "wave": "1............0......u..." }
+    ],
+    {},
+    { "name": "D31-D16", "wave": "z....x.....=.........z..", "data": ["Data word"] }
+  ],
+  "markers": [
+    { "at": 6, "label": "/IOR on" },
+    { "at": 14, "label": "DSACK seen" },
+    { "at": 18, "label": "latched, /IOR off" },
+    { "at": 20, "label": "/CS0 released" }
+  ],
+  "foot": { "text": "Proposed. Drawn at 16 MHz (1 slot = 15.6 ns). A11 = 1 selects the fast timing: /IOR (nCPU_RD) is low from edge 1 to edge 4 (187 ns), DEVMAP acknowledges at T2, and the cycle takes 5 clocks (312 ns). That meets PIO mode 2 for 16-bit transfers at 12 and 16 MHz. Use the fast window for the Data register only: the 8-bit registers need the base window's 290 ns strobes. A fast write has /IOW from edge 1 to edge 3." },
+  "config": { "hscale": 1.5 }
+}
