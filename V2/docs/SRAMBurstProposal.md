@@ -77,7 +77,7 @@ Assumptions: worst-case 68030 timing (address valid #6 = 25/20/14 ns at 20/25/33
 
 1. **SRAM address A1:A0 (two wires).** On the riser, cut the traces from connector pins **A18** (CPU_A2) and **B18** (CPU_A3) to the SRAMs' A0 (pin 44) and A1 (pin 43). Feed those nets from **J27 pins 3 and 2** on the main board: INTCTRL `TESTP0` (pin 40) and `TESTP1` (pin 41). Using the riser and the existing test header avoids touching 0.5 mm CPLD pins.
 2. **CBACK.** Tie CPU `/CBACK` (PGA pin J1) to GND; pin J3, two positions away, is a GND pin. For step 1 (no burst counter yet) tie it **high** instead, or keep `IBE` and `DBE` clear (Section 5).
-3. While the socket is out anyway, add the pull-ups the board is missing: `/CDIS` (H12) to Vcc (H11), and `/MMUDIS` (F13) to Vcc (F11), 10K each. See TheoryOfOperations Section 4.6.
+3. `/CDIS` (H12) and `/MMUDIS` (F13) are already pulled up on the current boards, through the spare pull-up at J23 (TheoryOfOperations Section 4.6). `/CBACK` is the one still floating, which step 2 fixes.
 4. For V3: route BA2/BA3 from a CPLD directly, route CBREQ and CBACK to the bus controller, and enable fast slew on the strobe outputs.
 
 ### 4.2 BUSCTRL changes (sketch, not compiled)

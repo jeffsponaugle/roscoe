@@ -18,10 +18,12 @@ Nothing in this file has been compiled or programmed yet. CS1's CUPL is written 
 
 | # | Change | Current boards | Next PCB |
 |---|---|---|---|
-| 0.1 | Pull-ups on 68030 `/CDIS` (H12), `/MMUDIS` (F13), `/CBACK` (J1) | wires to a pull-up resistor | 10K pull-ups; route `/CBACK` to a CPLD or a GND jumper if burst fills are wanted |
-| 0.2 | Pull-up on RTC `/IRQ` (U33 pin 19, `vINT1A`) | pull-up added (confirm it is on `/IRQ`) | 10K pull-up |
+| 0.1 | Pull-ups on 68030 `/CDIS` (H12) and `/MMUDIS` (F13) | One wire joins PGA pins H12 and F13 on the underside and runs to J23 ("5VPU"), the header for the two spare 10K pull-ups R44 (J23 pin 1, `EXTRAPU1`) and R45 (pin 2, `EXTRAPU2`). | 10K pull-ups on the CPU sheet (H11 and F11 next to them are VCC) |
+| 0.1a | `/CBACK` (J1) | **Not wired**: still floating. Harmless today, because the 68030 ignores CBACK in every cycle terminated by DSACKx or BERR (UM 7.2.8), and Roscoe never asserts STERM. | route it to a CPLD, or to GND through a jumper (J3 next to it is GND), before any STERM or burst cycles ([SRAMBurstProposal.md](SRAMBurstProposal.md) 4.1) |
+| 0.2 | Pull-up on RTC `/IRQ` (U33 pin 19, `vINT1A`) | A wire from U33 pin 19 to the other J23 pin, so /IRQ uses the other spare pull-up. Confirmed on the photos. | 10K pull-up |
+| 0.3 | Filter capacitor on the reset button: from the reset-button net (`PWR_RSTBUTTON`: switch U66, J17 pin 1, ATtiny U65 pin 12 `RESET_BUTTON`) to VCC, using J301 pin 2 as the VCC point | added because the button input was noisy; value not recorded | Put the capacitor on the board next to U65 (button net to VCC), plus a 10K pull-up. The net has no resistor today, so it relies on the ATtiny's weak internal pull-up. Going to VCC rather than GND is right for an active-low button: at power-up the cap pulls the line high, so it never looks like a press. |
 
-Details: [TheoryOfOperations.md, Section 15](TheoryOfOperations.md#15-next-pcb-revision-checklist).
+The pin numbers come from the underside photos (`IMG_0019`, `IMG_0022`, `IMG_0023`), matched against the netlist and the PCB layout (`V2PCBTop.pdf`, `V2PCBBottom.pdf`). The photos show the board from below, which mirrors the layout. On the CPU, H12 and F13 are the only two pins that fit: both are unconnected in the netlist. Details: [TheoryOfOperations.md, Section 15](TheoryOfOperations.md#15-next-pcb-revision-checklist).
 
 ---
 
@@ -1060,3 +1062,5 @@ Program the CS1 JEDs (DEVMAP rev 22, BUSCTRL rev 30) and INTCTRL rev 16. P5 and 
 | 2026-10-18 | CS2 agreed as proposed: all five decisions in 2.11. |
 | 2026-10-18 | Checked against the netlist (`schematic/RoscoeMainboardV2Final.net`): every CPLD pin assignment and every rework point in CS1 and CS2 matches. Proposed P7 (SN74AHCT245 in the IDE data path), after the netlist showed SN74AHC245 there. Added the 5 V CMOS rule for card read data. |
 | 2026-10-18 | CS1 decision 8: keep the P1 wire rather than relaying AS through BUSCTRL. |
+| 2026-10-18 | CS0 corrected from the underside photos: H12 and F13 go to one spare pull-up (R44/R45 via J23) and RTC /IRQ (U33 pin 19) to the other; /CBACK (J1) is not wired. Added 0.3, a reset-to-UART wire whose purpose is still to be confirmed. |
+| 2026-10-18 | CS0 0.3 identified: a filter capacitor from the reset-button net to VCC (J301 pin 2), added because the button was noisy. |
