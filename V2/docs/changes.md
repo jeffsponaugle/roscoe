@@ -137,7 +137,7 @@ The window is 2 MB, 0x5000_0000-0x501F_FFFF (agreed). That covers the display an
 |---|---|---|---|
 | P1 | **Wire `nCPU_AS` to DEVMAP pin 35**: logic header U70 pin 4 (`nCPU_AS`) to J28 pin 3 (DEVMAP pin 35, today `TESTP0`) | required for CS1 | Short wire, ideally twisted with a ground. Any `nCPU_AS` point closer to U59 also works. Pin 35 is chosen because J28 brings it to a header, so no fine-pitch soldering. **Only fit it after DEVMAP rev 22 is programmed**: the old DEVMAP drives pin 35 as an output. |
 | P2 | R10 (`nEXP_DEV_WAIT`, becoming `nEXP_ACK`) 10K -> 1K | before the first card | Lets an open-drain card acknowledge release fast enough for the next cycle |
-| P3 | **4.7K pull-up to +5V on `nEXP_VMEM_BUSY`** (connector B26). The easiest point is logic header U69 pin 3 (CLK1, `EXP_BC_CPLD1`), to any +5V point; U69 pin 1 is not connected. | required for CS1: fit before, or together with, BUSCTRL rev 30 | BUSCTRL reads B26 from rev 30 on. With no card the pull-up keeps it high, so VMEM cycles run at 0 wait states. Without it the pin keeper holds whatever level the pin last had, and a low level would hang every VMEM access. Harmless on the old BUSCTRL, which drives B26 low: 1 mA. |
+| P3 | **4.7K pull-up to +5V on `nEXP_VMEM_BUSY`** (connector B26). The easiest point is logic header U69 pin 3 (CLK1, `EXP_BC_CPLD1`), to any +5V point; U69 pin 1 is not connected. | required whenever BUSCTRL uses the hold-off (B4a). **Not needed for the no-card build (B4b)**, which ignores B26. | A BUSCTRL that uses the hold-off reads B26. With no card the pull-up keeps it high, so VMEM cycles run at 0 wait states. Without it the pin keeper holds whatever level the pin last had, and a low level would hang every VMEM access. Harmless on the old BUSCTRL, which drives B26 low: 1 mA. |
 
 The DSACK pull-ups need no change. R51/R52 are 1K on the boards (the schematic says 10K), which returns DSACK above 2.0 V in roughly 15-25 ns. The schematic gets corrected on the next PCB (1.13).
 
@@ -247,6 +247,18 @@ nEXP_VMEM_GNT.ap = nCPU_AS # !nSYS_RESET;     // negated between cycles and duri
 ```
 
 This is the same registered, preset-to-high pattern as `nREFRESH_CAS`.
+
+**B4b. No-card build (option, until the VGA card exists).** With no expansion card fitted, BUSCTRL can ignore B26 altogether, and then P3 is not needed. Make two changes to B4a:
+
+```
+/* No-card build: the hold-off is disabled and B26 is ignored, so no pull-up is needed. To enable the
+   hold-off for a VGA card, put nEXP_VMEM_BUSY back in place of 'b'1 and fit P3 at the same time. */
+nEXP_VMEM_GNT.d  = !( VMEM_ADDR & !nCPU_AS & ('b'1 # !nEXP_VMEM_GNT) );
+```
+
+Also add `& nEXP_VMEM_BUSY` to the dummy `TESTP3` term, so pin 28 stays assigned as an input. The pin keeper holds it at a steady level, and since the logic never looks at it, the level does not matter. A card plugged in later cannot fight a BUSCTRL output.
+
+Everything else is unchanged: VMEM cycles always get the grant on the S2 edge and run at 0 wait states, and `nEXP_VMEM_GNT` still works for the logic analyser. **Before plugging in a card that drives B26, rebuild with B4a and fit P3.**
 
 **B5. Bus timeout**: add the counter, and replace `nCPU_BERR = !UNUSED_REGION_ACCESS;`:
 
@@ -481,7 +493,7 @@ No change in CS1.
 
 1. Build BUSCTRL rev 30 and DEVMAP rev 22. Keep `REV29_BUSCTRL2-CPURD.jed` and `REV21-DEVMAP2-2WS.jed` for rollback.
 2. Program **both** CPLDs in the same session; each needs the other's change. The board will not run between this step and step 4.
-3. Power off and fit the P1 wire (U70 pin 4 to J28 pin 3), and the P3 pull-up if it is not already there.
+3. Power off and fit the P1 wire (U70 pin 4 to J28 pin 3). Also fit the P3 pull-up, unless you built the no-card variant (B4b).
 4. Power on and boot. Checks, with the logic analyser on U70 (`nCPU_AS` pin 4, `nCPU_DSACK0/1` pins 8/9, `CPU_CLK` pin 3), J28 (pin 2 `nDEV_ACK`, pin 1 `T1`) and U69 (pin 3 `nEXP_VMEM_BUSY`, pin 2 `nEXP_VMEM_GNT`):
 
    | Test | Expected |
@@ -492,8 +504,9 @@ No change in CS1.
    | Read of 0x3100_0000 | bus error after about 15-20 us |
    | Read of 0x6000_0000 | bus error (it hangs today) |
    | Read of 0x5000_0000 | 0 wait states, floating data; `nEXP_VMEM_GNT` low from S2 to the end of each access |
-   | Hold-off: run a loop reading 0x5000_0000, then link U69 pin 3 to pin 20 (GND) for a few seconds | the CPU stops inside the read with no bus error, and carries on when the link is removed |
-   | Refresh during a stall: fill DRAM with a pattern, hold U69 pin 3 low for 10 s during a VMEM read, release, check the pattern | pattern intact (with the old refresh condition the DRAM would lose it) |
+   | Hold-off (B4a build only): run a loop reading 0x5000_0000, then link U69 pin 3 to pin 20 (GND) for a few seconds | the CPU stops inside the read with no bus error, and carries on when the link is removed |
+   | Refresh during a stall (B4a build only): fill DRAM with a pattern, hold U69 pin 3 low for 10 s during a VMEM read, release, check the pattern | pattern intact (with the old refresh condition the DRAM would lose it) |
+   | No-card build (B4b): link U69 pin 3 to GND while reading 0x5000_0000 | no effect: reads still run at 0 wait states |
    | Normal OS boot and run | no change |
 
 ### 1.12 Rollback
@@ -521,6 +534,7 @@ All next-PCB items from every change set are consolidated, with pin assignments,
 | 6 | Bus-timeout length | Open. 224-240 clocks proposed. |
 | 7 | P2 (R10 to 1K) | Open: now, or with the first card. |
 | 8 | AS to DEVMAP: rework wire P1, or relay AS through BUSCTRL on the spare `EXTRA_BC_DM2` | **Decided 2026-10-18: the wire (P1).** A relay passes through one BUSCTRL level, exactly like today's AS-qualified region selects. That gives no gain: the fast on-board devices would still take 1 wait state at 16 MHz. |
+| 9 | Build BUSCTRL rev 30 without the VMEM hold-off (B4b) until the VGA card exists, deferring P3 | Proposed 2026-10-18 |
 
 ---
 
@@ -1172,3 +1186,4 @@ If IORDY never goes low, CS3 is not needed. The pull-up can stay; it is part of 
 | 2026-10-18 | CS0 corrected from the underside photos: H12 and F13 go to one spare pull-up (R44/R45 via J23) and RTC /IRQ (U33 pin 19) to the other; /CBACK (J1) is not wired. Added 0.3, a reset-to-UART wire whose purpose is still to be confirmed. |
 | 2026-10-18 | CS0 0.3 identified: a filter capacitor from the reset-button net to VCC (J301 pin 2), added because the button was noisy. |
 | 2026-10-18 | CS3 written (optional): IORDY to DEVMAP pin 37 via J28 pin 1 plus a 1K pull-up (P8), and a counter hold in DEVMAP rev 24. Added the SET FEATURES "IORDY disabled" step to the CS2 software notes. Next-PCB routing consolidated in NextPCB.md. |
+| 2026-10-18 | CS1: added the no-card BUSCTRL build (B4b), which ignores B26 so P3 can wait for the VGA card (decision 9). |
