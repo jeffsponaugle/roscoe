@@ -19,6 +19,7 @@ Companion documents:
 * [DRAM.md](DRAM.md) - the DRAM controller: SIMM wiring, address multiplexing, access cycles and refresh.
 * [SRAMBurstProposal.md](SRAMBurstProposal.md) - what it would take to run the SRAM with synchronous (STERM) cycles and 2-1-1-1 burst cache fills.
 * [changes.md](changes.md) - the agreed and proposed changes (rework, CPLD edits, expansion-bus definition), grouped into change sets.
+* [NextPCB.md](NextPCB.md) - the routing, pin and parts list for the next main-board revision.
 * [timing/](timing/) - every timing diagram in these documents, as WaveDrom source plus rendered SVG.
 
 **Conventions.** Signal names are the schematic and CUPL names; a leading `n` means active low. BUSCTRL, DEVMAP and INTCTRL are the three ATF1508AS parts, and PTC is the ATF1504AS. Addresses are physical. Timing is quoted for a 20 MHz CPU clock (50 ns period), the schematic value, unless stated otherwise. The boards currently run at 12 or 16 MHz with a different Y1 oscillator. At those clocks each CPLD delay takes a smaller share of the clock, so most margins are larger; anything decided at a clock edge, such as DSACK sampling, behaves the same. Everything here comes from the schematic PDFs and the CUPL sources, cross-checked against the netlist: every CPLD pin assignment in the four CUPL sources matches the net it is wired to. Where a statement is an inference (a timing margin, for example) the text says so. Items that still need a scope, the logic analyser or a look at the fitted parts are marked **Check**.
@@ -951,6 +952,8 @@ Confidence: **high** means read directly from the source or schematic, **medium*
 ---
 
 ## 15 Next PCB revision checklist
+
+This section lists the problems. [NextPCB.md](NextPCB.md) turns them, and the change sets in [changes.md](changes.md), into a routing, pin and parts list for the next revision.
 
 ### 15.1 Reworked on the current V2 boards (must be fixed on the next PCB)
 

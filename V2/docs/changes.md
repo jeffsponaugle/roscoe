@@ -11,6 +11,7 @@ Nothing in this file has been compiled or programmed yet. CS1's CUPL is written 
 | CS0 | Pull-up rework already on the boards | Done on current boards; fix on next PCB |
 | CS1 | Device-cycle acknowledge (replaces `nDEV_WAIT`), fast VMEM window with card hold-off, bus timeout, refresh during long cycles | **Agreed in principle; details under discussion (1.14)** |
 | CS2 | IDE timing on both ports, /IOR window, interrupts, pull-downs, reset length | **Agreed (2.11)**; implement after CS1 is verified. P7 (buffer swap) proposed. |
+| CS3 | IDE IORDY flow control (base window) | **Optional**: only if cards still fail after CS2 and the 3.4 check shows IORDY activity |
 
 ---
 
@@ -500,6 +501,8 @@ No change in CS1.
 Power off and **remove the P1 wire first**: the old DEVMAP drives pin 35. Then program the two saved JEDs. To keep the wire fitted while rolling back, rebuild the old DEVMAP with pin 35 declared as an unused input. The P3 pull-up can stay.
 
 ### 1.13 Next PCB items from CS1
+
+All next-PCB items from every change set are consolidated, with pin assignments, in [NextPCB.md](NextPCB.md).
 
 * Route `nCPU_AS` to a DEVMAP dedicated input (pin 89 or 90; both are unconnected today) and give `TESTP0` back its header pin.
 * Name connector A26 `nEXP_ACK` with a 1K pull-up. Name B26 `nEXP_VMEM_BUSY` with a 4.7K pull-up, and B30 `nEXP_VMEM_GNT`.
@@ -1001,6 +1004,9 @@ The masks reset to 0, so nothing changes until software sets them. Fit P5 before
   The vectors are 0xD2 (IDE1) and 0xD4 (IDE2), level 5.
 * Reset: the software reset now holds /RESET for 30-41 us. After any /RESET, wait 2 ms, then poll BSY; a drive may take up to 31 s to spin up. To reset just the drives, use SRST (Device Control bit 2) instead of a system reset.
 * Byte order is unchanged (TheoryOfOperations 12.3): swap the bytes in each word for PC-compatible sector data.
+* IORDY: the board ignores IORDY (CS3 can add it for the base window). After IDENTIFY, check word 49:
+  * If bit 10 is set ("IORDY may be disabled"), send SET FEATURES with Features = 03h and Sector Count = 01h ("PIO default mode, IORDY disabled"), so the drive never relies on it.
+  * If bit 11 is set but bit 10 is clear, the drive may stretch cycles with IORDY. Use the base window for its Data register too, and consider CS3 if it misbehaves.
 * With P6, an empty port reads BSY clear, so probing cannot hang on it. Check for a drive by writing and reading back the Sector Count register.
 
 ### 2.8 Programming, wiring and test
@@ -1031,6 +1037,8 @@ Program the CS1 JEDs (DEVMAP rev 22, BUSCTRL rev 30) and INTCTRL rev 16. P5 and 
 
 ### 2.10 Next PCB items from CS2
 
+Consolidated, with pin assignments, in [NextPCB.md](NextPCB.md).
+
 * IORDY (pin 27) to a DEVMAP input, with a 1K pull-up, so slow devices can stretch cycles.
 * IDE /IOR from its own DEVMAP pin, instead of `nCPU_RD` (frees `EXTRA_BC_DM1`).
 * 10K pull-downs on INTRQ (pin 31) and DD7 (pin 3), on both ports.
@@ -1052,6 +1060,105 @@ Program the CS1 JEDs (DEVMAP rev 22, BUSCTRL rev 30) and INTCTRL rev 16. P5 and 
 
 ---
 
+## CS3 - IDE IORDY (optional)
+
+Do this only if some cards still fail after CS2, **and** the check in 3.4 shows them pulling IORDY low. CS3 builds on CS2 (DEVMAP rev 23).
+
+### 3.1 Why it is optional
+
+A drive that needs more time pulls IORDY (pin 27) low within 35 ns of a strobe starting (ATA tA), and may hold it low for up to 1.25 us (tB). The host must keep the strobe asserted until IORDY is released. The host has to honour IORDY in PIO modes 3 and 4. In modes 0-2 it is optional, because a drive that meets those modes needs no flow control.
+
+CS2 runs every register access at mode 0 (/IOW 312 ns, /IOR 437 ns at 16 MHz) and the Data-register alias at mode 2, so a compliant drive never needs IORDY. Today's one-clock strobes are another matter, which is why IORDY may be part of the current failures. The remaining risk after CS2 is a drive that insists on IORDY in modes 0-2 and holds it longer than the base strobes. The software step in 2.7 (SET FEATURES "IORDY disabled") covers every drive that allows it.
+
+**The fast window cannot use IORDY.** Its acknowledge comes at the second falling edge, before IORDY could be seen, and DSACK can never be withdrawn. CS3 therefore acts on the base window only, which is fine: mode 2 does not require IORDY.
+
+### 3.2 Physical change
+
+| # | Change | When | Notes |
+|---|---|---|---|
+| P8 | **IORDY to DEVMAP**: wire J4 pin 27 to J6 pin 27, and from there to J28 pin 1 (DEVMAP pin 37, today `TESTP2`). Add a **1K pull-up** from J4 pin 27 to J5 pin 1 (VCC, next to J4). | with CS3. **Only connect J28 pin 1 after DEVMAP rev 24 is programmed**: rev 23 drives pin 37 as an output. | 1K is the ATA host value. Only the selected drive ever drives IORDY, so both ports can share the line and the pull-up. All the pins were checked in the netlist: pin 27 is unconnected on both headers, and J5 pin 1 is VCC. |
+
+### 3.3 DEVMAP (U59) - rev 24
+
+Edits to rev 23 (2.4).
+
+**D4. Pin 37 becomes the IORDY input.** Replace `Pin[36,37] = [TESTP1..2];` with:
+
+```
+Pin[36]  = TESTP1;           // J28 pin 2
+Pin[37]  = IDE_IORDY;        // J28 pin 1 (was TESTP2): IORDY from J4/J6 pin 27, 1K pull-up (P8). 0 = drive needs more time
+```
+
+Delete `TESTP2 = T1;`.
+
+**D5. Sample IORDY, and hold the counter while it is low.** Add the node and replace the counter block:
+
+```
+PINNODE = IORDY_S;
+
+/* IORDY is asynchronous, so it is sampled on each falling edge. Preset on reset so it reads "ready". */
+IORDY_S.d  = IDE_IORDY;
+IORDY_S.ck = !CPU_CLK;
+IORDY_S.ap = !nSYS_RESET;
+
+/* IORDY hold, base window only: once a strobe has started (T2) and the drive holds IORDY low, the
+   counter stops where it is. /IOW, the /IOR window (nIDE_RD_INH) and the acknowledge all come from
+   the counter, so they stretch together and BUSCTRL needs no change. T1 and T2 are never held, so
+   the RTC (T2) and every other device are unaffected. */
+IDE_HOLD = IDE_CYC & !IDE_FAST & T2 & !IORDY_S;
+
+[T1..8].ck = !CPU_CLK;
+[T1..8].ar = nCPU_AS # !nSYS_RESET;
+T1.d = 'b'1;
+T2.d = T1;
+T3.d = T3 # (T2 & !IDE_HOLD);
+T4.d = T4 # (T3 & !IDE_HOLD);
+T5.d = T5 # (T4 & !IDE_HOLD);
+T6.d = T6 # (T5 & !IDE_HOLD);
+T7.d = T7 # (T6 & !IDE_HOLD);
+T8.d = T8 # (T7 & !IDE_HOLD);
+```
+
+**D6. Header:** `//      VERSION 24 - CS3 (docs/changes.md): IDE IORDY on pin 37 holds the base-window timing counter.`
+
+Timing, base window at 16 MHz:
+* /IOR or /IOW reaches the drive about 16 ns after edge 2.
+* A drive that wants more time pulls IORDY low within 35 ns (tA), so DEVMAP sees it about 52 ns after edge 2. That meets the 7 ns setup before edge 3 with a few ns to spare. If it is missed, edge 4 catches it.
+* The counter therefore stops at T3 or T4, well before /IOW ends (T6), the acknowledge (T7) and the end of /IOR (T8).
+* When IORDY rises, the counter resumes on the next-but-one edge, so the strobe still runs 3 to 5 more clocks. ATA only requires the data to be valid when IORDY rises.
+* A drive that never releases IORDY is caught by CS1's bus timeout: the access ends in a bus error after about 15 us.
+
+Resources: one more flop, and an extra product term on T3..T8.
+
+### 3.4 Check before building it
+
+Find out first whether any of your cards actually use IORDY:
+1. Fit only the 1K pull-up from P8 (J4 pin 27 to J5 pin 1), with nothing connected to J28.
+2. Clip the logic analyser or a scope onto J4 pin 27.
+3. Run the CS2 tests in 2.8 with each card.
+
+If IORDY never goes low, CS3 is not needed. The pull-up can stay; it is part of P8 anyway.
+
+### 3.5 Programming, test and rollback
+
+1. Program DEVMAP rev 24 with J28 pin 1 still unconnected, then power off and fit the P8 wire.
+2. Repeat the CS2 tests (2.8) on the cards that failed. Then test the hold with **no drive on J4**:
+   * Run a loop reading 0x4000_00E1, and link J4 pin 27 to pin 26 (GND).
+   * Each read should now stall until the bus timeout ends it with a bus error, after about 15 us.
+   * With the link removed, reads complete normally again.
+
+   The dangling pull-up only draws 5 mA through the link.
+3. Rollback: remove the wire from J28 pin 1 first, then program rev 23. The pull-up can stay.
+
+### 3.6 Decisions
+
+| # | Question | Status |
+|---|---|---|
+| 1 | Build CS3 at all | Open: decide after CS2 testing and the 3.4 check |
+| 2 | IORDY on J28 pin 1 (losing the `T1` test point) for this board | Proposed |
+
+---
+
 ## Change log
 
 | Date | Change |
@@ -1064,3 +1171,4 @@ Program the CS1 JEDs (DEVMAP rev 22, BUSCTRL rev 30) and INTCTRL rev 16. P5 and 
 | 2026-10-18 | CS1 decision 8: keep the P1 wire rather than relaying AS through BUSCTRL. |
 | 2026-10-18 | CS0 corrected from the underside photos: H12 and F13 go to one spare pull-up (R44/R45 via J23) and RTC /IRQ (U33 pin 19) to the other; /CBACK (J1) is not wired. Added 0.3, a reset-to-UART wire whose purpose is still to be confirmed. |
 | 2026-10-18 | CS0 0.3 identified: a filter capacitor from the reset-button net to VCC (J301 pin 2), added because the button was noisy. |
+| 2026-10-18 | CS3 written (optional): IORDY to DEVMAP pin 37 via J28 pin 1 plus a 1K pull-up (P8), and a counter hold in DEVMAP rev 24. Added the SET FEATURES "IORDY disabled" step to the CS2 software notes. Next-PCB routing consolidated in NextPCB.md. |
