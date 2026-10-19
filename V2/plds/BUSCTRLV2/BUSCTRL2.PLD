@@ -1,7 +1,7 @@
 Name	 BUSCTRL;
 PartNo   BUSCTRL;
 Date     03/30/2024;
-Revision 29;
+Revision 30;
 Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
@@ -20,6 +20,9 @@ PROPERTY ATMEL {open_collector=nCPU_DSACK0, nCPU_DSACK1};
 //      VERSION 27 - Bus Error Signal enabled. [64/128 SIMM]
 //      VERSION 28 - nDEV_WAIT used for wait state addition. [64/128 SIMM]
 //      VERSION 29 - nCPU_RD delayed.
+//      VERSION 30 - CS1 (docs/changes.md): pin 90 nDEV_WAIT becomes nDEV_ACK; nDEV8/16/32BITCS are
+//                   address-only; VMEM window granted here at 0 WS (no-card build B4b: B26 ignored);
+//                   bus-timeout BERR; refresh may start during non-DRAM cycles.
 
 /* NOTE:  Active low values are designated with a starting n. */
 
@@ -79,7 +82,7 @@ Pin[1] = nDEV8BITCS;
 Pin[2] = nDEV16BITCS;
 Pin[5] = nDEV32BITCS;
 Pin[6] = nINT_ACK_CYCLE;
-Pin[90] = nDEV_WAIT;
+Pin[90] = nDEV_ACK;      // From DEVMAP pin 6. 0 = the selected device may finish the cycle (was nDEV_WAIT).
 
 // To DRAM
 
@@ -94,8 +97,8 @@ Pin[27] = nDRAM_S4B_RAS;
 
 // Mark these pins as unused
 Pin[32,33,35,36] = [TESTP0..3];
-Pin[28] = EXP_BC_CPLD1;
-Pin[29] = EXP_BC_CPLD2;
+Pin[28] = nEXP_VMEM_BUSY;  // Connector B26 (was EXP_BC_CPLD1). Card holds it low while VMEM is busy. Ignored in the no-card build.
+Pin[29] = nEXP_VMEM_GNT;   // Connector B30 (was EXP_BC_CPLD2). 0 = the current CPU cycle owns VMEM.
 Pin[17] = nDRAM_CAS0;
 Pin[16] = nDRAM_CAS1;
 Pin[14] = nDRAM_CAS2;
@@ -134,8 +137,6 @@ PINNODE = nDRAM_ACCESS_CAS;
 /* Unused pin defauts */
 nCPU_HALT = 'b'1;   
 nCPU_STERM = 'b'1;
-EXP_BC_CPLD1 = 'b'0;
-EXP_BC_CPLD2 = 'b'0;
 
 
 // nCPU_RD = !CPU_RW;
@@ -149,7 +150,8 @@ nCPU_RD.ap = nCPU_AS # !nSYS_RESET;
 // UNUSED output forces the allocation of the input pins so they are reserved even if not referenced yet.
 
 // TESTP2 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2; 
-TESTP3 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2 & nCPU_RMC & UNUSED2;
+// nEXP_VMEM_BUSY is only here to keep pin 28 assigned as an input in the no-card build (B4b).
+TESTP3 = CPU_A19 & CPU_A18 & CPU_A17 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2 & nCPU_RMC & UNUSED2 & nEXP_VMEM_BUSY;
 
 /* 
     Clock Generation:
@@ -267,14 +269,23 @@ FC_CPU_SPACE = CPU_FC0 & CPU_FC1 & CPU_FC2;
 
 DRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & CPU_A31 & !REFRESH_ACTIVE;                                  // 0x8000 0000 - 0xFFFF FFFF
 BOOTFLASH_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28 & !CPU_A27;  // 0x0000 0000 - 0x07FF FFFF
-BIGFLASH_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28 & CPU_A27;    // 0x0800 0000 - 0x0FFF FFFF
-SRAM_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & CPU_A28;                   // 0x1000 0000 - 0x1FFF FFFF
-DEV8BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 
-                        & CPU_A29 & CPU_A28;                                                                // 0x3000 0000 - 0x3FFF FFFF
-DEV16BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 
-                        & !CPU_A29 & !CPU_A28;                                                              // 0x4000 0000 - 0x4FFF FFFF
-DEV32BIT_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 
-                        & !CPU_A29 & CPU_A28;                                                               // 0x5000 0000 - 0x5FFF FFFF
+/* Rev 30: no FC term on BIGFLASH and SRAM. No CPU-space address can fall in 0x08xx xxxx or 0x1xxx xxxx
+   (IACK addresses are all ones; BKPT, access-level and coprocessor cycles use 0x0000 xxxx - 0x0002 xxxx),
+   and !FC_CPU_SPACE costs three product terms in every DSACK term that uses it. BOOTFLASH keeps it, since
+   coprocessor and BKPT addresses do fall in its range. */
+BIGFLASH_REGION_ACCESS = !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & !CPU_A28 & CPU_A27;                    // 0x0800 0000 - 0x0FFF FFFF
+SRAM_REGION_ACCESS = !nCPU_AS & !CPU_A31 & !CPU_A30 & !CPU_A29 & CPU_A28;                                   // 0x1000 0000 - 0x1FFF FFFF
+/* CS1: address-only region decodes. CPU-space cycles never use 0x3-0x5 (IACK addresses are all ones,
+   coprocessor and BKPT addresses are 0x0002xxxx/0x0000xxxx), so FC is not needed here. */
+DEV8_ADDR  = !CPU_A31 & !CPU_A30 &  CPU_A29 &  CPU_A28;                       // 0x3xxx xxxx
+DEV16_ADDR = !CPU_A31 &  CPU_A30 & !CPU_A29 & !CPU_A28;                       // 0x4xxx xxxx
+DEV32_ADDR = !CPU_A31 &  CPU_A30 & !CPU_A29 &  CPU_A28;                       // 0x5xxx xxxx
+VMEM_ADDR  = DEV32_ADDR & !CPU_A27 & !CPU_A26 & !CPU_A25 & !CPU_A24
+                        & !CPU_A23 & !CPU_A22 & !CPU_A21;                     // 0x5000 0000 - 0x501F FFFF
+
+DEV8BIT_REGION_ACCESS  = DEV8_ADDR  & !nCPU_AS;                               // 0x3000 0000 - 0x3FFF FFFF
+DEV16BIT_REGION_ACCESS = DEV16_ADDR & !nCPU_AS;                               // 0x4000 0000 - 0x4FFF FFFF
+DEV32BIT_REGION_ACCESS = DEV32_ADDR & !nCPU_AS;                               // 0x5000 0000 - 0x5FFF FFFF
 VIDEO_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & CPU_A30 & CPU_A29;                              // 0x6000 0000 - 0x7FFF FFFF
 INTERRUPT_ACK_ACCESS =  !nCPU_AS & FC_CPU_SPACE & CPU_A16 & CPU_A17 & CPU_A18 & CPU_A19;
 UNUSED_REGION_ACCESS = !FC_CPU_SPACE & !nCPU_AS & !CPU_A31 & !CPU_A30 & CPU_A29 & !CPU_A28;                 // 0x2000 0000 - 0x2FFF FFFF
@@ -359,16 +370,45 @@ DRAM_REGION_ACCESS_WAITSTATE.ar = nCPU_AS # !nSYS_RESET;
 
     Interrupt Ack Access is set to 8 bits since the INTCTRL (Interrupt controller) is 8 bit.
 
+    CS1 (rev 30): device cycles no longer end by default. DSACK for the 8/16/32-bit device regions is only
+    asserted while DEVMAP drives nDEV_ACK low, so every device (and expansion card) decides when its own cycle
+    may end, and an acknowledge is never retracted. The VMEM window (0x5000 0000 - 0x501F FFFF) is the
+    exception: BUSCTRL grants it by itself at 0 wait states (nEXP_VMEM_GNT, below). Cycles that nobody
+    acknowledges end in a bus error from the bus timeout. See docs/changes.md CS1.
+
 */
 
-nCPU_DSACK0 =  !( DRAM_REGION_ACCESS_WAITSTATE 
-                # SRAM_REGION_ACCESS 
-                # (DEV32BIT_REGION_ACCESS & nDEV_WAIT) 
-                # (DEV8BIT_REGION_ACCESS & nDEV_WAIT) 
-                # INTERRUPT_ACK_ACCESS 
-                # BOOTFLASH_REGION_ACCESS);
+DEV8_DONE  = DEV8BIT_REGION_ACCESS  & !nDEV_ACK;
+DEV16_DONE = DEV16BIT_REGION_ACCESS & !nDEV_ACK;
+/* DEV32_DONE needs no !VMEM_ADDR term: DEVMAP never acknowledges the VMEM window (nDEV_ACK stays high
+   there), and spelling it out cost seven product terms per DSACK. */
+DEV32_DONE = (DEV32BIT_REGION_ACCESS & !nDEV_ACK)                    // card space: card acknowledges
+           # (DEV32BIT_REGION_ACCESS & !nEXP_VMEM_GNT);              // VMEM window: granted (below)
 
-nCPU_DSACK1 = !( SRAM_REGION_ACCESS # DRAM_REGION_ACCESS_WAITSTATE # (DEV32BIT_REGION_ACCESS & nDEV_WAIT) # (DEV16BIT_REGION_ACCESS & nDEV_WAIT)  # BIGFLASH_REGION_ACCESS );
+/* DSACK0 has more terms than one macrocell holds (5 product terms), and the fitter cannot use cascade
+   logic with these pin positions. The terms that are not timing-critical, or never pair with DSACK1,
+   go into their own node: the DRAM wait-state flop (a full clock to settle), boot flash and interrupt
+   acknowledge (8-bit, DSACK0 only). That keeps SRAM, the device acknowledge and the VMEM grant one level
+   after their inputs on both DSACKs, so 32-bit cycles stay inside the DSACK0/1 skew limit (#31A). */
+PINNODE = DSACK0_SLOW;
+DSACK0_SLOW = DRAM_REGION_ACCESS_WAITSTATE # BOOTFLASH_REGION_ACCESS # INTERRUPT_ACK_ACCESS;
+
+nCPU_DSACK0 = !( DSACK0_SLOW # SRAM_REGION_ACCESS # DEV8_DONE # DEV32_DONE );
+nCPU_DSACK1 = !( DRAM_REGION_ACCESS_WAITSTATE # SRAM_REGION_ACCESS # BIGFLASH_REGION_ACCESS
+               # DEV16_DONE # DEV32_DONE );
+
+/* VMEM window grant (docs/changes.md 1.4). The grant is decided on rising CPU_CLK edges: first at the start
+   of S2, then once per clock until the card is ready. Once granted, GNT (and, through DEV32_DONE, DSACK)
+   stays asserted until AS negates. Registered pin, so GNT appears about 10 ns after the edge.
+
+   No-card build (B4b, decision 9): VMEM_READY is a constant, so B26 is ignored and no pull-up is needed.
+   For a VGA card that holds the CPU off, change it to   VMEM_READY = nEXP_VMEM_BUSY;   and fit the 4.7K
+   pull-up on B26 (P3) at the same time. */
+VMEM_READY = 'b'1;
+
+nEXP_VMEM_GNT.d  = !( VMEM_ADDR & !nCPU_AS & (VMEM_READY # !nEXP_VMEM_GNT) );
+nEXP_VMEM_GNT.ck = CPU_CLK;
+nEXP_VMEM_GNT.ap = nCPU_AS # !nSYS_RESET;     // negated between cycles and during reset
 
 /*
 nCPU_DSACK0 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCESS & nDEV_WAIT) # (DEV8BIT_REGION_ACCESS & nDEV_WAIT) # INTERRUPT_ACK_ACCESS # BOOTFLASH_REGION_ACCESS);
@@ -376,9 +416,23 @@ nCPU_DSACK0 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCE
 nCPU_DSACK1 = !( DRAM_REGION_ACCESS # SRAM_REGION_ACCESS # (DEV32BIT_REGION_ACCESS & nDEV_WAIT) # (DEV16BIT_REGION_ACCESS & nDEV_WAIT)  # BIGFLASH_REGION_ACCESS );
 */
 
-nCPU_BERR = !UNUSED_REGION_ACCESS;
+/* Bus timeout (CS1): counts CPU_CLK/16 rising edges while AS is asserted; BERR after 15 of them
+   (224-240 CPU clocks). Catches cycles nobody acknowledges: 0x6/0x7 region, empty card space,
+   BKPT, and coprocessor cycles with no FPU fitted (the CPU then takes an F-line exception).
+   VMEM cycles are excluded: a card hold-off may legitimately last longer, and the card bounds it. */
+PINNODE = [BTO0..3];
+[BTO0..3].ck = CPU_CLK_div16;
+[BTO0..3].ar = nCPU_AS # VMEM_ADDR # !nSYS_RESET;
+BTO_FULL = BTO3 & BTO2 & BTO1 & BTO0;
+BTO0.d = BTO0 $ !BTO_FULL;
+BTO1.d = BTO1 $ (BTO0 & !BTO_FULL);
+BTO2.d = BTO2 $ (BTO1 & BTO0 & !BTO_FULL);
+BTO3.d = BTO3 $ (BTO2 & BTO1 & BTO0 & !BTO_FULL);
 
-//nCPU_BERR = 'b'1; 
+nCPU_BERR = !( UNUSED_REGION_ACCESS # (BTO_FULL & !nCPU_AS) );
+
+//nCPU_BERR = !UNUSED_REGION_ACCESS;      // rev 29
+//nCPU_BERR = 'b'1;
 
 /* Boot Flash signaling */
 
@@ -434,14 +488,16 @@ nSRAM_UH_SEL = !(CPU_RW # BA32_UH);
         of the particular region size.  This chip select can be used in decode logic combined with the lower address 
         lines to create the actual device chip selects.
 
-        In this first iteration there is no feedback mechinism for the devices to ask for waitstates, but that 
-        will be added later.
+        CS1 (rev 30): these are address-only now. DEVMAP qualifies them with its own nCPU_AS input (the
+        CS1 rework wire to DEVMAP pin 35), so its device selects follow AS by one CPLD level. They may
+        glitch while the address changes between cycles; nothing else on the board uses them. Devices
+        end their cycles through DEVMAP's nDEV_ACK (see the DSACK section).
 
 */
 
-nDEV8BITCS = !DEV8BIT_REGION_ACCESS;
-nDEV16BITCS = !DEV16BIT_REGION_ACCESS;
-nDEV32BITCS = !DEV32BIT_REGION_ACCESS;
+nDEV8BITCS  = !DEV8_ADDR;
+nDEV16BITCS = !DEV16_ADDR;
+nDEV32BITCS = !DEV32_ADDR;
 
 
 PINNODE = CPU_CLK_DELAY1, CPU_CLK_DELAY2;
@@ -606,9 +662,15 @@ REFRESH_REQUESTED.ar = !nSYS_RESET # REFRESH_COMPLETE;
     This flag is used in the DRAM_REGION_ACTIVE to prevent DRAM access as soon as this flag is active.  That will force the insertion of waitstates
     by the CPU until the REFRESH is complete and a DRAM transaction can start.
 
+    CS1 (rev 30): a pending refresh may also start during a bus cycle that cannot be a DRAM cycle (A31 = 0,
+    or CPU space), so long VMEM hold-offs and slow card cycles cannot starve refresh. A DRAM cycle is still
+    never cut into: for those the request waits for AS high, as before. DRAM_REGION_ACCESS is already false
+    during such a cycle, so nothing else changes.
+
 */
 
-REFRESH_ACTIVE.d = (REFRESH_REQUESTED & nCPU_AS) # REFRESH_ACTIVE;
+// REFRESH_ACTIVE.d = (REFRESH_REQUESTED & nCPU_AS) # REFRESH_ACTIVE;       // rev 29
+REFRESH_ACTIVE.d = (REFRESH_REQUESTED & (nCPU_AS # !CPU_A31 # FC_CPU_SPACE)) # REFRESH_ACTIVE;
 REFRESH_ACTIVE.ck = CPU_CLK;
 REFRESH_ACTIVE.ar = !nSYS_RESET # REFRESH_COMPLETE_DELAY;         
 

@@ -1,7 +1,7 @@
 Name	 DEVMAP;
 PartNo   DEVMAP;
 Date     03/30/2024;
-Revision 20;
+Revision 22;
 Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
@@ -13,8 +13,24 @@ PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
 //      VERSION 20 - IDE Waitstate Fix/Test, plus IDE WR pin delaty
+//      VERSION 22 - CS1 (docs/changes.md): device acknowledge (nDEV_ACK) replaces nDEV_WAIT;
+//                   nCPU_AS on pin 35 (rework wire, was TESTP0); BUSCTRL rev 30 region selects are
+//                   address-only; per-device wait-state counter; interim IDE write strobe for both ports.
+//                   The rev 20 source is kept as DEVMAP2_REV20.PLD.
 
-/* 
+/*
+    How a device cycle ends (CS1):
+
+    BUSCTRL only asserts DSACK for the 8/16/32-bit device regions while this CPLD drives nDEV_ACK low.
+    Fast devices acknowledge one CPLD level after AS (0 wait states). The RTC and IDE acknowledge after a
+    fixed number of falling clock edges from the T counter. Expansion cards acknowledge through nEXP_ACK
+    (connector A26). An acknowledge is held until AS negates, so DSACK is never retracted.
+
+    The address decodes are buried nodes on purpose: they depend only on the address, which settles long
+    before AS, so every device select and every 0-wait-state acknowledge is a single product term on AS.
+*/
+
+/*
                                                 Inputs
     ##########################################################################################
 */
@@ -22,302 +38,178 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
 // From CPU
 Pin[52,53,54,55,56,57,58,60,61,63,64,65,67,68,69,70,71,72,75,76] = [CPU_A27..8];
 Pin[100] = CPU_RW;
+Pin[35]  = nCPU_AS;          // CS1 rework wire (U70 pin 4 -> J28 pin 3). Was TESTP0.
 
 // From Bus Controller CPLD
-Pin[1] = nDEV8BITCS;
-Pin[2] = nDEV16BITCS;
-Pin[5] = nDEV32BITCS;
+Pin[1]   = nDEV8BITCS;       // address-only 0x3xxx xxxx decode (no AS) from BUSCTRL rev 30
+Pin[2]   = nDEV16BITCS;      // 0x4xxx xxxx
+Pin[5]   = nDEV32BITCS;      // 0x5xxx xxxx
 
-Pin[87] = CPU_CLK;
-Pin[88] = nSYS_RESET;
-Pin[33] = nEXP_CACHE_CTRL;
+Pin[87]  = CPU_CLK;
+Pin[88]  = nSYS_RESET;
 
-/* 
-                                                Outputs 
+// From the expansion connector
+Pin[32]  = nEXP_ACK;         // connector A26 (was nEXP_DEV_WAIT): card pulls low when its cycle may end
+Pin[33]  = nEXP_CACHE_CTRL;
+
+/*
+                                                Outputs
    ##########################################################################################
 */
 
-Pin[29] = nEXP_DEV8BITCS;
-Pin[30] = nEXP_DEV16BITCS;
-Pin[31] = nEXP_DEV32BITCS;
-Pin[32] = nEXP_DEV_WAIT;
+Pin[6]   = nDEV_ACK;         // to BUSCTRL pin 90 (was nDEV_WAIT): 0 = the selected device may finish
 
-/* AS Timing
+Pin[29]  = nEXP_DEV8BITCS;
+Pin[30]  = nEXP_DEV16BITCS;
+Pin[31]  = nEXP_DEV32BITCS;
 
-         _____     _____     _____     _____     _____     _____
- CLK    : 0  :_1__: 2  :_3__:  4 :_5__: 6  :____:    :____:     
- /AS          :___________________:     
+Pin[93]  = SYS_RESET_POS;    // Inverted version of reset, needed for the UART IC.
+Pin[25]  = nUART_CSA;
+Pin[24]  = nUART_CSB;
+Pin[28]  = nPTC_CS;
+Pin[50]  = nIDE1_CSA;
+Pin[49]  = nIDE1_CSB;
+Pin[48]  = nIDE2_CSA;
+Pin[47]  = nIDE2_CSB;
+Pin[46]  = nIDE_WR;
+Pin[45]  = nIDE_BUFFER_EN1;
+Pin[44]  = nIDE_BUFFER_EN2;
 
- /AS goes low about 3ns after CLK goes low.
- /DSACK is sampled on the falling edge going into cycle 3
+Pin[13]  = nINTCTRL_CS;
+Pin[14]  = nRTC_CS;
+Pin[23]  = nEXP_VMEM_CS;
+Pin[22]  = nEXP_VIO_CS;
 
-/*
+Pin[17]  = RTC_A_SEL;
+Pin[16]  = RTC_D_SEL;
 
-    The Expansion interface has 3 CS based on the size of the device bus.   The 8 bit expansion region covers 
-0x3100 0000 to 0x31FF FFFF [16MBs], the 16 bit expansion region covers 0x4100 0000 to 0x41FF FFFF[16MBs], and the 32 bit region
-covers 0x5000 0000 to 0x51FF FFFF [16MBs)].   These regions could be expanded, but it would also require additional selection
-discrition in the downstream expansion devices.
+Pin[96]  = nSEVENSEGA_WR;
+Pin[97]  = nSEVENSEGB_WR;
+Pin[98]  = nSTATUSLED_WR;
 
-With these 16MBs regions, devices on the expansion bus need to decode based on address lines A23-A0.
+Pin[7]   = EXP_DM_CPLD1;
+Pin[8]   = EXP_DM_CPLD2;
 
-There is an additional special region for the video output device.   This region needs an additional line from the bus controller CPLD
-to indicate access in the dedicated video region (0x6XXX XXXX).   That region would be further subdivided to create the 
-nEXP_VMEM_CS signal so it is a subset of that memory area.  640x480 at 32bpp is only 1.2MBs of memory, so a 16 MB chunk is probably 
-sufficient.  
+Pin[21]  = EXTRA_DM_INT1;
+Pin[27]  = EXTRA_DM_INT2;
 
-nEXP_DEV_WAIT is a signal from the expansion interface is used to add waitstates.  If it is pulled to GND, waitstates will be added.  For 
-this singal to work, the CPU needs to see the DSASK lines unasserted by the end of CPU state S2.  The AS line goes low at the start of S1,
-so you only have about 3/4s of a clock cycle from AS to DSACK check.   This might be problemmatic with the CPLDs, so it might be needed
-to have the nEXP_DEV_WAIT signal go directly to the BUSCTRL CPLD.
+Pin[83]  = EXTRA_BC_DM1;
+Pin[84]  = EXTRA_BC_DM2;
 
-*/
-
-
-Pin[6] = nDEV_WAIT;
-Pin[93] = SYS_RESET_POS;  // Inverted version of reset, needed for the UART IC.
-Pin[25] = nUART_CSA;
-Pin[24] = nUART_CSB;
-Pin[28] = nPTC_CS;
-Pin[50] = nIDE1_CSA;
-Pin[49] = nIDE1_CSB;
-Pin[48] = nIDE2_CSA;
-Pin[47] = nIDE2_CSB;
-Pin[46] = nIDE_WR;
-Pin[45] = nIDE_BUFFER_EN1;
-Pin[44] = nIDE_BUFFER_EN2;
-
-Pin[13] = nINTCTRL_CS;
-Pin[14] = nRTC_CS;
-Pin[23] = nEXP_VMEM_CS;
-Pin[22] = nEXP_VIO_CS;
-
-Pin[17] = RTC_A_SEL;
-Pin[16] = RTC_D_SEL;
-
-Pin[96] = nSEVENSEGA_WR;
-Pin[97] = nSEVENSEGB_WR;
-Pin[98] = nSTATUSLED_WR;
-
-Pin[7] = EXP_DM_CPLD1;
-Pin[8] = EXP_DM_CPLD2;
-
-Pin[21] = EXTRA_DM_INT1;
-Pin[27] = EXTRA_DM_INT2;
-
-Pin[83] = EXTRA_BC_DM1;
-Pin[84] = EXTRA_BC_DM2;
-
-Pin[35,36,37] = [TESTP0..2];		
+Pin[36,37] = [TESTP1..2];    // J28 pins 2 and 1 (J28 pin 3 is now nCPU_AS)
 
 // These pins are not used and not reserved due to block limits, so these may not be usable.
 Pin[92,99] = EXPANSION_EXTRA1, EXPANSION_EXTRA2;
 
-Pin[19] = UNUSED1;
-Pin[20] = UNUSED2;
+Pin[19]  = UNUSED1;
+Pin[20]  = UNUSED2;
 
-// ADD a CPU_AS signal to this device so we can have proper device bus cycle termination
-
-
-PINNODE = IDE_WR_SIG_A, IDE_WR_SIG_RESET, IDE_WR_SIG;
-PINNODE = nINTCTRL_CS_delay;
-PINNODE = nIDE_WAITSTATE_DELAY;
-PINNODE = nIDE_WAITSTATE_DELAY_RESETw1;
-PINNODE = nIDE_WAITSTATE_DELAY_RESETw2;
-
-
-// dummy expression to force the pins to be assigned.
-EXPANSION_EXTRA2 = nSYS_RESET & nDEV32BITCS & CPU_RW  & nEXP_DEV_WAIT & nEXP_CACHE_CTRL;
-EXPANSION_EXTRA1 = EXTRA_DM_INT1 & EXTRA_DM_INT2 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXP_DM_CPLD1 & EXP_DM_CPLD2;
-UNUSED1 = UNUSED2;
-
-
+PINNODE = [WIN0..8];
+PINNODE = ONB, VMW, IDEWIN, FAST8_ADDR, FAST16_ADDR, CARD_ADDR8;
+PINNODE = SLOW_ACK, nINTCTRL_CS_delay;
+PINNODE = [T1..3];
 
 FIELD field_CPU_ADDRESS = [CPU_A27..8];
 
-SYS_RESET_POS = !nSYS_RESET;
-// These are currently unused, reserved for some future use.
-EXP_DM_CPLD1 = 'b'0;
-EXP_DM_CPLD2 = 'b'0;
-
-nEXP_DEV8BITCS = nDEV8BITCS;
-nEXP_DEV16BITCS = nDEV16BITCS;
-nEXP_DEV32BITCS = nDEV32BITCS;
-
-
-/*  
-    DEV8BIT_REGION_ACCESS   0x3000 0000 - 0x3FFF FFFF
-    DEV16BIT_REGION_ACCESS  0x4000 0000 - 0x4FFF FFFF
-    DEV32BIT_REGION_ACCESS  0x5000 0000 - 0x5FFF FFFF
-
-    The smalled segment decodable here is 256 bytes do to only having access to A27-A8
+/*
+    Address-only window decodes (settle before AS). The same window numbers are used in the 8- and 16-bit
+    regions. The smallest window decodable here is 256 bytes, since only A27-A8 come to this CPLD.
 */
 
+WIN0 = field_CPU_ADDRESS:['h'00000XX];     // UART A        | IDE1 CS0
+WIN1 = field_CPU_ADDRESS:['h'00001XX];     // UART B        | IDE1 CS1
+WIN2 = field_CPU_ADDRESS:['h'00002XX];     // INTCTRL       | IDE2 CS0
+WIN3 = field_CPU_ADDRESS:['h'00003XX];     // RTC           | IDE2 CS1
+WIN4 = field_CPU_ADDRESS:['h'00004XX];     //               | PTC
+WIN5 = field_CPU_ADDRESS:['h'00005XX];     // VIO (card)
+WIN6 = field_CPU_ADDRESS:['h'00006XX];     // 7-segment A
+WIN7 = field_CPU_ADDRESS:['h'00007XX];     // 7-segment B
+WIN8 = field_CPU_ADDRESS:['h'00008XX];     // status LEDs
+ONB  = field_CPU_ADDRESS:['h'0XXXXXX];     // A27-A24 all 0: on-board area of the 8/16-bit regions
+VMW  = !CPU_A27 & !CPU_A26 & !CPU_A25 & !CPU_A24 & !CPU_A23 & !CPU_A22 & !CPU_A21;  // 2 MB VMEM window
+IDEWIN      = WIN0 # WIN1 # WIN2 # WIN3;
+FAST8_ADDR  = ONB & !WIN3 & !WIN5;         // 8-bit on-board, 0 WS: UARTs, INTCTRL, displays, empty windows
+FAST16_ADDR = ONB & !IDEWIN;               // 16-bit on-board, 0 WS: PTC, empty windows
+CARD_ADDR8  = !ONB # WIN5;                 // 8-bit card space, including the VIO window
 
-/* 8 bit devices */
+/* AS-qualified regions: one level after AS */
+DEV8  = !nDEV8BITCS  & !nCPU_AS;
+DEV16 = !nDEV16BITCS & !nCPU_AS;
+DEV32 = !nDEV32BITCS & !nCPU_AS;
 
-nUART_CSA = nDEV8BITCS #        !(field_CPU_ADDRESS:['h'00000XX]);     // 0x3000 0000 - 0x3000 00FF
-nUART_CSB = nDEV8BITCS #        !(field_CPU_ADDRESS:['h'00001XX]);     // 0x3000 0100 - 0x3000 01FF
-nINTCTRL_CS_pre = nDEV8BITCS #  !(field_CPU_ADDRESS:['h'00002XX]);   // 0x3000 0200 - 0x3000 02FF
-nRTC_CS = nDEV8BITCS #          !(field_CPU_ADDRESS:['h'00003XX]);       // 0x3000 0300 - 0x3000 03FF
+nEXP_DEV8BITCS  = !DEV8;
+nEXP_DEV16BITCS = !DEV16;
+nEXP_DEV32BITCS = !DEV32;
 
-nEXP_VIO_CS = nDEV8BITCS #      !(field_CPU_ADDRESS:['h'00005XX]);   // 0x3000 0500 - 0x3000 05FF
-nSEVENSEGA_WR = nDEV8BITCS #    !(field_CPU_ADDRESS:['h'00006XX]);   // 0x3000 0600 - 0x3000 06FF
-nSEVENSEGB_WR = nDEV8BITCS #    !(field_CPU_ADDRESS:['h'00007XX]);   // 0x3000 0700 - 0x3000 07FF
-nSTATUSLED_WR = nDEV8BITCS #    !(field_CPU_ADDRESS:['h'00008XX]);   // 0x3000 0800 - 0x3000 08FF
+/* Device selects */
+nUART_CSA       = !(DEV8 & WIN0);          // 0x3000 0000 - 0x3000 00FF
+nUART_CSB       = !(DEV8 & WIN1);          // 0x3000 0100 - 0x3000 01FF
+nINTCTRL_CS_pre = !(DEV8 & WIN2);          // 0x3000 0200 - 0x3000 02FF
+nRTC_CS         = !(DEV8 & WIN3);          // 0x3000 0300 - 0x3000 03FF
+nEXP_VIO_CS     = !(DEV8 & WIN5);          // 0x3000 0500 - 0x3000 05FF
+nSEVENSEGA_WR   = !(DEV8 & WIN6);          // 0x3000 0600 - 0x3000 06FF
+nSEVENSEGB_WR   = !(DEV8 & WIN7);          // 0x3000 0700 - 0x3000 07FF
+nSTATUSLED_WR   = !(DEV8 & WIN8);          // 0x3000 0800 - 0x3000 08FF
+nIDE1_CSA       = !(DEV16 & WIN0);         // 0x4000 0000 - 0x4000 00FF
+nIDE1_CSB       = !(DEV16 & WIN1);         // 0x4000 0100 - 0x4000 01FF
+nIDE2_CSA       = !(DEV16 & WIN2);         // 0x4000 0200 - 0x4000 02FF
+nIDE2_CSB       = !(DEV16 & WIN3);         // 0x4000 0300 - 0x4000 03FF
+nPTC_CS         = !(DEV16 & WIN4);         // 0x4000 0400 - 0x4000 04FF
+nEXP_VMEM_CS    = !(DEV32 & VMW);          // 0x5000 0000 - 0x501F FFFF (2 MB)
+nIDE_BUFFER_EN1 = !(DEV16 & (WIN0 # WIN1));
+nIDE_BUFFER_EN2 = !(DEV16 & (WIN2 # WIN3));
 
-nINTCTRL_CS_delay.d = 'b'1;
+/* Interrupt-controller write pulse (unchanged): the select ends at the first falling edge of a write,
+   so the INTCTRL registers are clocked mid-cycle while the CPU is still driving the data. */
+nINTCTRL_CS_delay.d  = 'b'1;
 nINTCTRL_CS_delay.ck = !CPU_CLK;
 nINTCTRL_CS_delay.ar = nINTCTRL_CS_pre # CPU_RW;
-
 nINTCTRL_CS = nINTCTRL_CS_pre # nINTCTRL_CS_delay;
 
-
-/* 16 bit devices */
-
-nIDE1_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00000XX]);
-nIDE1_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00001XX]);
-nIDE2_CSA = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00002XX]);
-nIDE2_CSB = nDEV16BITCS # !(field_CPU_ADDRESS:['h'00003XX]);
-nPTC_CS = nDEV16BITCS #   !(field_CPU_ADDRESS:['h'00004XX]);       // 0x3000 0400 - 0x3000 04FF
-
-
-/* 32 bit devices */
-
-nEXP_VMEM_CS = nDEV32BITCS # !(field_CPU_ADDRESS:['h'00XXXXX]);   // 1MB of Video Memory
-
-// nNIC_CS = nDEV32BITCS # !(field_CPU_ADDRESS:['h'0200XXX]);          // 4096B NIC Interface
-
-
-/* IDE Device custom signals:
-
-      nIDE_WR signal goes directly to the /WR pin on both IDE interfaces.   This signal is asserted (low) as soon as     
-      the CPU_RW signal goes low, which normally happens write at the start of an /AS cycle.  The IDE_WR_DELAY1 and DELAY2 
-      flip flops are configured such that they both start at 0 when an AS cycle starts.  After 2 CLK_16M cycles the 
-      DELAY2 signal is set to 1, which directly unasserts the IDE /WR pin.  The allows the /WR pin to have an active rising
-      edge BEFORE the end of the CPU cpu cycle.  This is critical to allow the IDE interface to latch data, since at the end
-      of the cycle the output buffers to the IDE inteface are turned off.  This was a fix from the original design which 
-      assumed the rising edge of the write signal would be sufficienctly ahead of the buffers getting turned off. 
-      
-       */
-
-nIDE_BUFFER_EN1 = (nIDE1_CSA & nIDE1_CSB);
-nIDE_BUFFER_EN2 = (nIDE2_CSA & nIDE2_CSB);
-
-nIDE_WR = CPU_RW # !IDE_WR_SIG;
-
-// nIDE_WR_SIG is the Write signal (positive assertion).   It does not turn on until one full clock cycle after the CS starts.
-// SIG_A is held in reset until a IDE cycle is active by a CS assertion, then changes on the next falling edge.
-
-IDE_WR_SIG_A.d = 'b'1;
-IDE_WR_SIG_A.ck = !CPU_CLK;
-IDE_WR_SIG_A.ar = (nIDE1_CSA & nIDE1_CSB) # !nSYS_RESET;
-
-// the nIDE_WR_SIG_RESET is a signal used to reset the nIDE_WR_SIG after one full clock cycle being asserted.  This signal is asserted on the
-// risign clock if the WR_SIG is active AND we are not in a waitstate in more.   This menas the WR_SIG signal is 1 clock cycle long if we only
-// add one waitstate, but if we add more each of those will add to the length of the WR_SIG pulse.
-
-IDE_WR_SIG_RESET.d = IDE_WR_SIG;
-IDE_WR_SIG_RESET.ck = CPU_CLK;
-IDE_WR_SIG_RESET.ar = (!nDEV_WAIT) # !nSYS_RESET;
-
-// nISE_WR_SIG follows the SIG_A.  As soon as SIG_A is asserted (falling clock after start of IDE cycle), SIG is not held in reset and will
-//   assert on the next rising edge.  This should be halfway through the first waitstate cycle.
-
-IDE_WR_SIG.d = 'b'1;
-IDE_WR_SIG.ck = CPU_CLK;
-IDE_WR_SIG.ar = (!IDE_WR_SIG_A) # IDE_WR_SIG_RESET # !nSYS_RESET;
-
-
-/* 
-    RTC Device custom signals 
-
-   RTC_A_SEL is used to change the address/data select lines going to the DS Real Time Clock IC.
-   It is also used to drive the DS line on the RTC.  The flip flop is reset while RTS_CS is off 
-   (which is tied to /AS), and then increments to 1 on the next falling edge.  It will stay at 1
-   until the end of the bus cycle.
-*/
-
-RTC_A_SEL.d = 'b'1;
+/* RTC address/data multiplexing (unchanged). RTC_A_SEL is held at 0 while the RTC is not selected, then
+   goes to 1 on the first falling edge and stays there until the end of the bus cycle. */
+RTC_A_SEL.d  = 'b'1;
 RTC_A_SEL.ck = !CPU_CLK;
-RTC_A_SEL.ar = nRTC_CS # !nSYS_RESET;    /* nRTC_CS is active low, so it will be high while RTS is not being accesses */
-RTC_D_SEL = !RTC_A_SEL;   /* Since RTA_A_SEL is held at zero when no access, this will be held at one which is off */
+RTC_A_SEL.ar = nRTC_CS # !nSYS_RESET;
+RTC_D_SEL = !RTC_A_SEL;
+
+SYS_RESET_POS = !nSYS_RESET;
+
+/* Timing counter, thermometer code: Tn is set by the n-th falling CPU_CLK edge after AS asserts,
+   and all of them clear as AS negates. T1 is set by the edge that ends S2, the CPU's first DSACK
+   sample, so a device acknowledged by Tn gets n wait states. A decode such as Tm & !Tn changes
+   only one input per edge, so unlike a binary count it cannot glitch. CS2 extends it to T8. */
+[T1..3].ck = !CPU_CLK;
+[T1..3].ar = nCPU_AS # !nSYS_RESET;
+T1.d = 'b'1;
+T2.d = T1;
+T3.d = T2;
+
+/* Acknowledge. Slow devices and cards go through the SLOW_ACK node, so the 0-wait-state terms
+   stay one level after AS. To change a device's wait states, change its Tn term. */
+SLOW_ACK = (DEV8  & WIN3   & T2)                           // RTC: 2 wait states
+         # (DEV16 & IDEWIN & T3)                           // IDE: 3 wait states (interim, CS2)
+         # (((DEV8 & CARD_ADDR8) # (DEV16 & !ONB) # (DEV32 & !VMW)) & !nEXP_ACK);   // cards
+
+nDEV_ACK = !( (DEV8 & FAST8_ADDR) # (DEV16 & FAST16_ADDR) # SLOW_ACK );
+
+/* Interim IDE write strobe, both ports: low from the 1st to the 3rd falling edge (2 clocks). It is
+   a falling-edge register, so it cannot glitch; at each edge it sees the count from before the
+   edge. It ends a clock before the acknowledge, while CS and the data buffers are still on.
+   CS2 replaces it. */
+nIDE_WR.d  = !(DEV16 & IDEWIN & !CPU_RW & !T2);
+nIDE_WR.ck = !CPU_CLK;
+nIDE_WR.ap = nCPU_AS # !nSYS_RESET;
+
+/* Unused and reserved pins (dummy expressions keep the pins assigned) */
+EXP_DM_CPLD1 = 'b'0;
+EXP_DM_CPLD2 = 'b'0;
+EXPANSION_EXTRA2 = nSYS_RESET & CPU_RW & nEXP_ACK & nEXP_CACHE_CTRL;
+EXPANSION_EXTRA1 = EXTRA_DM_INT1 & EXTRA_DM_INT2 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXP_DM_CPLD1 & EXP_DM_CPLD2;
+UNUSED1 = UNUSED2;
+
+/* Test points on J28 */
+TESTP1 = nDEV_ACK;     // J28 pin 2
+TESTP2 = T1;           // J28 pin 1
 
 
-
-/*
-
-    Wait State Generation - To insert wait states for devices, we need to hold nDEV_WAIT low during the S2 falling CLK of the system clock.
-
-    We want to add one wait state for all IDE activity.
-
-    There are two flip flops - The first is the signal that gets sent to the Bus controler CPLD asking for a waitstate.  This signal needs
-    to go to active shortly after the AS signal is decoded, and we do that with the nIDE1_CSA & nIDE1_CSB signals.  Those signals will go low 
-    if an IDE cycle is starting.   That transition from high to low for one of them will clock in a '1' into the first flip flop.  This FF is used to 
-    ask for the wait state.  
-    
-    The nIDE_BUFFER_EN signals will go low at a bit past halfway into CLK S1. About 7ns later nIDE_WAITSTATE_DELAY will latch in a 1,
-    and about 7ns after that the nDEV_WAIT signal will go low.  That should get the nDEV_WAIT signal low just before going into S2.  
-    That should in turn allow the BUS CONTROLLER CPLD to raise the DSACK lines high signaling a need to wait.
-
-    As the same time the second flip flop is being held in reset by the first flip flop, so as soon as the first flip flop is turned on
-    (by the IDE cycle), this second flip flip will come out of reset and wait until the next falling CLK edge.  Once that falling CLK edge 
-    appears the second flip flop will go to 1, which resets the first flip flop.   This creates a pulse that startes when the IDE cycle 
-    starts, and ends when the next falling CLK edge happens.  Since there is a delay from when the nIDE_WAITSTATE_DELAY goes back to 0
-    and the final DSACK will also fall to 0 the 'hold' time for the CPU sampling of DSACK should be satisfied. 
-    
-    It looks like this should get the signal asserted before the falling edge of S2 (CPU cycle), so the CPU will sample this 
-    and add a wait state.  The risk is the time from AS going low through the first CPLD (to do device selection) plus the time 
-    to generate the nIDE_CS, then the nIDE_BUFFER_EN, then the flip flop itself.  From AS to DSACK sample looks to be about 0.75 
-    of a clock cycle, so at 16mhz that is about 50ns.   This might require some tweaking.  This will only add 1 waitstate since the nDEV_WAIT
-    signal is cleared on the next falling edge.
-
-    If we want to add additional delays, add extra DELAY steps on successive clock edges.
-
-*/
-
-// nIDE_WAITSTATE_DELAY == 0 at reset, which indicates no request for a waitstate.
-//    It is set to one as soon as either IDE Buffer Enable signal is asserted(==0). 
-//    It is held at one until the following falling CPU clock, which is also the same falling clock from the CPU
-//    that samples the DSACK lines to see if a waitstate has been requested.
-//    This should create a single waitstate. 
-
-nIDE_WAITSTATE_DELAY.d = 'b'1;
-nIDE_WAITSTATE_DELAY.ck = !(nIDE1_CSA & nIDE1_CSB);
-
-// Change the 'nIDE_WAITSTATE_DELAY_RESETw2' below to w1 for a single waitstate. 
-nIDE_WAITSTATE_DELAY.ar = nIDE_WAITSTATE_DELAY_RESETw2 # !nSYS_RESET;
-
-// The w1 varient will assert on the next falling CPU CLK edge, which is right after the CPU detection of a waitstate insertion.
-
-nIDE_WAITSTATE_DELAY_RESETw1.d = 'b'1;
-nIDE_WAITSTATE_DELAY_RESETw1.ck = !CPU_CLK;
-nIDE_WAITSTATE_DELAY_RESETw1.ar = !nIDE_WAITSTATE_DELAY # !nSYS_RESET;
-
-// The w2 varient will assert one falling clock edge later then the w1 varient, this giving you an extra complete waitstate.
-
-nIDE_WAITSTATE_DELAY_RESETw2.d =  nIDE_WAITSTATE_DELAY_RESETw1;
-nIDE_WAITSTATE_DELAY_RESETw2.ck = !CPU_CLK;
-nIDE_WAITSTATE_DELAY_RESETw2.ar = !nIDE_WAITSTATE_DELAY # !nSYS_RESET;
-
-nDEV_WAIT = (!nIDE_WAITSTATE_DELAY) & nEXP_DEV_WAIT;       // 1 = No waitstates, 0 = add waitstates
-                                                           // - so if IDE_WAITSTATE_DELAY is in reset, we will invert.
-                                                           // Also if EXP DEV WAIT asserted, lets assert it here.
-
-
-// Test Pins used for debugging.
-TESTP0 = nDEV_WAIT;
-TESTP1 = nIDE_WAITSTATE_DELAY;
-TESTP2 = nIDE_WAITSTATE_DELAY_RESETw2;
-
-/*
-Total dedicated input used:	2/4 	(50%)
-Total I/O pins used		67/80 	(83%)
-Total Logic cells used 		34/128 	(26%)
-Total Flip-Flop used 		3/128 	(2%)
-Total Foldback logic used 	0/128 	(0%)
-Total Nodes+FB/MCells 		34/128 	(26%)
-Total cascade used 		0
-Total input pins 		38
-Total output pins 		31
-Total Pts 			34
-*/

@@ -2,14 +2,16 @@
 
 This is the working list of every change we decide to make: physical rework on the current boards, CPLD source changes, expansion-bus definitions, and items for the next PCB. Changes are grouped into change sets (CS). Each set says what to wire, what to edit in which CPLD file, how to program and test it, and how to roll it back. Background and analysis are in [TheoryOfOperations.md](TheoryOfOperations.md).
 
-Nothing in this file has been compiled or programmed yet. CS1's CUPL is written against the current sources (BUSCTRL rev 29, DEVMAP rev 20/21), and CS2's against CS1's revisions plus INTCTRL rev 16. They still need a WinCUPL compile, and the fit report has to be checked for logic levels as noted in each step.
+Nothing in this file has been programmed yet. CS1's CUPL was written against BUSCTRL rev 29 and DEVMAP rev 20/21 and now compiles (see the change log). CS2's is written against CS1's revisions plus INTCTRL rev 16 and still needs a WinCUPL compile, with the fit report checked for logic levels as noted in each step.
+
+Before opening an edited .PLD in WinCUPL, run `powershell -ExecutionPolicy Bypass -File plds\check-wincupl-open.ps1`. WinCUPL's editor cannot open some files that compile cleanly and reports them as "doesn't exist. New File assumed". The script runs the editor's parser and names the line it would stop on.
 
 **Status values:** Proposed -> Agreed -> Implemented (source edited) -> Programmed -> Verified.
 
 | Set | Title | Status |
 |---|---|---|
 | CS0 | Pull-up rework already on the boards | Done on current boards; fix on next PCB |
-| CS1 | Device-cycle acknowledge (replaces `nDEV_WAIT`), fast VMEM window with card hold-off, bus timeout, refresh during long cycles | **Agreed in principle; details under discussion (1.14)** |
+| CS1 | Device-cycle acknowledge (replaces `nDEV_WAIT`), fast VMEM window with card hold-off, bus timeout, refresh during long cycles | **Implemented** (sources edited 2026-10-18: `BUSCTRL2.PLD` rev 30, no-card build; `DEVMAP2.PLD` rev 22; INTCTRL unchanged). Both compile and fit in WinCUPL with every pin kept (DEVMAP 36/128 cells, BUSCTRL 79/128); not yet programmed. Backups: `BUSCTRL2_REV29.PLD`, `DEVMAP2_REV20.PLD`. |
 | CS2 | IDE timing on both ports, /IOR window, interrupts, pull-downs, reset length | **Agreed (2.11)**; implement after CS1 is verified. P7 (buffer swap) proposed. |
 | CS3 | IDE IORDY flow control (base window) | **Optional**: only if cards still fail after CS2 and the 3.4 check shows IORDY activity |
 
@@ -82,7 +84,7 @@ Worst-case paths, with a -10 CPLD with slow-slew outputs (14 ns per level to a p
 
 The AS wire is what buys 0-wait-state devices at 16 MHz. Without it CS1 still works, with every device cycle 1 wait state longer at 16 MHz.
 
-**Keep DSACK single-level if possible.** Dropping FC from the device-region terms (CPU-space cycles never use 0x3-0x5) and allowing cascade logic gives the fitter a chance. After compiling, check the fit report: `nCPU_DSACK0/1` should not depend on `XXL_` nodes.
+**Keep DSACK single-level.** After compiling, check the fit report: `nCPU_DSACK0/1` should not depend on `XXL_` nodes. Keep the two DSACKs' 32-bit terms at the same depth, or 32-bit cycles can break the 68030's DSACK skew limit (#31A). B7 records how rev 30 achieves this.
 
 ### 1.4 VGA memory: 0 wait states, with a hold-off for the card
 
@@ -222,11 +224,17 @@ DEV32BIT_REGION_ACCESS = DEV32_ADDR & !nCPU_AS;
 ```
 DEV8_DONE  = DEV8BIT_REGION_ACCESS  & !nDEV_ACK;
 DEV16_DONE = DEV16BIT_REGION_ACCESS & !nDEV_ACK;
-DEV32_DONE = (DEV32BIT_REGION_ACCESS & !VMEM_ADDR & !nDEV_ACK)       // card space: card acknowledges
+/* No !VMEM_ADDR term: DEVMAP never acknowledges the VMEM window, and spelling it out cost seven
+   product terms per DSACK. */
+DEV32_DONE = (DEV32BIT_REGION_ACCESS & !nDEV_ACK)                    // card space: card acknowledges
            # (DEV32BIT_REGION_ACCESS & !nEXP_VMEM_GNT);              // VMEM window: granted (B4a)
 
-nCPU_DSACK0 = !( DRAM_REGION_ACCESS_WAITSTATE # SRAM_REGION_ACCESS # BOOTFLASH_REGION_ACCESS
-               # INTERRUPT_ACK_ACCESS # DEV8_DONE # DEV32_DONE );
+/* Terms that are not timing-critical, or never pair with DSACK1, get their own node, so SRAM, the
+   device acknowledge and the VMEM grant fit in DSACK0's own macrocell (B7). */
+PINNODE = DSACK0_SLOW;
+DSACK0_SLOW = DRAM_REGION_ACCESS_WAITSTATE # BOOTFLASH_REGION_ACCESS # INTERRUPT_ACK_ACCESS;
+
+nCPU_DSACK0 = !( DSACK0_SLOW # SRAM_REGION_ACCESS # DEV8_DONE # DEV32_DONE );
 nCPU_DSACK1 = !( DRAM_REGION_ACCESS_WAITSTATE # SRAM_REGION_ACCESS # BIGFLASH_REGION_ACCESS
                # DEV16_DONE # DEV32_DONE );
 ```
@@ -289,7 +297,14 @@ nDEV16BITCS = !DEV16_ADDR;
 nDEV32BITCS = !DEV32_ADDR;
 ```
 
-**B7. Fitter (optional):** if the fit shows `nCPU_DSACK0/1` split into `XXL_` nodes, try enabling cascade logic, for example `PROPERTY ATMEL {cascade_logic = on};`. Check the exact property name in the Atmel fitter help.
+**B7. Fitting DSACK into one macrocell each (done, 2026-10-18).** The first rev 30 fit split both DSACKs into `XXL_` helper nodes, which put the device acknowledge two levels deep. Three changes fix it:
+1. Drop `!VMEM_ADDR` from `DEV32_DONE` (B4; seven product terms).
+2. Drop `!FC_CPU_SPACE` from `SRAM_REGION_ACCESS` and `BIGFLASH_REGION_ACCESS`. No CPU-space address falls in 0x1xxx_xxxx or 0x08xx_xxxx. Boot flash keeps it, because coprocessor and BKPT addresses are 0x0000xxxx-0x0002xxxx.
+3. The `DSACK0_SLOW` node (B4).
+
+The node matters as much as the trims: with the trims alone, DSACK1 fit in one macrocell but DSACK0's device terms stayed in a helper. On 32-bit cycles that left about one CPLD level between the two DSACKs, against the 68030's skew limit #31A of 10 ns (20 MHz grade), 7 ns (25) or 5 ns (33). Cascade logic (`PROPERTY ATMEL {cascade_logic = on};`) was tried too: with these fixed pin positions the design no longer fits ("Placement fail").
+
+Result: both DSACKs are single macrocells with 5 product terms each. SRAM, the device acknowledge and the VMEM grant are one level after their inputs on both. Boot flash, interrupt acknowledge and the DRAM wait-state flop go through `DSACK0_SLOW`. The design uses 79 of 128 logic cells and 34 flip-flops, and every pin stays where it was.
 
 **B8. Refresh during long cycles**: replace the `REFRESH_ACTIVE.d` line, and add a sentence to the comment block above it:
 
@@ -302,7 +317,7 @@ REFRESH_ACTIVE.d = (REFRESH_REQUESTED & (nCPU_AS # !CPU_A31 # FC_CPU_SPACE)) # R
 
 This is safe because `DRAM_REGION_ACCESS` (`!FC_CPU_SPACE & !nCPU_AS & CPU_A31 & !REFRESH_ACTIVE`) is already false during such a cycle. If the next cycle is a DRAM cycle, it waits for the refresh to finish, exactly as it does today when a refresh starts just before it. The address and FC are stable whenever AS is low, and the rising edges that sample them are half a clock away from any AS transition.
 
-Unchanged: `nCPU_CIIN` (it now uses the new region terms, with the same meaning), the DRAM access logic, SRAM, flash, FPU select, reset, and the dividers. Resource estimate: about 5 more macrocells (77 -> about 82 of 128). Pins 28 and 29 change use; no new pins.
+Unchanged: `nCPU_CIIN` (it now uses the new region terms, with the same meaning), the DRAM access logic, SRAM, flash, FPU select, reset, and the dividers. Apart from the B7 FC trim, SRAM and big-flash decoding is unchanged. Fitted size: 79 of 128 logic cells (rev 29 used 77). Pins 28 and 29 change use; no new pins.
 
 ### 1.8 DEVMAP (U59) - rev 22
 
@@ -378,7 +393,7 @@ WIN5 = field_CPU_ADDRESS:['h'00005XX];     // VIO (card)
 WIN6 = field_CPU_ADDRESS:['h'00006XX];     // 7-segment A
 WIN7 = field_CPU_ADDRESS:['h'00007XX];     // 7-segment B
 WIN8 = field_CPU_ADDRESS:['h'00008XX];     // status LEDs
-ONB  = field_CPU_ADDRESS:['h'0XXXXXX];     // A27-A24 = 0: on-board area of the 8/16-bit regions
+ONB  = field_CPU_ADDRESS:['h'0XXXXXX];     // A27-A24 all 0: on-board area of the 8/16-bit regions
 VMW  = !CPU_A27 & !CPU_A26 & !CPU_A25 & !CPU_A24 & !CPU_A23 & !CPU_A22 & !CPU_A21;  // 2 MB VMEM window
 IDEWIN      = WIN0 # WIN1 # WIN2 # WIN3;
 FAST8_ADDR  = ONB & !WIN3 & !WIN5;         // 8-bit on-board, 0 WS: UARTs, INTCTRL, displays, empty windows
@@ -775,7 +790,7 @@ WIN5 = field_CPU_ADDRESS:['h'00005XX];     // VIO (card)
 WIN6 = field_CPU_ADDRESS:['h'00006XX];     // 7-segment A
 WIN7 = field_CPU_ADDRESS:['h'00007XX];     // 7-segment B
 WIN8 = field_CPU_ADDRESS:['h'00008XX];     // status LEDs
-ONB  = field_CPU_ADDRESS:['h'0XXXXXX];     // A27-A24 = 0: on-board area of the 8/16-bit regions
+ONB  = field_CPU_ADDRESS:['h'0XXXXXX];     // A27-A24 all 0: on-board area of the 8/16-bit regions
 VMW  = !CPU_A27 & !CPU_A26 & !CPU_A25 & !CPU_A24 & !CPU_A23 & !CPU_A22 & !CPU_A21;  // 2 MB VMEM window
 
 /* IDE: 0x4000_0000-0x4000_03FF (base timing) and the same registers at 0x4000_0800-0x4000_0BFF
@@ -1188,3 +1203,7 @@ If IORDY never goes low, CS3 is not needed. The pull-up can stay; it is part of 
 | 2026-10-18 | CS3 written (optional): IORDY to DEVMAP pin 37 via J28 pin 1 plus a 1K pull-up (P8), and a counter hold in DEVMAP rev 24. Added the SET FEATURES "IORDY disabled" step to the CS2 software notes. Next-PCB routing consolidated in NextPCB.md. |
 | 2026-10-18 | CS1: added the no-card BUSCTRL build (B4b), which ignores B26 so P3 can wait for the VGA card (decision 9). |
 | 2026-10-18 | Decision 9 decided: CS1 uses the no-card build (B4b); P3 is deferred to the VGA card. |
+| 2026-10-18 | CS1 implemented in the sources: `BUSCTRL2.PLD` rev 30 (B1-B8 with B4b: `VMEM_READY = 'b'1`) and `DEVMAP2.PLD` rev 22 (the 1.8 listing). Awaiting WinCUPL compile and fit review. |
+| 2026-10-18 | CS1 fit review. DEVMAP rev 22: 36/128 cells, pins kept, fast acknowledges one level after AS. BUSCTRL rev 30: DSACK trimmed (B7: no `!VMEM_ADDR` in `DEV32_DONE`, no FC on SRAM/big flash, `DSACK0_SLOW` node), so both DSACKs fit in one macrocell; 79/128 cells, pins kept. Cascade logic was tried and does not fit with the fixed pinout. |
+| 2026-10-18 | WinCUPL would not open `DEVMAP2.PLD` rev 22 ("doesn't exist. New File assumed"). Its editor's symbol parser crashes on a line holding a `field` reference, then `;`, then `=`, which the ONB line had in its comment. Reworded that comment in the source and in the 1.8 and D3 listings. Added `plds/check-wincupl-open.ps1`, which runs the same parser over .PLD files. DEVMAP rev 22 now compiles in WinCUPL with the same fit (36/128). |
+| 2026-10-18 | BUSCTRL rev 30 compiled in WinCUPL: 79/128 cells, 34 flip-flops, 223 product terms, no cascades. Both DSACKs are single macrocells with `nDEV_ACK` and `nEXP_VMEM_GNT` one level deep. Every declared pin is at its declared position in both CPLDs. DEVMAP pins 21, 27, 83 and 84 are unused, as in rev 20. Ready for 1.11 step 2. |
