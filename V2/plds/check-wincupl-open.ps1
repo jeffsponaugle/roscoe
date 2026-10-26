@@ -32,11 +32,13 @@
     powershell -ExecutionPolicy Bypass -File plds\check-wincupl-open.ps1
 
 .EXAMPLE
-    powershell -ExecutionPolicy Bypass -File plds\check-wincupl-open.ps1 plds\DEVMAPV2\DEVMAP2.PLD
+    powershell -ExecutionPolicy Bypass -File plds\check-wincupl-open.ps1 plds\DEVMAPV2 plds\BUSCTRLV2
 #>
 param(
-    [string[]] $Path = @($PSScriptRoot)
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]] $Path
 )
+if (-not $Path) { $Path = @($PSScriptRoot) }
 
 # VB runtime error 5 (Invalid procedure call or argument), the only error the parser can raise.
 class VbError : System.Exception {

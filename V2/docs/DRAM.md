@@ -1,6 +1,6 @@
 # Roscoe V2 - DRAM interface and refresh
 
-The DRAM controller lives entirely in the bus-controller CPLD, BUSCTRL (U58). This document covers the hardware on schematic sheets 7 and 8, the address mapping, the access cycle, CAS-before-RAS refresh, timing margins and bring-up. It is written against `plds/BUSCTRLV2/BUSCTRL2.PLD` revision 29; see [TheoryOfOperations.md](TheoryOfOperations.md) for the rest of the system. **Status (October 2026):** DRAM works on the current boards. They run four 128 MB 60 ns SIMMs (all eight 64 MB ranks, 512 MB at 0x8000_0000-0x9FFF_FFFF) in the 64/128 MB build with J3 = 1-2 and one wait state, at 12 and 16 MHz. The README's "test DRAM" to-do predates this.
+The DRAM controller lives entirely in the bus-controller CPLD, BUSCTRL (U58). This document covers the hardware on schematic sheets 7 and 8, the address mapping, the access cycle, CAS-before-RAS refresh, timing margins and bring-up. It is written against `plds/BUSCTRLV2/BUSCTRL2_REV29.PLD` (revision 29); see [TheoryOfOperations.md](TheoryOfOperations.md) for the rest of the system. **Status (October 2026):** DRAM works on the current boards. They run four 128 MB 60 ns SIMMs (all eight 64 MB ranks, 512 MB at 0x8000_0000-0x9FFF_FFFF) in the 64/128 MB build with J3 = 1-2 and one wait state, at 12 and 16 MHz. The README's "test DRAM" to-do predates this.
 
 Timing is at a 20 MHz CPU clock unless stated otherwise. At the 12 and 16 MHz clocks the boards actually use, the margins in Section 3.3 are larger. DRAM parameters are taken from the TMS417400A data sheet in `datasheets/`, which is representative of the 4M x 4 parts on 16/32 MB SIMMs; -60 and -70 grades are shown.
 
@@ -72,7 +72,7 @@ DRAM occupies 0x8000_0000-0xFFFF_FFFF (`DRAM_REGION_ACCESS` = A31 & AS & not CPU
 | 3B | `nDRAM_S3B_RAS` | BANK 3, side B | 0x9800_0000-0x9BFF_FFFF | 0x8600_0000-0x86FF_FFFF |
 | 4B | `nDRAM_S4B_RAS` | BANK 4, side B | 0x9C00_0000-0x9FFF_FFFF | 0x8700_0000-0x87FF_FFFF |
 
-The 16/32 MB decode is the commented-out block in `BUSCTRL2.PLD` (it is active in `REV25_BUSCTRL2-1632.PLD`). A rank's memory is contiguous only when the SIMM's organisation matches the build:
+The 16/32 MB decode is the commented-out block in the BUSCTRL source (`BUSCTRL2_REV29.PLD` and later; it is active in `REV25_BUSCTRL2-1632.PLD`). A rank's memory is contiguous only when the SIMM's organisation matches the build:
 
 * **64/128 MB build, J3 = 1-2:** row = A25, A24-A14 (12 bits); column = A13-A2 (12 bits); 64 MB per rank. Correct for SIMMs whose ranks are 16M x 32 (12/12 addressing).
 * **16/32 MB build, J3 = 2-3:** row = A23-A13 (11 bits); column = A12-A2 (11 bits; DRAM_A11 unused); 16 MB per rank. Correct for 4M x 32 ranks (11/11 addressing).

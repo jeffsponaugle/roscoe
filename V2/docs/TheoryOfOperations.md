@@ -7,9 +7,9 @@ This document explains how the Roscoe V2 main board works, with the emphasis on 
 | Main board schematic | `RoscoeMainboardV2Final.pdf` (17 sheets) |
 | Main board netlist | `schematic/RoscoeMainboardV2Final.net` (DipTrace 5.3.5.1 export), checked 2026-10-18 |
 | SRAM riser schematic | `RoscoeSRAMboardV2.pdf` (2 sheets) |
-| Bus controller CPLD, U58 | `plds/BUSCTRLV2/BUSCTRL2.PLD`, revision 29 ("nCPU_RD delayed"), fitted 2026-07-04 |
-| Device decoder CPLD, U59 | `plds/DEVMAPV2/DEVMAP2.PLD`, revision 20 (newest JED in the folder: `REV21-DEVMAP2-2WS.jed`) |
-| Interrupt controller CPLD, U60 | `plds/INTCTRLV2/INTCTRL2.PLD`, revision 16 |
+| Bus controller CPLD, U58 | `plds/BUSCTRLV2/BUSCTRL2_REV29.PLD`, revision 29 ("nCPU_RD delayed"), fitted 2026-07-04. Later revisions: [changes.md](changes.md) |
+| Device decoder CPLD, U59 | `plds/DEVMAPV2/DEVMAP2_REV21.PLD`, revision 21 (2 wait states; it builds `REV21-DEVMAP2-2WS.jed` exactly). Until 2026-10-23 it was named `DEVMAP2_REV20.PLD` and its Revision line said 20. Later revisions: [changes.md](changes.md) |
+| Interrupt controller CPLD, U60 | `plds/INTCTRLV2/INTCTRL2_REV16.PLD`, revision 16 |
 | Programmable timer CPLD, U11 | `plds/PTC/PTC.PLD`, revision 4/5 |
 | CPU | `datasheets/MC68030_Data_Sheet_1991.pdf`, `datasheets/MC68030UM.pdf` |
 | CPLDs | `datasheets/ATF1508.pdf` |
@@ -346,7 +346,7 @@ On byte writes the 68030 copies the byte to every lane it might need, so byte wr
 
 ## 7 CPLD 1 - BUSCTRL (U58)
 
-Source: `plds/BUSCTRLV2/BUSCTRL2.PLD` (rev 29). Fit: 77/128 macrocells, 28 flip-flops, 80/80 I/O pins and 4/4 dedicated inputs. The I/O pins are all used, so new outputs have to reuse test or spare pins (7.9).
+Source: `plds/BUSCTRLV2/BUSCTRL2_REV29.PLD` (rev 29). Fit: 77/128 macrocells, 28 flip-flops, 80/80 I/O pins and 4/4 dedicated inputs. The I/O pins are all used, so new outputs have to reuse test or spare pins (7.9).
 
 ### 7.1 Pins
 
@@ -461,7 +461,7 @@ The `EXTRA_*` nets are real board traces between the CPLDs that neither end driv
 
 ## 8 CPLD 2 - DEVMAP (U59)
 
-Source: `plds/DEVMAPV2/DEVMAP2.PLD` (rev 20). There is no `.fit` file and no `DEVMAP2.jed` in the folder, only `REV17-...IDEWAIT`, `REV20-...` and `REV21-...-2WS.jed`. The `.chn` files expect `DEVMAP2.jed`. Fit summary from the source comments: 34/128 macrocells, so there is plenty of room.
+Source: `plds/DEVMAPV2/DEVMAP2_REV21.PLD` (rev 21, the 2-wait-state version that was on the board before CS1). It builds `REV21-DEVMAP2-2WS.jed` exactly at every minimization level (checked 2026-10-23). Until then it was named `DEVMAP2_REV20.PLD`, and its Revision line said 20. `REV20-DEVMAP2.jed` came from an earlier source that was not kept. The `.chn` chain files in `plds/` still point at the old `C:\Users\jeff\src\roscoe\plds` folder and the generic JED names. Fit summary from the source comments: 34/128 macrocells, so there is plenty of room.
 
 DEVMAP has **no AS input**. Everything is derived from BUSCTRL's region selects, which include AS. That costs one extra CPLD level on every device select, and DEVMAP cannot see the end of a cycle until BUSCTRL's select goes away.
 
@@ -524,7 +524,7 @@ nDEV_WAIT = (!nIDE_WAITSTATE_DELAY) & nEXP_DEV_WAIT;
 
 ## 9 CPLD 3 - INTCTRL (U60)
 
-Source: `plds/INTCTRLV2/INTCTRL2.PLD` (rev 16). Fit: 65/128 macrocells, 30 flip-flops, 46/80 I/O. JEDs in the folder: `INTCTRL2.jed`, `INTCTRL2_ORIG.jed`, `INTCTRL2-RSTFIX.jed`.
+Source: `plds/INTCTRLV2/INTCTRL2_REV16.PLD` (rev 16). Fit: 65/128 macrocells, 30 flip-flops, 46/80 I/O. JEDs in the folder: `INTCTRL2_REV16.jed` (the rev 16 build, checked against the source 2026-10-23), `INTCTRL2_ORIG.jed`, `INTCTRL2-RSTFIX.jed`.
 
 ### 9.1 Pins
 

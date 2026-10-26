@@ -1,7 +1,7 @@
 Name	 DEVMAP;
 PartNo   DEVMAP;
 Date     03/30/2024;
-Revision 22;
+Revision 23;
 Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
@@ -13,10 +13,14 @@ PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
 //      VERSION 20 - IDE Waitstate Fix/Test, plus IDE WR pin delaty
+//      VERSION 21 - 2 wait states (REV21-DEVMAP2-2WS.jed).
 //      VERSION 22 - CS1 (docs/changes.md): device acknowledge (nDEV_ACK) replaces nDEV_WAIT;
 //                   nCPU_AS on pin 35 (rework wire, was TESTP0); BUSCTRL rev 30 region selects are
 //                   address-only; per-device wait-state counter; interim IDE write strobe for both ports.
-//                   The rev 20 source is kept as DEVMAP2_REV20.PLD.
+//                   The rev 21 source is kept as DEVMAP2_REV21.PLD (its Revision line said 20).
+//      VERSION 23 - CS2 (docs/changes.md): IDE timing. Counter T1..T8; IDE selects with a fast alias
+//                   (A11) and held to the rising edge after AS; registered /IOW; /IOR window sent to
+//                   BUSCTRL rev 31 on pin 83 (nIDE_RD_INH). The rev 22 source is kept as DEVMAP2_REV22.PLD.
 
 /*
     How a device cycle ends (CS1):
@@ -25,6 +29,9 @@ PROPERTY ATMEL {PREASSIGN = KEEP};
     Fast devices acknowledge one CPLD level after AS (0 wait states). The RTC and IDE acknowledge after a
     fixed number of falling clock edges from the T counter. Expansion cards acknowledge through nEXP_ACK
     (connector A26). An acknowledge is held until AS negates, so DSACK is never retracted.
+
+    The IDE strobes come from the same counter (CS2): /IOW is nIDE_WR, and /IOR is BUSCTRL's nCPU_RD,
+    shaped for IDE reads by nIDE_RD_INH.
 
     The address decodes are buried nodes on purpose: they depend only on the address, which settles long
     before AS, so every device select and every 0-wait-state acknowledge is a single product term on AS.
@@ -58,6 +65,7 @@ Pin[33]  = nEXP_CACHE_CTRL;
 */
 
 Pin[6]   = nDEV_ACK;         // to BUSCTRL pin 90 (was nDEV_WAIT): 0 = the selected device may finish
+Pin[83]  = nIDE_RD_INH;      // to BUSCTRL pin 81 (net EXTRA_BC_DM1, was a dummy): 0 = keep /IOR (nCPU_RD) off
 
 Pin[29]  = nEXP_DEV8BITCS;
 Pin[30]  = nEXP_DEV16BITCS;
@@ -93,7 +101,6 @@ Pin[8]   = EXP_DM_CPLD2;
 Pin[21]  = EXTRA_DM_INT1;
 Pin[27]  = EXTRA_DM_INT2;
 
-Pin[83]  = EXTRA_BC_DM1;
 Pin[84]  = EXTRA_BC_DM2;
 
 Pin[36,37] = [TESTP1..2];    // J28 pins 2 and 1 (J28 pin 3 is now nCPU_AS)
@@ -105,31 +112,40 @@ Pin[19]  = UNUSED1;
 Pin[20]  = UNUSED2;
 
 PINNODE = [WIN0..8];
-PINNODE = ONB, VMW, IDEWIN, FAST8_ADDR, FAST16_ADDR, CARD_ADDR8;
+PINNODE = ONB, VMW, IDEW, FAST8_ADDR, FAST16_ADDR, CARD_ADDR8;
 PINNODE = SLOW_ACK, nINTCTRL_CS_delay;
-PINNODE = [T1..3];
+PINNODE = [T1..8];
+PINNODE = [IDEH0..3];
 
 FIELD field_CPU_ADDRESS = [CPU_A27..8];
 
 /*
-    Address-only window decodes (settle before AS). The same window numbers are used in the 8- and 16-bit
-    regions. The smallest window decodable here is 256 bytes, since only A27-A8 come to this CPLD.
+    Address-only window decodes (settle before AS). WIN4 is the PTC in the 16-bit region; the others are
+    the 8-bit devices. The IDE ports have their own decode (IDEW, below). The smallest window decodable
+    here is 256 bytes, since only A27-A8 come to this CPLD.
 */
 
-WIN0 = field_CPU_ADDRESS:['h'00000XX];     // UART A        | IDE1 CS0
-WIN1 = field_CPU_ADDRESS:['h'00001XX];     // UART B        | IDE1 CS1
-WIN2 = field_CPU_ADDRESS:['h'00002XX];     // INTCTRL       | IDE2 CS0
-WIN3 = field_CPU_ADDRESS:['h'00003XX];     // RTC           | IDE2 CS1
-WIN4 = field_CPU_ADDRESS:['h'00004XX];     //               | PTC
+WIN0 = field_CPU_ADDRESS:['h'00000XX];     // UART A
+WIN1 = field_CPU_ADDRESS:['h'00001XX];     // UART B
+WIN2 = field_CPU_ADDRESS:['h'00002XX];     // INTCTRL
+WIN3 = field_CPU_ADDRESS:['h'00003XX];     // RTC
+WIN4 = field_CPU_ADDRESS:['h'00004XX];     // PTC (16-bit region)
 WIN5 = field_CPU_ADDRESS:['h'00005XX];     // VIO (card)
 WIN6 = field_CPU_ADDRESS:['h'00006XX];     // 7-segment A
 WIN7 = field_CPU_ADDRESS:['h'00007XX];     // 7-segment B
 WIN8 = field_CPU_ADDRESS:['h'00008XX];     // status LEDs
 ONB  = field_CPU_ADDRESS:['h'0XXXXXX];     // A27-A24 all 0: on-board area of the 8/16-bit regions
 VMW  = !CPU_A27 & !CPU_A26 & !CPU_A25 & !CPU_A24 & !CPU_A23 & !CPU_A22 & !CPU_A21;  // 2 MB VMEM window
-IDEWIN      = WIN0 # WIN1 # WIN2 # WIN3;
+
+/* IDE: 0x4000_0000-0x4000_03FF (base timing) and the same registers at 0x4000_0800-0x4000_0BFF
+   (A11 high: fast timing, for the Data register). A9 picks the port and A8 picks CS0 or CS1. */
+IDEW = !CPU_A27 & !CPU_A26 & !CPU_A25 & !CPU_A24 & !CPU_A23 & !CPU_A22 & !CPU_A21 & !CPU_A20
+     & !CPU_A19 & !CPU_A18 & !CPU_A17 & !CPU_A16 & !CPU_A15 & !CPU_A14 & !CPU_A13 & !CPU_A12
+     & !CPU_A10;
+IDE_FAST = CPU_A11;
+
 FAST8_ADDR  = ONB & !WIN3 & !WIN5;         // 8-bit on-board, 0 WS: UARTs, INTCTRL, displays, empty windows
-FAST16_ADDR = ONB & !IDEWIN;               // 16-bit on-board, 0 WS: PTC, empty windows
+FAST16_ADDR = ONB & !IDEW;                 // 16-bit on-board, 0 WS: PTC, empty windows
 CARD_ADDR8  = !ONB # WIN5;                 // 8-bit card space, including the VIO window
 
 /* AS-qualified regions: one level after AS */
@@ -141,7 +157,7 @@ nEXP_DEV8BITCS  = !DEV8;
 nEXP_DEV16BITCS = !DEV16;
 nEXP_DEV32BITCS = !DEV32;
 
-/* Device selects */
+/* Device selects other than IDE */
 nUART_CSA       = !(DEV8 & WIN0);          // 0x3000 0000 - 0x3000 00FF
 nUART_CSB       = !(DEV8 & WIN1);          // 0x3000 0100 - 0x3000 01FF
 nINTCTRL_CS_pre = !(DEV8 & WIN2);          // 0x3000 0200 - 0x3000 02FF
@@ -150,14 +166,8 @@ nEXP_VIO_CS     = !(DEV8 & WIN5);          // 0x3000 0500 - 0x3000 05FF
 nSEVENSEGA_WR   = !(DEV8 & WIN6);          // 0x3000 0600 - 0x3000 06FF
 nSEVENSEGB_WR   = !(DEV8 & WIN7);          // 0x3000 0700 - 0x3000 07FF
 nSTATUSLED_WR   = !(DEV8 & WIN8);          // 0x3000 0800 - 0x3000 08FF
-nIDE1_CSA       = !(DEV16 & WIN0);         // 0x4000 0000 - 0x4000 00FF
-nIDE1_CSB       = !(DEV16 & WIN1);         // 0x4000 0100 - 0x4000 01FF
-nIDE2_CSA       = !(DEV16 & WIN2);         // 0x4000 0200 - 0x4000 02FF
-nIDE2_CSB       = !(DEV16 & WIN3);         // 0x4000 0300 - 0x4000 03FF
 nPTC_CS         = !(DEV16 & WIN4);         // 0x4000 0400 - 0x4000 04FF
 nEXP_VMEM_CS    = !(DEV32 & VMW);          // 0x5000 0000 - 0x501F FFFF (2 MB)
-nIDE_BUFFER_EN1 = !(DEV16 & (WIN0 # WIN1));
-nIDE_BUFFER_EN2 = !(DEV16 & (WIN2 # WIN3));
 
 /* Interrupt-controller write pulse (unchanged): the select ends at the first falling edge of a write,
    so the INTCTRL registers are clocked mid-cycle while the CPU is still driving the data. */
@@ -178,34 +188,69 @@ SYS_RESET_POS = !nSYS_RESET;
 /* Timing counter, thermometer code: Tn is set by the n-th falling CPU_CLK edge after AS asserts,
    and all of them clear as AS negates. T1 is set by the edge that ends S2, the CPU's first DSACK
    sample, so a device acknowledged by Tn gets n wait states. A decode such as Tm & !Tn changes
-   only one input per edge, so unlike a binary count it cannot glitch. CS2 extends it to T8. */
-[T1..3].ck = !CPU_CLK;
-[T1..3].ar = nCPU_AS # !nSYS_RESET;
+   only one input per edge, so unlike a binary count it cannot glitch. */
+[T1..8].ck = !CPU_CLK;
+[T1..8].ar = nCPU_AS # !nSYS_RESET;
 T1.d = 'b'1;
 T2.d = T1;
 T3.d = T2;
+T4.d = T3;
+T5.d = T4;
+T6.d = T5;
+T7.d = T6;
+T8.d = T7;
+
+/* IDE selects. They assert one level after AS. Each IDEH flop holds its select until the first
+   rising edge after AS negates, so /CS stays valid after /IOR rises (ATA t9). The transceivers use
+   the AS-qualified selects only, so they let go of the CPU bus as AS negates. */
+IDE_CYC = DEV16 & IDEW;
+IDE1A = IDE_CYC & !CPU_A9 & !CPU_A8;       // IDE1 /CS0: 0x4000 0000 - 00FF, fast 0x4000 0800 - 08FF
+IDE1B = IDE_CYC & !CPU_A9 &  CPU_A8;       // IDE1 /CS1: 0x4000 0100 - 01FF, fast 0x4000 0900 - 09FF
+IDE2A = IDE_CYC &  CPU_A9 & !CPU_A8;       // IDE2 /CS0: 0x4000 0200 - 02FF, fast 0x4000 0A00 - 0AFF
+IDE2B = IDE_CYC &  CPU_A9 &  CPU_A8;       // IDE2 /CS1: 0x4000 0300 - 03FF, fast 0x4000 0B00 - 0BFF
+
+[IDEH0..3].ck = CPU_CLK;
+[IDEH0..3].ar = !nSYS_RESET;
+IDEH0.d = IDE1A;
+IDEH1.d = IDE1B;
+IDEH2.d = IDE2A;
+IDEH3.d = IDE2B;
+
+nIDE1_CSA = !(IDE1A # IDEH0);
+nIDE1_CSB = !(IDE1B # IDEH1);
+nIDE2_CSA = !(IDE2A # IDEH2);
+nIDE2_CSB = !(IDE2B # IDEH3);
+
+nIDE_BUFFER_EN1 = !(IDE1A # IDE1B);
+nIDE_BUFFER_EN2 = !(IDE2A # IDE2B);
+
+/* /IOW, both ports. A falling-edge register, so it cannot glitch; at each edge it sees the count
+   from before the edge. Base: low from edge 2 to edge 7. Fast: from edge 1 to edge 3. */
+nIDE_WR.d  = !( IDE_CYC & !CPU_RW & ( (!IDE_FAST & T1 & !T6) # (IDE_FAST & !T2) ) );
+nIDE_WR.ck = !CPU_CLK;
+nIDE_WR.ap = nCPU_AS # !nSYS_RESET;
+
+/* /IOR window. /IOR is BUSCTRL's nCPU_RD, a falling-edge register that can only assert on an edge
+   where this signal is high, and that sees the count from the edge before. Base: /IOR low from
+   edge 2 to edge 9. Fast: from edge 1 to edge 4. Both end on the edge where the CPU latches the
+   data. High in every other cycle, so nCPU_RD behaves as before for all other devices. */
+nIDE_RD_INH = !( IDE_CYC & CPU_RW & ( (!IDE_FAST & (!T1 # T8)) # (IDE_FAST & T3) ) );
 
 /* Acknowledge. Slow devices and cards go through the SLOW_ACK node, so the 0-wait-state terms
-   stay one level after AS. To change a device's wait states, change its Tn term. */
-SLOW_ACK = (DEV8  & WIN3   & T2)                           // RTC: 2 wait states
-         # (DEV16 & IDEWIN & T3)                           // IDE: 3 wait states (interim, CS2)
+   stay one level after AS. IDE timing lives in three places that must change together: the
+   T terms here, in nIDE_WR and in nIDE_RD_INH (docs/changes.md 2.2). */
+SLOW_ACK = (DEV8  & WIN3 & T2)                                      // RTC: 2 wait states
+         # (IDE_CYC & !IDE_FAST & T7)                               // IDE base: 7 wait states
+         # (IDE_CYC &  IDE_FAST & T2)                               // IDE fast: 2 wait states
          # (((DEV8 & CARD_ADDR8) # (DEV16 & !ONB) # (DEV32 & !VMW)) & !nEXP_ACK);   // cards
 
 nDEV_ACK = !( (DEV8 & FAST8_ADDR) # (DEV16 & FAST16_ADDR) # SLOW_ACK );
-
-/* Interim IDE write strobe, both ports: low from the 1st to the 3rd falling edge (2 clocks). It is
-   a falling-edge register, so it cannot glitch; at each edge it sees the count from before the
-   edge. It ends a clock before the acknowledge, while CS and the data buffers are still on.
-   CS2 replaces it. */
-nIDE_WR.d  = !(DEV16 & IDEWIN & !CPU_RW & !T2);
-nIDE_WR.ck = !CPU_CLK;
-nIDE_WR.ap = nCPU_AS # !nSYS_RESET;
 
 /* Unused and reserved pins (dummy expressions keep the pins assigned) */
 EXP_DM_CPLD1 = 'b'0;
 EXP_DM_CPLD2 = 'b'0;
 EXPANSION_EXTRA2 = nSYS_RESET & CPU_RW & nEXP_ACK & nEXP_CACHE_CTRL;
-EXPANSION_EXTRA1 = EXTRA_DM_INT1 & EXTRA_DM_INT2 & EXTRA_BC_DM1 & EXTRA_BC_DM2 & EXP_DM_CPLD1 & EXP_DM_CPLD2;
+EXPANSION_EXTRA1 = EXTRA_DM_INT1 & EXTRA_DM_INT2 & EXTRA_BC_DM2 & EXP_DM_CPLD1 & EXP_DM_CPLD2;
 UNUSED1 = UNUSED2;
 
 /* Test points on J28 */

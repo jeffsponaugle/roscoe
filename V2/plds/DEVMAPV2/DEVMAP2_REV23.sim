@@ -1,0 +1,488 @@
+%SIGNAL
+PIN   0 =  CARD_ADDR8 
+PIN  76 =  CPU_A8 
+PIN  75 =  CPU_A9 
+PIN  72 =  CPU_A10 
+PIN  71 =  CPU_A11 
+PIN  70 =  CPU_A12 
+PIN  69 =  CPU_A13 
+PIN  68 =  CPU_A14 
+PIN  67 =  CPU_A15 
+PIN  65 =  CPU_A16 
+PIN  64 =  CPU_A17 
+PIN  63 =  CPU_A18 
+PIN  61 =  CPU_A19 
+PIN  60 =  CPU_A20 
+PIN  58 =  CPU_A21 
+PIN  57 =  CPU_A22 
+PIN  56 =  CPU_A23 
+PIN  55 =  CPU_A24 
+PIN  54 =  CPU_A25 
+PIN  53 =  CPU_A26 
+PIN  52 =  CPU_A27 
+PIN  87 =  CPU_CLK 
+PIN 100 =  CPU_RW 
+PIN  92 =  EXPANSION_EXTRA1 
+PIN  99 =  EXPANSION_EXTRA2 
+PIN   7 =  EXP_DM_CPLD1 
+PIN   8 =  EXP_DM_CPLD2 
+PIN  84 =  EXTRA_BC_DM2 
+PIN  21 =  EXTRA_DM_INT1 
+PIN  27 =  EXTRA_DM_INT2 
+PIN   0 =  FAST16_ADDR 
+PIN   0 =  FAST8_ADDR 
+PIN   0 =  IDEH0 
+PIN   0 =  IDEH1 
+PIN   0 =  IDEH2 
+PIN   0 =  IDEH3 
+PIN   0 =  IDEW 
+PIN   0 =  ONB 
+PIN  17 =  RTC_A_SEL 
+PIN  16 =  RTC_D_SEL 
+PIN   0 =  SLOW_ACK 
+PIN  93 =  SYS_RESET_POS 
+PIN   0 =  T1 
+PIN   0 =  T2 
+PIN   0 =  T3 
+PIN   0 =  T4 
+PIN   0 =  T5 
+PIN   0 =  T6 
+PIN   0 =  T7 
+PIN   0 =  T8 
+PIN  36 =  TESTP1 
+PIN  37 =  TESTP2 
+PIN  19 =  UNUSED1 
+PIN  20 =  UNUSED2 
+PIN   0 =  VMW 
+PIN   0 =  WIN0 
+PIN   0 =  WIN1 
+PIN   0 =  WIN2 
+PIN   0 =  WIN3 
+PIN   0 =  WIN4 
+PIN   0 =  WIN5 
+PIN   0 =  WIN6 
+PIN   0 =  WIN7 
+PIN   0 =  WIN8 
+PIN  35 =  nCPU_AS 
+PIN   2 =  nDEV16BITCS 
+PIN   5 =  nDEV32BITCS 
+PIN   1 =  nDEV8BITCS 
+PIN   6 =  nDEV_ACK 
+PIN  32 =  nEXP_ACK 
+PIN  33 =  nEXP_CACHE_CTRL 
+PIN  30 =  nEXP_DEV16BITCS 
+PIN  31 =  nEXP_DEV32BITCS 
+PIN  29 =  nEXP_DEV8BITCS 
+PIN  22 =  nEXP_VIO_CS 
+PIN  23 =  nEXP_VMEM_CS 
+PIN  50 =  nIDE1_CSA 
+PIN  49 =  nIDE1_CSB 
+PIN  48 =  nIDE2_CSA 
+PIN  47 =  nIDE2_CSB 
+PIN  45 =  nIDE_BUFFER_EN1 
+PIN  44 =  nIDE_BUFFER_EN2 
+PIN  83 =  nIDE_RD_INH 
+PIN  46 =  nIDE_WR 
+PIN  13 =  nINTCTRL_CS 
+PIN   0 =  nINTCTRL_CS_delay 
+PIN  28 =  nPTC_CS 
+PIN  14 =  nRTC_CS 
+PIN  96 =  nSEVENSEGA_WR 
+PIN  97 =  nSEVENSEGB_WR 
+PIN  98 =  nSTATUSLED_WR 
+PIN  88 =  nSYS_RESET 
+PIN  25 =  nUART_CSA 
+PIN  24 =  nUART_CSB 
+%END
+
+%FIELD
+FIELD field_CPU_ADDRESS = CPU_A27,CPU_A26,CPU_A25,CPU_A24,CPU_A23,CPU_A22,CPU_A21,CPU_A20,CPU_A19,CPU_A18,CPU_A17,CPU_A16,CPU_A15,CPU_A14,CPU_A13,CPU_A12,CPU_A11,CPU_A10,CPU_A9,CPU_A8
+%END
+
+%EQUATION
+CARD_ADDR8 =>
+    !ONB
+  # WIN5
+
+DEV8 =>
+    !nCPU_AS & !nDEV8BITCS
+
+DEV16 =>
+    !nCPU_AS & !nDEV16BITCS
+
+DEV32 =>
+    !nCPU_AS & !nDEV32BITCS
+
+EXPANSION_EXTRA1 =>
+    EXP_DM_CPLD1 & EXP_DM_CPLD2 & EXTRA_BC_DM2 & EXTRA_DM_INT1 & EXTRA_DM_INT2
+
+EXPANSION_EXTRA2 =>
+    CPU_RW & nEXP_ACK & nEXP_CACHE_CTRL & nSYS_RESET
+
+EXP_DM_CPLD1 =>
+    0 
+
+EXP_DM_CPLD2 =>
+    0 
+
+FAST16_ADDR =>
+    !IDEW & ONB
+
+FAST8_ADDR =>
+    ONB & !WIN3 & !WIN5
+
+IDE1A =>
+    !CPU_A8 & !CPU_A9 & IDEW & !nCPU_AS & !nDEV16BITCS
+
+IDE1B =>
+    CPU_A8 & !CPU_A9 & IDEW & !nCPU_AS & !nDEV16BITCS
+
+IDE2A =>
+    !CPU_A8 & CPU_A9 & IDEW & !nCPU_AS & !nDEV16BITCS
+
+IDE2B =>
+    CPU_A8 & CPU_A9 & IDEW & !nCPU_AS & !nDEV16BITCS
+
+IDEH0.d  =>
+    !CPU_A8 & !CPU_A9 & IDEW & !nCPU_AS & !nDEV16BITCS
+
+IDEH0.ar  =>
+    !nSYS_RESET
+
+IDEH0.ck  =>
+    CPU_CLK
+
+IDEH1.d  =>
+    CPU_A8 & !CPU_A9 & IDEW & !nCPU_AS & !nDEV16BITCS
+
+IDEH1.ar  =>
+    !nSYS_RESET
+
+IDEH1.ck  =>
+    CPU_CLK
+
+IDEH2.d  =>
+    !CPU_A8 & CPU_A9 & IDEW & !nCPU_AS & !nDEV16BITCS
+
+IDEH2.ar  =>
+    !nSYS_RESET
+
+IDEH2.ck  =>
+    CPU_CLK
+
+IDEH3.d  =>
+    CPU_A8 & CPU_A9 & IDEW & !nCPU_AS & !nDEV16BITCS
+
+IDEH3.ar  =>
+    !nSYS_RESET
+
+IDEH3.ck  =>
+    CPU_CLK
+
+IDEW =>
+    !CPU_A10 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+IDE_CYC =>
+    IDEW & !nCPU_AS & !nDEV16BITCS
+
+IDE_FAST =>
+    CPU_A11
+
+ONB =>
+    !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+RTC_A_SEL.d  =>
+    1 
+
+RTC_A_SEL.ar  =>
+    nRTC_CS
+  # !nSYS_RESET
+
+RTC_A_SEL.ck  =>
+    !CPU_CLK
+
+RTC_D_SEL =>
+    !RTC_A_SEL
+
+SLOW_ACK =>
+    T2 & WIN3 & !nCPU_AS & !nDEV8BITCS
+  # !ONB & !nCPU_AS & !nDEV16BITCS & !nEXP_ACK
+  # !VMW & !nCPU_AS & !nDEV32BITCS & !nEXP_ACK
+  # CARD_ADDR8 & !nCPU_AS & !nDEV8BITCS & !nEXP_ACK
+  # CPU_A11 & IDEW & T2 & !nCPU_AS & !nDEV16BITCS
+  # !CPU_A11 & IDEW & T7 & !nCPU_AS & !nDEV16BITCS
+
+SYS_RESET_POS =>
+    !nSYS_RESET
+
+T1.d  =>
+    1 
+
+T1.ar  =>
+    nCPU_AS
+  # !nSYS_RESET
+
+T1.ck  =>
+    !CPU_CLK
+
+T2.d  =>
+    T1
+
+T2.ar  =>
+    nCPU_AS
+  # !nSYS_RESET
+
+T2.ck  =>
+    !CPU_CLK
+
+T3.d  =>
+    T2
+
+T3.ar  =>
+    nCPU_AS
+  # !nSYS_RESET
+
+T3.ck  =>
+    !CPU_CLK
+
+T4.d  =>
+    T3
+
+T4.ar  =>
+    nCPU_AS
+  # !nSYS_RESET
+
+T4.ck  =>
+    !CPU_CLK
+
+T5.d  =>
+    T4
+
+T5.ar  =>
+    nCPU_AS
+  # !nSYS_RESET
+
+T5.ck  =>
+    !CPU_CLK
+
+T6.d  =>
+    T5
+
+T6.ar  =>
+    nCPU_AS
+  # !nSYS_RESET
+
+T6.ck  =>
+    !CPU_CLK
+
+T7.d  =>
+    T6
+
+T7.ar  =>
+    nCPU_AS
+  # !nSYS_RESET
+
+T7.ck  =>
+    !CPU_CLK
+
+T8.d  =>
+    T7
+
+T8.ar  =>
+    nCPU_AS
+  # !nSYS_RESET
+
+T8.ck  =>
+    !CPU_CLK
+
+TESTP1 =>
+    nDEV_ACK
+
+TESTP2 =>
+    T1
+
+UNUSED1 =>
+    UNUSED2
+
+VMW =>
+    !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+WIN0 =>
+    !CPU_A8 & !CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+WIN1 =>
+    CPU_A8 & !CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+WIN2 =>
+    !CPU_A8 & CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+WIN3 =>
+    CPU_A8 & CPU_A9 & !CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+WIN4 =>
+    !CPU_A8 & !CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+WIN5 =>
+    CPU_A8 & !CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+WIN6 =>
+    !CPU_A8 & CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+WIN7 =>
+    CPU_A8 & CPU_A9 & CPU_A10 & !CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+WIN8 =>
+    !CPU_A8 & !CPU_A9 & !CPU_A10 & CPU_A11 & !CPU_A12 & !CPU_A13 & !CPU_A14 & !CPU_A15 & !CPU_A16 & !CPU_A17 & !CPU_A18 & !CPU_A19 & !CPU_A20 & !CPU_A21 & !CPU_A22 & !CPU_A23 & !CPU_A24 & !CPU_A25 & !CPU_A26 & !CPU_A27
+
+nDEV_ACK =>
+    !SLOW_ACK & nCPU_AS
+  # !FAST16_ADDR & !FAST8_ADDR & !SLOW_ACK
+  # !FAST8_ADDR & !SLOW_ACK & nDEV16BITCS
+  # !FAST16_ADDR & !SLOW_ACK & nDEV8BITCS
+  # !SLOW_ACK & nDEV16BITCS & nDEV8BITCS
+
+nEXP_DEV16BITCS =>
+    nCPU_AS
+  # nDEV16BITCS
+
+nEXP_DEV32BITCS =>
+    nCPU_AS
+  # nDEV32BITCS
+
+nEXP_DEV8BITCS =>
+    nCPU_AS
+  # nDEV8BITCS
+
+nEXP_VIO_CS =>
+    !WIN5
+  # nCPU_AS
+  # nDEV8BITCS
+
+nEXP_VMEM_CS =>
+    !VMW
+  # nCPU_AS
+  # nDEV32BITCS
+
+nIDE1_CSA =>
+    CPU_A8 & !IDEH0
+  # CPU_A9 & !IDEH0
+  # !IDEH0 & !IDEW
+  # !IDEH0 & nCPU_AS
+  # !IDEH0 & nDEV16BITCS
+
+nIDE1_CSB =>
+    !CPU_A8 & !IDEH1
+  # CPU_A9 & !IDEH1
+  # !IDEH1 & !IDEW
+  # !IDEH1 & nCPU_AS
+  # !IDEH1 & nDEV16BITCS
+
+nIDE2_CSA =>
+    CPU_A8 & !IDEH2
+  # !CPU_A9 & !IDEH2
+  # !IDEH2 & !IDEW
+  # !IDEH2 & nCPU_AS
+  # !IDEH2 & nDEV16BITCS
+
+nIDE2_CSB =>
+    !CPU_A8 & !IDEH3
+  # !CPU_A9 & !IDEH3
+  # !IDEH3 & !IDEW
+  # !IDEH3 & nCPU_AS
+  # !IDEH3 & nDEV16BITCS
+
+nIDE_BUFFER_EN1 =>
+    CPU_A9
+  # !IDEW
+  # nCPU_AS
+  # nDEV16BITCS
+
+nIDE_BUFFER_EN2 =>
+    !CPU_A9
+  # !IDEW
+  # nCPU_AS
+  # nDEV16BITCS
+
+nIDE_RD_INH =>
+    !CPU_RW
+  # !IDEW
+  # nCPU_AS
+  # nDEV16BITCS
+  # CPU_A11 & !T3
+  # !CPU_A11 & T1 & !T8
+
+nIDE_WR.d  =>
+    CPU_RW
+  # !IDEW
+  # nCPU_AS
+  # nDEV16BITCS
+  # !CPU_A11 & !T1
+  # CPU_A11 & T2
+  # !CPU_A11 & T6
+
+nIDE_WR.ap  =>
+    nCPU_AS
+  # !nSYS_RESET
+
+nIDE_WR.ck  =>
+    !CPU_CLK
+
+nINTCTRL_CS =>
+    !WIN2
+  # nCPU_AS
+  # nDEV8BITCS
+  # nINTCTRL_CS_delay
+
+nINTCTRL_CS_delay.d  =>
+    1 
+
+nINTCTRL_CS_delay.ar  =>
+    nDEV8BITCS
+  # nCPU_AS
+  # !WIN2
+  # CPU_RW
+
+nINTCTRL_CS_delay.ck  =>
+    !CPU_CLK
+
+nINTCTRL_CS_pre =>
+    nDEV8BITCS
+  # nCPU_AS
+  # !WIN2
+
+nPTC_CS =>
+    !WIN4
+  # nCPU_AS
+  # nDEV16BITCS
+
+nRTC_CS =>
+    !WIN3
+  # nCPU_AS
+  # nDEV8BITCS
+
+nSEVENSEGA_WR =>
+    !WIN6
+  # nCPU_AS
+  # nDEV8BITCS
+
+nSEVENSEGB_WR =>
+    !WIN7
+  # nCPU_AS
+  # nDEV8BITCS
+
+nSTATUSLED_WR =>
+    !WIN8
+  # nCPU_AS
+  # nDEV8BITCS
+
+nUART_CSA =>
+    !WIN0
+  # nCPU_AS
+  # nDEV8BITCS
+
+nUART_CSB =>
+    !WIN1
+  # nCPU_AS
+  # nDEV8BITCS
+
+%END

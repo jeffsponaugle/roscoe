@@ -1,7 +1,7 @@
 Name	 DEVMAP;
 PartNo   DEVMAP;
 Date     03/30/2024;
-Revision 20;
+Revision 21;
 Designer Sponaugle;
 Company  Ratiometric;
 Assembly None;
@@ -13,6 +13,8 @@ PROPERTY ATMEL {TMS_PULLUP = ON};
 PROPERTY ATMEL {PREASSIGN = KEEP};
 
 //      VERSION 20 - IDE Waitstate Fix/Test, plus IDE WR pin delaty
+//      VERSION 21 - 2 wait states: this source builds REV21-DEVMAP2-2WS.jed. Its Revision line said 20
+//                   until 2026-10-23, when it was renamed from DEVMAP2_REV20.PLD.
 
 /* 
                                                 Inputs

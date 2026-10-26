@@ -2,18 +2,20 @@
 
 This is the working list of every change we decide to make: physical rework on the current boards, CPLD source changes, expansion-bus definitions, and items for the next PCB. Changes are grouped into change sets (CS). Each set says what to wire, what to edit in which CPLD file, how to program and test it, and how to roll it back. Background and analysis are in [TheoryOfOperations.md](TheoryOfOperations.md).
 
-Nothing in this file has been programmed yet. CS1's CUPL was written against BUSCTRL rev 29 and DEVMAP rev 20/21 and now compiles (see the change log). CS2's is written against CS1's revisions plus INTCTRL rev 16 and still needs a WinCUPL compile, with the fit report checked for logic levels as noted in each step.
+CS1 is programmed on the board (2026-10-23). CS2's DEVMAP and BUSCTRL changes are in the sources and compile with the command-line tools; they still need the WinCUPL compile and programming. INTCTRL stays at rev 16 for now, so the IDE interrupts stay disabled.
 
 Before opening an edited .PLD in WinCUPL, run `powershell -ExecutionPolicy Bypass -File plds\check-wincupl-open.ps1`. WinCUPL's editor cannot open some files that compile cleanly and reports them as "doesn't exist. New File assumed". The script runs the editor's parser and names the line it would stop on.
+
+**File names.** Each CPLD source carries its revision in its name: `DEVMAP2_REV23.PLD`, `BUSCTRL2_REV31.PLD`, `INTCTRL2_REV16.PLD`. WinCUPL names every output after the source, so the JED says which revision it is (`DEVMAP2_REV23.jed`); the JED header itself only carries a date. For a new revision, copy the newest source to the next number and edit the copy, including its `Revision` line. The older files stay as they are, for rollback. Files named the older way (`REV29_BUSCTRL2-CPURD.jed`) are left as they were. Those older builds used minimization `-m1`, while WinCUPL is now set to `-m2`, so rebuilding an old source gives a different but equivalent fuse map.
 
 **Status values:** Proposed -> Agreed -> Implemented (source edited) -> Programmed -> Verified.
 
 | Set | Title | Status |
 |---|---|---|
 | CS0 | Pull-up rework already on the boards | Done on current boards; fix on next PCB |
-| CS1 | Device-cycle acknowledge (replaces `nDEV_WAIT`), fast VMEM window with card hold-off, bus timeout, refresh during long cycles | **Implemented** (sources edited 2026-10-18: `BUSCTRL2.PLD` rev 30, no-card build; `DEVMAP2.PLD` rev 22; INTCTRL unchanged). Both compile and fit in WinCUPL with every pin kept (DEVMAP 36/128 cells, BUSCTRL 79/128); not yet programmed. Backups: `BUSCTRL2_REV29.PLD`, `DEVMAP2_REV20.PLD`. |
-| CS2 | IDE timing on both ports, /IOR window, interrupts, pull-downs, reset length | **Agreed (2.11)**; implement after CS1 is verified. P7 (buffer swap) proposed. |
-| CS3 | IDE IORDY flow control (base window) | **Optional**: only if cards still fail after CS2 and the 3.4 check shows IORDY activity |
+| CS1 | Device-cycle acknowledge (replaces `nDEV_WAIT`), fast VMEM window with card hold-off, bus timeout, refresh during long cycles | **Implemented** (sources edited 2026-10-18: `BUSCTRL2_REV30.PLD`, no-card build; `DEVMAP2_REV22.PLD`; INTCTRL unchanged). **Programmed 2026-10-23**: boots; IDE and RTC work. Both compiled and fitted in WinCUPL with every pin kept (DEVMAP 36/128 cells, BUSCTRL 79/128). Backups: `BUSCTRL2_REV29.PLD`, `DEVMAP2_REV21.PLD`. |
+| CS2 | IDE timing on both ports, /IOR window, interrupts, pull-downs, reset length | **Programmed 2026-10-25** (`DEVMAP2_REV23`, `BUSCTRL2_REV31`; P6 not fitted yet). Almost every card that failed IDENTIFY on CS1 now identifies and reads and writes correctly. Still open: two identical industrial cards stall or freeze after many writes, and a 128 MB card hangs after a few MB of writes. All three read Status = 0xD0 (busy) when stuck. INTCTRL rev 17 (IDE interrupts) deferred: decision 7. P7 (buffer swap) proposed. Rollback: the rev 22 and rev 30 files. |
+| CS3 | IDE IORDY flow control (base window) | **Implemented in source** (2026-10-25: `DEVMAP2_REV24.PLD`; command-line fit 46/128 cells, 16 flip-flops, pins kept). Not yet compiled in WinCUPL or programmed. Needs P8: the 1K pull-up, plus the wire to J28 pin 1 fitted only after rev 24 is programmed. The 3.4 check decides whether it is worth using. |
 
 ---
 
@@ -479,7 +481,7 @@ TESTP1 = nDEV_ACK;     // J28 pin 2
 TESTP2 = T1;           // J28 pin 1
 ```
 
-Removed compared with rev 20: `IDE_WR_SIG_A`, `IDE_WR_SIG_RESET`, `IDE_WR_SIG`, `nIDE_WAITSTATE_DELAY`, `..._RESETw1`, `..._RESETw2`, `nDEV_WAIT`, and `TESTP0`. After compiling, check that `nDEV_ACK` and the device selects use only the `WINn`/`ONB`/`VMW`/`FASTx` nodes plus single product terms on `nCPU_AS`.
+Removed compared with rev 21: `IDE_WR_SIG_A`, `IDE_WR_SIG_RESET`, `IDE_WR_SIG`, `nIDE_WAITSTATE_DELAY`, `..._RESETw1`, `..._RESETw2`, `nDEV_WAIT`, and `TESTP0`. After compiling, check that `nDEV_ACK` and the device selects use only the `WINn`/`ONB`/`VMW`/`FASTx` nodes plus single product terms on `nCPU_AS`.
 
 Interim IDE timing this gives, before CS2:
 
@@ -654,7 +656,7 @@ Notes, no change needed now:
 
 ### 2.4 DEVMAP (U59) - rev 23
 
-**D1. The old IDE code (rev 20) that goes away.** It is shown here without its comments. CS1's rev 22 already removed it; it is repeated here so the old and new versions can be compared.
+**D1. The old IDE code (rev 21) that goes away.** It is shown here without its comments. CS1's rev 22 already removed it; it is repeated here so the old and new versions can be compared.
 
 ```
 /* 16 bit devices */
@@ -701,7 +703,7 @@ TESTP2 = nIDE_WAITSTATE_DELAY_RESETw2;
 
 **D2. What replaces each part**
 
-| Rev 20 | What was wrong | Rev 23 |
+| Rev 21 | What was wrong | Rev 23 |
 |---|---|---|
 | `nIDEx_CSx` from BUSCTRL's AS-qualified region select | /CS two CPLDs after AS, and it ends with AS | `IDE1A`..`IDE2B` from `DEV16` (direct AS), held by the `IDEH0..3` flops until the rising edge after AS negates |
 | `nIDE_BUFFER_ENx` from the CS outputs | would inherit the /CS hold | built from the AS-qualified selects only, so the transceivers let go of the CPU bus as AS negates |
@@ -913,6 +915,8 @@ TESTP2 = T1;           // J28 pin 1
 
 After compiling, check in the fit report that `nIDE_WR` is a registered output, and that `nDEV_ACK`'s 0-wait-state terms still depend only on the address nodes plus `nCPU_AS`. Resource estimate: about 60 of 128 macrocells.
 
+The source (2026-10-23) is this listing with rev 22's comments and version notes kept. Command-line fit with WinCUPL's settings (`-m2`): 46/128 cells and 15 flip-flops, with every pin kept. `nIDE_WR` is registered. `nIDE_RD_INH`, the four /CS outputs and both buffer enables are each one level after AS. The fitter folds `SLOW_ACK` into `nDEV_ACK`, which then has nine product terms, all one level after AS. To get the extra terms it chains in a neighbouring macrocell (one cascade). That adds at most tPEXP, 0.8 ns on the -10 part, to the 0-wait-state terms; the slow terms lose a level. The address decodes (WIN, ONB, VMW, IDEW) are foldback terms (tSEXP 5 ns), but they settle before AS.
+
 ### 2.5 BUSCTRL (U58) - rev 31
 
 Edits on top of rev 30 (1.7).
@@ -941,8 +945,10 @@ nCPU_RD.d  = !(CPU_RW & nIDE_RD_INH);
 nCPU_RD.ck = !CPU_CLK;
 nCPU_RD.ap = nCPU_AS # !nSYS_RESET;
 
-TESTP3 = CPU_A19 & CPU_A18 & CPU_A17 & nIDE_RD_INH & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2 & nCPU_RMC & UNUSED2;
+TESTP3 = CPU_A19 & CPU_A18 & CPU_A17 & nIDE_RD_INH & EXTRA_BC_DM2 & EXTRA_BC_INT1 & EXTRA_BC_INT2 & nCPU_RMC & UNUSED2 & nEXP_VMEM_BUSY;
 ```
+
+(`nEXP_VMEM_BUSY` stays in the TESTP3 dummy term from CS1's no-card build, B4b.)
 
 `nIDE_RD_INH` has to be stable 7 ns before each falling edge. DEVMAP changes it at most about 18 ns after a falling edge (counter plus one level). At the start of a cycle it follows AS, so it can come as late as 34 ns after the edge that begins S1. Either way the margin is at least 20 ns at 16 MHz.
 
@@ -985,9 +991,11 @@ The release still happens on a falling CPU_CLK edge, as before. The software-res
 //                   reset stretched to about 490 clocks.
 ```
 
-Resources: 5 more macrocells (about 87 of 128). Pin 81 changes from a dummy input to a used input; no new pins.
+Resources: 5 more macrocells (about 87 of 128). Pin 81 changes from a dummy input to a used input; no new pins. Command-line fit of the rev 31 source: 86/128 cells, 39 flip-flops, every pin kept, both DSACKs unchanged and one macrocell each. The RST counter's next-state logic uses two helper nodes; that costs nothing at 1 MHz.
 
 ### 2.6 INTCTRL (U60) - rev 17
+
+**Deferred (decision 7, 2026-10-23).** INTCTRL stays at rev 16 for now, so the IDE interrupts stay disabled; the rest of CS2 does not depend on it. I1-I3 below are ready for when they are wanted, together with P5.
 
 **I1. Let software enable the IDE interrupts.** Old:
 
@@ -1041,7 +1049,7 @@ The masks reset to 0, so nothing changes until software sets them. Fit P5 before
 ### 2.8 Programming, wiring and test
 
 1. CS1 must be in place and verified.
-2. Build DEVMAP rev 23 and BUSCTRL rev 31, and program both in the same session: `nIDE_RD_INH` runs between them. INTCTRL rev 17 can come later. Keep the rev 22 and rev 30 JEDs for rollback.
+2. Build `DEVMAP2_REV23.PLD` and `BUSCTRL2_REV31.PLD` (WinCUPL writes `DEVMAP2_REV23.jed` and `BUSCTRL2_REV31.jed`), and program both in the same session: `nIDE_RD_INH` runs between them. INTCTRL rev 17 can come later. Keep the rev 22 and rev 30 JEDs for rollback (`DEVMAP2_REV22.jed` and `BUSCTRL2_REV30.jed`).
 3. Fit P6 now. Fit P5 before enabling IDE interrupts.
 4. Checks, with the logic analyser on:
    * U70: `nCPU_AS` pin 4, `CPU_RW` pin 5, `nCPU_DSACK1` pin 9, `nSYS_RESET` pin 13, `CPU_CLK` pin 3;
@@ -1062,7 +1070,7 @@ The masks reset to 0, so nothing changes until software sets them. Fit P5 before
 
 ### 2.9 Rollback
 
-Program the CS1 JEDs (DEVMAP rev 22, BUSCTRL rev 30) and INTCTRL rev 16. P5 and P6 can stay: with rev 16 the IDE interrupt masks are forced off, and the DD7 pull-down is harmless.
+Program the CS1 JEDs (DEVMAP rev 22, BUSCTRL rev 30: `DEVMAP2_REV22.jed`, `BUSCTRL2_REV30.jed`) and INTCTRL rev 16. P5 and P6 can stay: with rev 16 the IDE interrupt masks are forced off, and the DD7 pull-down is harmless.
 
 ### 2.10 Next PCB items from CS2
 
@@ -1086,6 +1094,7 @@ Consolidated, with pin assignments, in [NextPCB.md](NextPCB.md).
 | 4 | Stretch every reset to about 490 clocks (B10; affects the whole board) | **Agreed 2026-10-18** |
 | 5 | Fit P5 and P6 now | **Agreed 2026-10-18** |
 | 6 | P7: SN74AHCT245 in the IDE data path | Proposed (added after the netlist check) |
+| 7 | Leave the IDE interrupts disabled for now: INTCTRL stays at rev 16, and I1-I3 and P5 wait | **Decided 2026-10-23** |
 
 ---
 
@@ -1159,6 +1168,8 @@ Timing, base window at 16 MHz:
 
 Resources: one more flop, and an extra product term on T3..T8.
 
+The source (`DEVMAP2_REV24.PLD`, 2026-10-25) follows D4-D6, with two small differences. `Pin[37]` is listed with the inputs. `IDE_CYC` is defined with the AS-qualified regions, so that `IDE_HOLD` never refers to a name defined further down the file. Command-line fit with WinCUPL's `-m2`: 46/128 cells, 16 flip-flops and 92 product terms, with every pin kept and pin 37 an input. T3-T8 each have two product terms, one level deep. `nIDE_WR`, `nIDE_RD_INH` and `nDEV_ACK` are unchanged from rev 23.
+
 ### 3.4 Check before building it
 
 Find out first whether any of your cards actually use IORDY:
@@ -1170,7 +1181,7 @@ If IORDY never goes low, CS3 is not needed. The pull-up can stay; it is part of 
 
 ### 3.5 Programming, test and rollback
 
-1. Program DEVMAP rev 24 with J28 pin 1 still unconnected, then power off and fit the P8 wire.
+1. Program DEVMAP rev 24 with J28 pin 1 still unconnected, then power off and fit the P8 wire. Do not run the board in between. Until the wire and pull-up reach pin 37, `IDE_IORDY` floats, and if its pin keeper holds it low, every base-window IDE access stalls until the bus timeout ends it in a bus error. For the same reason, rev 24 must never be used without the P8 pull-up.
 2. Repeat the CS2 tests (2.8) on the cards that failed. Then test the hold with **no drive on J4**:
    * Run a loop reading 0x4000_00E1, and link J4 pin 27 to pin 26 (GND).
    * Each read should now stall until the bus timeout ends it with a bus error, after about 15 us.
@@ -1183,8 +1194,8 @@ If IORDY never goes low, CS3 is not needed. The pull-up can stay; it is part of 
 
 | # | Question | Status |
 |---|---|---|
-| 1 | Build CS3 at all | Open: decide after CS2 testing and the 3.4 check |
-| 2 | IORDY on J28 pin 1 (losing the `T1` test point) for this board | Proposed |
+| 1 | Build CS3 at all | **Source built 2026-10-25** at Jeff's request (`DEVMAP2_REV24.PLD`). Fitting P8 and programming it: decide after the 3.4 check |
+| 2 | IORDY on J28 pin 1 (losing the `T1` test point) for this board | **As built in rev 24** |
 
 ---
 
@@ -1206,4 +1217,11 @@ If IORDY never goes low, CS3 is not needed. The pull-up can stay; it is part of 
 | 2026-10-18 | CS1 implemented in the sources: `BUSCTRL2.PLD` rev 30 (B1-B8 with B4b: `VMEM_READY = 'b'1`) and `DEVMAP2.PLD` rev 22 (the 1.8 listing). Awaiting WinCUPL compile and fit review. |
 | 2026-10-18 | CS1 fit review. DEVMAP rev 22: 36/128 cells, pins kept, fast acknowledges one level after AS. BUSCTRL rev 30: DSACK trimmed (B7: no `!VMEM_ADDR` in `DEV32_DONE`, no FC on SRAM/big flash, `DSACK0_SLOW` node), so both DSACKs fit in one macrocell; 79/128 cells, pins kept. Cascade logic was tried and does not fit with the fixed pinout. |
 | 2026-10-18 | WinCUPL would not open `DEVMAP2.PLD` rev 22 ("doesn't exist. New File assumed"). Its editor's symbol parser crashes on a line holding a `field` reference, then `;`, then `=`, which the ONB line had in its comment. Reworded that comment in the source and in the 1.8 and D3 listings. Added `plds/check-wincupl-open.ps1`, which runs the same parser over .PLD files. DEVMAP rev 22 now compiles in WinCUPL with the same fit (36/128). |
-| 2026-10-18 | BUSCTRL rev 30 compiled in WinCUPL: 79/128 cells, 34 flip-flops, 223 product terms, no cascades. Both DSACKs are single macrocells with `nDEV_ACK` and `nEXP_VMEM_GNT` one level deep. Every declared pin is at its declared position in both CPLDs. DEVMAP pins 21, 27, 83 and 84 are unused, as in rev 20. Ready for 1.11 step 2. |
+| 2026-10-18 | BUSCTRL rev 30 compiled in WinCUPL: 79/128 cells, 34 flip-flops, 223 product terms, no cascades. Both DSACKs are single macrocells with `nDEV_ACK` and `nEXP_VMEM_GNT` one level deep. Every declared pin is at its declared position in both CPLDs. DEVMAP pins 21, 27, 83 and 84 are unused, as in rev 21. Ready for 1.11 step 2. |
+| 2026-10-23 | CS1 programmed: the board boots, and IDE and RTC work. |
+| 2026-10-23 | CS2 implemented in the sources: DEVMAP rev 23 (the D3 listing, keeping rev 22's comments and version notes) and BUSCTRL rev 31 (B9-B11; TESTP3 keeps `nEXP_VMEM_BUSY`). Command-line fit with WinCUPL's `-m2`: DEVMAP 46/128 cells, BUSCTRL 86/128, every pin kept (fit notes in 2.4 and 2.5). Decision 7: INTCTRL stays at rev 16, so the IDE interrupts stay disabled. Saved `DEVMAP2_REV22` and `BUSCTRL2_REV30` (.PLD and the programmed .jed) for rollback. `plds/check-wincupl-open.ps1` now takes several paths. |
+| 2026-10-23 | CPLD files renamed by revision (see "File names" at the top). The newest sources are now `DEVMAP2_REV23.PLD` and `BUSCTRL2_REV31.PLD`, and INTCTRL's is `INTCTRL2_REV16.PLD`. The generic build outputs were renamed to the revision they came from (`DEVMAP2_REV22.*`, `BUSCTRL2_REV30.*`, `INTCTRL2_REV16.*`). The generic `DEVMAP2.jed`, `BUSCTRL2.jed` and `INTCTRL2.PLD` were removed, since each was byte-identical to its `_REVnn` copy. `INTCTRL2_REV16.jed` was checked against a rebuild of the rev 16 source. `DEVMAP2_REV20.PLD` turns out to build `REV21-DEVMAP2-2WS.jed` exactly, so it is really rev 21. |
+| 2026-10-23 | `DEVMAP2_REV20.*` renamed to `DEVMAP2_REV21.*`, and the source's Revision line set to 21 with a VERSION 21 note. The VERSION 21 note was also added to rev 22 and 23, whose version notes now point to `DEVMAP2_REV21.PLD`. Mentions of that source as "rev 20" in this file now say rev 21. A rebuild gives the same fuses as before for rev 21, 22 and 23. |
+| 2026-10-24 | CS1 captures of IDENTIFY on a good and a bad CF card. The bad card sometimes returns the same Data-register word twice, so it has missed a read. It then still has data waiting (Status 0x58 rather than 0x50) when the next IDENTIFY is issued. On CS1, /IOR, /CS0 and DA0-DA2 all change together at the end of a read (2.1 problem 5), so a card that counts reads on the rising edge of /IOR can miss one. |
+| 2026-10-25 | CS2 programmed, P6 not fitted yet. Almost all cards that failed IDENTIFY on CS1 now identify and read and write correctly, which confirms the CS1 finding above. Still open: write-only hangs on three cards (status row above). |
+| 2026-10-25 | CS3 source built: `DEVMAP2_REV24.PLD`, a copy of rev 23 with D4-D6 applied (IORDY on pin 37, the `IORDY_S` sampler, and a hold on T3-T8). Command-line fit 46/128 cells, 16 flip-flops, pins kept (3.3). Not compiled in WinCUPL or programmed. 3.5 now warns not to run rev 24 without P8. |
