@@ -1,0 +1,12 @@
+# This file records the configuration of libintl in a form that
+# can be read back in by a configure script in a sister directory.
+# See config/gettext.m4 for its use.
+
+USE_NLS='yes'
+LIBINTL='-L${top_builddir}/../intl -lintl -liconv'
+LIBINTL_DEP='${top_builddir}/../intl/libintl.a'
+INCINTL='-I${top_builddir}/../intl'
+
+XGETTEXT='/opt/homebrew/bin/xgettext'
+GMSGFMT='/opt/homebrew/bin/msgfmt'
+POSUB='po'
