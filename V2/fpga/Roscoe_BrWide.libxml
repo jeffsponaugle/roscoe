@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Library Type="DipTrace-PatternLibrary" Name="Roscoe Br Wide" Hint="Alchitry Br Wide V2 socket for Roscoe (Au underneath), pins 1-136" Version="5.3.5.0" UID32="1046235283" Units="mm">
+  <PadStyles>
+    <PadStyle Name="BrWidePad" Type="Through" HoleType="Round" Hole="1.016">
+      <MainStack Shape="Ellipse" Width="1.88" Height="1.88" />
+    </PadStyle>
+    <PadStyle Name="BrWidePad1" Type="Through" HoleType="Round" Hole="1.016">
+      <MainStack Shape="Rectangle" Width="1.88" Height="1.88" />
+    </PadStyle>
+  </PadStyles>
+  <Patterns>
+    <Pattern Id="0" RefDes="J" Mounting="Through" Width="70" Height="55" Orientation="0" LockTypeChange="N" Type="Free" Float1="0" Float2="0" Float3="0" Int1="0" Int2="0">
+      <Name>Roscoe_BrWide_V2</Name>
+      <Name_Description>Alchitry Br Wide V2 with the Au plugged in underneath. Roscoe pins 1-136: pin = 14*(J-7)+hole for J7-J14, 112+6*(J-17)+hole for J17-J20. Origin = centre of the mounting-hole rectangle.</Name_Description>
+      <Value />
+      <DefPad Style="BrWidePad" />
+      <Pads>
+        <Pad Id="0" Style="BrWidePad1" X="25.26" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="N" Group="-1">
+          <Number>1</Number>
+          <Note>J7-1 GND</Note>
+        </Pad>
+        <Pad Id="1" Style="BrWidePad" X="25.26" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>2</Number>
+          <Note>J7-2 A0</Note>
+        </Pad>
+        <Pad Id="2" Style="BrWidePad" X="25.26" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>3</Number>
+          <Note>J7-3 A1</Note>
+        </Pad>
+        <Pad Id="3" Style="BrWidePad" X="25.26" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>4</Number>
+          <Note>J7-4 SIZ0</Note>
+        </Pad>
+        <Pad Id="4" Style="BrWidePad" X="25.26" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>5</Number>
+          <Note>J7-5 SIZ1</Note>
+        </Pad>
+        <Pad Id="5" Style="BrWidePad" X="25.26" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>6</Number>
+          <Note>J7-6 FC0</Note>
+        </Pad>
+        <Pad Id="6" Style="BrWidePad" X="25.26" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>7</Number>
+          <Note>J7-7 spare</Note>
+        </Pad>
+        <Pad Id="7" Style="BrWidePad" X="25.26" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>8</Number>
+          <Note>J7-8 spare</Note>
+        </Pad>
+        <Pad Id="8" Style="BrWidePad" X="25.26" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>9</Number>
+          <Note>J7-9 spare</Note>
+        </Pad>
+        <Pad Id="9" Style="BrWidePad" X="25.26" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>10</Number>
+          <Note>J7-10 DEV_CODE0</Note>
+        </Pad>
+        <Pad Id="10" Style="BrWidePad" X="25.26" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>11</Number>
+          <Note>J7-11 DEV_CODE1</Note>
+        </Pad>
+        <Pad Id="11" Style="BrWidePad" X="25.26" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>12</Number>
+          <Note>J7-12 DEV_CODE2</Note>
+        </Pad>
+        <Pad Id="12" Style="BrWidePad" X="25.26" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>13</Number>
+          <Note>J7-13 DEV_CODE3</Note>
+        </Pad>
+        <Pad Id="13" Style="BrWidePad" X="25.26" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>14</Number>
+          <Note>J7-14 nEXP_ACK</Note>
+        </Pad>
+        <Pad Id="14" Style="BrWidePad" X="27.82" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>15</Number>
+          <Note>J8-1 GND</Note>
+        </Pad>
+        <Pad Id="15" Style="BrWidePad" X="27.82" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>16</Number>
+          <Note>J8-2 spare</Note>
+        </Pad>
+        <Pad Id="16" Style="BrWidePad" X="27.82" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>17</Number>
+          <Note>J8-3 FC2</Note>
+        </Pad>
+        <Pad Id="17" Style="BrWidePad" X="27.82" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>18</Number>
+          <Note>J8-4 R/W</Note>
+        </Pad>
+        <Pad Id="18" Style="BrWidePad" X="27.82" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>19</Number>
+          <Note>J8-5 nAS</Note>
+        </Pad>
+        <Pad Id="19" Style="BrWidePad" X="27.82" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>20</Number>
+          <Note>J8-6 nCBREQ</Note>
+        </Pad>
+        <Pad Id="20" Style="BrWidePad" X="27.82" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>21</Number>
+          <Note>J8-7 nSYS_RESET</Note>
+        </Pad>
+        <Pad Id="21" Style="BrWidePad" X="27.82" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>22</Number>
+          <Note>J8-8 CPU_CLK</Note>
+        </Pad>
+        <Pad Id="22" Style="BrWidePad" X="27.82" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>23</Number>
+          <Note>J8-9 PWR_REQ</Note>
+        </Pad>
+        <Pad Id="23" Style="BrWidePad" X="27.82" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>24</Number>
+          <Note>J8-10 nDEV_EN</Note>
+        </Pad>
+        <Pad Id="24" Style="BrWidePad" X="27.82" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>25</Number>
+          <Note>J8-11 SRAM_BA3</Note>
+        </Pad>
+        <Pad Id="25" Style="BrWidePad" X="27.82" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>26</Number>
+          <Note>J8-12 nFPU_CS</Note>
+        </Pad>
+        <Pad Id="26" Style="BrWidePad" X="27.82" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>27</Number>
+          <Note>J8-13 FC1</Note>
+        </Pad>
+        <Pad Id="27" Style="BrWidePad" X="27.82" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>28</Number>
+          <Note>J8-14 spare</Note>
+        </Pad>
+        <Pad Id="28" Style="BrWidePad" X="30.38" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>29</Number>
+          <Note>J9-1 GND</Note>
+        </Pad>
+        <Pad Id="29" Style="BrWidePad" X="30.38" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>30</Number>
+          <Note>J9-2 spare</Note>
+        </Pad>
+        <Pad Id="30" Style="BrWidePad" X="30.38" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>31</Number>
+          <Note>J9-3 nDSACK1</Note>
+        </Pad>
+        <Pad Id="31" Style="BrWidePad" X="30.38" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>32</Number>
+          <Note>J9-4 nDSACK_OE</Note>
+        </Pad>
+        <Pad Id="32" Style="BrWidePad" X="30.38" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>33</Number>
+          <Note>J9-5 nSTERM</Note>
+        </Pad>
+        <Pad Id="33" Style="BrWidePad" X="30.38" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>34</Number>
+          <Note>J9-6 A16</Note>
+        </Pad>
+        <Pad Id="34" Style="BrWidePad" X="30.38" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>35</Number>
+          <Note>J9-7 A17</Note>
+        </Pad>
+        <Pad Id="35" Style="BrWidePad" X="30.38" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>36</Number>
+          <Note>J9-8 A18</Note>
+        </Pad>
+        <Pad Id="36" Style="BrWidePad" X="30.38" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>37</Number>
+          <Note>J9-9 A19</Note>
+        </Pad>
+        <Pad Id="37" Style="BrWidePad" X="30.38" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>38</Number>
+          <Note>J9-10 A20</Note>
+        </Pad>
+        <Pad Id="38" Style="BrWidePad" X="30.38" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>39</Number>
+          <Note>J9-11 A21</Note>
+        </Pad>
+        <Pad Id="39" Style="BrWidePad" X="30.38" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>40</Number>
+          <Note>J9-12 A22</Note>
+        </Pad>
+        <Pad Id="40" Style="BrWidePad" X="30.38" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>41</Number>
+          <Note>J9-13 A23</Note>
+        </Pad>
+        <Pad Id="41" Style="BrWidePad" X="30.38" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>42</Number>
+          <Note>J9-14 A2</Note>
+        </Pad>
+        <Pad Id="42" Style="BrWidePad" X="32.94" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>43</Number>
+          <Note>J10-1 GND</Note>
+        </Pad>
+        <Pad Id="43" Style="BrWidePad" X="32.94" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>44</Number>
+          <Note>J10-2 A24</Note>
+        </Pad>
+        <Pad Id="44" Style="BrWidePad" X="32.94" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>45</Number>
+          <Note>J10-3 nCBACK</Note>
+        </Pad>
+        <Pad Id="45" Style="BrWidePad" X="32.94" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>46</Number>
+          <Note>J10-4 nDSACK0</Note>
+        </Pad>
+        <Pad Id="46" Style="BrWidePad" X="32.94" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>47</Number>
+          <Note>J10-5 nCIIN</Note>
+        </Pad>
+        <Pad Id="47" Style="BrWidePad" X="32.94" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>48</Number>
+          <Note>J10-6 A25</Note>
+        </Pad>
+        <Pad Id="48" Style="BrWidePad" X="32.94" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>49</Number>
+          <Note>J10-7 A26</Note>
+        </Pad>
+        <Pad Id="49" Style="BrWidePad" X="32.94" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>50</Number>
+          <Note>J10-8 A27</Note>
+        </Pad>
+        <Pad Id="50" Style="BrWidePad" X="32.94" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>51</Number>
+          <Note>J10-9 A28</Note>
+        </Pad>
+        <Pad Id="51" Style="BrWidePad" X="32.94" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>52</Number>
+          <Note>J10-10 A29</Note>
+        </Pad>
+        <Pad Id="52" Style="BrWidePad" X="32.94" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>53</Number>
+          <Note>J10-11 A30</Note>
+        </Pad>
+        <Pad Id="53" Style="BrWidePad" X="32.94" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>54</Number>
+          <Note>J10-12 A31</Note>
+        </Pad>
+        <Pad Id="54" Style="BrWidePad" X="32.94" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>55</Number>
+          <Note>J10-13 A3</Note>
+        </Pad>
+        <Pad Id="55" Style="BrWidePad" X="32.94" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>56</Number>
+          <Note>J10-14 SRAM_BA2</Note>
+        </Pad>
+        <Pad Id="56" Style="BrWidePad" X="-32.94" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>57</Number>
+          <Note>J11-1 GND</Note>
+        </Pad>
+        <Pad Id="57" Style="BrWidePad" X="-32.94" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>58</Number>
+          <Note>J11-2 nRAS0</Note>
+        </Pad>
+        <Pad Id="58" Style="BrWidePad" X="-32.94" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>59</Number>
+          <Note>J11-3 nRAS1</Note>
+        </Pad>
+        <Pad Id="59" Style="BrWidePad" X="-32.94" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>60</Number>
+          <Note>J11-4 nRAS2</Note>
+        </Pad>
+        <Pad Id="60" Style="BrWidePad" X="-32.94" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>61</Number>
+          <Note>J11-5 nRAS3</Note>
+        </Pad>
+        <Pad Id="61" Style="BrWidePad" X="-32.94" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>62</Number>
+          <Note>J11-6 nRAS4</Note>
+        </Pad>
+        <Pad Id="62" Style="BrWidePad" X="-32.94" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>63</Number>
+          <Note>J11-7 spare</Note>
+        </Pad>
+        <Pad Id="63" Style="BrWidePad" X="-32.94" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>64</Number>
+          <Note>J11-8 nRAS5</Note>
+        </Pad>
+        <Pad Id="64" Style="BrWidePad" X="-32.94" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>65</Number>
+          <Note>J11-9 nRAS6</Note>
+        </Pad>
+        <Pad Id="65" Style="BrWidePad" X="-32.94" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>66</Number>
+          <Note>J11-10 nRAS7</Note>
+        </Pad>
+        <Pad Id="66" Style="BrWidePad" X="-32.94" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>67</Number>
+          <Note>J11-11 nCAS0</Note>
+        </Pad>
+        <Pad Id="67" Style="BrWidePad" X="-32.94" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>68</Number>
+          <Note>J11-12 nCAS1</Note>
+        </Pad>
+        <Pad Id="68" Style="BrWidePad" X="-32.94" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>69</Number>
+          <Note>J11-13 nCAS2</Note>
+        </Pad>
+        <Pad Id="69" Style="BrWidePad" X="-32.94" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>70</Number>
+          <Note>J11-14 nCAS3</Note>
+        </Pad>
+        <Pad Id="70" Style="BrWidePad" X="-30.4" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>71</Number>
+          <Note>J12-1 GND</Note>
+        </Pad>
+        <Pad Id="71" Style="BrWidePad" X="-30.4" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>72</Number>
+          <Note>J12-2 nDRAM_WE</Note>
+        </Pad>
+        <Pad Id="72" Style="BrWidePad" X="-30.4" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>73</Number>
+          <Note>J12-3 DRAM_MUX</Note>
+        </Pad>
+        <Pad Id="73" Style="BrWidePad" X="-30.4" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>74</Number>
+          <Note>J12-4 spare</Note>
+        </Pad>
+        <Pad Id="74" Style="BrWidePad" X="-30.4" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>75</Number>
+          <Note>J12-5 nDRAM_BUF_OE</Note>
+        </Pad>
+        <Pad Id="75" Style="BrWidePad" X="-30.4" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>76</Number>
+          <Note>J12-6 IORDY</Note>
+        </Pad>
+        <Pad Id="76" Style="BrWidePad" X="-30.4" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>77</Number>
+          <Note>J12-7 A15</Note>
+        </Pad>
+        <Pad Id="77" Style="BrWidePad" X="-30.4" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>78</Number>
+          <Note>J12-8 A8</Note>
+        </Pad>
+        <Pad Id="78" Style="BrWidePad" X="-30.4" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>79</Number>
+          <Note>J12-9 A9</Note>
+        </Pad>
+        <Pad Id="79" Style="BrWidePad" X="-30.4" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>80</Number>
+          <Note>J12-10 A10</Note>
+        </Pad>
+        <Pad Id="80" Style="BrWidePad" X="-30.4" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>81</Number>
+          <Note>J12-11 A11</Note>
+        </Pad>
+        <Pad Id="81" Style="BrWidePad" X="-30.4" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>82</Number>
+          <Note>J12-12 A12</Note>
+        </Pad>
+        <Pad Id="82" Style="BrWidePad" X="-30.4" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>83</Number>
+          <Note>J12-13 A13</Note>
+        </Pad>
+        <Pad Id="83" Style="BrWidePad" X="-30.4" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>84</Number>
+          <Note>J12-14 A14</Note>
+        </Pad>
+        <Pad Id="84" Style="BrWidePad" X="-27.86" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>85</Number>
+          <Note>J13-1 GND</Note>
+        </Pad>
+        <Pad Id="85" Style="BrWidePad" X="-27.86" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>86</Number>
+          <Note>J13-2 nSRAM_CE0</Note>
+        </Pad>
+        <Pad Id="86" Style="BrWidePad" X="-27.86" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>87</Number>
+          <Note>J13-3 nSRAM_CE1</Note>
+        </Pad>
+        <Pad Id="87" Style="BrWidePad" X="-27.86" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>88</Number>
+          <Note>J13-4 nSRAM_CE2</Note>
+        </Pad>
+        <Pad Id="88" Style="BrWidePad" X="-27.86" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>89</Number>
+          <Note>J13-5 nSRAM_CE3</Note>
+        </Pad>
+        <Pad Id="89" Style="BrWidePad" X="-27.86" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>90</Number>
+          <Note>J13-6 nBE0</Note>
+        </Pad>
+        <Pad Id="90" Style="BrWidePad" X="-27.86" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>91</Number>
+          <Note>J13-7 nBE1</Note>
+        </Pad>
+        <Pad Id="91" Style="BrWidePad" X="-27.86" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>92</Number>
+          <Note>J13-8 nBE2</Note>
+        </Pad>
+        <Pad Id="92" Style="BrWidePad" X="-27.86" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>93</Number>
+          <Note>J13-9 NC (1.35V)</Note>
+        </Pad>
+        <Pad Id="93" Style="BrWidePad" X="-27.86" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>94</Number>
+          <Note>J13-10 nBE3</Note>
+        </Pad>
+        <Pad Id="94" Style="BrWidePad" X="-27.86" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>95</Number>
+          <Note>J13-11 D24</Note>
+        </Pad>
+        <Pad Id="95" Style="BrWidePad" X="-27.86" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>96</Number>
+          <Note>J13-12 D25</Note>
+        </Pad>
+        <Pad Id="96" Style="BrWidePad" X="-27.86" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>97</Number>
+          <Note>J13-13 D26</Note>
+        </Pad>
+        <Pad Id="97" Style="BrWidePad" X="-27.86" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>98</Number>
+          <Note>J13-14 D27</Note>
+        </Pad>
+        <Pad Id="98" Style="BrWidePad" X="-25.32" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>99</Number>
+          <Note>J14-1 GND</Note>
+        </Pad>
+        <Pad Id="99" Style="BrWidePad" X="-25.32" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>100</Number>
+          <Note>J14-2 nIPL0</Note>
+        </Pad>
+        <Pad Id="100" Style="BrWidePad" X="-25.32" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>101</Number>
+          <Note>J14-3 nFLASH_CE</Note>
+        </Pad>
+        <Pad Id="101" Style="BrWidePad" X="-25.32" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>102</Number>
+          <Note>J14-4 nBERR</Note>
+        </Pad>
+        <Pad Id="102" Style="BrWidePad" X="-25.32" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>103</Number>
+          <Note>J14-5 spare</Note>
+        </Pad>
+        <Pad Id="103" Style="BrWidePad" X="-25.32" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>104</Number>
+          <Note>J14-6 spare</Note>
+        </Pad>
+        <Pad Id="104" Style="BrWidePad" X="-25.32" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>105</Number>
+          <Note>J14-7 nIPL1</Note>
+        </Pad>
+        <Pad Id="105" Style="BrWidePad" X="-25.32" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>106</Number>
+          <Note>J14-8 nIPL2</Note>
+        </Pad>
+        <Pad Id="106" Style="BrWidePad" X="-25.32" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>107</Number>
+          <Note>J14-9 NC (1.35V)</Note>
+        </Pad>
+        <Pad Id="107" Style="BrWidePad" X="-25.32" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>108</Number>
+          <Note>J14-10 nDATA_OE</Note>
+        </Pad>
+        <Pad Id="108" Style="BrWidePad" X="-25.32" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>109</Number>
+          <Note>J14-11 D28</Note>
+        </Pad>
+        <Pad Id="109" Style="BrWidePad" X="-25.32" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>110</Number>
+          <Note>J14-12 D29</Note>
+        </Pad>
+        <Pad Id="110" Style="BrWidePad" X="-25.32" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>111</Number>
+          <Note>J14-13 D30</Note>
+        </Pad>
+        <Pad Id="111" Style="BrWidePad" X="-25.32" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>112</Number>
+          <Note>J14-14 D31</Note>
+        </Pad>
+        <Pad Id="112" Style="BrWidePad" X="25.26" Y="24.27" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>113</Number>
+          <Note>J17-1 +3V3</Note>
+        </Pad>
+        <Pad Id="113" Style="BrWidePad" X="25.26" Y="21.73" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>114</Number>
+          <Note>J17-2 IRQ_IDE1</Note>
+        </Pad>
+        <Pad Id="114" Style="BrWidePad" X="25.26" Y="19.19" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>115</Number>
+          <Note>J17-3 IRQ_UARTA</Note>
+        </Pad>
+        <Pad Id="115" Style="BrWidePad" X="25.26" Y="16.65" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>116</Number>
+          <Note>J17-4 RESET</Note>
+        </Pad>
+        <Pad Id="116" Style="BrWidePad" X="25.26" Y="14.11" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>117</Number>
+          <Note>J17-5 TMS</Note>
+        </Pad>
+        <Pad Id="117" Style="BrWidePad" X="25.26" Y="11.57" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>118</Number>
+          <Note>J17-6 TDI</Note>
+        </Pad>
+        <Pad Id="118" Style="BrWidePad" X="27.82" Y="24.27" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>119</Number>
+          <Note>J18-1 VCC (RAW in)</Note>
+        </Pad>
+        <Pad Id="119" Style="BrWidePad" X="27.82" Y="21.73" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>120</Number>
+          <Note>J18-2 IRQ_IDE2</Note>
+        </Pad>
+        <Pad Id="120" Style="BrWidePad" X="27.82" Y="19.19" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>121</Number>
+          <Note>J18-3 IRQ_UARTB</Note>
+        </Pad>
+        <Pad Id="121" Style="BrWidePad" X="27.82" Y="16.65" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>122</Number>
+          <Note>J18-4 PROGRAM_B</Note>
+        </Pad>
+        <Pad Id="122" Style="BrWidePad" X="27.82" Y="14.11" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>123</Number>
+          <Note>J18-5 TCK</Note>
+        </Pad>
+        <Pad Id="123" Style="BrWidePad" X="27.82" Y="11.57" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>124</Number>
+          <Note>J18-6 TDO</Note>
+        </Pad>
+        <Pad Id="124" Style="BrWidePad" X="30.38" Y="24.27" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>125</Number>
+          <Note>J19-1 DONE</Note>
+        </Pad>
+        <Pad Id="125" Style="BrWidePad" X="30.38" Y="21.73" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>126</Number>
+          <Note>J19-2 nIRQ_RTC</Note>
+        </Pad>
+        <Pad Id="126" Style="BrWidePad" X="30.38" Y="19.19" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>127</Number>
+          <Note>J19-3 nIRQ_EXP2</Note>
+        </Pad>
+        <Pad Id="127" Style="BrWidePad" X="30.38" Y="16.65" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>128</Number>
+          <Note>J19-4 VBSEL (= Au VBSEL_A)</Note>
+        </Pad>
+        <Pad Id="128" Style="BrWidePad" X="30.38" Y="14.11" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>129</Number>
+          <Note>J19-5 AVP</Note>
+        </Pad>
+        <Pad Id="129" Style="BrWidePad" X="30.38" Y="11.57" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>130</Number>
+          <Note>J19-6 AREF</Note>
+        </Pad>
+        <Pad Id="130" Style="BrWidePad" X="32.94" Y="24.27" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>131</Number>
+          <Note>J20-1 A1V8</Note>
+        </Pad>
+        <Pad Id="131" Style="BrWidePad" X="32.94" Y="21.73" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>132</Number>
+          <Note>J20-2 nIRQ_EXP1</Note>
+        </Pad>
+        <Pad Id="132" Style="BrWidePad" X="32.94" Y="19.19" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>133</Number>
+          <Note>J20-3 nIRQ_EXP3</Note>
+        </Pad>
+        <Pad Id="133" Style="BrWidePad" X="32.94" Y="16.65" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>134</Number>
+          <Note>J20-4 "+2.5V" (= Au VBSEL_B)</Note>
+        </Pad>
+        <Pad Id="134" Style="BrWidePad" X="32.94" Y="14.11" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>135</Number>
+          <Note>J20-5 AVN</Note>
+        </Pad>
+        <Pad Id="135" Style="BrWidePad" X="32.94" Y="11.57" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+          <Number>136</Number>
+          <Note>J20-6 AGND</Note>
+        </Pad>
+      </Pads>
+      <Shapes>
+        <Shape Id="0" Type="Rectangle" Locked="N" Layer="Top Silk" Group="-1">
+          <Points>
+            <Point X="-34.21" Y="-26.53" />
+            <Point X="-24.05" Y="9.03" />
+          </Points>
+        </Shape>
+        <Shape Id="1" Type="Rectangle" Locked="N" Layer="Top Silk" Group="-1">
+          <Points>
+            <Point X="23.99" Y="-26.53" />
+            <Point X="34.21" Y="9.03" />
+          </Points>
+        </Shape>
+        <Shape Id="2" Type="Rectangle" Locked="N" Layer="Top Silk" Group="-1">
+          <Points>
+            <Point X="23.99" Y="10.3" />
+            <Point X="34.21" Y="25.54" />
+          </Points>
+        </Shape>
+        <Shape Id="3" Type="Rectangle" Locked="N" Layer="Top Courtyard" Group="-1">
+          <Points>
+            <Point X="-34.46" Y="-26.78" />
+            <Point X="-23.8" Y="9.28" />
+          </Points>
+        </Shape>
+        <Shape Id="4" Type="Rectangle" Locked="N" Layer="Top Courtyard" Group="-1">
+          <Points>
+            <Point X="23.74" Y="-26.78" />
+            <Point X="34.46" Y="9.28" />
+          </Points>
+        </Shape>
+        <Shape Id="5" Type="Rectangle" Locked="N" Layer="Top Courtyard" Group="-1">
+          <Points>
+            <Point X="23.74" Y="10.05" />
+            <Point X="34.46" Y="25.79" />
+          </Points>
+        </Shape>
+        <Shape Id="6" Type="Text" Locked="N" Layer="Top Silk" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Right" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+          <TextLines>
+            <TextLine>1</TextLine>
+          </TextLines>
+          <Points>
+            <Point X="23" Y="7.76" />
+          </Points>
+        </Shape>
+        <Shape Id="7" Type="Text" Locked="N" Layer="Top Silk" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+          <TextLines>
+            <TextLine>57</TextLine>
+          </TextLines>
+          <Points>
+            <Point X="-32.94" Y="10.25" />
+          </Points>
+        </Shape>
+        <Shape Id="8" Type="Text" Locked="N" Layer="Top Silk" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+          <TextLines>
+            <TextLine>113</TextLine>
+          </TextLines>
+          <Points>
+            <Point X="25.26" Y="26.65" />
+          </Points>
+        </Shape>
+        <Shape Id="9" Type="Polyline" Locked="N" Layer="Top Assy" Group="-1">
+          <Points>
+            <Point X="-33.5" Y="-27.5" />
+            <Point X="-16" Y="-27.5" />
+            <Point X="-14.5" Y="-26" />
+            <Point X="-14.5" Y="-23.5" />
+            <Point X="-13" Y="-22" />
+            <Point X="13" Y="-22" />
+            <Point X="14.5" Y="-23.5" />
+            <Point X="14.5" Y="-26" />
+            <Point X="16" Y="-27.5" />
+            <Point X="33.5" Y="-27.5" />
+            <Point X="35" Y="-26" />
+            <Point X="35" Y="26" />
+            <Point X="33.5" Y="27.5" />
+            <Point X="-33.5" Y="27.5" />
+            <Point X="-35" Y="26" />
+            <Point X="-35" Y="-26" />
+            <Point X="-33.5" Y="-27.5" />
+          </Points>
+        </Shape>
+        <Shape Id="10" Type="Rectangle" Locked="N" Layer="Top Assy" Group="-1">
+          <Points>
+            <Point X="-22.5" Y="-27.5" />
+            <Point X="22.5" Y="27.5" />
+          </Points>
+        </Shape>
+        <Shape Id="11" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+          <TextLines>
+            <TextLine>Au V2 underneath, 4 mm below the Br</TextLine>
+          </TextLines>
+          <Points>
+            <Point X="0" Y="2.5" />
+          </Points>
+        </Shape>
+        <Shape Id="12" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+          <TextLines>
+            <TextLine>keep parts here low</TextLine>
+          </TextLines>
+          <Points>
+            <Point X="0" Y="-1" />
+          </Points>
+        </Shape>
+        <Shape Id="13" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+          <TextLines>
+            <TextLine>Au USB-C</TextLine>
+          </TextLines>
+          <Points>
+            <Point X="12.65" Y="25.5" />
+          </Points>
+        </Shape>
+        <Shape Id="14" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+          <TextLines>
+            <TextLine>BANK B 57-112</TextLine>
+          </TextLines>
+          <Points>
+            <Point X="-29" Y="13.5" />
+          </Points>
+        </Shape>
+        <Shape Id="15" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+          <TextLines>
+            <TextLine>BANK A 1-56</TextLine>
+          </TextLines>
+          <Points>
+            <Point X="29.1" Y="-29.3" />
+          </Points>
+        </Shape>
+        <Shape Id="16" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+          <TextLines>
+            <TextLine>CONTROL 113-136</TextLine>
+          </TextLines>
+          <Points>
+            <Point X="29.1" Y="29.3" />
+          </Points>
+        </Shape>
+      </Shapes>
+      <Holes>
+        <Hole Id="0" Locked="N" X="-20" Y="-25" Diam="4" HoleDiam="2.2" Group="-1" />
+        <Hole Id="1" Locked="N" X="-20" Y="25" Diam="4" HoleDiam="2.2" Group="-1" />
+        <Hole Id="2" Locked="N" X="20" Y="-25" Diam="4" HoleDiam="2.2" Group="-1" />
+        <Hole Id="3" Locked="N" X="20" Y="25" Diam="4" HoleDiam="2.2" Group="-1" />
+      </Holes>
+    </Pattern>
+  </Patterns>
+</Library>

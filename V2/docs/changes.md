@@ -2,7 +2,7 @@
 
 This is the working list of every change we decide to make: physical rework on the current boards, CPLD source changes, expansion-bus definitions, and items for the next PCB. Changes are grouped into change sets (CS). Each set says what to wire, what to edit in which CPLD file, how to program and test it, and how to roll it back. Background and analysis are in [TheoryOfOperations.md](TheoryOfOperations.md).
 
-CS1 is programmed on the board (2026-10-23). CS2's DEVMAP and BUSCTRL changes are in the sources and compile with the command-line tools; they still need the WinCUPL compile and programming. INTCTRL stays at rev 16 for now, so the IDE interrupts stay disabled.
+**Board status (2026-11-21):** the board runs CS3, which includes CS1 and CS2: BUSCTRL rev 31, DEVMAP rev 24 and INTCTRL rev 17, with the reworks P1, P5, P6 and P8 fitted. IDE and every other on-board peripheral work, including the device wait states. The PTC runs the original `PTC.PLD`; `PTCR2.PLD` and `PTCR2A.PLD` in `plds/PTC` are an experiment towards a new PTC and are not programmed. P2, P3 and the B4a hold-off build are planned with the first expansion card.
 
 Before opening an edited .PLD in WinCUPL, run `powershell -ExecutionPolicy Bypass -File plds\check-wincupl-open.ps1`. WinCUPL's editor cannot open some files that compile cleanly and reports them as "doesn't exist. New File assumed". The script runs the editor's parser and names the line it would stop on.
 
@@ -14,8 +14,8 @@ Before opening an edited .PLD in WinCUPL, run `powershell -ExecutionPolicy Bypas
 |---|---|---|
 | CS0 | Pull-up rework already on the boards | Done on current boards; fix on next PCB |
 | CS1 | Device-cycle acknowledge (replaces `nDEV_WAIT`), fast VMEM window with card hold-off, bus timeout, refresh during long cycles | **Implemented** (sources edited 2026-10-18: `BUSCTRL2_REV30.PLD`, no-card build; `DEVMAP2_REV22.PLD`; INTCTRL unchanged). **Programmed 2026-10-23**: boots; IDE and RTC work. Both compiled and fitted in WinCUPL with every pin kept (DEVMAP 36/128 cells, BUSCTRL 79/128). Backups: `BUSCTRL2_REV29.PLD`, `DEVMAP2_REV21.PLD`. |
-| CS2 | IDE timing on both ports, /IOR window, interrupts, pull-downs, reset length | **Programmed 2026-10-25** (`DEVMAP2_REV23`, `BUSCTRL2_REV31`; P6 not fitted yet). Almost every card that failed IDENTIFY on CS1 now identifies and reads and writes correctly. Still open: two identical industrial cards stall or freeze after many writes, and a 128 MB card hangs after a few MB of writes. All three read Status = 0xD0 (busy) when stuck. INTCTRL rev 17 (IDE interrupts) deferred: decision 7. P7 (buffer swap) proposed. Rollback: the rev 22 and rev 30 files. |
-| CS3 | IDE IORDY flow control (base window) | **Implemented in source** (2026-10-25: `DEVMAP2_REV24.PLD`; command-line fit 46/128 cells, 16 flip-flops, pins kept). Not yet compiled in WinCUPL or programmed. Needs P8: the 1K pull-up, plus the wire to J28 pin 1 fitted only after rev 24 is programmed. The 3.4 check decides whether it is worth using. |
+| CS2 | IDE timing on both ports, /IOR window, interrupts, pull-downs, reset length | **Programmed 2026-10-25** (`DEVMAP2_REV23`, `BUSCTRL2_REV31`; DEVMAP has since moved on to CS3's rev 24). **INTCTRL rev 17** (IDE interrupts) was built 2026-11-11 and is programmed, with P5 and P6 fitted (2026-11-21). Almost every card that failed IDENTIFY on CS1 now identifies and reads and writes correctly. On CS2, two identical industrial cards stalled or froze after many writes, and a 128 MB card hung after a few MB of writes, all reading Status = 0xD0 (busy) when stuck. Whether CS3 fixed them is not recorded yet. P7 (buffer swap) proposed. Rollback: the rev 22 and rev 30 files, and `INTCTRL2_REV16.jed`. |
+| CS3 | IDE IORDY flow control (base window) | **Programmed**, with P8 fitted (reported 2026-11-21). The board boots and runs, with IDE and every other on-board peripheral working. Source `DEVMAP2_REV24.PLD` (2026-10-25; command-line fit 46/128 cells, 16 flip-flops, pins kept); JED built 2026-10-25. Rev 24 must never run without P8 (3.5). Rollback: 3.5 step 3. |
 
 ---
 
@@ -995,7 +995,7 @@ Resources: 5 more macrocells (about 87 of 128). Pin 81 changes from a dummy inpu
 
 ### 2.6 INTCTRL (U60) - rev 17
 
-**Deferred (decision 7, 2026-10-23).** INTCTRL stays at rev 16 for now, so the IDE interrupts stay disabled; the rest of CS2 does not depend on it. I1-I3 below are ready for when they are wanted, together with P5.
+**Programmed** (reported 2026-11-21). It was deferred on 2026-10-23 (decision 7), then built from `INTCTRL2_REV17.PLD` on 2026-11-11 with I1 and I2 as below. That source still says `Revision 16;` in its header (I3). The JED header only carries a date, so nothing else is affected. The masks reset to 0, so software still has to set them (2.7) before an IDE interrupt reaches the CPU.
 
 **I1. Let software enable the IDE interrupts.** Old:
 
@@ -1092,9 +1092,9 @@ Consolidated, with pin assignments, in [NextPCB.md](NextPCB.md).
 | 2 | Fast alias for the Data register at base + 0x800 (PIO mode 2) | **Agreed 2026-10-18** |
 | 3 | /IOR through BUSCTRL and `EXTRA_BC_DM1` (no rework), rather than lifting U39/U42 pin 8 | **Agreed 2026-10-18** |
 | 4 | Stretch every reset to about 490 clocks (B10; affects the whole board) | **Agreed 2026-10-18** |
-| 5 | Fit P5 and P6 now | **Agreed 2026-10-18** |
+| 5 | Fit P5 and P6 now | **Agreed 2026-10-18**; both fitted (2026-11-21) |
 | 6 | P7: SN74AHCT245 in the IDE data path | Proposed (added after the netlist check) |
-| 7 | Leave the IDE interrupts disabled for now: INTCTRL stays at rev 16, and I1-I3 and P5 wait | **Decided 2026-10-23** |
+| 7 | Leave the IDE interrupts disabled for now: INTCTRL stays at rev 16, and I1-I3 and P5 wait | **Decided 2026-10-23**; superseded: rev 17 built 2026-11-11 and programmed, P5 fitted (2026-11-21) |
 
 ---
 
@@ -1194,7 +1194,7 @@ If IORDY never goes low, CS3 is not needed. The pull-up can stay; it is part of 
 
 | # | Question | Status |
 |---|---|---|
-| 1 | Build CS3 at all | **Source built 2026-10-25** at Jeff's request (`DEVMAP2_REV24.PLD`). Fitting P8 and programming it: decide after the 3.4 check |
+| 1 | Build CS3 at all | **Source built 2026-10-25** at Jeff's request (`DEVMAP2_REV24.PLD`). **Programmed, with P8 fitted** (reported 2026-11-21) |
 | 2 | IORDY on J28 pin 1 (losing the `T1` test point) for this board | **As built in rev 24** |
 
 ---
@@ -1225,3 +1225,4 @@ If IORDY never goes low, CS3 is not needed. The pull-up can stay; it is part of 
 | 2026-10-24 | CS1 captures of IDENTIFY on a good and a bad CF card. The bad card sometimes returns the same Data-register word twice, so it has missed a read. It then still has data waiting (Status 0x58 rather than 0x50) when the next IDENTIFY is issued. On CS1, /IOR, /CS0 and DA0-DA2 all change together at the end of a read (2.1 problem 5), so a card that counts reads on the rising edge of /IOR can miss one. |
 | 2026-10-25 | CS2 programmed, P6 not fitted yet. Almost all cards that failed IDENTIFY on CS1 now identify and read and write correctly, which confirms the CS1 finding above. Still open: write-only hangs on three cards (status row above). |
 | 2026-10-25 | CS3 source built: `DEVMAP2_REV24.PLD`, a copy of rev 23 with D4-D6 applied (IORDY on pin 37, the `IORDY_S` sampler, and a hold on T3-T8). Command-line fit 46/128 cells, 16 flip-flops, pins kept (3.3). Not compiled in WinCUPL or programmed. 3.5 now warns not to run rev 24 without P8. |
+| 2026-11-21 | Status brought up to date from Jeff's report. The board runs CS3 (DEVMAP rev 24, BUSCTRL rev 31) and INTCTRL rev 17 (built 2026-11-11), with P5, P6 and P8 fitted. IDE and every other on-board peripheral work, including the wait states. The PTC still runs the original `PTC.PLD`; `PTCR2.PLD` and `PTCR2A.PLD` are an experiment. Not recorded yet: whether CS3 fixed the three CF cards that stalled on long writes. `INTCTRL2_REV17.PLD` still says `Revision 16;`. |

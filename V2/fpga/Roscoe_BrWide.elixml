@@ -1,0 +1,1562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Library Type="DipTrace-ComponentLibrary" Name="Roscoe Br Wide" Hint="Alchitry Br Wide V2 (Au underneath) for Roscoe: 3-part symbol, pins 1-136, footprint attached" Version="5.3.5.0" UID32="1630592140" Units="mm">
+  <Library Type="DipTrace-PatternLibrary" Units="mm">
+    <PadStyles>
+      <PadStyle Name="BrWidePad" Type="Through" HoleType="Round" Hole="1.016">
+        <MainStack Shape="Ellipse" Width="1.88" Height="1.88" />
+      </PadStyle>
+      <PadStyle Name="BrWidePad1" Type="Through" HoleType="Round" Hole="1.016">
+        <MainStack Shape="Rectangle" Width="1.88" Height="1.88" />
+      </PadStyle>
+    </PadStyles>
+    <Patterns>
+      <Pattern PatternStyle="PatType0" Id="0" RefDes="J" Mounting="Through" Width="70" Height="55" Orientation="0" LockTypeChange="N" Type="Free" Float1="0" Float2="0" Float3="0" Int1="0" Int2="0">
+        <Name>Roscoe_BrWide_V2</Name>
+        <Name_Description>Alchitry Br Wide V2 with the Au plugged in underneath. Roscoe pins 1-136: pin = 14*(J-7)+hole for J7-J14, 112+6*(J-17)+hole for J17-J20. Origin = centre of the mounting-hole rectangle.</Name_Description>
+        <Value />
+        <DefPad Style="BrWidePad" />
+        <Pads>
+          <Pad Id="0" Style="BrWidePad1" X="25.26" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="N" Group="-1">
+            <Number>1</Number>
+            <Note>J7-1 GND</Note>
+          </Pad>
+          <Pad Id="1" Style="BrWidePad" X="25.26" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>2</Number>
+            <Note>J7-2 A0</Note>
+          </Pad>
+          <Pad Id="2" Style="BrWidePad" X="25.26" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>3</Number>
+            <Note>J7-3 A1</Note>
+          </Pad>
+          <Pad Id="3" Style="BrWidePad" X="25.26" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>4</Number>
+            <Note>J7-4 SIZ0</Note>
+          </Pad>
+          <Pad Id="4" Style="BrWidePad" X="25.26" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>5</Number>
+            <Note>J7-5 SIZ1</Note>
+          </Pad>
+          <Pad Id="5" Style="BrWidePad" X="25.26" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>6</Number>
+            <Note>J7-6 FC0</Note>
+          </Pad>
+          <Pad Id="6" Style="BrWidePad" X="25.26" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>7</Number>
+            <Note>J7-7 spare</Note>
+          </Pad>
+          <Pad Id="7" Style="BrWidePad" X="25.26" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>8</Number>
+            <Note>J7-8 spare</Note>
+          </Pad>
+          <Pad Id="8" Style="BrWidePad" X="25.26" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>9</Number>
+            <Note>J7-9 spare</Note>
+          </Pad>
+          <Pad Id="9" Style="BrWidePad" X="25.26" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>10</Number>
+            <Note>J7-10 DEV_CODE0</Note>
+          </Pad>
+          <Pad Id="10" Style="BrWidePad" X="25.26" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>11</Number>
+            <Note>J7-11 DEV_CODE1</Note>
+          </Pad>
+          <Pad Id="11" Style="BrWidePad" X="25.26" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>12</Number>
+            <Note>J7-12 DEV_CODE2</Note>
+          </Pad>
+          <Pad Id="12" Style="BrWidePad" X="25.26" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>13</Number>
+            <Note>J7-13 DEV_CODE3</Note>
+          </Pad>
+          <Pad Id="13" Style="BrWidePad" X="25.26" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>14</Number>
+            <Note>J7-14 nEXP_ACK</Note>
+          </Pad>
+          <Pad Id="14" Style="BrWidePad" X="27.82" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>15</Number>
+            <Note>J8-1 GND</Note>
+          </Pad>
+          <Pad Id="15" Style="BrWidePad" X="27.82" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>16</Number>
+            <Note>J8-2 spare</Note>
+          </Pad>
+          <Pad Id="16" Style="BrWidePad" X="27.82" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>17</Number>
+            <Note>J8-3 FC2</Note>
+          </Pad>
+          <Pad Id="17" Style="BrWidePad" X="27.82" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>18</Number>
+            <Note>J8-4 R/W</Note>
+          </Pad>
+          <Pad Id="18" Style="BrWidePad" X="27.82" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>19</Number>
+            <Note>J8-5 nAS</Note>
+          </Pad>
+          <Pad Id="19" Style="BrWidePad" X="27.82" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>20</Number>
+            <Note>J8-6 nCBREQ</Note>
+          </Pad>
+          <Pad Id="20" Style="BrWidePad" X="27.82" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>21</Number>
+            <Note>J8-7 nSYS_RESET</Note>
+          </Pad>
+          <Pad Id="21" Style="BrWidePad" X="27.82" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>22</Number>
+            <Note>J8-8 CPU_CLK</Note>
+          </Pad>
+          <Pad Id="22" Style="BrWidePad" X="27.82" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>23</Number>
+            <Note>J8-9 PWR_REQ</Note>
+          </Pad>
+          <Pad Id="23" Style="BrWidePad" X="27.82" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>24</Number>
+            <Note>J8-10 nDEV_EN</Note>
+          </Pad>
+          <Pad Id="24" Style="BrWidePad" X="27.82" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>25</Number>
+            <Note>J8-11 SRAM_BA3</Note>
+          </Pad>
+          <Pad Id="25" Style="BrWidePad" X="27.82" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>26</Number>
+            <Note>J8-12 nFPU_CS</Note>
+          </Pad>
+          <Pad Id="26" Style="BrWidePad" X="27.82" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>27</Number>
+            <Note>J8-13 FC1</Note>
+          </Pad>
+          <Pad Id="27" Style="BrWidePad" X="27.82" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>28</Number>
+            <Note>J8-14 spare</Note>
+          </Pad>
+          <Pad Id="28" Style="BrWidePad" X="30.38" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>29</Number>
+            <Note>J9-1 GND</Note>
+          </Pad>
+          <Pad Id="29" Style="BrWidePad" X="30.38" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>30</Number>
+            <Note>J9-2 spare</Note>
+          </Pad>
+          <Pad Id="30" Style="BrWidePad" X="30.38" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>31</Number>
+            <Note>J9-3 nDSACK1</Note>
+          </Pad>
+          <Pad Id="31" Style="BrWidePad" X="30.38" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>32</Number>
+            <Note>J9-4 nDSACK_OE</Note>
+          </Pad>
+          <Pad Id="32" Style="BrWidePad" X="30.38" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>33</Number>
+            <Note>J9-5 nSTERM</Note>
+          </Pad>
+          <Pad Id="33" Style="BrWidePad" X="30.38" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>34</Number>
+            <Note>J9-6 A16</Note>
+          </Pad>
+          <Pad Id="34" Style="BrWidePad" X="30.38" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>35</Number>
+            <Note>J9-7 A17</Note>
+          </Pad>
+          <Pad Id="35" Style="BrWidePad" X="30.38" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>36</Number>
+            <Note>J9-8 A18</Note>
+          </Pad>
+          <Pad Id="36" Style="BrWidePad" X="30.38" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>37</Number>
+            <Note>J9-9 A19</Note>
+          </Pad>
+          <Pad Id="37" Style="BrWidePad" X="30.38" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>38</Number>
+            <Note>J9-10 A20</Note>
+          </Pad>
+          <Pad Id="38" Style="BrWidePad" X="30.38" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>39</Number>
+            <Note>J9-11 A21</Note>
+          </Pad>
+          <Pad Id="39" Style="BrWidePad" X="30.38" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>40</Number>
+            <Note>J9-12 A22</Note>
+          </Pad>
+          <Pad Id="40" Style="BrWidePad" X="30.38" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>41</Number>
+            <Note>J9-13 A23</Note>
+          </Pad>
+          <Pad Id="41" Style="BrWidePad" X="30.38" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>42</Number>
+            <Note>J9-14 A2</Note>
+          </Pad>
+          <Pad Id="42" Style="BrWidePad" X="32.94" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>43</Number>
+            <Note>J10-1 GND</Note>
+          </Pad>
+          <Pad Id="43" Style="BrWidePad" X="32.94" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>44</Number>
+            <Note>J10-2 A24</Note>
+          </Pad>
+          <Pad Id="44" Style="BrWidePad" X="32.94" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>45</Number>
+            <Note>J10-3 nCBACK</Note>
+          </Pad>
+          <Pad Id="45" Style="BrWidePad" X="32.94" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>46</Number>
+            <Note>J10-4 nDSACK0</Note>
+          </Pad>
+          <Pad Id="46" Style="BrWidePad" X="32.94" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>47</Number>
+            <Note>J10-5 nCIIN</Note>
+          </Pad>
+          <Pad Id="47" Style="BrWidePad" X="32.94" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>48</Number>
+            <Note>J10-6 A25</Note>
+          </Pad>
+          <Pad Id="48" Style="BrWidePad" X="32.94" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>49</Number>
+            <Note>J10-7 A26</Note>
+          </Pad>
+          <Pad Id="49" Style="BrWidePad" X="32.94" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>50</Number>
+            <Note>J10-8 A27</Note>
+          </Pad>
+          <Pad Id="50" Style="BrWidePad" X="32.94" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>51</Number>
+            <Note>J10-9 A28</Note>
+          </Pad>
+          <Pad Id="51" Style="BrWidePad" X="32.94" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>52</Number>
+            <Note>J10-10 A29</Note>
+          </Pad>
+          <Pad Id="52" Style="BrWidePad" X="32.94" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>53</Number>
+            <Note>J10-11 A30</Note>
+          </Pad>
+          <Pad Id="53" Style="BrWidePad" X="32.94" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>54</Number>
+            <Note>J10-12 A31</Note>
+          </Pad>
+          <Pad Id="54" Style="BrWidePad" X="32.94" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>55</Number>
+            <Note>J10-13 A3</Note>
+          </Pad>
+          <Pad Id="55" Style="BrWidePad" X="32.94" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>56</Number>
+            <Note>J10-14 SRAM_BA2</Note>
+          </Pad>
+          <Pad Id="56" Style="BrWidePad" X="-32.94" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>57</Number>
+            <Note>J11-1 GND</Note>
+          </Pad>
+          <Pad Id="57" Style="BrWidePad" X="-32.94" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>58</Number>
+            <Note>J11-2 nRAS0</Note>
+          </Pad>
+          <Pad Id="58" Style="BrWidePad" X="-32.94" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>59</Number>
+            <Note>J11-3 nRAS1</Note>
+          </Pad>
+          <Pad Id="59" Style="BrWidePad" X="-32.94" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>60</Number>
+            <Note>J11-4 nRAS2</Note>
+          </Pad>
+          <Pad Id="60" Style="BrWidePad" X="-32.94" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>61</Number>
+            <Note>J11-5 nRAS3</Note>
+          </Pad>
+          <Pad Id="61" Style="BrWidePad" X="-32.94" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>62</Number>
+            <Note>J11-6 nRAS4</Note>
+          </Pad>
+          <Pad Id="62" Style="BrWidePad" X="-32.94" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>63</Number>
+            <Note>J11-7 spare</Note>
+          </Pad>
+          <Pad Id="63" Style="BrWidePad" X="-32.94" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>64</Number>
+            <Note>J11-8 nRAS5</Note>
+          </Pad>
+          <Pad Id="64" Style="BrWidePad" X="-32.94" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>65</Number>
+            <Note>J11-9 nRAS6</Note>
+          </Pad>
+          <Pad Id="65" Style="BrWidePad" X="-32.94" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>66</Number>
+            <Note>J11-10 nRAS7</Note>
+          </Pad>
+          <Pad Id="66" Style="BrWidePad" X="-32.94" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>67</Number>
+            <Note>J11-11 nCAS0</Note>
+          </Pad>
+          <Pad Id="67" Style="BrWidePad" X="-32.94" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>68</Number>
+            <Note>J11-12 nCAS1</Note>
+          </Pad>
+          <Pad Id="68" Style="BrWidePad" X="-32.94" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>69</Number>
+            <Note>J11-13 nCAS2</Note>
+          </Pad>
+          <Pad Id="69" Style="BrWidePad" X="-32.94" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>70</Number>
+            <Note>J11-14 nCAS3</Note>
+          </Pad>
+          <Pad Id="70" Style="BrWidePad" X="-30.4" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>71</Number>
+            <Note>J12-1 GND</Note>
+          </Pad>
+          <Pad Id="71" Style="BrWidePad" X="-30.4" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>72</Number>
+            <Note>J12-2 nDRAM_WE</Note>
+          </Pad>
+          <Pad Id="72" Style="BrWidePad" X="-30.4" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>73</Number>
+            <Note>J12-3 DRAM_MUX</Note>
+          </Pad>
+          <Pad Id="73" Style="BrWidePad" X="-30.4" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>74</Number>
+            <Note>J12-4 spare</Note>
+          </Pad>
+          <Pad Id="74" Style="BrWidePad" X="-30.4" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>75</Number>
+            <Note>J12-5 nDRAM_BUF_OE</Note>
+          </Pad>
+          <Pad Id="75" Style="BrWidePad" X="-30.4" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>76</Number>
+            <Note>J12-6 IORDY</Note>
+          </Pad>
+          <Pad Id="76" Style="BrWidePad" X="-30.4" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>77</Number>
+            <Note>J12-7 A15</Note>
+          </Pad>
+          <Pad Id="77" Style="BrWidePad" X="-30.4" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>78</Number>
+            <Note>J12-8 A8</Note>
+          </Pad>
+          <Pad Id="78" Style="BrWidePad" X="-30.4" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>79</Number>
+            <Note>J12-9 A9</Note>
+          </Pad>
+          <Pad Id="79" Style="BrWidePad" X="-30.4" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>80</Number>
+            <Note>J12-10 A10</Note>
+          </Pad>
+          <Pad Id="80" Style="BrWidePad" X="-30.4" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>81</Number>
+            <Note>J12-11 A11</Note>
+          </Pad>
+          <Pad Id="81" Style="BrWidePad" X="-30.4" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>82</Number>
+            <Note>J12-12 A12</Note>
+          </Pad>
+          <Pad Id="82" Style="BrWidePad" X="-30.4" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>83</Number>
+            <Note>J12-13 A13</Note>
+          </Pad>
+          <Pad Id="83" Style="BrWidePad" X="-30.4" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>84</Number>
+            <Note>J12-14 A14</Note>
+          </Pad>
+          <Pad Id="84" Style="BrWidePad" X="-27.86" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>85</Number>
+            <Note>J13-1 GND</Note>
+          </Pad>
+          <Pad Id="85" Style="BrWidePad" X="-27.86" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>86</Number>
+            <Note>J13-2 nSRAM_CE0</Note>
+          </Pad>
+          <Pad Id="86" Style="BrWidePad" X="-27.86" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>87</Number>
+            <Note>J13-3 nSRAM_CE1</Note>
+          </Pad>
+          <Pad Id="87" Style="BrWidePad" X="-27.86" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>88</Number>
+            <Note>J13-4 nSRAM_CE2</Note>
+          </Pad>
+          <Pad Id="88" Style="BrWidePad" X="-27.86" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>89</Number>
+            <Note>J13-5 nSRAM_CE3</Note>
+          </Pad>
+          <Pad Id="89" Style="BrWidePad" X="-27.86" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>90</Number>
+            <Note>J13-6 nBE0</Note>
+          </Pad>
+          <Pad Id="90" Style="BrWidePad" X="-27.86" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>91</Number>
+            <Note>J13-7 nBE1</Note>
+          </Pad>
+          <Pad Id="91" Style="BrWidePad" X="-27.86" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>92</Number>
+            <Note>J13-8 nBE2</Note>
+          </Pad>
+          <Pad Id="92" Style="BrWidePad" X="-27.86" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>93</Number>
+            <Note>J13-9 NC (1.35V)</Note>
+          </Pad>
+          <Pad Id="93" Style="BrWidePad" X="-27.86" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>94</Number>
+            <Note>J13-10 nBE3</Note>
+          </Pad>
+          <Pad Id="94" Style="BrWidePad" X="-27.86" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>95</Number>
+            <Note>J13-11 D24</Note>
+          </Pad>
+          <Pad Id="95" Style="BrWidePad" X="-27.86" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>96</Number>
+            <Note>J13-12 D25</Note>
+          </Pad>
+          <Pad Id="96" Style="BrWidePad" X="-27.86" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>97</Number>
+            <Note>J13-13 D26</Note>
+          </Pad>
+          <Pad Id="97" Style="BrWidePad" X="-27.86" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>98</Number>
+            <Note>J13-14 D27</Note>
+          </Pad>
+          <Pad Id="98" Style="BrWidePad" X="-25.32" Y="7.76" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>99</Number>
+            <Note>J14-1 GND</Note>
+          </Pad>
+          <Pad Id="99" Style="BrWidePad" X="-25.32" Y="5.22" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>100</Number>
+            <Note>J14-2 nIPL0</Note>
+          </Pad>
+          <Pad Id="100" Style="BrWidePad" X="-25.32" Y="2.68" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>101</Number>
+            <Note>J14-3 nFLASH_CE</Note>
+          </Pad>
+          <Pad Id="101" Style="BrWidePad" X="-25.32" Y="0.14" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>102</Number>
+            <Note>J14-4 nBERR</Note>
+          </Pad>
+          <Pad Id="102" Style="BrWidePad" X="-25.32" Y="-2.4" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>103</Number>
+            <Note>J14-5 spare</Note>
+          </Pad>
+          <Pad Id="103" Style="BrWidePad" X="-25.32" Y="-4.94" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>104</Number>
+            <Note>J14-6 spare</Note>
+          </Pad>
+          <Pad Id="104" Style="BrWidePad" X="-25.32" Y="-7.48" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>105</Number>
+            <Note>J14-7 nIPL1</Note>
+          </Pad>
+          <Pad Id="105" Style="BrWidePad" X="-25.32" Y="-10.02" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>106</Number>
+            <Note>J14-8 nIPL2</Note>
+          </Pad>
+          <Pad Id="106" Style="BrWidePad" X="-25.32" Y="-12.56" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>107</Number>
+            <Note>J14-9 NC (1.35V)</Note>
+          </Pad>
+          <Pad Id="107" Style="BrWidePad" X="-25.32" Y="-15.1" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>108</Number>
+            <Note>J14-10 nDATA_OE</Note>
+          </Pad>
+          <Pad Id="108" Style="BrWidePad" X="-25.32" Y="-17.64" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>109</Number>
+            <Note>J14-11 D28</Note>
+          </Pad>
+          <Pad Id="109" Style="BrWidePad" X="-25.32" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>110</Number>
+            <Note>J14-12 D29</Note>
+          </Pad>
+          <Pad Id="110" Style="BrWidePad" X="-25.32" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>111</Number>
+            <Note>J14-13 D30</Note>
+          </Pad>
+          <Pad Id="111" Style="BrWidePad" X="-25.32" Y="-25.26" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>112</Number>
+            <Note>J14-14 D31</Note>
+          </Pad>
+          <Pad Id="112" Style="BrWidePad" X="25.26" Y="24.27" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>113</Number>
+            <Note>J17-1 +3V3</Note>
+          </Pad>
+          <Pad Id="113" Style="BrWidePad" X="25.26" Y="21.73" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>114</Number>
+            <Note>J17-2 IRQ_IDE1</Note>
+          </Pad>
+          <Pad Id="114" Style="BrWidePad" X="25.26" Y="19.19" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>115</Number>
+            <Note>J17-3 IRQ_UARTA</Note>
+          </Pad>
+          <Pad Id="115" Style="BrWidePad" X="25.26" Y="16.65" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>116</Number>
+            <Note>J17-4 RESET</Note>
+          </Pad>
+          <Pad Id="116" Style="BrWidePad" X="25.26" Y="14.11" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>117</Number>
+            <Note>J17-5 TMS</Note>
+          </Pad>
+          <Pad Id="117" Style="BrWidePad" X="25.26" Y="11.57" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>118</Number>
+            <Note>J17-6 TDI</Note>
+          </Pad>
+          <Pad Id="118" Style="BrWidePad" X="27.82" Y="24.27" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>119</Number>
+            <Note>J18-1 VCC (RAW in)</Note>
+          </Pad>
+          <Pad Id="119" Style="BrWidePad" X="27.82" Y="21.73" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>120</Number>
+            <Note>J18-2 IRQ_IDE2</Note>
+          </Pad>
+          <Pad Id="120" Style="BrWidePad" X="27.82" Y="19.19" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>121</Number>
+            <Note>J18-3 IRQ_UARTB</Note>
+          </Pad>
+          <Pad Id="121" Style="BrWidePad" X="27.82" Y="16.65" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>122</Number>
+            <Note>J18-4 PROGRAM_B</Note>
+          </Pad>
+          <Pad Id="122" Style="BrWidePad" X="27.82" Y="14.11" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>123</Number>
+            <Note>J18-5 TCK</Note>
+          </Pad>
+          <Pad Id="123" Style="BrWidePad" X="27.82" Y="11.57" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>124</Number>
+            <Note>J18-6 TDO</Note>
+          </Pad>
+          <Pad Id="124" Style="BrWidePad" X="30.38" Y="24.27" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>125</Number>
+            <Note>J19-1 DONE</Note>
+          </Pad>
+          <Pad Id="125" Style="BrWidePad" X="30.38" Y="21.73" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>126</Number>
+            <Note>J19-2 nIRQ_RTC</Note>
+          </Pad>
+          <Pad Id="126" Style="BrWidePad" X="30.38" Y="19.19" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>127</Number>
+            <Note>J19-3 nIRQ_EXP2</Note>
+          </Pad>
+          <Pad Id="127" Style="BrWidePad" X="30.38" Y="16.65" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>128</Number>
+            <Note>J19-4 VBSEL (= Au VBSEL_A)</Note>
+          </Pad>
+          <Pad Id="128" Style="BrWidePad" X="30.38" Y="14.11" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>129</Number>
+            <Note>J19-5 AVP</Note>
+          </Pad>
+          <Pad Id="129" Style="BrWidePad" X="30.38" Y="11.57" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>130</Number>
+            <Note>J19-6 AREF</Note>
+          </Pad>
+          <Pad Id="130" Style="BrWidePad" X="32.94" Y="24.27" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>131</Number>
+            <Note>J20-1 A1V8</Note>
+          </Pad>
+          <Pad Id="131" Style="BrWidePad" X="32.94" Y="21.73" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>132</Number>
+            <Note>J20-2 nIRQ_EXP1</Note>
+          </Pad>
+          <Pad Id="132" Style="BrWidePad" X="32.94" Y="19.19" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>133</Number>
+            <Note>J20-3 nIRQ_EXP3</Note>
+          </Pad>
+          <Pad Id="133" Style="BrWidePad" X="32.94" Y="16.65" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>134</Number>
+            <Note>J20-4 "+2.5V" (= Au VBSEL_B)</Note>
+          </Pad>
+          <Pad Id="134" Style="BrWidePad" X="32.94" Y="14.11" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>135</Number>
+            <Note>J20-5 AVN</Note>
+          </Pad>
+          <Pad Id="135" Style="BrWidePad" X="32.94" Y="11.57" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
+            <Number>136</Number>
+            <Note>J20-6 AGND</Note>
+          </Pad>
+        </Pads>
+        <Shapes>
+          <Shape Id="0" Type="Rectangle" Locked="N" Layer="Top Silk" Group="-1">
+            <Points>
+              <Point X="-34.21" Y="-26.53" />
+              <Point X="-24.05" Y="9.03" />
+            </Points>
+          </Shape>
+          <Shape Id="1" Type="Rectangle" Locked="N" Layer="Top Silk" Group="-1">
+            <Points>
+              <Point X="23.99" Y="-26.53" />
+              <Point X="34.21" Y="9.03" />
+            </Points>
+          </Shape>
+          <Shape Id="2" Type="Rectangle" Locked="N" Layer="Top Silk" Group="-1">
+            <Points>
+              <Point X="23.99" Y="10.3" />
+              <Point X="34.21" Y="25.54" />
+            </Points>
+          </Shape>
+          <Shape Id="3" Type="Rectangle" Locked="N" Layer="Top Courtyard" Group="-1">
+            <Points>
+              <Point X="-34.46" Y="-26.78" />
+              <Point X="-23.8" Y="9.28" />
+            </Points>
+          </Shape>
+          <Shape Id="4" Type="Rectangle" Locked="N" Layer="Top Courtyard" Group="-1">
+            <Points>
+              <Point X="23.74" Y="-26.78" />
+              <Point X="34.46" Y="9.28" />
+            </Points>
+          </Shape>
+          <Shape Id="5" Type="Rectangle" Locked="N" Layer="Top Courtyard" Group="-1">
+            <Points>
+              <Point X="23.74" Y="10.05" />
+              <Point X="34.46" Y="25.79" />
+            </Points>
+          </Shape>
+          <Shape Id="6" Type="Text" Locked="N" Layer="Top Silk" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Right" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+            <TextLines>
+              <TextLine>1</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="23" Y="7.76" />
+            </Points>
+          </Shape>
+          <Shape Id="7" Type="Text" Locked="N" Layer="Top Silk" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+            <TextLines>
+              <TextLine>57</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="-32.94" Y="10.25" />
+            </Points>
+          </Shape>
+          <Shape Id="8" Type="Text" Locked="N" Layer="Top Silk" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+            <TextLines>
+              <TextLine>113</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="25.26" Y="26.65" />
+            </Points>
+          </Shape>
+          <Shape Id="9" Type="Polyline" Locked="N" Layer="Top Assy" Group="-1">
+            <Points>
+              <Point X="-33.5" Y="-27.5" />
+              <Point X="-16" Y="-27.5" />
+              <Point X="-14.5" Y="-26" />
+              <Point X="-14.5" Y="-23.5" />
+              <Point X="-13" Y="-22" />
+              <Point X="13" Y="-22" />
+              <Point X="14.5" Y="-23.5" />
+              <Point X="14.5" Y="-26" />
+              <Point X="16" Y="-27.5" />
+              <Point X="33.5" Y="-27.5" />
+              <Point X="35" Y="-26" />
+              <Point X="35" Y="26" />
+              <Point X="33.5" Y="27.5" />
+              <Point X="-33.5" Y="27.5" />
+              <Point X="-35" Y="26" />
+              <Point X="-35" Y="-26" />
+              <Point X="-33.5" Y="-27.5" />
+            </Points>
+          </Shape>
+          <Shape Id="10" Type="Rectangle" Locked="N" Layer="Top Assy" Group="-1">
+            <Points>
+              <Point X="-22.5" Y="-27.5" />
+              <Point X="22.5" Y="27.5" />
+            </Points>
+          </Shape>
+          <Shape Id="11" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+            <TextLines>
+              <TextLine>Au V2 underneath, 4 mm below the Br</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="0" Y="2.5" />
+            </Points>
+          </Shape>
+          <Shape Id="12" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+            <TextLines>
+              <TextLine>keep parts here low</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="0" Y="-1" />
+            </Points>
+          </Shape>
+          <Shape Id="13" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+            <TextLines>
+              <TextLine>Au USB-C</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="12.65" Y="25.5" />
+            </Points>
+          </Shape>
+          <Shape Id="14" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+            <TextLines>
+              <TextLine>BANK B 57-112</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="-29" Y="13.5" />
+            </Points>
+          </Shape>
+          <Shape Id="15" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+            <TextLines>
+              <TextLine>BANK A 1-56</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="29.1" Y="-29.3" />
+            </Points>
+          </Shape>
+          <Shape Id="16" Type="Text" Locked="N" Layer="Top Assy" FontVector="Y" FontSize="3" FontSizeFloat="3" FontScale="1" FontWidth="-2" TextShow="Any Text" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Angle="0" AllLayers="N" Group="-1">
+            <TextLines>
+              <TextLine>CONTROL 113-136</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="29.1" Y="29.3" />
+            </Points>
+          </Shape>
+        </Shapes>
+        <Holes>
+          <Hole Id="0" Locked="N" X="-20" Y="-25" Diam="4" HoleDiam="2.2" Group="-1" />
+          <Hole Id="1" Locked="N" X="-20" Y="25" Diam="4" HoleDiam="2.2" Group="-1" />
+          <Hole Id="2" Locked="N" X="20" Y="-25" Diam="4" HoleDiam="2.2" Group="-1" />
+          <Hole Id="3" Locked="N" X="20" Y="25" Diam="4" HoleDiam="2.2" Group="-1" />
+        </Holes>
+      </Pattern>
+    </Patterns>
+  </Library>
+  <Components>
+    <Component Id="0">
+      <Part Id="0" RefDes="J" PartType="Normal" ShowNumbers="Show" Type="Free" Int1="0" Int2="0" Width="35.56" Height="81.28" LockTypeChange="Y">
+        <Pattern Style="PatType0" />
+        <Name>Roscoe_BrWide_V2</Name>
+        <PartName>Bank A</PartName>
+        <Value />
+        <Origin X="0" Y="0" />
+        <Manufacturer>Alchitry</Manufacturer>
+        <Pins>
+          <Pin Id="0" X="-17.78" Y="35.56" Locked="N" Type="Default" ElectricType="Power" Orientation="0" PadId="0" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>GND</Name>
+            <PadNumber>1</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="1" X="-17.78" Y="33.02" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="1" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A0</Name>
+            <PadNumber>2</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="2" X="-17.78" Y="30.48" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="2" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A1</Name>
+            <PadNumber>3</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="3" X="-17.78" Y="27.94" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="3" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SIZ0</Name>
+            <PadNumber>4</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="4" X="-17.78" Y="25.4" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="4" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SIZ1</Name>
+            <PadNumber>5</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="5" X="-17.78" Y="22.86" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="5" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>FC0</Name>
+            <PadNumber>6</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="6" X="-17.78" Y="20.32" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="6" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SPARE_A33</Name>
+            <PadNumber>7</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="7" X="-17.78" Y="17.78" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="7" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>NC_A39</Name>
+            <PadNumber>8</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="8" X="-17.78" Y="15.24" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="8" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SPARE_A45</Name>
+            <PadNumber>9</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="9" X="-17.78" Y="12.7" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="9" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>DEV_CODE0</Name>
+            <PadNumber>10</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="10" X="-17.78" Y="10.16" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="10" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>DEV_CODE1</Name>
+            <PadNumber>11</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="11" X="-17.78" Y="7.62" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="11" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>DEV_CODE2</Name>
+            <PadNumber>12</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="12" X="-17.78" Y="5.08" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="12" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>DEV_CODE3</Name>
+            <PadNumber>13</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="13" X="-17.78" Y="2.54" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="13" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nEXP_ACK</Name>
+            <PadNumber>14</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="14" X="-17.78" Y="-2.54" Locked="N" Type="Default" ElectricType="Power" Orientation="0" PadId="14" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>GND</Name>
+            <PadNumber>15</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="15" X="-17.78" Y="-5.08" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="15" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SPARE_A5</Name>
+            <PadNumber>16</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="16" X="-17.78" Y="-7.62" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="16" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>FC2</Name>
+            <PadNumber>17</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="17" X="-17.78" Y="-10.16" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="17" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>R/W</Name>
+            <PadNumber>18</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="18" X="-17.78" Y="-12.7" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="18" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nAS</Name>
+            <PadNumber>19</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="19" X="-17.78" Y="-15.24" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="19" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nCBREQ</Name>
+            <PadNumber>20</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="20" X="-17.78" Y="-17.78" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="20" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nSYS_RESET</Name>
+            <PadNumber>21</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="21" X="-17.78" Y="-20.32" Locked="N" Type="Clock" ElectricType="Input" Orientation="0" PadId="21" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>CPU_CLK</Name>
+            <PadNumber>22</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="22" X="-17.78" Y="-22.86" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="22" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>PWR_REQ</Name>
+            <PadNumber>23</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="23" X="-17.78" Y="-25.4" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="23" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nDEV_EN</Name>
+            <PadNumber>24</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="24" X="-17.78" Y="-27.94" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="24" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SRAM_BA3</Name>
+            <PadNumber>25</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="25" X="-17.78" Y="-30.48" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="25" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nFPU_CS</Name>
+            <PadNumber>26</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="26" X="-17.78" Y="-33.02" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="26" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>FC1</Name>
+            <PadNumber>27</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="27" X="-17.78" Y="-35.56" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="27" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SPARE_A77</Name>
+            <PadNumber>28</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="28" X="17.78" Y="35.56" Locked="N" Type="Default" ElectricType="Power" Orientation="180" PadId="28" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>GND</Name>
+            <PadNumber>29</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="29" X="17.78" Y="33.02" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="29" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SPARE_A4</Name>
+            <PadNumber>30</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="30" X="17.78" Y="30.48" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="30" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nDSACK1</Name>
+            <PadNumber>31</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="31" X="17.78" Y="27.94" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="31" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nDSACK_OE</Name>
+            <PadNumber>32</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="32" X="17.78" Y="25.4" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="32" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nSTERM</Name>
+            <PadNumber>33</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="33" X="17.78" Y="22.86" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="33" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A16</Name>
+            <PadNumber>34</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="34" X="17.78" Y="20.32" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="34" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A17</Name>
+            <PadNumber>35</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="35" X="17.78" Y="17.78" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="35" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A18</Name>
+            <PadNumber>36</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="36" X="17.78" Y="15.24" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="36" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A19</Name>
+            <PadNumber>37</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="37" X="17.78" Y="12.7" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="37" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A20</Name>
+            <PadNumber>38</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="38" X="17.78" Y="10.16" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="38" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A21</Name>
+            <PadNumber>39</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="39" X="17.78" Y="7.62" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="39" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A22</Name>
+            <PadNumber>40</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="40" X="17.78" Y="5.08" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="40" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A23</Name>
+            <PadNumber>41</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="41" X="17.78" Y="2.54" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="41" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A2</Name>
+            <PadNumber>42</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="42" X="17.78" Y="-2.54" Locked="N" Type="Default" ElectricType="Power" Orientation="180" PadId="42" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>GND</Name>
+            <PadNumber>43</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="43" X="17.78" Y="-5.08" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="43" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A24</Name>
+            <PadNumber>44</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="44" X="17.78" Y="-7.62" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="44" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nCBACK</Name>
+            <PadNumber>45</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="45" X="17.78" Y="-10.16" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="45" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nDSACK0</Name>
+            <PadNumber>46</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="46" X="17.78" Y="-12.7" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="46" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nCIIN</Name>
+            <PadNumber>47</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="47" X="17.78" Y="-15.24" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="47" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A25</Name>
+            <PadNumber>48</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="48" X="17.78" Y="-17.78" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="48" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A26</Name>
+            <PadNumber>49</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="49" X="17.78" Y="-20.32" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="49" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A27</Name>
+            <PadNumber>50</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="50" X="17.78" Y="-22.86" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="50" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A28</Name>
+            <PadNumber>51</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="51" X="17.78" Y="-25.4" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="51" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A29</Name>
+            <PadNumber>52</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="52" X="17.78" Y="-27.94" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="52" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A30</Name>
+            <PadNumber>53</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="53" X="17.78" Y="-30.48" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="53" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A31</Name>
+            <PadNumber>54</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="54" X="17.78" Y="-33.02" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="54" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A3</Name>
+            <PadNumber>55</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="55" X="17.78" Y="-35.56" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="55" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SRAM_BA2</Name>
+            <PadNumber>56</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+        </Pins>
+        <Shapes>
+          <Shape Id="0" Type="Rectangle" LineWidth="0.254" Locked="N" Group="-1">
+            <Points>
+              <Point X="-17.78" Y="40.64" />
+              <Point X="17.78" Y="-40.64" />
+            </Points>
+          </Shape>
+          <Shape Id="1" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>BANK A 1-56</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="0" Y="38.1" />
+            </Points>
+          </Shape>
+          <Shape Id="2" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J7</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="-15.24" Y="38.1" />
+            </Points>
+          </Shape>
+          <Shape Id="3" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J8</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="-15.24" Y="0" />
+            </Points>
+          </Shape>
+          <Shape Id="4" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J9</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="15.24" Y="38.1" />
+            </Points>
+          </Shape>
+          <Shape Id="5" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J10</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="15.24" Y="0" />
+            </Points>
+          </Shape>
+        </Shapes>
+      </Part>
+      <Part Id="1" PartType="Normal" ShowNumbers="Show" Type="Free" Int1="0" Int2="0" Width="35.56" Height="81.28" LockTypeChange="Y">
+        <PartName>Bank B</PartName>
+        <Value />
+        <Origin X="0" Y="0" />
+        <Pins>
+          <Pin Id="0" X="-17.78" Y="35.56" Locked="N" Type="Default" ElectricType="Power" Orientation="0" PadId="56" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>GND</Name>
+            <PadNumber>57</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="1" X="-17.78" Y="33.02" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="57" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nRAS0</Name>
+            <PadNumber>58</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="2" X="-17.78" Y="30.48" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="58" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nRAS1</Name>
+            <PadNumber>59</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="3" X="-17.78" Y="27.94" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="59" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nRAS2</Name>
+            <PadNumber>60</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="4" X="-17.78" Y="25.4" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="60" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nRAS3</Name>
+            <PadNumber>61</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="5" X="-17.78" Y="22.86" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="61" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nRAS4</Name>
+            <PadNumber>62</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="6" X="-17.78" Y="20.32" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="62" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SPARE_B33</Name>
+            <PadNumber>63</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="7" X="-17.78" Y="17.78" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="63" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nRAS5</Name>
+            <PadNumber>64</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="8" X="-17.78" Y="15.24" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="64" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nRAS6</Name>
+            <PadNumber>65</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="9" X="-17.78" Y="12.7" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="65" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nRAS7</Name>
+            <PadNumber>66</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="10" X="-17.78" Y="10.16" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="66" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nCAS0</Name>
+            <PadNumber>67</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="11" X="-17.78" Y="7.62" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="67" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nCAS1</Name>
+            <PadNumber>68</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="12" X="-17.78" Y="5.08" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="68" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nCAS2</Name>
+            <PadNumber>69</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="13" X="-17.78" Y="2.54" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="69" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nCAS3</Name>
+            <PadNumber>70</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="14" X="-17.78" Y="-2.54" Locked="N" Type="Default" ElectricType="Power" Orientation="0" PadId="70" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>GND</Name>
+            <PadNumber>71</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="15" X="-17.78" Y="-5.08" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="71" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nDRAM_WE</Name>
+            <PadNumber>72</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="16" X="-17.78" Y="-7.62" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="72" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>DRAM_MUX</Name>
+            <PadNumber>73</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="17" X="-17.78" Y="-10.16" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="73" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SPARE_B17</Name>
+            <PadNumber>74</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="18" X="-17.78" Y="-12.7" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="74" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nDRAM_BUF_OE</Name>
+            <PadNumber>75</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="19" X="-17.78" Y="-15.24" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="75" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>IORDY</Name>
+            <PadNumber>76</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="20" X="-17.78" Y="-17.78" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="76" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A15</Name>
+            <PadNumber>77</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="21" X="-17.78" Y="-20.32" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="77" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A8</Name>
+            <PadNumber>78</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="22" X="-17.78" Y="-22.86" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="78" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A9</Name>
+            <PadNumber>79</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="23" X="-17.78" Y="-25.4" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="79" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A10</Name>
+            <PadNumber>80</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="24" X="-17.78" Y="-27.94" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="80" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A11</Name>
+            <PadNumber>81</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="25" X="-17.78" Y="-30.48" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="81" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A12</Name>
+            <PadNumber>82</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="26" X="-17.78" Y="-33.02" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="82" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A13</Name>
+            <PadNumber>83</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="27" X="-17.78" Y="-35.56" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="83" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A14</Name>
+            <PadNumber>84</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="28" X="17.78" Y="35.56" Locked="N" Type="Default" ElectricType="Power" Orientation="180" PadId="84" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>GND</Name>
+            <PadNumber>85</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="29" X="17.78" Y="33.02" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="85" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nSRAM_CE0</Name>
+            <PadNumber>86</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="30" X="17.78" Y="30.48" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="86" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nSRAM_CE1</Name>
+            <PadNumber>87</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="31" X="17.78" Y="27.94" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="87" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nSRAM_CE2</Name>
+            <PadNumber>88</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="32" X="17.78" Y="25.4" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="88" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nSRAM_CE3</Name>
+            <PadNumber>89</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="33" X="17.78" Y="22.86" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="89" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nBE0</Name>
+            <PadNumber>90</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="34" X="17.78" Y="20.32" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="90" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nBE1</Name>
+            <PadNumber>91</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="35" X="17.78" Y="17.78" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="91" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nBE2</Name>
+            <PadNumber>92</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="36" X="17.78" Y="15.24" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="92" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>NC_1V35</Name>
+            <PadNumber>93</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="37" X="17.78" Y="12.7" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="93" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nBE3</Name>
+            <PadNumber>94</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="38" X="17.78" Y="10.16" Locked="N" Type="Default" ElectricType="Bidirectional" Orientation="180" PadId="94" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>D24</Name>
+            <PadNumber>95</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="39" X="17.78" Y="7.62" Locked="N" Type="Default" ElectricType="Bidirectional" Orientation="180" PadId="95" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>D25</Name>
+            <PadNumber>96</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="40" X="17.78" Y="5.08" Locked="N" Type="Default" ElectricType="Bidirectional" Orientation="180" PadId="96" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>D26</Name>
+            <PadNumber>97</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="41" X="17.78" Y="2.54" Locked="N" Type="Default" ElectricType="Bidirectional" Orientation="180" PadId="97" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>D27</Name>
+            <PadNumber>98</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="42" X="17.78" Y="-2.54" Locked="N" Type="Default" ElectricType="Power" Orientation="180" PadId="98" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>GND</Name>
+            <PadNumber>99</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="43" X="17.78" Y="-5.08" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="99" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nIPL0</Name>
+            <PadNumber>100</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="44" X="17.78" Y="-7.62" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="100" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nFLASH_CE</Name>
+            <PadNumber>101</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="45" X="17.78" Y="-10.16" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="101" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nBERR</Name>
+            <PadNumber>102</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="46" X="17.78" Y="-12.7" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="102" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SPARE_B24</Name>
+            <PadNumber>103</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="47" X="17.78" Y="-15.24" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="103" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SPARE_B30</Name>
+            <PadNumber>104</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="48" X="17.78" Y="-17.78" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="104" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nIPL1</Name>
+            <PadNumber>105</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="49" X="17.78" Y="-20.32" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="105" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nIPL2</Name>
+            <PadNumber>106</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="50" X="17.78" Y="-22.86" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="106" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>NC_1V35</Name>
+            <PadNumber>107</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="51" X="17.78" Y="-25.4" Locked="N" Type="Default" ElectricType="Output" Orientation="180" PadId="107" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nDATA_OE</Name>
+            <PadNumber>108</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="52" X="17.78" Y="-27.94" Locked="N" Type="Default" ElectricType="Bidirectional" Orientation="180" PadId="108" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>D28</Name>
+            <PadNumber>109</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="53" X="17.78" Y="-30.48" Locked="N" Type="Default" ElectricType="Bidirectional" Orientation="180" PadId="109" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>D29</Name>
+            <PadNumber>110</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="54" X="17.78" Y="-33.02" Locked="N" Type="Default" ElectricType="Bidirectional" Orientation="180" PadId="110" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>D30</Name>
+            <PadNumber>111</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="55" X="17.78" Y="-35.56" Locked="N" Type="Default" ElectricType="Bidirectional" Orientation="180" PadId="111" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>D31</Name>
+            <PadNumber>112</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+        </Pins>
+        <Shapes>
+          <Shape Id="0" Type="Rectangle" LineWidth="0.254" Locked="N" Group="-1">
+            <Points>
+              <Point X="-17.78" Y="40.64" />
+              <Point X="17.78" Y="-40.64" />
+            </Points>
+          </Shape>
+          <Shape Id="1" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>BANK B 57-112</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="0" Y="38.1" />
+            </Points>
+          </Shape>
+          <Shape Id="2" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J11</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="-15.24" Y="38.1" />
+            </Points>
+          </Shape>
+          <Shape Id="3" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J12</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="-15.24" Y="0" />
+            </Points>
+          </Shape>
+          <Shape Id="4" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J13</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="15.24" Y="38.1" />
+            </Points>
+          </Shape>
+          <Shape Id="5" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J14</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="15.24" Y="0" />
+            </Points>
+          </Shape>
+        </Shapes>
+      </Part>
+      <Part Id="2" PartType="Normal" ShowNumbers="Show" Type="Free" Int1="0" Int2="0" Width="35.56" Height="40.64" LockTypeChange="Y">
+        <PartName>Control</PartName>
+        <Value />
+        <Origin X="0" Y="0" />
+        <Pins>
+          <Pin Id="0" X="-17.78" Y="15.24" Locked="N" Type="Default" ElectricType="Power" Orientation="0" PadId="112" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>+3V3</Name>
+            <PadNumber>113</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="1" X="-17.78" Y="12.7" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="113" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>IRQ_IDE1</Name>
+            <PadNumber>114</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="2" X="-17.78" Y="10.16" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="114" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>IRQ_UARTA</Name>
+            <PadNumber>115</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="3" X="-17.78" Y="7.62" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="115" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>RESET</Name>
+            <PadNumber>116</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="4" X="-17.78" Y="5.08" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="116" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>TMS</Name>
+            <PadNumber>117</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="5" X="-17.78" Y="2.54" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="117" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>TDI</Name>
+            <PadNumber>118</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="6" X="-17.78" Y="-2.54" Locked="N" Type="Default" ElectricType="Power" Orientation="0" PadId="118" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>VCC_RAW</Name>
+            <PadNumber>119</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="7" X="-17.78" Y="-5.08" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="119" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>IRQ_IDE2</Name>
+            <PadNumber>120</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="8" X="-17.78" Y="-7.62" Locked="N" Type="Default" ElectricType="Input" Orientation="0" PadId="120" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>IRQ_UARTB</Name>
+            <PadNumber>121</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="9" X="-17.78" Y="-10.16" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="121" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>PROGRAM_B</Name>
+            <PadNumber>122</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="10" X="-17.78" Y="-12.7" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="122" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>TCK</Name>
+            <PadNumber>123</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="11" X="-17.78" Y="-15.24" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="123" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>TDO</Name>
+            <PadNumber>124</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="12" X="17.78" Y="15.24" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="124" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>DONE</Name>
+            <PadNumber>125</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="13" X="17.78" Y="12.7" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="125" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nIRQ_RTC</Name>
+            <PadNumber>126</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="14" X="17.78" Y="10.16" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="126" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nIRQ_EXP2</Name>
+            <PadNumber>127</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="15" X="17.78" Y="7.62" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="127" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>VBSEL_A</Name>
+            <PadNumber>128</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="16" X="17.78" Y="5.08" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="128" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>AVP</Name>
+            <PadNumber>129</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="17" X="17.78" Y="2.54" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="129" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>AREF</Name>
+            <PadNumber>130</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="18" X="17.78" Y="-2.54" Locked="N" Type="Default" ElectricType="Power" Orientation="180" PadId="130" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>A1V8</Name>
+            <PadNumber>131</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="19" X="17.78" Y="-5.08" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="131" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nIRQ_EXP1</Name>
+            <PadNumber>132</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="20" X="17.78" Y="-7.62" Locked="N" Type="Default" ElectricType="Input" Orientation="180" PadId="132" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>nIRQ_EXP3</Name>
+            <PadNumber>133</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="21" X="17.78" Y="-10.16" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="133" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>VBSEL_B</Name>
+            <PadNumber>134</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="22" X="17.78" Y="-12.7" Locked="N" Type="Default" ElectricType="Undefined" Orientation="180" PadId="134" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>AVN</Name>
+            <PadNumber>135</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+          <Pin Id="23" X="17.78" Y="-15.24" Locked="N" Type="Default" ElectricType="Power" Orientation="180" PadId="135" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>AGND</Name>
+            <PadNumber>136</PadNumber>
+            <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
+          </Pin>
+        </Pins>
+        <Shapes>
+          <Shape Id="0" Type="Rectangle" LineWidth="0.254" Locked="N" Group="-1">
+            <Points>
+              <Point X="-17.78" Y="20.32" />
+              <Point X="17.78" Y="-20.32" />
+            </Points>
+          </Shape>
+          <Shape Id="1" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>CONTROL 113-136</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="0" Y="17.78" />
+            </Points>
+          </Shape>
+          <Shape Id="2" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J17</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="-15.24" Y="17.78" />
+            </Points>
+          </Shape>
+          <Shape Id="3" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J18</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="-15.24" Y="0" />
+            </Points>
+          </Shape>
+          <Shape Id="4" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J19</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="15.24" Y="17.78" />
+            </Points>
+          </Shape>
+          <Shape Id="5" Type="Text" LineWidth="0.254" Locked="N" FontVector="Y" FontMono="N" FontSize="6" FontSizeFloat="6" FontColor="0" TextShow="Any Text" FontName="Tahoma" FontWidth="-2" FontScale="1" Angle="0" HorzAlign="Center" VertAlign="Center" TextAlign="Center" LineSpacing="1.2" Group="-1">
+            <TextLines>
+              <TextLine>J20</TextLine>
+            </TextLines>
+            <Points>
+              <Point X="15.24" Y="0" />
+            </Points>
+          </Shape>
+        </Shapes>
+      </Part>
+    </Component>
+  </Components>
+</Library>

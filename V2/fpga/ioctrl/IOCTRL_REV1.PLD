@@ -1,0 +1,256 @@
+Name     IOCTRL;
+PartNo   IOCTRL;
+Date     11/21/2026;
+Revision 1;
+Designer Sponaugle;
+Company  Ratiometric;
+Assembly None;
+Location None;
+Device   f1504isptqfp44;
+
+PROPERTY ATMEL {JTAG = ON};
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+PROPERTY ATMEL {PREASSIGN = KEEP};
+PROPERTY ATMEL {pin_keep OFF};
+
+//      VERSION 1 - First draft for the FPGA board (fpga/Roscoe_FPGA_Redesign.md section 10).
+//                  Not built or programmed yet.
+
+/*
+    IOCTRL is the one CPLD left on the FPGA version of Roscoe. It sits in the TQFP-44
+    footprint the PTC uses today (U11), and keeps its JTAG header (J11).
+
+    What it does:
+      - Turns the FPGA's 4-bit device code (DEV_CODE3..0) and enable (nDEV_EN) into the
+        5V selects and strobes of the slow devices: IDE x2, RTC, UART, 7-segment and LED
+        latches. Every one of them is a flip-flop on the falling edge of CPU_CLK, so an
+        output can only change just after a falling edge and a code that changes several
+        bits at once cannot glitch it. The FPGA decides on which edge each output changes.
+      - Ends the strobes that drive read data, and the latch strobes, as soon as the CPU
+        negates AS (an asynchronous preset from nCPU_AS). A read select then can never
+        run into the next bus cycle, and the device holds its data until AS rises, which
+        is the 68030's hold rule #29. This is what the UART needs: it has no data hold
+        (tDD min 0) and must not see the next cycle's R/W or address.
+      - Holds the system in reset while the FPGA is unconfigured (FPGA_DONE low) or the
+        power controller asks (nPWR_RESET_SINK low), and on a software reset (code 14),
+        then for 1024 more CPU clocks. It drives nSYS_RESET high for a clock or two as it
+        releases it, because the 68030 needs a RESET edge within 1.5 clocks (#32) and
+        R47 alone gives a slow RC edge. Otherwise nSYS_RESET is open (Hi-Z), so the
+        68030's RESET instruction can still pull it low.
+      - Keeps the power-off request bit (codes 12 and 13) and drives POWER_CONTROL_OUT
+        high while it is set.
+      - Makes nCPU_RD (NOT CPU_RW) and SYS_RESET_POS (the UART reset).
+
+    Device codes (DEV_CODE3..0). A select follows the code alone; a strobe needs the code
+    and nDEV_EN low. Codes 12-14 are commands and only act with nDEV_EN low.
+       0  idle
+       1  IDE1 command block   nIDE1_CSA, nIDE1_BUFFER_EN   strobes nIDE_RD / nIDE_WR by R/W
+       2  IDE1 control block   nIDE1_CSB, nIDE1_BUFFER_EN   same
+       3  IDE2 command block   nIDE2_CSA, nIDE2_BUFFER_EN   same
+       4  IDE2 control block   nIDE2_CSB, nIDE2_BUFFER_EN   same
+       5  RTC                  nRTC_CS (the RTC's /CS and AS)   strobe RTC_A_SEL (DS) and RTC_D_SEL
+       6  spare
+       7  UART channel A       nUART_CSA (its /IOR is nCPU_RD and its /IOW is CPU R/W)
+       8  UART channel B       nUART_CSB
+       9  7-segment A latch    nSEVENSEGA_WR
+      10  7-segment B latch    nSEVENSEGB_WR
+      11  status LED latch     nSTATUSLED_WR
+      12  power-off request on    (POWER_CONTROL_OUT driven high)
+      13  power-off request off   (POWER_CONTROL_OUT Hi-Z; R9/R46 pull it low)
+      14  system reset
+      15  spare
+
+    The FPGA's side of the contract: DEV_CODE and nDEV_EN change just after rising edges
+    of CPU_CLK and are stable at every falling edge. To end a read at AS negation, the
+    FPGA keeps the code (and nDEV_EN) past the last falling edge of the cycle; the AS
+    preset then ends the output. To end an output at a falling edge, it removes the code
+    before that edge. IDE /CS and the RTC's /CS are not tied to AS: IDE /CS outlasts
+    DIOR by a clock (ATA t9), and the RTC's AS must rise after DS falls.
+
+    Board requirements (section 9 of the redesign notes):
+      - 10K pull-ups on nCPU_AS and CPU_RW. The 68030 three-states them during reset
+        (user's manual 7.8), and the AS presets rely on AS being high then.
+      - 100K pull-down on FPGA_DONE, so a missing Au reads as unconfigured. The Au has
+        4.7K and 10K pull-ups on DONE, so it still reads about 3.2V when configured.
+      - 10K pull-downs on DEV_CODE3..0 (code 0 while the FPGA is not driving them).
+      - R47 (10K pull-up on nSYS_RESET) stays.
+      - Suggested: 10K pull-ups on the 16 active-low outputs and a 10K pull-down on
+        RTC_A_SEL, so every device stays deselected while IOCTRL is blank or being
+        programmed (its outputs float then; pin-keepers are off).
+*/
+
+/*  ---------------------------------------------------------------------------------
+    Inputs
+*/
+Pin 37 = CPU_CLK;               // GCLK1. CPU clock; every flip-flop here uses its falling edge.
+Pin 38 = CPU_RW;                // CPU R/W: 1 read, 0 write.
+Pin 39 = nPWR_RESET_SINK;       // GCLR. RESET_SINK from the power controller (U65): 0 = reset.
+Pin 40 = FPGA_DONE;             // Au DONE (3.3V). 0 = the FPGA is not configured.
+Pin 33 = nCPU_AS;               // CPU address strobe.
+Pin [34,35,42,43] = [DEV_CODE0..3];   // device code from the FPGA (3.3V)
+Pin 44 = nDEV_EN;               // strobe enable from the FPGA (3.3V): 0 = strobe window
+
+/*  ---------------------------------------------------------------------------------
+    Outputs
+*/
+Pin 2  = nIDE1_CSA;             // IDE1 /CS0 (via U39)
+Pin 3  = nIDE1_CSB;             // IDE1 /CS1 (via U39)
+Pin 5  = nIDE1_BUFFER_EN;       // IDE1 data buffers U37/U38 /OE
+Pin 6  = nIDE2_CSA;             // IDE2 /CS0 (via U42)
+Pin 8  = nIDE2_CSB;             // IDE2 /CS1 (via U42)
+Pin 10 = nIDE2_BUFFER_EN;       // IDE2 data buffers U40/U41 /OE
+Pin 11 = nIDE_RD;               // DIOR to both ports (U39/U42 pin 8; no longer nCPU_RD)
+Pin 12 = nIDE_WR;               // DIOW to both ports
+Pin 13 = nRTC_CS;               // RTC U33 /CS and AS
+Pin 14 = RTC_A_SEL;             // RTC U33 DS and U34 /OE (address buffer): 1 = data phase
+Pin 15 = RTC_D_SEL;             // RTC data buffer U35 /OE: 0 = data phase
+Pin 18 = nUART_CSA;             // UART U36 /CSA
+Pin 19 = nUART_CSB;             // UART U36 /CSB
+Pin 20 = SYS_RESET_POS;         // UART U36 RESET (active high)
+Pin 21 = nCPU_RD;               // flash and SRAM /OE, UART /IOR
+Pin 22 = SPARE22;               // spare: driven low; bring to a test pad
+Pin 23 = nSEVENSEGA_WR;         // 74HC273 U9 CP
+Pin 25 = nSEVENSEGB_WR;         // 74HC273 U10 CP
+Pin 27 = nSTATUSLED_WR;         // 74HC273 U7 CP
+Pin 28 = nSYS_RESET;            // system reset (R47 pull-up): driven low in reset, read back
+Pin 30 = POWER_CONTROL_OUT;     // to the power controller's PWR_REQGR: high or Hi-Z
+Pin 31 = SPARE31;               // spare: driven low; bring to a test pad
+
+/*  JTAG (ISP through J11): TDI 1, TMS 7, TCK 26, TDO 32.
+    VCC 9, 17, 29, 41. GND 4, 16, 24, 36.  */
+
+PINNODE = [RST0..9];            // reset stretch counter
+PINNODE = SOFT;                 // software reset request, one clock after code 14
+PINNODE = KICK;                 // 1 = drive nSYS_RESET high (the release edge)
+PINNODE = SAMP;                 // nSYS_RESET as it was at the last falling edge
+PINNODE = PWRDN;                // power-off request bit
+
+FIELD CODE = [DEV_CODE3..0];
+
+/*  ---------------------------------------------------------------------------------
+    Code decode (combinational terms used below)
+*/
+EN         = !nDEV_EN;
+C_IDE1A    = CODE:'h'1;
+C_IDE1B    = CODE:'h'2;
+C_IDE2A    = CODE:'h'3;
+C_IDE2B    = CODE:'h'4;
+C_RTC      = CODE:'h'5;
+C_UARTA    = CODE:'h'7;
+C_UARTB    = CODE:'h'8;
+C_SEGA     = CODE:'h'9;
+C_SEGB     = CODE:'h'A;
+C_LEDS     = CODE:'h'B;
+C_POFF_SET = CODE:'h'C;
+C_POFF_CLR = CODE:'h'D;
+C_SYSRST   = CODE:'h'E;
+C_IDE1     = C_IDE1A # C_IDE1B;
+C_IDE2     = C_IDE2A # C_IDE2B;
+C_IDE      = C_IDE1 # C_IDE2;
+
+/*  ---------------------------------------------------------------------------------
+    Selects and strobes. All change only just after a falling edge of CPU_CLK.
+    FPGA_DONE low holds them off (directly, or through the CPU reset that it causes).
+*/
+nIDE1_CSA.d       = !(C_IDE1A & FPGA_DONE);
+nIDE1_CSB.d       = !(C_IDE1B & FPGA_DONE);
+nIDE2_CSA.d       = !(C_IDE2A & FPGA_DONE);
+nIDE2_CSB.d       = !(C_IDE2B & FPGA_DONE);
+nRTC_CS.d         = !(C_RTC & FPGA_DONE);
+
+nIDE1_BUFFER_EN.d = !(C_IDE1 & FPGA_DONE);
+nIDE2_BUFFER_EN.d = !(C_IDE2 & FPGA_DONE);
+nIDE_RD.d         = !(C_IDE & EN & CPU_RW & FPGA_DONE);
+nIDE_WR.d         = !(C_IDE & EN & !CPU_RW & FPGA_DONE);
+RTC_A_SEL.d       = C_RTC & EN & FPGA_DONE;
+RTC_D_SEL.d       = !(C_RTC & EN & FPGA_DONE);
+nUART_CSA.d       = !(C_UARTA & FPGA_DONE);
+nUART_CSB.d       = !(C_UARTB & FPGA_DONE);
+nSEVENSEGA_WR.d   = !(C_SEGA & FPGA_DONE);
+nSEVENSEGB_WR.d   = !(C_SEGB & FPGA_DONE);
+nSTATUSLED_WR.d   = !(C_LEDS & FPGA_DONE);
+
+[nIDE1_CSA, nIDE1_CSB, nIDE2_CSA, nIDE2_CSB, nRTC_CS].ck = !CPU_CLK;
+[nIDE1_BUFFER_EN, nIDE2_BUFFER_EN, nIDE_RD, nIDE_WR, RTC_A_SEL, RTC_D_SEL].ck = !CPU_CLK;
+[nUART_CSA, nUART_CSB, nSEVENSEGA_WR, nSEVENSEGB_WR, nSTATUSLED_WR].ck = !CPU_CLK;
+
+/* Not tied to AS: these outlast the bus cycle on purpose (ATA t9; RTC AS after DS). */
+[nIDE1_CSA, nIDE1_CSB, nIDE2_CSA, nIDE2_CSB, nRTC_CS].ap = !FPGA_DONE;
+
+/* Tied to AS: off as soon as the CPU negates AS, and held off while it is high. */
+[nIDE1_BUFFER_EN, nIDE2_BUFFER_EN, nIDE_RD, nIDE_WR, RTC_D_SEL].ap = nCPU_AS;
+[nUART_CSA, nUART_CSB, nSEVENSEGA_WR, nSEVENSEGB_WR, nSTATUSLED_WR].ap = nCPU_AS;
+RTC_A_SEL.ar = nCPU_AS;
+
+/*  ---------------------------------------------------------------------------------
+    Read strobe for flash, SRAM and the UART. Immediate, so the SRAM can answer a
+    2-clock synchronous read. Held off while the FPGA is unconfigured, so the memories
+    never drive the bus while the 3.3V buffers are unpowered or floating.
+*/
+nCPU_RD = !(CPU_RW & FPGA_DONE);
+
+/*  ---------------------------------------------------------------------------------
+    Power-off request (POWER_CONTROL_OUT, the power controller's PWR_REQGR line).
+    Code 12 sets it, code 13 clears it, any reset clears it (as INTCTRL did).
+*/
+PWRDN.t  = (C_POFF_SET & EN & FPGA_DONE & !PWRDN)
+         # (C_POFF_CLR & EN & FPGA_DONE & PWRDN);
+PWRDN.ck = !CPU_CLK;
+PWRDN.ar = !nSYS_RESET.io;
+
+POWER_CONTROL_OUT    = 'b'1;
+POWER_CONTROL_OUT.oe = PWRDN;
+
+/*  ---------------------------------------------------------------------------------
+    System reset.
+    The register in the nSYS_RESET macrocell is 0 while in reset. It is cleared at once
+    by FPGA_DONE low or nPWR_RESET_SINK low, and one clock after code 14 (SOFT). The
+    counter then runs; when it reaches all ones the register sets on the next falling
+    edge, 1024 clocks after the request ended. The 68030 needs 520 clocks at power-up,
+    and ATA drives need 25 us (1024 clocks cover that up to 40 MHz).
+*/
+SOFT.d  = C_SYSRST & EN & FPGA_DONE;
+SOFT.ck = !CPU_CLK;
+SOFT.ar = !FPGA_DONE;
+
+RDONE = RST9 & RST8 & RST7 & RST6 & RST5 & RST4 & RST3 & RST2 & RST1 & RST0;
+
+RST0.t = (!nSYS_RESET & !SOFT) # (RST0 & SOFT);
+RST1.t = (RST0 & !nSYS_RESET & !SOFT) # (RST1 & SOFT);
+RST2.t = (RST1 & RST0 & !nSYS_RESET & !SOFT) # (RST2 & SOFT);
+RST3.t = (RST2 & RST1 & RST0 & !nSYS_RESET & !SOFT) # (RST3 & SOFT);
+RST4.t = (RST3 & RST2 & RST1 & RST0 & !nSYS_RESET & !SOFT) # (RST4 & SOFT);
+RST5.t = (RST4 & RST3 & RST2 & RST1 & RST0 & !nSYS_RESET & !SOFT) # (RST5 & SOFT);
+RST6.t = (RST5 & RST4 & RST3 & RST2 & RST1 & RST0 & !nSYS_RESET & !SOFT) # (RST6 & SOFT);
+RST7.t = (RST6 & RST5 & RST4 & RST3 & RST2 & RST1 & RST0 & !nSYS_RESET & !SOFT) # (RST7 & SOFT);
+RST8.t = (RST7 & RST6 & RST5 & RST4 & RST3 & RST2 & RST1 & RST0 & !nSYS_RESET & !SOFT) # (RST8 & SOFT);
+RST9.t = (RST8 & RST7 & RST6 & RST5 & RST4 & RST3 & RST2 & RST1 & RST0 & !nSYS_RESET & !SOFT) # (RST9 & SOFT);
+[RST0..9].ck = !CPU_CLK;
+[RST0..9].ar = !nPWR_RESET_SINK # !FPGA_DONE;
+
+nSYS_RESET.d  = (RDONE & !SOFT) # (nSYS_RESET & !SOFT);
+nSYS_RESET.ck = !CPU_CLK;
+nSYS_RESET.ar = !nPWR_RESET_SINK # !FPGA_DONE;
+nSYS_RESET.oe = !nSYS_RESET # KICK;
+
+/*  KICK drives the line high for a clock or two:
+      - as IOCTRL releases it (the register goes from 0 to 1 on this edge);
+      - when it was seen low and is now high while IOCTRL holds it released, which is
+        the end of a 68030 RESET instruction; this speeds up R47's slow rising edge. */
+SAMP.d  = nSYS_RESET.io;
+SAMP.ck = !CPU_CLK;
+
+KICK.d  = (RDONE & !nSYS_RESET & !SOFT)
+        # (nSYS_RESET & !SAMP & nSYS_RESET.io);
+KICK.ck = !CPU_CLK;
+KICK.ar = !nPWR_RESET_SINK # !FPGA_DONE;
+
+/* UART reset: follows the line, so the 68030's RESET instruction resets the UART too. */
+SYS_RESET_POS = !nSYS_RESET.io;
+
+/*  ---------------------------------------------------------------------------------
+    Spare outputs
+*/
+SPARE22 = 'b'0;
+SPARE31 = 'b'0;

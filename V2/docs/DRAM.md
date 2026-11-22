@@ -253,5 +253,5 @@ DRAMs need about 200 us after power is stable, plus at least eight refresh cycle
 * **Page-mode burst fills.** The 68030 can burst-fill a cache line from any STERM-terminated 32-bit port. A DRAM version keeps RAS low, toggles CAS four times while counting A3:A2, and returns STERM and CBACK, so a 4-clock read could become roughly 4-2-2-2. The A3:A2 counter needed for the SRAM burst ([SRAMBurstProposal.md](SRAMBurstProposal.md)) would feed the column mux instead (DRAM_A0/A1 come from CPU A2/A3).
 * **Clock-independent RAS timing** (Section 3.4), if the board is to run above about 20-25 MHz.
 * **Hold the transceiver direction until CAS rises,** to remove the end-of-read overlap.
-* **Refresh interval:** comparing against 31 instead of 15 at 20 MHz would halve the refresh overhead and still give 12.8 us. Keep a margin, and remember the interval scales with the clock.
+* **Refresh interval:** comparing against 31 instead of 15 at 20 MHz would halve the refresh overhead and still give 12.8 us. Keep a margin, and remember the interval scales with the clock. The FPGA version (`fpga/hdl/dramctrl.v`, 22 Nov 2026) requests a CBR refresh every 15.6 us, worked out from the clock frequency. Parts with 8K refresh in 64 ms need 7.8 us instead.
 * **Bus error above 0x9FFF_FFFF and for empty ranks** (instead of returning garbage), which helps memory-sizing code.
