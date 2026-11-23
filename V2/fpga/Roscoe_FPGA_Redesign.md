@@ -955,7 +955,10 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
      - **16-bit:** 0x4100_0000–0x4FFF_FFFF.
      - **32-bit:** all of 0x5, whose first 16 MB also drive nEXP_VMEM_CS.
      - A card that decodes its own address can use any of it. A card that doesn't, like the VGA card, uses the two selects.
-   - **The VGA card:** it needs a CPLD change for A26's new meaning (nEXP_ACK low = done, where nEXP_DEV_WAIT low meant wait). Its VMEM window is 16 MB now, and the card decodes 1 MB, so its image repeats through the window.
+   - **The VGA card:** Jeff will rebuild it for the new board (22 Nov 2026).
+     - As drawn, it needs a CPLD change for A26's new meaning (nEXP_ACK low = done, where nEXP_DEV_WAIT low meant wait).
+     - It decodes 1 MB, so its image repeats through the 16 MB VMEM window.
+     - The rebuild can keep using nEXP_VMEM_CS and nEXP_VIO_CS, or decode A20–A31 itself.
    - `changes.md`'s card rules (1.4, 1.6) still describe busy/grant on B26/B30 and the other old selects. Rewrite them for this connector before the next card is designed.
 14. **Tools:** Vivado 2026.2 is installed (`C:\AMDDesignTools\2026.2\Vivado`, free edition), with its xsim simulator for a 68030 bus testbench.
    - First use, 21 Nov 2026: a throwaway top level using all 100 ports ran from synthesis through bitstream for xc7a35tftg256-2, the Au V2's part.
