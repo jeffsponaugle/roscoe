@@ -31,8 +31,9 @@
 //   0x6000_0000-0x7FFF_FFFF  no answer: bus error from the bus timeout.
 //   0x8000_0000-0xFFFF_FFFF  DRAM [32], 1 wait state (dramctrl.v).
 //   CPU space: interrupt acknowledge [8] at 0 wait states with the vector from intctrl. FPU cycles
-//   select the 68882 (nFPU_CS, from the address alone as today), which ends them itself; like every
-//   other CPU-space cycle the FPGA doesn't answer, they end in the bus timeout if nothing does.
+//   are the 68882's: its select comes from a 74AHCT138 on the 5V side (FC0-2, A17, A19, A16), not
+//   from the FPGA, and it ends them itself. Like every other CPU-space cycle the FPGA doesn't answer,
+//   they end in the bus timeout if nothing does, so a missing FPU gives the F-line exception.
 //   CIIN is asserted for 0x3-0x5, decoded from the address alone: it is a synchronous input of the
 //   68030 and must be stable at every rising edge while AS is asserted (data sheet note 13).
 //
@@ -99,7 +100,6 @@ module busctrl #(
     output reg  [3:0]  sram_ce_n  = 4'hF,
     output reg  [3:0]  be_n       = 4'hF,
     output reg         flash_ce_n = 1'b1,
-    output wire        fpu_cs_n,
 
     // IOCTRL
     output reg  [3:0]  dev_code   = 4'd0,
@@ -175,7 +175,6 @@ module busctrl #(
     end
 
     assign dram_cyc = !cpu_space && a_hi[31];
-    assign fpu_cs_n = !(cpu_space && a_hi[19:16] == 4'h2);
     // CIIN is one of the 68030's synchronous inputs: it must be stable at every rising edge while AS is
     // asserted (data sheet note 13), so it comes from A31-A28 alone and settles before R1. No FC term is
     // needed: no CPU-space cycle has 3, 4 or 5 there (interrupt acknowledge puts all ones on the address,

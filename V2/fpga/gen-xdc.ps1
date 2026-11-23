@@ -84,7 +84,7 @@ $groupText = @{
   'DRAM-1'  = 'RAS0-7 through U_DRAM1 (74AHCT244)'
   'DRAM-2'  = 'CAS0-3, DRAM WE, MUX and the data-buffer /OE through U_DRAM2 (74AHCT244); the buffer DIR is CPU R/W'
   'MEM-1'   = 'SRAM CE0-3 and byte enables through U_MEM1 (74AHCT244)'
-  'MEM-2'   = 'Flash CE and FPU CS through U_MEM2 (74AHCT244); the flash /WE is CPU R/W'
+  'MEM-2'   = 'Flash CE through U_MEM2 (74AHCT244); the flash /WE is CPU R/W. (The 68882 select is a 74AHCT138 on the 5V side.)'
   'BURST'   = 'SRAM burst address BA3:BA2 (CPU A3:A2 plus the burst count) through U_MEM2 ch4 and U_DRAM2 ch7 (74AHCT244) to riser pins A18/B18'
   'DEV'     = 'Device code bus, wired straight to IOCTRL (ATF1504, TTL inputs)'
 }

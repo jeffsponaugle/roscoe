@@ -135,7 +135,7 @@ set groups {
     {out {ras_n[*] cas_n[*] dram_we_n dram_buf_oe_n}            {DRAM RAS, CAS, WE, 245 enable}}
     {out {dram_mux}                                             {DRAM_MUX}}
     {out {sram_ce_n[*] be_n[*] flash_ce_n}                      {SRAM and flash selects}}
-    {out {ciin_n fpu_cs_n sram_ba[*]}                           {CIIN, nFPU_CS, SRAM_BA (address decodes)}}
+    {out {ciin_n sram_ba[*]}                                    {CIIN, SRAM_BA (address decodes)}}
 }
 set fh [open io_slack.txt w]
 foreach g $groups {
@@ -202,8 +202,14 @@ puts "CHECK-HDL IMPL DONE"
         if ($wns -lt 0) { Fail "timing: worst setup slack $wns ns" }
         if ($whs -lt 0) { Fail "timing: worst hold slack $whs ns" }
     }
-    foreach ($l in (Get-Log (Join-Path $dir 'check_timing.rpt') | Where-Object { $_ -match '^\s*\d+\.\s+checking\s+\w+\s+\((\d+)\)' })) {
-        if ($l -notmatch '\(0\)\s*$') { "  check_timing: $($l.Trim())" }
+    # Every check_timing count must be 0: a port without both input (or output) delays, an unconstrained
+    # endpoint and the like are holes in roscoe_timing.xdc. (The report lists each check twice.)
+    $ctSeen = @{}
+    foreach ($l in (Get-Log (Join-Path $dir 'check_timing.rpt'))) {
+        if ($l -match '^\s*\d+\.\s+checking\s+(\w+)\s+\((\d+)\)' -and [int]$matches[2] -gt 0 -and -not $ctSeen.ContainsKey($matches[1])) {
+            $ctSeen[$matches[1]] = $true
+            Fail "check_timing: $($matches[1]) ($($matches[2])); see $dir\check_timing.rpt"
+        }
     }
     '  {0,-44} {1,10} {2,10}' -f 'worst slack, ns', 'setup', 'hold'
     foreach ($l in (Get-Log (Join-Path $dir 'io_slack.txt'))) {

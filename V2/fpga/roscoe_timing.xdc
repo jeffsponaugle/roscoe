@@ -65,8 +65,8 @@ set_input_delay -clock cpu_clk -min [expr {$t53 + $lvc_min + $wire_min - $uclk_m
 ## at that edge is a don't-care: either AS gates it off (busctrl's `go`), or it is loaded again at R1 from
 ## the new address (cyc = 0 there). Write data changes after R1 and is only taken at R2. Vivado can't know
 ## that: with the min input delay below zero and the clock's ~4.5 ns insertion delay (no MMCM), it pads
-## these nets by several ns to meet a hold check nothing depends on. The padding then slows CIIN, nFPU_CS
-## and SRAM_BA, which share the nets. (A real hold, against the next cycle's change, has clocks to spare.)
+## these nets by several ns to meet a hold check nothing depends on. The padding then slows CIIN and
+## SRAM_BA, which share the nets. (A real hold, against the next cycle's change, has clocks to spare.)
 set_false_path -hold -from [get_ports {cpu_a_hi[*] cpu_a_lo[*] cpu_fc[*] cpu_siz[*] cpu_rw cpu_d[*]}]
 ## Asynchronous inputs, each synchronised in the FPGA. (The zero input delay only keeps check_timing quiet.)
 set async_in [get_ports {sys_reset_n exp_ack_n ide_iordy pwr_req irq_ide[*] irq_uart[*] irq_rtc_n irq_exp_n[*]}]
@@ -129,8 +129,9 @@ set_false_path -hold -fall_from [get_clocks cpu_clk] -to [get_ports dsack_oe_n]
 
 ## ---- Pin-to-pin paths, with no clock edge in between ------------------------------------------------------
 ## A set_max_delay between ports counts the ports' input and output delays too, so each limit below is the
-## whole path; the comment gives the FPGA's share.
-set in_addr [expr {$t6 + $lvc_max + $wire_max - $uclk_min}]     ;# the address input delay above
+## whole path; the comment gives the FPGA's share. Each has a set_min_delay 0 beside it, which checks
+## nothing (-datapath_only already drops the hold check): without it, check_timing reports every source
+## port as having only a max input delay ("partial_input_delay"), which would hide a real one.
 set in_as   [expr {$t9 + $lvc_max + $wire_max - $uclk_min}]     ;# the AS input delay above
 set out_d   [expr {$wire_max + $lvc_en + $t27 + $uclk_max}]      ;# the D31-D24 / nDATA_OE output delay above
 set out_mem [expr {$wire_max + $ahct_max + $uclk_max}]           ;# the memory-select output delay above
@@ -138,14 +139,16 @@ set out_mem [expr {$wire_max + $ahct_max + $uclk_max}]           ;# the memory-s
 ## released within 50 ns of AS at the CPU: 6.9 (U_IN5 and wiring) + the FPGA + 8 (U_DATA) or 9.5 (AHCT)
 ## + ~25 (HCT245). FPGA share: 12 ns.
 set_max_delay -datapath_only [expr {$in_as + 12.0 + $out_d}]   -from [get_ports cpu_as_n] -to [get_ports {data_oe_n cpu_d[*]}]
+set_min_delay 0.0                                              -from [get_ports cpu_as_n] -to [get_ports {data_oe_n cpu_d[*]}]
 set_max_delay -datapath_only [expr {$in_as + 12.0 + $out_mem}] -from [get_ports cpu_as_n] -to [get_ports dram_buf_oe_n]
-## The register-read multiplexer, A3-A0 to D31-D24: the data is needed at the latch edge, two clocks after
-## the address. FPGA share: 30 ns.
-set_max_delay -datapath_only [expr {$in_addr + 30.0 + $out_d}] -from [get_ports {cpu_a_lo[*]}] -to [get_ports {cpu_d[*]}]
+set_min_delay 0.0                                              -from [get_ports cpu_as_n] -to [get_ports dram_buf_oe_n]
+## (The register-read multiplexer, A3-A0 to D31-D24, is no longer one of these: the read data is
+## registered in the I/O blocks, so the address input delay above covers it.)
 ## CIIN (U_CPU) must be at the CPU #60 before the first rising edge of the cycle, R1 (data sheet note 13).
 ## Counted from S0's rising edge at the FPGA pin, as the address input delay is.
 set_max_delay -datapath_only [expr {$tclk - $uclk_max - $t60 - $lvc_max - $wire_max}] -from [get_ports {cpu_a_hi[*]}] -to [get_ports ciin_n]
-## The 68882's select (U_MEM2) held to the same limit as CIIN, at R1. Section 16 has why that is not enough.
-set_max_delay -datapath_only [expr {$tclk - $uclk_max - $ahct_max - $wire_max}] -from [get_ports {cpu_a_hi[*] cpu_fc[*]}] -to [get_ports fpu_cs_n]
+set_min_delay 0.0 -from [get_ports {cpu_a_hi[*]}] -to [get_ports ciin_n]
+## (The 68882's select is no longer the FPGA's: a 74AHCT138 on the 5V side makes it, as section 16 explains.)
 ## SRAM_BA (U_MEM2, U_DRAM2) is the SRAM's A1:A0, needed with the rest of the address once CE falls after R1.
 set_max_delay -datapath_only [expr {$tclk - $uclk_max - $ahct_max - $wire_max}] -from [get_ports {cpu_a_lo[*]}] -to [get_ports {sram_ba[*]}]
+set_min_delay 0.0 -from [get_ports {cpu_a_lo[*]}] -to [get_ports {sram_ba[*]}]

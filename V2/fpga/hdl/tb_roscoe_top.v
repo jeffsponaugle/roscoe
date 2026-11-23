@@ -17,7 +17,6 @@
 //   - D31-D24: the FPGA never drives against U_DATA, and U_DATA never opens on a read the FPGA doesn't
 //     drive.
 //   - DSACK: three-stated during FPU cycles; STERM and CBACK stay negated.
-//   - nFPU_CS: asserted exactly when FC is CPU space and A19-A16 = 2 (coprocessor).
 
 `timescale 1ns / 1ps
 
@@ -51,7 +50,7 @@ module tb_roscoe_top;
     wire [31:24] cpu_d;           // FPGA side of U_DATA
     wire [7:0]   dbus;            // CPU side, D31-D24
     wire        data_oe_n, dsack_oe_n, sterm_n, ciin_n, cback_n, berr_n, dram_we_n, dram_mux, dram_buf_oe_n;
-    wire        dev_en_n, flash_ce_n, fpu_cs_n;
+    wire        dev_en_n, flash_ce_n;
     wire [2:0]  ipl_n;
     wire [1:0]  dsack_d;
     wire [7:0]  ras_n;
@@ -74,7 +73,7 @@ module tb_roscoe_top;
         .sterm_n(sterm_n), .ciin_n(ciin_n), .cback_n(cback_n), .berr_n(berr_n),
         .ras_n(ras_n), .cas_n(cas_n), .dram_we_n(dram_we_n), .dram_mux(dram_mux), .dram_buf_oe_n(dram_buf_oe_n),
         .dev_code(dev_code), .dev_en_n(dev_en_n), .sram_ce_n(sram_ce_n), .be_n(be_n),
-        .flash_ce_n(flash_ce_n), .fpu_cs_n(fpu_cs_n), .sram_ba(sram_ba));
+        .flash_ce_n(flash_ce_n), .sram_ba(sram_ba));
 
     // A card: pulls nEXP_ACK low card_delay ns after AS falls (no card if negative), lets go with AS.
     real card_delay = -1.0;
@@ -126,7 +125,7 @@ module tb_roscoe_top;
     localparam integer MAXE = 600;
     reg [3:0] e_code [1:MAXE];  reg e_en   [1:MAXE];  reg [7:0] e_ras [1:MAXE];  reg [3:0] e_cas [1:MAXE];
     reg       e_we   [1:MAXE];  reg e_mux  [1:MAXE];  reg       e_boe [1:MAXE];  reg [3:0] e_sce [1:MAXE];
-    reg [3:0] e_be   [1:MAXE];  reg e_fce  [1:MAXE];  reg       e_ciin[1:MAXE];  reg       e_fpu [1:MAXE];
+    reg [3:0] e_be   [1:MAXE];  reg e_fce  [1:MAXE];  reg       e_ciin[1:MAXE];
     reg       e_doe  [1:MAXE];
 
     task rec(input integer k);      // the outputs as the CPU and IOCTRL see them at this falling edge
@@ -135,7 +134,7 @@ module tb_roscoe_top;
                 e_code[k] = dev_code;  e_en[k]  = dev_en_n;   e_ras[k] = ras_n;   e_cas[k] = cas_n;
                 e_we[k]   = dram_we_n; e_mux[k] = dram_mux;   e_boe[k] = dram_buf_oe_n;
                 e_sce[k]  = sram_ce_n; e_be[k]  = be_n;       e_fce[k] = flash_ce_n;
-                e_ciin[k] = ciin_n;    e_fpu[k] = fpu_cs_n;   e_doe[k] = data_oe_n;
+                e_ciin[k] = ciin_n;    e_doe[k] = data_oe_n;
             end
         end
     endtask
@@ -355,9 +354,6 @@ module tb_roscoe_top;
             if (sterm_n !== 1'b1 || cback_n !== 1'b1) begin
                 errors = errors + 1; $display("FAIL at %0t: STERM or CBACK asserted", $realtime);
             end
-            if (fpu_cs_n !== !(FC == FC_CPU && A[19:16] == 4'h2)) begin
-                errors = errors + 1; $display("FAIL at %0t: nFPU_CS is %b with FC %0d, A19-A16 %h", $realtime, fpu_cs_n, FC, A[19:16]);
-            end
         end
     endtask
     always @(posedge clk)  begin #2 bus_check; end
@@ -419,11 +415,9 @@ module tb_roscoe_top;
         ctx = "0x6 region";        rd(32'h6000_0000, SZ_L);  bus_error(TIMEOUT - 1);
         ctx = "0x7 region";        wr(32'h7FFF_FFFC, SZ_L, 8'h00); bus_error(TIMEOUT - 1);
         ctx = "FPU, none fitted";  cycle(32'h0002_2000, FC_CPU, SZ_L, 1'b1, 8'h00, 1'b1);
-        bus_error(TIMEOUT - 1);    chk_eq(e_fpu[1], 1'b0, "nFPU_CS");  chk_eq(e_fce[1], 1'b1, "no flash CE");
+        bus_error(TIMEOUT - 1);    chk_eq(e_fce[1], 1'b1, "no flash CE");     // the 68882's select is outside the FPGA
         ctx = "breakpoint cycle";  cycle(32'h0000_0000, FC_CPU, SZ_B, 1'b1, 8'h00, 1'b1);
-        bus_error(TIMEOUT - 1);    chk_eq(e_fpu[1], 1'b1, "no nFPU_CS");  chk_eq(e_fce[1], 1'b1, "no flash CE");
-        ctx = "A19-A16 = 2, data space"; rd(32'h1002_0000, SZ_L);
-        ends(0, 2'b00);            chk_eq(e_fpu[1], 1'b1, "no nFPU_CS");
+        bus_error(TIMEOUT - 1);    chk_eq(e_fce[1], 1'b1, "no flash CE");
         ctx = "card space, no card"; rd(32'h3100_0000, SZ_B); bus_error(TIMEOUT - 1);
 
         // ---- interrupt acknowledge and the FPGA registers

@@ -118,7 +118,7 @@
           </Pad>
           <Pad Id="25" Style="BrWidePad" X="27.82" Y="-20.18" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
             <Number>26</Number>
-            <Note>J8-12 nFPU_CS</Note>
+            <Note>J8-12 spare</Note>
           </Pad>
           <Pad Id="26" Style="BrWidePad" X="27.82" Y="-22.72" Angle="0" Locked="N" Side="Top" DefStyle="Y" Group="-1">
             <Number>27</Number>
@@ -842,8 +842,8 @@
             <PadNumber>25</PadNumber>
             <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
           </Pin>
-          <Pin Id="25" X="-17.78" Y="-30.48" Locked="N" Type="Default" ElectricType="Output" Orientation="0" PadId="25" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
-            <Name>nFPU_CS</Name>
+          <Pin Id="25" X="-17.78" Y="-30.48" Locked="N" Type="Default" ElectricType="Undefined" Orientation="0" PadId="25" Length="5.08" ShowName="Y" NumXShift="0" NumYShift="0" NameXShift="0" NameYShift="0" SignalDelay="0" NumOrientation="0" NameOrientation="0">
+            <Name>SPARE_A65</Name>
             <PadNumber>26</PadNumber>
             <NameFont Size="5" FontSizeFloat="5" Width="-2" Scale="1" FontMono="N" />
           </Pin>
