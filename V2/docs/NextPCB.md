@@ -1,6 +1,6 @@
 # Roscoe - next PCB (V4) hardware changes
 
-This is the routing and parts list for the next revision of the main board. It collects every board-level change from [TheoryOfOperations.md](TheoryOfOperations.md) (Sections 4-15), [changes.md](changes.md) (CS0-CS3) and [SRAMBurstProposal.md](SRAMBurstProposal.md), and says which signal goes to which pin.
+This is the routing and parts list for the next revision of the main board. It collects every board-level change from [TheoryOfOperations.md](TheoryOfOperations.md) (Sections 4-15), [changes.md](changes.md) (CS0-CS3), [SRAMBurstProposal.md](SRAMBurstProposal.md) and the DRAM timing in [Roscoe_FPGA_Redesign.md](../fpga/Roscoe_FPGA_Redesign.md) (section 16), and says which signal goes to which pin.
 
 **Schematic versions:**
 * **V2** (`schematic/RoscoeMainboardV2Final`) is the schematic the PCB was made from.
@@ -48,6 +48,7 @@ No other routing changes. In particular, the expansion connector keeps its pin-o
 | IDE `IORDY` (J4/J6 pin 27, item 2) | one, to VCC | 1K pull-up | rework P8 (R69 in V3) | changes.md 3.2 |
 | IDE `/IOR`, `/IOW`, `/CS0`, `/CS1`, `DA0`-`DA2` | in series at the U39/U42 outputs, both ports | 22-33 ohm | none | ringing on the cable can double-clock a strobe |
 | IDE `DD0`-`DD15` | in series on the IDE side of U37/U38/U40/U41 | 22-33 ohm (optional) | none | same reason, smaller effect |
+| DRAM data, 32 lines | in series on the SIMM side of U29-U32 | 15-22 ohm arrays (optional; 0 ohm if not needed) | none | The AHCT245s (Section 3) have faster edges than the HCT245s. Each line carries about 86 pF with four SIMMs, and the DRAMs' inputs are specified down to -1 V. Otherwise scope a data line for undershoot on the first board. |
 | IDE `CSEL` (J4 and J6 pin 28) | to GND through a 2-pin jumper | jumper | not connected | lets cable select work |
 | IDE `DASP` (J4 and J6 pin 39) | LED and series resistor to VCC | LED + 470 ohm | not connected | drive activity light |
 
@@ -62,8 +63,10 @@ Keep the two spare 10K pull-ups R44/R45 on header J23. They made the CS0 rework 
 | U37, U38, U40, U41 (IDE data) | SN74AHC245 | **SN74AHCT245** | TTL input thresholds. ATA drives only promise 2.4 V for a high, and some drive 3.3 V levels (changes.md P7). Already fitted on the boards and in V3. |
 | U54-U57 (expansion data) | SN74AHC245 | **SN74AHCT245** | cards are then free to use TTL-level outputs |
 | U35 (RTC data) | SN74AHC245 | SN74AHCT245 (optional) | the DS12887's specified VOH is 2.4 V |
+| U26-U28 (DRAM address muxes) | SN74AHC157D | **CY74FCT2257T**, CT grade, SOIC-16 (CY74FCT2257CTSOC) | **Drive strength** (Jeff, 2026-11-23). With four double-sided SIMMs each address line carries about 380 pF. An AHC157 takes up to 51 ns to pull a bit down to VIL, against roughly half a clock from DRAM_MUX to CAS. The FCT2257's outputs have 25 ohm series resistors built in: about 31 ns worst case (about 15 typical), without ringing. Same pinout. Pin 15 is /OE rather than /G, and V3 already ties it to GND. TTL inputs. Its supply range is 5 V +-5%. |
+| U29-U32 (DRAM data) | 74HCT245D | **SN74AHCT245DW** | **Speed** (Jeff, 2026-11-23). At worst case the HCT245 takes 28 ns through, 58 to turn on and 50 to turn off (TI SCLS020). That eats the read margin (DRAM.md 3.3), and it stretches the overlap when DIR turns around at the end of a read. The AHCT245 is 9.5, 16 and 16.5 ns, with the same pinout. See also the optional DRAM data resistors in Section 2. |
 
-The other AHC parts (U39/U42, U49-U53, U68, U34, U26-U28) are driven by CPLDs or the CPU, whose outputs swing to the rail, so they can stay.
+The other AHC parts (U39/U42, U49-U53, U68, U34) are driven by CPLDs or the CPU, whose outputs swing to the rail, so they can stay. U26-U28 change for drive strength, not thresholds. The FPGA design keeps both changes (`fpga/Roscoe_FPGA_Redesign.md` sections 9 and 16).
 
 ## 4 Test points and headers
 
@@ -119,3 +122,5 @@ Spare inter-CPLD nets on V2:
 1. Trial-fit BUSCTRL, DEVMAP and INTCTRL with the new pin assignments, and check the fit reports for logic levels on the DSACK and acknowledge paths (changes.md 1.3).
 2. Export the V4 netlist and repeat the V2 check: every CUPL `Pin[]` assignment against its net, and every pull-up/pull-down above against its net.
 3. Check that no rework from CS0-CS3 is still needed on V4: the CPU and RTC pull-ups, the reset filter, R10, the B26 pull-up, the AS wire, the IDE pull-downs and IORDY.
+4. **Check that the CY74FCT2257T (SOIC-16) is in stock before routing U26-U28 for it.** Put its data sheet (TI SCCS038B) in `datasheets/`. The figures used so far came from web searches of it.
+   * The fallback needs different routing: keep the SN74AHC157s and add a second set of three, so that each set drives two SIMM sockets (FPGA doc section 16).

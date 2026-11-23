@@ -105,15 +105,15 @@ set_property -dict {PACKAGE_PIN L2 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_p
 set_property -dict {PACKAGE_PIN K2 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {dsack_oe_n}] ;# pin  32  J9-4 A16 U_CPU /1OE         -> /1OE (DSACK0/1; ch3-4 unused)
 set_property -dict {PACKAGE_PIN H3 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {sterm_n}] ;# pin  33  J9-5 A22 U_CPU ch5          ~STERM (group 2, /2OE = GND)
 
-## BERR, push-pull through U_MEM2 (74AHCT244), as BUSCTRL drives it today
+## BERR, push-pull through U_MEM2 (74AHCT541), as BUSCTRL drives it today
 set_property -dict {PACKAGE_PIN R13 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {berr_n}] ;# pin 102  J14-4 B18 U_MEM2 ch2        ~BERR (68030), push-pull as BUSCTRL drives it today
 
-## IPL0-2 through U_MEM2 (74AHCT244)
+## IPL0-2 through U_MEM2 (74AHCT541)
 set_property -dict {PACKAGE_PIN T9 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {ipl_n[0]}] ;# pin 100  J14-2 B6 U_MEM2 ch5         ~IPL0 (68030)
 set_property -dict {PACKAGE_PIN M16 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {ipl_n[1]}] ;# pin 105  J14-7 B36 U_MEM2 ch6        ~IPL1 (68030)
 set_property -dict {PACKAGE_PIN N13 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {ipl_n[2]}] ;# pin 106  J14-8 B42 U_MEM2 ch7        ~IPL2 (68030)
 
-## RAS0-7 through U_DRAM1 (74AHCT244)
+## RAS0-7 through U_DRAM1 (74AHCT541), each with 15R in series at the output
 set_property -dict {PACKAGE_PIN T8 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {ras_n[0]}] ;# pin  58  J11-2 B3 U_DRAM1 ch1        ~RAS0
 set_property -dict {PACKAGE_PIN T5 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {ras_n[1]}] ;# pin  59  J11-3 B9 U_DRAM1 ch2        ~RAS1
 set_property -dict {PACKAGE_PIN R7 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {ras_n[2]}] ;# pin  60  J11-4 B15 U_DRAM1 ch3       ~RAS2
@@ -123,16 +123,18 @@ set_property -dict {PACKAGE_PIN P11 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_
 set_property -dict {PACKAGE_PIN N12 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {ras_n[6]}] ;# pin  65  J11-9 B45 U_DRAM1 ch7       ~RAS6
 set_property -dict {PACKAGE_PIN M1 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {ras_n[7]}] ;# pin  66  J11-10 B51 U_DRAM1 ch8      ~RAS7
 
-## CAS0-3, DRAM WE, MUX and the data-buffer /OE through U_DRAM2 (74AHCT244); the buffer DIR is CPU R/W
+## CAS0-3 (each with 15R in series), MUX and the data-buffer /OE through U_DRAM2 (74AHCT541); the buffer DIR is CPU R/W
 set_property -dict {PACKAGE_PIN N2 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {cas_n[0]}] ;# pin  67  J11-11 B57 U_DRAM2 ch1      ~CAS0
 set_property -dict {PACKAGE_PIN P3 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {cas_n[1]}] ;# pin  68  J11-12 B63 U_DRAM2 ch2      ~CAS1
 set_property -dict {PACKAGE_PIN M4 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {cas_n[2]}] ;# pin  69  J11-13 B69 U_DRAM2 ch3      ~CAS2
 set_property -dict {PACKAGE_PIN L5 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {cas_n[3]}] ;# pin  70  J11-14 B75 U_DRAM2 ch4      ~CAS3
-set_property -dict {PACKAGE_PIN P8 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {dram_buf_oe_n}] ;# pin  75  J12-5 B23 U_DRAM2 ch8       ~DRAM_BUF_OE (HCT245 /OE, new)
-set_property -dict {PACKAGE_PIN R5 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {dram_mux}] ;# pin  73  J12-3 B11 U_DRAM2 ch6       DRAM_MUX (157 S pins)
-set_property -dict {PACKAGE_PIN T7 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {dram_we_n}] ;# pin  72  J12-2 B5 U_DRAM2 ch5        ~DRAM_WE
+set_property -dict {PACKAGE_PIN P8 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {dram_buf_oe_n}] ;# pin  75  J12-5 B23 U_DRAM2 ch8       ~DRAM_BUF_OE (AHCT245 /OE, new)
+set_property -dict {PACKAGE_PIN R5 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {dram_mux}] ;# pin  73  J12-3 B11 U_DRAM2 ch6       DRAM_MUX (FCT2257 S pins, U26-U28)
 
-## SRAM CE0-3 and byte enables through U_MEM1 (74AHCT244)
+## DRAM WE through U_DRAM3 (74AHCT541) ch1 and ch2: WE_A to SIMM sockets 1-2, WE_B to sockets 3-4
+set_property -dict {PACKAGE_PIN T7 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {dram_we_n}] ;# pin  72  J12-2 B5 U_DRAM3 ch1+ch2    ~DRAM_WE -> WE_A (SIMM sockets 1-2) and WE_B (sockets 3-4)
+
+## SRAM CE0-3 and byte enables through U_MEM1 (74AHCT541)
 set_property -dict {PACKAGE_PIN R16 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {be_n[0]}] ;# pin  90  J13-6 B28 U_MEM1 ch5        ~BE0 (D31-24)
 set_property -dict {PACKAGE_PIN N16 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {be_n[1]}] ;# pin  91  J13-7 B34 U_MEM1 ch6        ~BE1 (D23-16)
 set_property -dict {PACKAGE_PIN P13 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {be_n[2]}] ;# pin  92  J13-8 B40 U_MEM1 ch7        ~BE2 (D15-8)
@@ -142,14 +144,14 @@ set_property -dict {PACKAGE_PIN T12 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_
 set_property -dict {PACKAGE_PIN T13 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {sram_ce_n[2]}] ;# pin  88  J13-4 B16 U_MEM1 ch3        ~SRAM_CE2
 set_property -dict {PACKAGE_PIN T15 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {sram_ce_n[3]}] ;# pin  89  J13-5 B22 U_MEM1 ch4        ~SRAM_CE3
 
-## Flash CE through U_MEM2 (74AHCT244); the flash /WE is CPU R/W. (The 68882 select is a 74AHCT138 on the 5V side.)
+## Flash CE through U_MEM2 (74AHCT541); the flash /WE is CPU R/W. (The 68882 select is a 74AHCT138 on the 5V side.)
 set_property -dict {PACKAGE_PIN R12 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {flash_ce_n}] ;# pin 101  J14-3 B12 U_MEM2 ch1        ~FLASH_CE
 
-## SRAM burst address BA3:BA2 (CPU A3:A2 plus the burst count) through U_MEM2 ch4 and U_DRAM2 ch7 (74AHCT244) to riser pins A18/B18
+## SRAM burst address BA3:BA2 (CPU A3:A2 plus the burst count) through U_MEM2 ch4 and U_DRAM2 ch7 (74AHCT541) to riser pins A18/B18
 set_property -dict {PACKAGE_PIN B7 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {sram_ba[2]}] ;# pin  56  J10-14 A78 U_MEM2 ch4       SRAM_BA2 -> riser pin A18 (SRAM A0); was CPU A2
 set_property -dict {PACKAGE_PIN A5 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {sram_ba[3]}] ;# pin  25  J8-11 A59 U_DRAM2 ch7       SRAM_BA3 -> riser pin B18 (SRAM A1); was CPU A3
 
-## Expansion selects nEXP_VMEM_CS (A21) and nEXP_VIO_CS (A30) through U_MEM2 ch3/ch8 (74AHCT244), bussed to every slot
+## Expansion selects nEXP_VMEM_CS (A21) and nEXP_VIO_CS (A30) through U_MEM2 ch3/ch8 (74AHCT541), bussed to every slot
 set_property -dict {PACKAGE_PIN B6 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {exp_vio_cs_n}] ;# pin  28  J8-14 A77 U_MEM2 ch8        ~EXP_VIO_CS (connector A30, bussed to every slot): 0x3000_0500-0x3000_05FF
 set_property -dict {PACKAGE_PIN E2 IOSTANDARD LVCMOS33 SLEW SLOW DRIVE 8} [get_ports {exp_vmem_cs_n}] ;# pin  26  J8-12 A65 U_MEM2 ch3        ~EXP_VMEM_CS (connector A21, bussed to every slot): 0x5000_0000-0x50FF_FFFF
 

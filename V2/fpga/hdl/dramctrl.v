@@ -3,6 +3,9 @@
 // Revision 1, 22 Nov 2026. Ported from BUSCTRL rev 31 (V2/plds/BUSCTRLV2/BUSCTRL2_REV31.PLD) and
 // docs/DRAM.md, for the FPGA that replaces the core CPLDs (fpga/Roscoe_FPGA_Redesign.md). Checked in
 // simulation by tb_roscoe_top.v; not yet run on hardware.
+// Revision 2, 23 Nov 2026 (Jeff's go-ahead): DRAM_MUX returns to the row address at F(s+2), when RAS has
+// risen, instead of after AS negates. With four SIMMs on the address lines the row needs that time to
+// settle before a back-to-back access's RAS (Roscoe_FPGA_Redesign.md section 16).
 //
 // Everything runs on CPU_CLK. Rising edges are numbered as in the design notes: R1 is the first rising
 // edge at which AS is seen asserted, and the CPU samples DSACK on the falling edge after each one.
@@ -13,6 +16,9 @@
 //   R(s+1)  CAS falls: all four lanes on a read, the written lanes on a write. DSACK (32-bit) is asserted,
 //           so the CPU sees it at F(s+1) and latches read data at F(s+2).
 //   R(s+2)  RAS rises (2 clocks low). CAS stays low until AS negates, as FPM and EDO parts need.
+//   F(s+2)  DRAM_MUX returns to the row address. CAS latched the column when it fell (the TMS417400's
+//           column latch closes on CAS's falling edge), so the column has been held a clock and a half
+//           (tCAH), and the next access's RAS is at least a clock and a half away (tASR).
 //   AS negates: CAS and WE rise at the next rising edge; the 245s turn off at once.
 // s is 1 (R1) unless a refresh is under way, in which case the access starts at the first rising edge
 // after the refresh's RAS has been high for a clock. Rank windows follow docs/DRAM.md section 2:
@@ -72,6 +78,8 @@ module dramctrl #(
     reg [2:0]       ref_t   = 3'd0;   // 0 idle, 1-4 the steps above
 
     // ---- Access sequence ---------------------------------------------------------------------------------
+    // (Kept as written: left to itself, synthesis recodes acc one-hot and drops a bit, with a warning.)
+    (* fsm_encoding = "none" *)
     reg [1:0]       acc     = 2'd0;   // 0 idle, 1 RAS low, 2 RAS and CAS low, 3 CAS low (RAS high again)
 
     // The access's next state is worked out as if AS were asserted at this edge, and AS gates it at the
@@ -117,6 +125,7 @@ module dramctrl #(
         we_n  <= !(go && acc_a != 2'd0 && !rw);
     end
 
-    always @(negedge clk) mux <= (acc != 2'd0);
+    // the column while RAS is low (acc 1 and 2), the row from the falling edge after RAS rises (acc 3)
+    always @(negedge clk) mux <= (acc == 2'd1 || acc == 2'd2);
 
 endmodule

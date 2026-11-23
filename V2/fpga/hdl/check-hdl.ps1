@@ -132,8 +132,12 @@ set groups {
     {out {berr_n}                                               {BERR to the CPU}}
     {out {cpu_d[*] data_oe_n}                                   {read data D31-D24}}
     {out {dev_code[*] dev_en_n}                                 {DEV_CODE, nDEV_EN to IOCTRL}}
-    {out {ras_n[*] cas_n[*] dram_we_n dram_buf_oe_n}            {DRAM RAS, CAS, WE, 245 enable}}
-    {out {dram_mux}                                             {DRAM_MUX}}
+    {out {ras_n[*]}                                             {DRAM RAS0-7 (tRAC; tASR)}}
+    {out {cas_n[*]}                                             {DRAM CAS0-3 (tCAC; tDS)}}
+    {out {dram_we_n}                                            {DRAM WE (tWCS)}}
+    {out {dram_buf_oe_n}                                        {nDRAM_BUF_OE (245 enable)}}
+    {outr {dram_mux}                                            {DRAM_MUX to column (tASC, tAA; tRAH)}}
+    {outf {dram_mux}                                            {DRAM_MUX to row (back-to-back tASR; tCAH)}}
     {out {sram_ce_n[*] be_n[*] flash_ce_n}                      {SRAM and flash selects}}
     {out {exp_vmem_cs_n exp_vio_cs_n}                           {nEXP_VMEM_CS, nEXP_VIO_CS (card selects)}}
     {out {ciin_n sram_ba[*]}                                    {CIIN, SRAM_BA (address decodes)}}
@@ -145,6 +149,12 @@ foreach g $groups {
     if {$dir eq "in"} {
         set s [get_timing_paths -from $ports -max_paths 1 -setup]
         set h [get_timing_paths -from $ports -max_paths 1 -hold]
+    } elseif {$dir eq "outr"} {
+        set s [get_timing_paths -rise_to $ports -max_paths 1 -setup]
+        set h [get_timing_paths -rise_to $ports -max_paths 1 -hold]
+    } elseif {$dir eq "outf"} {
+        set s [get_timing_paths -fall_to $ports -max_paths 1 -setup]
+        set h [get_timing_paths -fall_to $ports -max_paths 1 -hold]
     } else {
         set s [get_timing_paths -to $ports -max_paths 1 -setup]
         set h [get_timing_paths -to $ports -max_paths 1 -hold]

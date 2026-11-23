@@ -57,6 +57,12 @@ At all other times the transceivers drive the CPU's data towards the DRAMs, so w
 
 The address, CAS and WE nets are shared by every socket. With four double-sided SIMMs built from x4 chips, each address line and WE sees around 64 DRAM inputs (several hundred pF), and each CAS line about 16. The address lines are driven by the AHC157s, and WE and CAS straight from slow-slew CPLD pins. Expect slow edges with all sockets populated. **Check** RAS-to-address and CAS edges at the far socket with a scope before relying on the margins in Section 3.3.
 
+Worked out on 2026-11-23, at the data-sheet limits:
+* An address line then carries about 380 pF, and an AHC157 takes up to about 51 ns to pull a bit down to VIL (34 ns typical). Section 3.3 assumes 7 ns.
+* The 74HCT245s are 28 ns through and 50-58 ns to turn around.
+* So V4 replaces U26-U28 with CY74FCT2257Ts, whose outputs have 25 ohm series resistors (about 31 ns worst case), and U29-U32 with 74AHCT245s ([NextPCB.md](NextPCB.md) Section 3).
+* The FPGA board's timing with these loads is in `fpga/Roscoe_FPGA_Redesign.md` section 16.
+
 ## 2 Address map
 
 DRAM occupies 0x8000_0000-0xFFFF_FFFF (`DRAM_REGION_ACCESS` = A31 & AS & not CPU space & not refreshing). BUSCTRL turns A31-A26 into one of eight RAS lines. The current build (rev 29, "64/128MB") gives each rank a 64 MB window:

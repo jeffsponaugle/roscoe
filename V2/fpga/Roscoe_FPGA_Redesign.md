@@ -120,7 +120,7 @@ The plan replaces four of Roscoe's programmable parts with one FPGA board:
 | The FPGA keeps the power-off/software-reset register; IOCTRL takes commands (codes 12–14) | IOCTRL needs no data lines, so D24/D25 leave it and two pins are freed. Software sees the same bits. The FPGA can make the register readable, and knows when the CPU itself drives POWER_CONTROL_OUT high. |
 | nCPU_AS into IOCTRL (pin 33) | In the first plan a UART read select ran into the next cycle's S0. If that cycle is a write, the UART sees /CS with /IOW (CPU R/W) low and takes a spurious write, and its address changes under an open read. The UART has no data hold (tDD min 0), so ending on the latch edge isn't safe either. With AS, the select and every other read strobe or latch strobe ends when the cycle does, as nCPU_RD's AS preset does on the board today. |
 | IOCTRL drives nSYS_RESET high as it releases it | The 68030's RESET input must change within 1.5 clocks (#32). With only R47 (10K), an open-drain release takes microseconds. IOCTRL drives the line low in reset, high for two clocks at release, then leaves it Hi-Z so the RESET instruction still works. |
-| nCPU_RD held high while DONE is low | While 3V3_FPGA is down, the AHCT244s assert every SRAM and flash select. With /OE held off, none of them can drive the data bus. This closes the power-up window (section 12) without the spare pin. |
+| nCPU_RD held high while DONE is low | While 3V3_FPGA is down, the AHCT output buffers assert every SRAM and flash select. With /OE held off, none of them can drive the data bus. This closes the power-up window (section 12) without the spare pin. |
 | Pull-ups on AS and R/W, pull-down on DONE | The board's part in the AS and DONE rows above. The 68030 three-states AS and R/W during reset, and the AS-tied outputs rely on AS being high then. A 100K pull-down makes a missing Au read as unconfigured. |
 
 **FPGA HDL (agreed 22 Nov 2026)**
@@ -154,6 +154,17 @@ The plan replaces four of Roscoe's programmable parts with one FPGA board:
 | 0x6–0x7 stay a bus error | For now. |
 | The FPGA drives nEXP_VMEM_CS (A21) and nEXP_VIO_CS (A30) again | The VGA card as drawn can't decode its own windows: A20–A31 don't connect on it, and A2–A19 only reach its video-memory buffers. Both selects come on at R1 and go off as AS negates, through U_MEM2's last two channels (ch3, ch8) from J8-12 and J8-14. A20, B19 and B20 stay reserved. |
 | Port widths fixed by region | A card picks the region that matches its bus width, and nothing needs setting up at boot. A width register could go in 0x208+ if a card ever needs one. |
+
+**DRAM drive (agreed 23 Nov 2026)**
+
+| Decision | Why |
+|---|---|
+| 74AHCT541s for the 5V output buffers (U_DRAM1/2, U_MEM1/2) | Jeff's suggestion: the flow-through pinout lays out better. They're as fast as the '244 at 50 pF (9.5 ns) and quicker at light loads (section 9). |
+| 15Ω in series with RAS0–7 and CAS0–3 | Undershoot, ring-back on strobes and ground bounce, at a cost of 1–2 ns (section 9). |
+| CY74FCT2257T address muxes in place of the SN74AHC157s | Jeff's pick of the two fixes for the address lines. With four double-sided SIMMs each line carries about 380 pF, and an AHC157 takes up to 51 ns to pull a bit to VIL, against half a clock. The FCT2257's 25Ω outputs take about 31 ns worst case by its data-sheet limits (about 15 typical). That matches splitting the AHC157s into two sets, with no extra chips. It has the same SOIC-16 pinout, and its pin 15 (/OE) is already on GND in V3 (section 16). It goes on V4 too (`docs/NextPCB.md` section 3). |
+| DRAM_MUX back to the row at F3, not F4 (`dramctrl.v` rev 2) | At F4 a back-to-back access's row had half a clock to settle before its RAS, about 3 ns more than four SIMMs need at worst case. At F3 it has a clock and a half. CAS latched the column at R2, so the column is held long enough (section 16). |
+| WE split: WE_A and WE_B on a third '541, U_DRAM3 | One AHCT output into all four sockets' WE (about 510 pF) has a falling edge of up to 31 ns at worst case, against the DRAM's 30 ns transition limit (tT). Two outputs from the one FPGA pin, two sockets each, give about 16 ns. U_DRAM2's old WE channel (ch5) is spare. |
+| 74AHCT245s for the DRAM data buffers U29–U32 | Agreed for V4, so this board has them too. The 74HCT245 is 28 ns through, 58 to turn on and 50 to turn off at worst case. That fails the read data via CAS, write data before CAS (now that nDRAM_BUF_OE turns the 245s on), and the 245s' release after AS (#29A). The AHCT245 is 9.5, 16 and 16.5 ns, with the same pinout. |
 
 ---
 
@@ -282,7 +293,7 @@ Spare holes:
 
 These were freed on 21 Nov 2026 by dropping nRMC, HALT, FLASH_WE, nEXP_SEL and nDRAM_DATA_EN, moving BERR to J14-4, and moving the interrupt inputs to the control header (section 2, "Pin changes"). J8-9 (A47), directly below the clock, then took the power request: a static line, through 1K (section 9). J8-6, J10-3, J12-4 and J14-6 then took the SRAM burst signals. On 22 Nov 2026 the timing pass moved nDSACK0, nCIIN, DEV_CODE0–3 and nDEV_EN into bank 35 next to AS, and A8–A15 and A24 out of their way (section 16). That used J10-4, J12-7, J12-13 and J12-14, and freed J9-2 and J8-11..13. Later that day nFPU_CS and FC1, then SRAM_BA2/3, moved into bank 35 beside their inputs. That used J8-11..13 and J10-14 and freed J8-2, J12-4, J14-5 and J14-6, all in bank 14. Then nFPU_CS left the FPGA for U_FPUCS, a 74AHCT138 (section 9), and J8-12 was free again. The card selects nEXP_VMEM_CS and nEXP_VIO_CS then took J8-12 and J8-14 (section 16).
 
-Spare translator channels: U_CPU ch8 (always driven; it can buffer a 5V input too) and U_MEM2 ch8 (a 5V output). U_IN5 and U_DRAM2 are full. Candidate uses are in section 15.
+Spare translator channels: U_CPU ch8 (always driven; it can buffer a 5V input too), U_DRAM2 ch5 (freed when DRAM_WE moved to U_DRAM3, 23 Nov 2026) and U_DRAM3 ch3–ch8 (5V outputs). U_IN5, U_MEM1 and U_MEM2 are full. Candidate uses are in section 15.
 
 ---
 
@@ -400,49 +411,49 @@ Byte lanes: nBE0 = D31–D24, nBE1 = D23–D16, nBE2 = D15–D8, nBE3 = D7–D0.
 | nIRQ_EXP1 | `irq_exp_n[0]` | in | 132 | J20-2 | C32 | M14 | 14 | U_IN6 (74LVC244A), 100Ω; Au LED5 |
 | nIRQ_EXP2 | `irq_exp_n[1]` | in | 127 | J19-3 | C34 | M12 | 14 | U_IN6 (74LVC244A), 100Ω; Au LED6 |
 | nIRQ_EXP3 | `irq_exp_n[2]` | in | 133 | J20-3 | C36 | P14 | 14 | U_IN6 (74LVC244A), 100Ω; Au LED7 |
-| nIPL0 | `ipl_n[0]` | out | 100 | J14-2 | B6 | T9 | 14 | U_MEM2 (74AHCT244) |
-| nIPL1 | `ipl_n[1]` | out | 105 | J14-7 | B36 | M16 | 14 | U_MEM2 (74AHCT244) |
-| nIPL2 | `ipl_n[2]` | out | 106 | J14-8 | B42 | N13 | 14 | U_MEM2 (74AHCT244) |
+| nIPL0 | `ipl_n[0]` | out | 100 | J14-2 | B6 | T9 | 14 | U_MEM2 (74AHCT541) |
+| nIPL1 | `ipl_n[1]` | out | 105 | J14-7 | B36 | M16 | 14 | U_MEM2 (74AHCT541) |
+| nIPL2 | `ipl_n[2]` | out | 106 | J14-8 | B42 | N13 | 14 | U_MEM2 (74AHCT541) |
 | nDSACK0 | `dsack_d[0]` | out | 46 | J10-4 | A18 | K3 | 35 | U_CPU (74LVC244A) |
 | nDSACK1 | `dsack_d[1]` | out | 31 | J9-3 | A10 | L2 | 35 | U_CPU (74LVC244A) |
 | nDSACK_OE | `dsack_oe_n` | out | 32 | J9-4 | A16 | K2 | 35 | U_CPU (74LVC244A) |
 | nSTERM | `sterm_n` | out | 33 | J9-5 | A22 | H3 | 35 | U_CPU (74LVC244A) |
 | nCIIN | `ciin_n` | out | 47 | J10-5 | A24 | J3 | 35 | U_CPU (74LVC244A) |
 | nCBACK | `cback_n` | out | 45 | J10-3 | A12 | L3 | 35 | U_CPU (74LVC244A) |
-| nBERR | `berr_n` | out | 102 | J14-4 | B18 | R13 | 14 | U_MEM2 (74AHCT244) |
-| nRAS0 | `ras_n[0]` | out | 58 | J11-2 | B3 | T8 | 14 | U_DRAM1 (74AHCT244) |
-| nRAS1 | `ras_n[1]` | out | 59 | J11-3 | B9 | T5 | 14 | U_DRAM1 (74AHCT244) |
-| nRAS2 | `ras_n[2]` | out | 60 | J11-4 | B15 | R7 | 14 | U_DRAM1 (74AHCT244) |
-| nRAS3 | `ras_n[3]` | out | 61 | J11-5 | B21 | R8 | 14 | U_DRAM1 (74AHCT244) |
-| nRAS4 | `ras_n[4]` | out | 62 | J11-6 | B27 | R11 | 14 | U_DRAM1 (74AHCT244) |
-| nRAS5 | `ras_n[5]` | out | 64 | J11-8 | B39 | P11 | 14 | U_DRAM1 (74AHCT244) |
-| nRAS6 | `ras_n[6]` | out | 65 | J11-9 | B45 | N12 | 14 | U_DRAM1 (74AHCT244) |
-| nRAS7 | `ras_n[7]` | out | 66 | J11-10 | B51 | M1 | 34 (MV, 3.3V) | U_DRAM1 (74AHCT244) |
-| nCAS0 | `cas_n[0]` | out | 67 | J11-11 | B57 | N2 | 34 (MV, 3.3V) | U_DRAM2 (74AHCT244) |
-| nCAS1 | `cas_n[1]` | out | 68 | J11-12 | B63 | P3 | 34 (MV, 3.3V) | U_DRAM2 (74AHCT244) |
-| nCAS2 | `cas_n[2]` | out | 69 | J11-13 | B69 | M4 | 34 (MV, 3.3V) | U_DRAM2 (74AHCT244) |
-| nCAS3 | `cas_n[3]` | out | 70 | J11-14 | B75 | L5 | 34 (MV, 3.3V) | U_DRAM2 (74AHCT244) |
-| nDRAM_WE | `dram_we_n` | out | 72 | J12-2 | B5 | T7 | 14 | U_DRAM2 (74AHCT244) |
-| DRAM_MUX | `dram_mux` | out | 73 | J12-3 | B11 | R5 | 14 | U_DRAM2 (74AHCT244) |
-| nDRAM_BUF_OE | `dram_buf_oe_n` | out | 75 | J12-5 | B23 | P8 | 14 | U_DRAM2 (74AHCT244) |
+| nBERR | `berr_n` | out | 102 | J14-4 | B18 | R13 | 14 | U_MEM2 (74AHCT541) |
+| nRAS0 | `ras_n[0]` | out | 58 | J11-2 | B3 | T8 | 14 | U_DRAM1 (74AHCT541) |
+| nRAS1 | `ras_n[1]` | out | 59 | J11-3 | B9 | T5 | 14 | U_DRAM1 (74AHCT541) |
+| nRAS2 | `ras_n[2]` | out | 60 | J11-4 | B15 | R7 | 14 | U_DRAM1 (74AHCT541) |
+| nRAS3 | `ras_n[3]` | out | 61 | J11-5 | B21 | R8 | 14 | U_DRAM1 (74AHCT541) |
+| nRAS4 | `ras_n[4]` | out | 62 | J11-6 | B27 | R11 | 14 | U_DRAM1 (74AHCT541) |
+| nRAS5 | `ras_n[5]` | out | 64 | J11-8 | B39 | P11 | 14 | U_DRAM1 (74AHCT541) |
+| nRAS6 | `ras_n[6]` | out | 65 | J11-9 | B45 | N12 | 14 | U_DRAM1 (74AHCT541) |
+| nRAS7 | `ras_n[7]` | out | 66 | J11-10 | B51 | M1 | 34 (MV, 3.3V) | U_DRAM1 (74AHCT541) |
+| nCAS0 | `cas_n[0]` | out | 67 | J11-11 | B57 | N2 | 34 (MV, 3.3V) | U_DRAM2 (74AHCT541) |
+| nCAS1 | `cas_n[1]` | out | 68 | J11-12 | B63 | P3 | 34 (MV, 3.3V) | U_DRAM2 (74AHCT541) |
+| nCAS2 | `cas_n[2]` | out | 69 | J11-13 | B69 | M4 | 34 (MV, 3.3V) | U_DRAM2 (74AHCT541) |
+| nCAS3 | `cas_n[3]` | out | 70 | J11-14 | B75 | L5 | 34 (MV, 3.3V) | U_DRAM2 (74AHCT541) |
+| nDRAM_WE | `dram_we_n` | out | 72 | J12-2 | B5 | T7 | 14 | U_DRAM3 (74AHCT541) ch1 and ch2: WE_A, WE_B |
+| DRAM_MUX | `dram_mux` | out | 73 | J12-3 | B11 | R5 | 14 | U_DRAM2 (74AHCT541) |
+| nDRAM_BUF_OE | `dram_buf_oe_n` | out | 75 | J12-5 | B23 | P8 | 14 | U_DRAM2 (74AHCT541) |
 | DEV_CODE0 | `dev_code[0]` | out | 10 | J7-10 | A51 | A3 | 35 | direct to IOCTRL |
 | DEV_CODE1 | `dev_code[1]` | out | 11 | J7-11 | A57 | A4 | 35 | direct to IOCTRL |
 | DEV_CODE2 | `dev_code[2]` | out | 12 | J7-12 | A63 | D1 | 35 | direct to IOCTRL |
 | DEV_CODE3 | `dev_code[3]` | out | 13 | J7-13 | A69 | C2 | 35 | direct to IOCTRL |
 | nDEV_EN | `dev_en_n` | out | 24 | J8-10 | A53 | B4 | 35 | direct to IOCTRL |
-| nSRAM_CE0 | `sram_ce_n[0]` | out | 86 | J13-2 | B4 | T10 | 14 | U_MEM1 (74AHCT244) |
-| nSRAM_CE1 | `sram_ce_n[1]` | out | 87 | J13-3 | B10 | T12 | 14 | U_MEM1 (74AHCT244) |
-| nSRAM_CE2 | `sram_ce_n[2]` | out | 88 | J13-4 | B16 | T13 | 14 | U_MEM1 (74AHCT244) |
-| nSRAM_CE3 | `sram_ce_n[3]` | out | 89 | J13-5 | B22 | T15 | 14 | U_MEM1 (74AHCT244) |
-| nBE0 | `be_n[0]` | out | 90 | J13-6 | B28 | R16 | 14 | U_MEM1 (74AHCT244) |
-| nBE1 | `be_n[1]` | out | 91 | J13-7 | B34 | N16 | 14 | U_MEM1 (74AHCT244) |
-| nBE2 | `be_n[2]` | out | 92 | J13-8 | B40 | P13 | 14 | U_MEM1 (74AHCT244) |
-| nBE3 | `be_n[3]` | out | 94 | J13-10 | B52 | P1 | 34 (MV, 3.3V) | U_MEM1 (74AHCT244) |
-| nFLASH_CE | `flash_ce_n` | out | 101 | J14-3 | B12 | R12 | 14 | U_MEM2 (74AHCT244) |
-| SRAM_BA2 | `sram_ba[2]` | out | 56 | J10-14 | A78 | B7 | 35 | U_MEM2 (74AHCT244) |
-| SRAM_BA3 | `sram_ba[3]` | out | 25 | J8-11 | A59 | A5 | 35 | U_DRAM2 (74AHCT244) |
-| nEXP_VMEM_CS | `exp_vmem_cs_n` | out | 26 | J8-12 | A65 | E2 | 35 | U_MEM2 (74AHCT244) |
-| nEXP_VIO_CS | `exp_vio_cs_n` | out | 28 | J8-14 | A77 | B6 | 35 | U_MEM2 (74AHCT244) |
+| nSRAM_CE0 | `sram_ce_n[0]` | out | 86 | J13-2 | B4 | T10 | 14 | U_MEM1 (74AHCT541) |
+| nSRAM_CE1 | `sram_ce_n[1]` | out | 87 | J13-3 | B10 | T12 | 14 | U_MEM1 (74AHCT541) |
+| nSRAM_CE2 | `sram_ce_n[2]` | out | 88 | J13-4 | B16 | T13 | 14 | U_MEM1 (74AHCT541) |
+| nSRAM_CE3 | `sram_ce_n[3]` | out | 89 | J13-5 | B22 | T15 | 14 | U_MEM1 (74AHCT541) |
+| nBE0 | `be_n[0]` | out | 90 | J13-6 | B28 | R16 | 14 | U_MEM1 (74AHCT541) |
+| nBE1 | `be_n[1]` | out | 91 | J13-7 | B34 | N16 | 14 | U_MEM1 (74AHCT541) |
+| nBE2 | `be_n[2]` | out | 92 | J13-8 | B40 | P13 | 14 | U_MEM1 (74AHCT541) |
+| nBE3 | `be_n[3]` | out | 94 | J13-10 | B52 | P1 | 34 (MV, 3.3V) | U_MEM1 (74AHCT541) |
+| nFLASH_CE | `flash_ce_n` | out | 101 | J14-3 | B12 | R12 | 14 | U_MEM2 (74AHCT541) |
+| SRAM_BA2 | `sram_ba[2]` | out | 56 | J10-14 | A78 | B7 | 35 | U_MEM2 (74AHCT541) |
+| SRAM_BA3 | `sram_ba[3]` | out | 25 | J8-11 | A59 | A5 | 35 | U_DRAM2 (74AHCT541) |
+| nEXP_VMEM_CS | `exp_vmem_cs_n` | out | 26 | J8-12 | A65 | E2 | 35 | U_MEM2 (74AHCT541) |
+| nEXP_VIO_CS | `exp_vio_cs_n` | out | 28 | J8-14 | A77 | B6 | 35 | U_MEM2 (74AHCT541) |
 
 Unused Au header pins: the 9 spares of section 6, and B46/B48 (1.35V). nFPU_CS is no longer an FPGA signal: U_FPUCS makes it (section 9).
 
@@ -463,10 +474,13 @@ Optional on-board pins, with no Br connection: `usb_rx` P15, `usb_tx` P16 (FT223
 | U_CLK | 74LVC1G34 | 3V3_FPGA | – | CPU clock → 33Ω → J8-8 |
 | U_DATA | 74LVC245A | 3V3_FPGA | nDATA_OE | D24–D31. DIR follows CPU R/W. nDATA_OE turns it on for writes the FPGA needs to see, and for the reads it answers itself (its registers and interrupt vectors), so it never fights another device on a read. |
 | U_CPU | 74LVC244A | 3V3_FPGA | 1OE: nDSACK_OE; 2OE: GND | Group 1: DSACK0/1 (driven, then three-stated; the 68882 shares them, and R51/R52 stay as pull-ups); ch3–4 unused. Group 2: STERM, CIIN, CBACK; ch8 spare, which can also buffer a 5V input. |
-| U_DRAM1 | 74AHCT244 | +5V | GND | RAS0–7 |
-| U_DRAM2 | 74AHCT244 | +5V | GND | CAS0–3, DRAM_WE, DRAM_MUX, DRAM_BUF_OE, SRAM_BA3 |
-| U_MEM1 | 74AHCT244 | +5V | GND | SRAM CE0–3, BE0–3 |
-| U_MEM2 | 74AHCT244 | +5V | GND | FLASH_CE, BERR, SRAM_BA2, IPL0–2, nEXP_VMEM_CS (ch3) and nEXP_VIO_CS (ch8), to connector A21 and A30 on every slot. All eight channels used. |
+| U_DRAM1 | 74AHCT541 | +5V | GND (both) | RAS0–7, each through 15Ω |
+| U_DRAM2 | 74AHCT541 | +5V | GND (both) | CAS0–3 (each through 15Ω), DRAM_MUX, DRAM_BUF_OE, SRAM_BA3. ch5 is spare: DRAM_WE moved to U_DRAM3 (23 Nov 2026). |
+| U_DRAM3 | 74AHCT541 | +5V | GND (both) | **Jeff, 23 Nov 2026:** ch1 = WE_A (SIMM sockets 1–2), ch2 = WE_B (sockets 3–4), both inputs from the FPGA's nDRAM_WE (Br J12-2). ch3–ch8 spare. Place it by the SIMM sockets. |
+| U_MEM1 | 74AHCT541 | +5V | GND (both) | SRAM CE0–3, BE0–3 |
+| U_MEM2 | 74AHCT541 | +5V | GND (both) | FLASH_CE, BERR, SRAM_BA2, IPL0–2, nEXP_VMEM_CS (ch3) and nEXP_VIO_CS (ch8), to connector A21 and A30 on every slot. All eight channels used. |
+| U26–U28 | CY74FCT2257T (CT grade, SOIC-16) | +5V | GND (pin 15) | DRAM address muxes, select = DRAM_MUX. **Jeff, 23 Nov 2026:** in place of V2/V3's SN74AHC157s, same pinout. 25Ω series resistors in the outputs; one set drives all four SIMM sockets (section 16, "Address muxes"). |
+| U29–U32 | 74AHCT245 | +5V | nDRAM_BUF_OE | DRAM data, CPU on the B side. **Jeff, 23 Nov 2026:** in place of V2/V3's 74HCT245s, on V4 too (rules below). |
 | U_FPUCS | 74AHCT138 | +5V | G1 = A17, /G2A = A19, /G2B = A16 | The 68882's chip select: Y7 (pin 7) = nFPU_CS, from the CPU's own FC0–2 on A, B, C (pins 1–3). Not an FPGA part (rules below). |
 | IOCTRL | ATF1504 (TQFP-44) | +5V | – | Slow-I/O decode, reset, power control (section 10) |
 | RN1–RN5 | 10K bussed ×8 | 3V3_FPGA | – | Pull-ups on all 35 active-low FPGA outputs. Of the 5 spare resistors, use 2 on the DSACK data lines (`dsack_d[1:0]`) so U_CPU's inputs don't float during configuration. |
@@ -476,7 +490,29 @@ U_OD (a 74LVC2G07 for BERR and HALT) is gone: HALT left the FPGA, and BERR moved
 **Rules**
 - **3V3_FPGA rail:** the Au's +3V3 (Br J17-1).
 - **Why LVC on inputs:** LVC inputs take 5V and have power-off protection (Ioff).
-- **Why AHCT on outputs:** AHCT outputs give a full 5V swing. That keeps the existing AHC157 DRAM address muxes (CMOS thresholds) and suits the SIMMs (VIH 2.4V).
+- **Why AHCT on outputs:** AHCT outputs give a full 5V swing, which suits the SIMMs (VIH 2.4V) and any CMOS-threshold input.
+  - AHCT's outputs are also soft: they're current-limited, about 40 mA at worst. Into the SIMM loads that means no ringing to speak of, and little ground bounce when eight RAS lines switch together on every refresh.
+  - ACT or ABT parts would ring there, and would need a resistor on every line.
+- **Why '541s (Jeff, 23 Nov 2026):** the flow-through pinout lays out better, and puts the RAS and CAS resistors right at the outputs. Tie both /OE pins to GND.
+  - The 74AHCT541 is as fast as the '244 at 50 pF: 9.5 ns max (TI SCLS269Q and SCLS228, both in `datasheets/`). At 15 pF it's quicker, 6.5 ns against 8.5.
+  - U_CPU stays a 74LVC244A, because its two halves have separate enables.
+  - U_IN1–U_IN6 could be 74LVC541As for the same layout reason. Check that sheet's figures against `roscoe_timing.xdc` first.
+- **DRAM strobe resistors (23 Nov 2026):** put 15Ω in series with each RAS0–7 and CAS0–3, right at the U_DRAM1/U_DRAM2 outputs, on footprints that take 0–22Ω.
+  - **Why:**
+    - Undershoot: the TMS417400's inputs are specified down to −1 V. Without a resistor, a fast-corner AHCT part can ring about 1 V below ground on these lines, and 15Ω brings that under about 0.3 V.
+    - RAS and CAS are strobes, so a ring-back through the threshold is an extra edge.
+    - Ground bounce: four CAS lines (about 570 pF) fall together on every read, and all eight RAS lines on every refresh.
+    - V2's strobes come from slow-slew CPLD pins, so V2 proves nothing here.
+  - **None on** WE, the address lines, DRAM_MUX, nDRAM_BUF_OE or SRAM_BA3. Their heavy loads damp them, or their runs are short, and a resistor would only slow them.
+  - **Cost:** at most the time constants, 2.1 ns on CAS and 1.2 on RAS, which is what `roscoe_timing.xdc` charges. With AHCT's current-limited outputs it's nearer half that, because the buffer, not the resistor, sets most of the edge.
+  - Place U_DRAM1–U_DRAM3 and the '157s close to the SIMM sockets.
+- **DRAM loads:** four double-sided SIMMs of x4 chips (16 per SIMM) put about 380 pF on each address line, 510 pF on WE, 140 pF on each CAS line, 80 pF on each RAS line (one rank) and 86 pF on each data line. Those are the TMS417400's 5 pF and 7 pF inputs, plus traces. Parity SIMMs have up to 24 chips, which is more again.
+  - V2/V3's '157s are AHC parts. At 380 pF they take about 51 ns, worst case, to pull an address bit down to VIL (34 ns typical), against half a clock (31 ns) from DRAM_MUX to CAS.
+  - **Fixes (23 Nov 2026, all agreed by Jeff), with their timing in section 16:**
+    - CY74FCT2257Ts in U26–U28's place. Their 25Ω outputs take about 31 ns worst case at 382 pF, against 51 for the AHC157.
+    - 74AHCT245s for U29–U32 (next rule).
+    - WE split into WE_A and WE_B on U_DRAM3 (260 pF each). Driving 510 pF, one AHCT output's edge takes up to 31 ns, against the DRAM's 30 ns limit (tT); split, 16 ns.
+  - The FCT2257s and the AHCT245s go on the CPLD board (V4) as well (`docs/NextPCB.md` section 3). It has the same footprints and pinouts, and the same loads.
 - **Driving 5V parts from 3.3V:** 3.3V outputs drive TTL-threshold inputs directly. That covers the 68030 and 68882 inputs (VIH 2.0V), the ATF1504 inputs, and HCT/AHCT/ACT parts. That's why the DEV_CODE bus and DONE go to IOCTRL without a translator.
 - **Series resistors:** put 33Ω on every translator output that drives the FPGA. It slows the edges through the 0.1" headers. The eight interrupt lines get 100Ω instead (next rule).
 - **Interrupt inputs on the LED pins:** U_IN6 drives the Au's LED0–7 pins through 100Ω each. Each pin also carries an Au LED with 330Ω to GND, about 3 mA when high, so the pin still sits near 3.0V (VIH is 2.0V). The 100Ω also limits the current to about 25 mA should a bitstream drive those pins, as a demo design that blinks the LEDs would. Load the Roscoe bitstream into the Au's flash before fitting it anyway: any bitstream that drives Roscoe's input pins fights the translators.
@@ -490,6 +526,10 @@ U_OD (a 74LVC2G07 for BERR and HALT) is gone: HALT left the FPGA, and BERR moved
   - **The FPGA's part:** none for the select. It still never drives DSACK in CPU space other than interrupt acknowledge, and the bus timeout still ends an FPU cycle nobody answers.
 - **HALT:** no FPGA connection. R2 keeps it high, and U1 still drives the HALT LED from it.
 - **DRAM data buffers:** lift U29–U32 /OE (pin 19) off GND and drive it from nDRAM_BUF_OE, and wire DIR (pin 1) to CPU R/W. The CPU is on the B side, so R/W high (a read) drives DRAM data onto the CPU bus, as nDRAM_DATA_EN did.
+  - **Make them 74AHCT245s (Jeff, 23 Nov 2026; on V4 too).** They're pin-compatible (SN74AHCT245DW), as P7's U37 swap was.
+    - Their edges are faster than the HCT245s', and each data line carries about 86 pF. Leave room for optional 15–22Ω series arrays on the SIMM side (0Ω if not needed), as `docs/NextPCB.md` section 2 does, or scope a data line for undershoot on the first board.
+    - The 74HCT245 (TI SCLS020) is too slow at worst case: 28 ns through, 58 ns to turn on, 50 ns to turn off. The 74AHCT245 (SCLS233S) is 9.5, 16 and 16.5 ns.
+    - With HCT245s, three checks fail: read data through tCAC misses the CPU's latch by about 4 ns; write data can reach the DRAM after CAS, because the turn-on now follows nDRAM_BUF_OE; and AS-to-release (#29A, 50 ns) is about 27 ns over.
 - **Flash /WE:** wire U3 pin 31 to CPU R/W. Writes become CE#-controlled (section 12).
 - **SRAM burst address:** riser pins A18/B18 (the SRAMs' A0/A1) take SRAM_BA2/BA3 instead of CPU A2/A3, so the riser itself doesn't change. Every other A2/A3 load (flash, FPU, UART, the RTC and expansion buffers, U_IN5) stays on the CPU's own lines.
   - Optionally feed the DRAM column mux (U26 1B/2B, column bits 0–1) from BA2/BA3 as well. Outside a burst they equal A3:A2, and the column phase comes long after they settle. A later DRAM page-mode burst needs exactly this (`docs/DRAM.md` section 6), so it would cost no more pins.
@@ -784,14 +824,17 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
   - Put 33Ω series resistors on translator outputs into the FPGA.
   - Place the translators right at the headers, over solid ground.
   - **Fallback** if crosstalk or ground bounce shows up: mount the Hirose DF40 mates directly on Roscoe instead of using the Br. That gives a ground pair every third row, but means 0.4 mm-pitch soldering.
+- **DRAM lines:** put 15Ω in series with each RAS and CAS line at its buffer, and nothing on WE, the address lines, DRAM_MUX or nDRAM_BUF_OE.
+  - The SIMM loads are large, 80–510 pF. So the address muxes, WE and the 245s, not the FPGA, set the DRAM timing.
+  - See section 9's rules, and section 16, "DRAM timing with real loads".
 - **Clock:** CPU_CLK goes through the 74LVC1G34, then 33Ω, to J8-8. J7-8 (its partner) stays empty. J8-9 carries only the power request, a static line, through 1K. J7-7/J7-9 (diagonal to it) are spare, for slow or static signals only.
 - **Configuration float:** PUDC_B is tied high on the Au, so all pins float during configuration. Every active-low output needs its 10K pull-up to 3V3_FPGA, so strobes stay negated while it loads.
 - **Power-up window:** 3V3_FPGA comes from the Au, so until the Au's regulators come up after +5V, or whenever the Au is unplugged, those pull-ups sit at 0V.
-  - The 5V AHCT244 buffers then see low inputs and assert every strobe behind them: RAS, CAS, DRAM_WE, the DRAM buffer enable, the SRAM and flash selects, IPL and BERR. (The 68882's select comes from U_FPUCS, which doesn't depend on 3V3_FPGA.)
+  - The 5V AHCT buffers (U_DRAM1–U_DRAM3, U_MEM1/2) then see low inputs and assert every strobe behind them: RAS, CAS, DRAM_WE, the DRAM buffer enable, the SRAM and flash selects, IPL and BERR. (The 68882's select comes from U_FPUCS, which doesn't depend on 3V3_FPGA.)
   - IOCTRL holds reset through this (DONE is low). It also holds nCPU_RD high, so the SRAM and flash can't drive the data bus even though their selects are asserted.
   - The DRAM buffers' DIR follows R/W. The CPU floats R/W during reset, but its new pull-up makes it read, so the buffers drive the CPU bus from the DRAM side, where nothing else is driving.
   - The flash needs a command sequence before it will program. So the window should be harmless.
-  - If it isn't, IOCTRL's spare pin 22 can still drive the four AHCT244 /OE pins from DONE, with pull-ups to +5V on their outputs. U_DATA and U_CPU are unpowered then, so their outputs are already off.
+  - If it isn't, IOCTRL's spare pin 22 can still drive the AHCT buffers' /OE pins from DONE, with pull-ups to +5V on their outputs. U_DATA and U_CPU are unpowered then, so their outputs are already off.
 - **Selectable bank (34):** 18 of our signals use it. Leave VBSEL_A/B (Br J19-4, J20-4) unconnected so it stays at 3.3V.
 - **Bank 15 pins (B46/B48):** run at 1.35V; leave them unconnected.
 - **Reset sequencing:** IOCTRL holds SYS_RESET until DONE rises, plus a 1024-clock stretch, and drives the line high for two clocks as it releases it (68030 #32). A JTAG reload while the machine is running drops DONE and resets the machine cleanly.
@@ -805,7 +848,7 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
   Ending CE# a clock before the cycle ends on writes, as the other write strobes in section 10 do, covers the second point with a clock to spare.
 - **SRAM synchronous cycles and bursts:** `docs/SRAMBurstProposal.md` has the same budget for the CPLD board.
   - **68030 limits (20 MHz grade):** STERM and CBACK need 4 ns setup and 12 ns hold at the rising edge (#60/#61). Read data needs 4 ns setup and 12 ns hold at the following falling edge (#27/#30). The fitted grade isn't recorded, and faster grades need less.
-  - **The FPGA's paths:** the CPU's address is valid by 25 ns (#6). Then come U_IN (about 5 ns), the FPGA pin to pin (about 8 ns), and U_CPU (about 5 ns) or an AHCT244 (about 8 ns), plus the headers. That's about 9 ns more than the proposal's -10 CPLD. Vivado now gives the FPGA's share (section 16, "I/O timing"): 6.9 ns from A3:A2 to SRAM_BA and 8.7 to CIIN, worst case.
+  - **The FPGA's paths:** the CPU's address is valid by 25 ns (#6). Then come U_IN (about 5 ns), the FPGA pin to pin (about 8 ns), and U_CPU (about 5 ns) or an AHCT541 (about 8 ns), plus the headers. That's about 9 ns more than the proposal's -10 CPLD. Vivado now gives the FPGA's share (section 16, "I/O timing"): 6.9 ns from A3:A2 to SRAM_BA and 8.7 to CIIN, worst case.
   - **First long word:** STERM is seen at the rising edge that starts S2, and the data is latched at the falling edge that ends it.
     - STERM is out at about 45 ns, against a deadline of T − 4: about 13 ns of margin at 16 MHz, but about 1 ns at 20 MHz.
     - SRAM data is valid at about 60 ns (CE and BA2/BA3 out at about 48, plus 12), against 1.5T − 4: about 30 ns of margin at 16 MHz, 11 ns at 20 MHz.
@@ -900,7 +943,14 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
    - PTC: Jeff will redesign it (22 Nov 2026), so it won't be ported from the CPLD. The interrupt controller takes two timer requests (`tmr_irq`), which the new design can keep or change. Until it is placed, the old PTC window (0x4000_0400) stays free. The bus controller comes first.
    - **Register map and card windows:** agreed and written 22 Nov 2026 (section 2, "Register map and card windows"; section 16). The FPGA registers sit at 0x3000_0200–0207 and the new PTC at 0x3000_0400. Port widths are fixed by region, and the FPGA drives nEXP_VMEM_CS and nEXP_VIO_CS.
    - **Clocking:** decided 22 Nov 2026: CPU_CLK, both edges (section 2, "FPGA HDL"). The burst counter will need an MMCM output a quarter clock behind CPU_CLK.
-   - **I/O timing constraints:** done 22 Nov 2026 (`roscoe_timing.xdc`, section 16). Every path passes at 16 MHz, worst case. BERR (+0.56 ns) and AS into R1 (+0.91 ns) are the tightest. Getting there took the "AS last" restructure, I/O-block registers, an ODDR for nDSACK_OE, and pin moves.
+   - **I/O timing constraints:** done 22 Nov 2026 (`roscoe_timing.xdc`, section 16). Every path passes at 16 MHz, worst case. Getting there took the "AS last" restructure, I/O-block registers, an ODDR for nDSACK_OE, and pin moves.
+     - **23 Nov 2026:** the 5V outputs are now timed at their own loads, and the DRAM lines against the SIMMs' own limits.
+     - With the agreed DRAM parts (item 15), everything still passes.
+     - With V2/V3's DRAM parts, the DRAM checks fail (section 16, "DRAM timing with real loads").
+   - **DRAM_MUX back to the row at F3 (done 23 Nov 2026, `dramctrl.v` rev 2, Jeff's go-ahead):** it used to wait for F4, after AS negated.
+     - At F4 a back-to-back access's row had half a clock to settle before its RAS fell. At F3 it has a clock and a half.
+     - It's safe because CAS has already latched the column by then (TMS417400 sheet: "the falling edge of CAS latches the column addresses"). The column has been held a clock and a half after CAS fell (tCAH).
+     - FPM and EDO parts latch the column like that. Static-column parts, which follow the column address while CAS is low, wouldn't, but 72-pin SIMMs of those are rare.
    - **68882 select:** decided 22 Nov 2026. U_FPUCS, a 74AHCT138 on the 5V side, makes it, and the FPGA no longer does (sections 9 and 16).
    - **Refresh interval:** read the chip markings on the SIMMs. For 8K-refresh parts, set `REFRESH_NS` to 7800 (section 16).
 3. **Power-controller request:** decided 21 Nov 2026: an FPGA input, `pwr_req` on J8-9 (sections 9 and 11). IOCTRL keeps only the power-off bit, so its CUPL needs no data-bus output. The debug button is dropped.
@@ -910,7 +960,7 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
    - Rev 29 delayed it to S3 only because of the IDE: /IOR ran ahead of /CS, breaking ATA t1 (TheoryOfOperations 12.5). The IDE has its own DIOR now.
    - UART reads now end with its select at AS negation (section 10).
    - So NOT CPU_RW, held high while DONE is low, is right for the remaining loads.
-7. **Spare pins (section 6):** 9 bank-header pins are free, 6 of them for anything. U_CPU ch8 (an input) is the last spare translator channel; a new output needs another buffer. CS1's VMEM busy/grant pair (B26/B30) is unused on the new board (item 13).
+7. **Spare pins (section 6):** 9 bank-header pins are free, 6 of them for anything. Spare translator channels: U_CPU ch8 (an input), and U_DRAM2 ch5 and U_DRAM3 ch3–ch8 (5V outputs) since 23 Nov 2026. CS1's VMEM busy/grant pair (B26/B30) is unused on the new board (item 13).
 8. **Power-up window:** closed by holding nCPU_RD high while DONE is low (section 12). IOCTRL pin 22 stays spare as the fallback.
 9. **Layout:**
    - In the schematic, use the Roscoe_BrWide_V2 component from `Roscoe_BrWide.elixml`. Its pins bind to the pattern's pads by number, so schematic and PCB share the one pin list.
@@ -920,6 +970,9 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
    - Translators at the headers.
    - Clock quiet zone around J8-8 (pin 22).
 10. **First-build checks:** look at the clock and strobe edges through the 0.1" headers. Fall back to the DF40 direct mount if needed.
+    - At the far SIMM socket, with all four SIMMs fitted, scope:
+      - RAS against an address bit (tRAH). Worst case on paper is about 7 ns against the 10 needed, if the FPGA's slowest RAS path met its fastest DRAM_MUX path. That can't happen on one die. At any one corner it's 25–32 ns.
+      - RAS and CAS for undershoot, which should be under about 0.3 V with the 15Ω resistors.
 11. **Headroom if more FPGA pins are ever needed** (9 are spare now):
    - FC0–2 into one CPU-space line (FC = 7) through a 3-input AND such as a 74LVC1G11 (+2).
    - SRAM CE0–3 from one select and a 2-to-4 decoder (+3).
@@ -966,6 +1019,16 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
    - Every port landed on its planned ball and bank (bank 14: 40 pins, 34: 18, 35: 42) as LVCMOS33, with SLOW/8 on the outputs.
    - Vivado's pin functions for all 112 balls in the pin list match Alchitry's net names. The eight LED balls were checked against the Au V2 schematic instead.
    - `check-xdc.ps1` repeats this test. Run it after any pin change.
+15. **DRAM drive (23 Nov 2026):** with four double-sided SIMMs, V2/V3's DRAM parts can't meet the SIMMs' timing at worst case (section 16, "DRAM timing with real loads"). The changes, all in section 9:
+    - **Agreed (Jeff):**
+      - **74AHCT541s** for U_DRAM1/U_DRAM2 and U_MEM1/U_MEM2 (his suggestion), with 15Ω on RAS0–7 and CAS0–3.
+      - **CY74FCT2257T address muxes** in U26–U28's place. TI SCCS038B: get it into `datasheets/` and check the figures `roscoe_timing.xdc` uses (`mux_*`, `fct_*`), and the stock.
+      - **74AHCT245s** for U29–U32.
+      - **WE_A and WE_B** on a third '541, U_DRAM3 (ch1 and ch2, both from nDRAM_WE).
+      - The FCT2257s and AHCT245s are on the V4 list too (`docs/NextPCB.md` section 3, 23 Nov 2026), so this board inherits them.
+    - **Done in the HDL:** DRAM_MUX back to the row at F3 (item 2).
+    - `roscoe_timing.xdc` assumes all of these. The knobs are `socks_we` and the `x245_*` figures; the mux model is the `mux_*` and `fct_*` figures.
+    - The pin-map workbook, `BrWide_pinlist.csv`, `roscoe_busctrl_au.xdc` (regenerated) and section 8 name the '541s and U_DRAM3 since 23 Nov 2026.
 
 ---
 
@@ -1039,6 +1102,9 @@ All are 8-bit and take 0 wait states, except writes to 0x202. Reset clears every
   - WE is low from R1 on a write.
   - The 245s' new /OE is on from R1, and AS cuts it, so the transceivers stop driving at once. That removes the end-of-read overlap described in `docs/DRAM.md` 3.3.
   - At 16 MHz that gives tRAS 125 ns, tRCD 62.5, tRAH over 31 and tRSH 62.5, and tRP 125 between back-to-back accesses.
+  - DRAM_MUX goes back to the row at F3, the falling edge after RAS rises (`dramctrl.v` rev 2, 23 Nov 2026). CAS latched the column at R2, so the column has been held a clock and a half, and the next access's RAS (R5 at the earliest) is a clock and a half away.
+    - Rev 1 waited for F4, after AS negated. That left a back-to-back access's row half a clock to settle, too little for four SIMMs (section 15 item 2).
+  - Those are clock-edge figures. For the SIMMs' own limits with real loads, see "DRAM timing with real loads" below.
 - **Ranks:** 64 MB windows (`RANK_64MB` = 1, J3 = 1-2) or 16 MB. `ras_n[0..7]` are ranks 1A, 2A, 3A, 4A, 1B, 2B, 3B, 4B in address order, the same as BUSCTRL rev 31's nDRAM_S1A … S4B. So the new board's RAS0–7 wire up as today: rank A to a SIMM's RAS0 and RAS2, rank B to RAS1 and RAS3.
 - **Refresh:** CAS before RAS, requested every `REFRESH_NS` = 15.6 µs (249 clocks at 16 MHz), against rev 31's 128 clocks.
   - **When it starts:** between bus cycles, or during any cycle that can't be a DRAM cycle. It never cuts into a DRAM cycle.
@@ -1048,7 +1114,7 @@ All are 8-bit and take 0 wait states, except writes to 0x202. Reset clears every
   - **8K-refresh parts:** 15.6 µs suits 2K/32 ms and 4K/64 ms parts. Some 64 Mbit chips on 128 MB SIMMs are 8K/64 ms and need 7.8 µs, so check the chip markings and set `REFRESH_NS` to match.
 
 **Checks: `hdl/check-hdl.ps1`**
-- **`tb_roscoe_top.v`** (8,523 checks) drives the whole design with a 68030 bus model. Each cycle records every output at every falling edge, where the CPU and IOCTRL sample them. The expected values are copied from this document and from BUSCTRL rev 31 / DEVMAP rev 24, not from the HDL. It covers:
+- **`tb_roscoe_top.v`** (9,526 checks since 23 Nov 2026) drives the whole design with a 68030 bus model. Each cycle records every output at every falling edge, where the CPU and IOCTRL sample them. The expected values are copied from this document and from BUSCTRL rev 31 / DEVMAP rev 24, not from the HDL. It covers:
   - every region and port width;
   - the flash and SRAM CE windows, and all 16 byte-enable cases;
   - bus errors, the timeout, FPU and breakpoint cycles;
@@ -1068,41 +1134,61 @@ All are 8-bit and take 0 wait states, except writes to 0x202. Reset clears every
   - contention on D24–D31;
   - DSACK released during FPU cycles;
   - DRAM_MUX already high at the falling edge before an access's CAS falls (tASC);
+  - DRAM_MUX back to the row only once every low CAS line has been low for a clock (tCAH), and an access's RAS falling only with the row back on DRAM_MUX for a clock and a half (back-to-back tASR). Both were added 23 Nov 2026 with `dramctrl.v` rev 2;
   - the card selects asserted only while AS is, and only in their windows.
 - **Planted bugs:** 35 bugs are planted in copies of the design, and 34 are caught. The odd one out (the acknowledge vector not held after R2) can't be seen, because an acknowledge always ends at 0 wait states, so only the value at R2 reaches the CPU.
+  - Three more (23 Nov 2026) for DRAM_MUX's return to the row are all caught:
+    - rev 1's F4, by the new expected value at F4 and the row-setup monitor;
+    - F2, too early, by the column-hold monitor;
+    - DRAM_MUX on the rising edge, by the tASC monitor.
   - Two needed new monitors: a RAS running straight from a refresh into an access, and (2026-11-22) DRAM_MUX moved to the rising edge, which breaks tASC.
   - The ten for the register map and card windows (22 Nov 2026) were all caught by the tests above. They cover wrong window edges, a 2 MB VMEM window, a select not cut at AS, the old "acknowledge at once" for 0x3, and register bits lost, stuck or surviving reset.
   - Another, an nFPU_CS that ignored FC, was retired with the FPGA's nFPU_CS.
 - **Implementation:** synthesis, place and route against `roscoe_busctrl_au.xdc` and `roscoe_timing.xdc`. Every one of the 101 ports landed on its planned ball.
-  - **Size:** 205 LUTs and 142 flip-flops, about 1% of the XC7A35T.
+  - **Size:** 227 LUTs and 142 flip-flops, about 1% of the XC7A35T (23 Nov 2026; the count moves a little with the constraints).
   - **Checks:** no DRC findings, every timing group positive (below), and every `check_timing` count zero, so no port or endpoint is left unconstrained. The script fails on any of these.
   - **Warnings:** three are expected at this stage, and the script prints why: cbreq_n is unused, STERM and CBACK are tied off, and A25/A24 are unused with 64 MB ranks.
   - **Run time:** 1–5 minutes after the testbenches, depending on placement. `-SimOnly` skips it.
 
-**I/O timing (`roscoe_timing.xdc`, 22 Nov 2026)**
+**I/O timing (`roscoe_timing.xdc`, 22 Nov 2026; real loads 23 Nov 2026)**
 - **What the file holds:** hand-written. `gen-xdc.ps1` never touches it, and the header says how each number is worked out.
-  - Input and output delays come from the 68030's AC table (1991 data sheet, 20 MHz column, the slowest grade it lists) and the translators' data-sheet maxima at 50 pF and full temperature: 74LVC244A/245A 5.9 ns (8.0 to enable), 74AHCT244 8.5, AHC157 11.0. Recheck those against the parts' own sheets, which aren't in `datasheets/` yet.
+  - Input and output delays come from the 68030's AC table (1991 data sheet, 20 MHz column, the slowest grade it lists), and from the parts' data-sheet maxima over −40 to 85 °C.
+  - **5V parts** (TI sheets, in `datasheets/` since 23 Nov 2026):
+
+    | Part | Max delay |
+    |---|---|
+    | 74AHCT541 | 6.5 ns at 15 pF, 9.5 ns at 50 pF |
+    | 74AHCT245 | 9.5 ns; 16 ns to turn on, 16.5 to turn off |
+    | SN74AHC157 (SCLS345; Nexperia's sheet agrees) | 11.5 ns from its select, 9.5 from its inputs, at 50 pF |
+
+    The 74AHCT244 is 8.5 ns at 15 pF and 9.5 at 50 pF. The 8.5 used until 23 Nov was its 15 pF figure, though the file called it 50 pF.
+  - **3.3V parts:** 74LVC244A/245A 5.9 ns (8.0 to enable). Those sheets aren't in `datasheets/` yet, so recheck them.
+  - **Loads (23 Nov 2026):** each 5V output is timed at its own estimated load, not a flat 50 pF.
+    - Light loads interpolate between the 15 pF and 50 pF figures: BERR 30 pF, the SRAM selects 40, FLASH_CE 20, nDRAM_BUF_OE 45.
+    - Heavier loads add 0.057 ns per pF above 50 pF: the card selects (60 pF), SRAM_BA (80) and the DRAM lines.
+    - That slope is the '157's 15-to-50 pF figure, about 40 mA of drive, and every AHC/AHCT output is assumed to share it. It's an estimate: the parts' own pairs of figures disagree (the '541's suggest 0.086, the '244's 0.029). Scope the DRAM edges on the first board.
   - They also include 1 ns of wiring each way and U_CLK's skew: the FPGA's clock edges come 1–4 ns after the CPU's.
   - Y1's 45–55 % duty cycle takes 3.1 ns off every half-clock path.
   - Pin-to-pin limits cover what is decoded straight from the pins: CIIN (at the CPU by R1) and SRAM_BA. They also cover AS turning off U_DATA, the FPGA's data drivers, the 245s (#29A) and the card selects.
-- **Results at 16 MHz** (worst case for every part, Vivado's slow corner):
+  - **DRAM:** RAS, CAS, WE and nDRAM_BUF_OE keep a window like the selects': each leaves the FPGA in time to clear a 50 pF buffer within its half clock. On top of that, the DRAM lines are checked against the SIMMs' own limits with their real loads ("DRAM timing with real loads", below).
+- **Results at 16 MHz, 23 Nov 2026** (`dramctrl.v` rev 2; worst case for every part, Vivado's slow corner, with the DRAM parts of section 15 item 15):
 
 | Path | Must arrive by | Worst slack, ns |
 |---|---|---|
-| AS into the R1 registers | R1 | +0.90 |
-| Address, FC, SIZ, R/W into the R1 registers | R1 | +7.94 |
-| Write data D31–D24 | R2 | +30.1 |
+| AS into the R1 registers | R1 | +0.91 |
+| Address, FC, SIZ, R/W into the R1 registers | R1 | +7.96 |
+| Write data D31–D24 | R2 | +29.7 |
 | DSACK0/1 and nDSACK_OE, at the CPU | F1 − 4 ns (#47A) | +2.31 |
-| BERR, at the CPU | F1 − 4 ns | +0.56 |
-| Read data, at the CPU | F2 − 4 ns (#27) | +3.37 |
+| BERR, at the CPU | F1 − 4 ns | +0.75 |
+| Read data, at the CPU | F2 − 4 ns (#27) | +3.56 |
 | DEV_CODE, nDEV_EN, at IOCTRL | the falling edge − 7 ns | +7.28 |
-| RAS, CAS, DRAM_WE, nDRAM_BUF_OE, past U_DRAM1/2 | the next falling edge | +1.47 |
-| DRAM_MUX, through the AHC157 | CAS at the next rising edge | +6.44 |
-| SRAM and flash selects, past U_MEM1/2 | the next falling edge | +2.19 |
-| nEXP_VMEM_CS, nEXP_VIO_CS, past U_MEM2 (and their AS cut) | the next falling edge | +2.56 |
-| CIIN, SRAM_BA | R1 | +7.94 |
+| RAS, CAS, WE, nDRAM_BUF_OE leave the FPGA (the window) | past a 50 pF buffer by the next falling edge | +0.79 (nDRAM_BUF_OE; WE +0.94, RAS +1.22, CAS +3.06) |
+| DRAM_MUX and the DRAM lines, against the SIMMs | see "DRAM timing with real loads" | +6.9 at worst (tRAH) |
+| SRAM and flash selects, past U_MEM1/2 | the next falling edge | +1.96 |
+| nEXP_VMEM_CS, nEXP_VIO_CS, past U_MEM2 (and their AS cut) | the next falling edge | +1.43 |
+| CIIN, SRAM_BA | R1 | +7.96 |
 
-  - **Hold:** at least 25 ns on every I/O path that keeps a hold check, and 0.13 ns on the tightest internal one.
+  - **Hold:** 0.12 ns on the tightest internal path. Every I/O hold check has at least 5.4 ns, including the DRAM ones (tRAH +6.9, tASR after idle +13.1, tDS +26.3, tCAH +42.7).
   - **The FPGA, pin to pin:** 6.9 ns for SRAM_BA (in and out in one bank), 8.8 for CIIN, 8.6 for AS to nDATA_OE, 8.7 and 9.4 for AS to the card selects, and 10.5 for AS to nDRAM_BUF_OE (across the die). nFPU_CS took 10.0 before it left the FPGA. Of each, 1.4 ns is the input buffer and 3.7 the output buffer (SLOW, 8 mA). The 8 ns section 12 assumed was about right.
   - **At 20 MHz** the half clock is 6.25 ns shorter, so the AS, DSACK, BERR and select paths would all fail by 3–6 ns. A faster clock needs the MMCM or wait states.
 - **What it took** (all simulated again afterwards):
@@ -1120,7 +1206,75 @@ All are 8-bit and take 0 wait states, except writes to 0x202. Reset clears every
     - Nothing depends on that edge. The CPU changes these lines only after the rising edge that starts S0, with AS negated. There every register that takes them is either gated off by AS or loaded again at R1, and write data is only taken at R2.
     - So `roscoe_timing.xdc` drops those hold checks, and says why. The padding had also been slowing nFPU_CS and SRAM_BA, which share the nets.
   - **No hold on nDSACK_OE's falling edge:** that edge only releases a DSACK already driven high, after AS has negated (#28).
-- **The tightest margins:** BERR (+0.56) and AS → R1 (+0.90) are the paths to watch when the logic changes. If BERR goes negative, move it into bank 35, where its flip-flop can go in the I/O block (the spare J11-7 hole).
+- **The tightest margins (23 Nov 2026, `dramctrl.v` rev 2):** BERR (+0.75), the DRAM window (nDRAM_BUF_OE +0.79, WE +0.94) and AS → R1 (+0.91). Watch these when the logic changes; they move by a few tenths with placement.
+  - If BERR goes negative, move it into bank 35, where its flip-flop can go in the I/O block (the spare J11-7 hole).
+  - The DRAM window only bounds the FPGA's share. The SIMMs' own limits behind it have more room (below).
+
+**DRAM timing with real loads (23 Nov 2026)**
+- **Loads:** four double-sided SIMMs of x4 chips, 16 per SIMM:
+
+  | Line | Load, pF |
+  |---|---|
+  | Address | 382 (one set of muxes drives all four sockets) |
+  | WE | 510, or 262 each as WE_A and WE_B |
+  | CAS | 142 |
+  | RAS (one rank) | 78 |
+  | DQ | 86 |
+
+  These are the TMS417400's 5 and 7 pF inputs, plus about 12 pF per SIMM and 14 pF of main board.
+- **Model:**
+  - **AHC/AHCT outputs** (the '541s, the 245s): each takes its data-sheet maximum at 50 pF, plus 0.057 ns per pF above that (typical 0.043).
+    - A falling edge counts only once it reaches VIL (0.8 V), so add a tail of about R × C. R is the output's resistance near ground, 55 Ω worst case from VOL 0.44 V at 8 mA (typical 30 Ω), plus any series resistor.
+    - So V2/V3's AHC157s bring a falling address bit to VIL in 51 ns at 382 pF (34 typical).
+  - **The CY74FCT2257Ts:** their 25Ω outputs make an RC edge.
+    - Pulling low: 46 Ω worst case (VOL 0.55 V at 12 mA), from as high as 3.8 V.
+    - Pulling high: toward 3.2 V through 53 Ω. That's the line through VOH 2.4 V at −15 mA and IOS −60 mA at 0 V.
+    - A bit is settled when a falling one reaches VIL and a rising one VIH (2.4 V): 27.4 and 28.1 ns at 382 pF.
+    - Add the select's own 5.2 ns at 50 pF, less the 1.8 ns of that which is the 50 pF itself: 31.5 ns after DRAM_MUX reaches the muxes, worst case.
+    - With typical figures (VOL 0.3 V, VOH 3.3 V) it's about 15 ns.
+- **How the file checks it:**
+  - Most DRAM limits compare two edges the FPGA sends at different clock edges: tRAH (RAS, then DRAM_MUX), tASC (DRAM_MUX, then CAS) and tWCS (WE, then CAS).
+  - Vivado times one pin at a time, so `roscoe_timing.xdc` credits the other edge conservatively:
+    - both edges at the slow corner, since it's one board at one temperature and supply;
+    - the other edge's FPGA delay at 8.0 ns, the slow corner's floor;
+    - channels in one package (U_DRAM2) within the 1 ns skew of each other.
+  - tRAH is a hold, so it's checked at the fast corner instead.
+  - Pairing the FPGA's slowest path with its fastest isn't physical, but for the record that would give tRAH about 7.5 ns and tASC about −11 with these parts.
+- **Results** (Vivado, slow corner; the "about" figures are worked from the same constraints, because the window hides them in Vivado's per-pin worst):
+
+| Check | Agreed DRAM parts (FCT2257s, WE split, AHCT245s), rev 2 | V2/V3's DRAM parts, rev 1 (row at F4) |
+|---|---|---|
+| tASC and tAA: the column at the SIMM before CAS; read data via tAA at the CPU by F3 − #27 | +10.4 | −20.8 (tAA) |
+| tASR, back to back: the row at the SIMM before the next access's RAS | +65.8 (+3.3 with rev 1) | −16.7 |
+| tRAH ≥ 10 ns (hold, fast corner) | +6.9 | +6.4 |
+| tCAH ≥ 15 ns: the column held after CAS (hold; new with rev 2) | +42.7 | – |
+| tASR after idle: the CPU's row before RAS (hold) | +13.1 | −5.3 |
+| tCAC: read data via CAS at the CPU by F3 − #27 | about +17 | −3.5 |
+| tRAC: read data via RAS | about +33 | about +14 |
+| tDS: write data at the SIMM before CAS (hold) | +26.3 | −14.7 |
+| tWCS: WE before CAS | about +45 | about +17 |
+| #29A: the 245s off the CPU bus within 50 ns of AS | +6.2 | −26.6 |
+| WE edge, VIH to VIL (DRAM limit 30 ns) | 16 ns | 31 ns |
+
+  - **Typical parts:** with the FCT2257s, every check has about 20 ns or more. V2/V3's parts have only +6 on tASC and +1 on a back-to-back tASR.
+  - **The RAS window in the V2/V3 run:** Vivado padded RAS's route by 16 ns, trying to meet the failed tASR hold, which broke RAS's window (−11.6).
+    - A failing DRAM hold check makes the router slow the FPGA's output instead of reporting a board problem.
+    - Treat any failure in these hold checks as a board or HDL problem.
+  - **Back-to-back tASR:** +65.8 now that DRAM_MUX returns to the row at F3 (rev 2). At F4 (rev 1) it was +3.3 with these parts, the thinnest DRAM margin. Rev 2 would also have fixed that row for V2/V3's parts (about +45), though not the others.
+- **Address muxes: CY74FCT2257T (Jeff, 23 Nov 2026).** TI's quad 2:1 mux with 25Ω series resistors in its outputs, CT grade (SCCS038B).
+  - **Drop-in:** it fits U26–U28's place. It comes in SOIC-16 (CY74FCT2257CTSOC) or QSOP-16 (DBQ), with the '157's pinout. Pin 15 is /OE, which V3 already ties to GND.
+  - **Inputs:** TTL thresholds, which suit the 68030's address outputs and the '541's DRAM_MUX.
+  - **Speed:** select to output is 5.2 ns at 50 pF, and I0/I1 to output 4.3.
+    - At 382 pF that's 31.5 ns worst case by the model above, against 51 for the AHC157. Typical is about 15 ns.
+    - Two sets of AHC157s would have matched the worst case (31 ns at 198 pF), but with three more chips, and about 20 ns typical.
+    - My first estimate, 23 ns, assumed typical drive. The sheet only guarantees 12 mA sink and 15 mA source, which sets the 31.5.
+  - **Supply:** FCT parts are specified at 5 V ± 5% (4.75–5.25 V), against AHC's ± 10%. The ATX supply's +5 V is ± 5%, so it fits, with nothing to spare.
+  - **Check before ordering:**
+    - Its figures came from web searches of the data sheet, not the PDF itself. Put SCCS038B in `datasheets/` and check `mux_*` and `fct_*` in `roscoe_timing.xdc` against it.
+    - Check the stock too.
+  - **Not chosen:**
+    - Two sets of AHC157s (above).
+    - The CD74ACT157 (24 mA): about 30 ns at 382 pF, with the 22Ω on each output it needs because it rings. Four outputs switching 380 pF each would also bounce its ground.
 
 **The 68882's select (decided 22 Nov 2026: U_FPUCS, on the 5V side)**
 - **Why it left the FPGA:** the FPGA decoded nFPU_CS from FC0–2 and A19–A16 alone, as BUSCTRL rev 31 does. That met the 68882's CS-to-DS setup on writes (#8B, 35 ns) with about 7 ns to spare. But CS changes only when the address does.

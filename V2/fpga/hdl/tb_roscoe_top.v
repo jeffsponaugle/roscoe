@@ -277,8 +277,24 @@ module tb_roscoe_top;
     integer    n_ref = 0, req_age = 0, max_req_age = 0, mi;
     initial for (mi = 0; mi < 8; mi = mi + 1) begin ras_edge[mi] = -1000.0; if (mi < 4) cas_edge[mi] = -1000.0; end
 
-    reg m_mux_f = 1'b0;                                 // DRAM_MUX 1 ns after the last falling edge
-    always @(negedge clk) begin #1 m_mux_f = dram_mux; end
+    reg     m_mux_f = 1'b0;                             // DRAM_MUX 1 ns after the last falling edge
+    real    mux_row_at = -1000.0;                       // when DRAM_MUX last went back to the row
+    integer mj;
+    always @(negedge clk) begin
+        #1;
+        if (m_mux_f && !dram_mux) begin
+            mux_row_at = $realtime;
+            // the column stays on until every low CAS line has been low for a clock (tCAH)
+            for (mj = 0; mj < 4; mj = mj + 1)
+                if (!cas_n[mj]) begin
+                    checks = checks + 1;
+                    if ($realtime - cas_edge[mj] < TCLK - 1.0) begin
+                        errors = errors + 1; $display("FAIL at %0t: DRAM_MUX back to the row under a clock after CAS%0d fell", $realtime, mj);
+                    end
+                end
+        end
+        m_mux_f = dram_mux;
+    end
 
     always @(posedge clk) begin
         #1;
@@ -287,6 +303,14 @@ module tb_roscoe_top;
             checks = checks + 1;
             if (m_mux_f !== 1'b1) begin
                 errors = errors + 1; $display("FAIL at %0t: CAS fell without DRAM_MUX high at the falling edge before", $realtime);
+            end
+        end
+        // an access's RAS falls only with the row back on DRAM_MUX for a clock and a half: with four SIMMs
+        // the muxes take most of a clock to settle (back-to-back tASR, design notes section 16)
+        if (m_ras == 8'hFF && ras_n != 8'hFF && ras_n != 8'h00) begin
+            checks = checks + 1;
+            if (m_mux_f !== 1'b0 || $realtime - mux_row_at < 1.5 * TCLK - 2.0) begin
+                errors = errors + 1; $display("FAIL at %0t: RAS fell without the row on DRAM_MUX for a clock and a half", $realtime);
             end
         end
         for (mi = 0; mi < 8; mi = mi + 1) begin
@@ -581,6 +605,7 @@ module tb_roscoe_top;
         chk_eq(e_cas[1], 4'hF, "CAS at F1");    chk_eq(e_cas[2], 4'h0, "CAS at F2 (read: all)");
         chk_eq(e_cas[3], 4'h0, "CAS at F3");    chk_eq(e_cas[4], 4'hF, "CAS after the cycle");
         chk_eq(e_mux[1], 1'b0, "MUX row at F1"); chk_eq(e_mux[2], 1'b1, "MUX column at F2");
+        chk_eq(e_mux[3], 1'b1, "MUX column at F3"); chk_eq(e_mux[4], 1'b0, "MUX row again at F4");
         chk_eq(e_boe[1], 1'b0, "245s on at F1"); chk_eq(e_boe[3], 1'b0, "245s on at F3");
         chk_eq(e_boe[4], 1'b1, "245s off after AS");
         for (j = 1; j <= 4; j = j + 1) chk_eq(e_we[j], 1'b1, "WE high on a read");

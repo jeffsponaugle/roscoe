@@ -68,7 +68,7 @@ foreach ($s in $sig | Where-Object { $_.Hdr -match '^J(17|18|19|20)$' }) {
 }
 
 # ---- write the XDC --------------------------------------------------------------------------
-$groupOrder = 'CLK','IN-A','IN-B','IN-C','IN-D','IN-E','IRQ','DATA','OUT-CPU','BERR','IPL','DRAM-1','DRAM-2','MEM-1','MEM-2','BURST','EXP','DEV'
+$groupOrder = 'CLK','IN-A','IN-B','IN-C','IN-D','IN-E','IRQ','DATA','OUT-CPU','BERR','IPL','DRAM-1','DRAM-2','DRAM-3','MEM-1','MEM-2','BURST','EXP','DEV'
 $groupText = @{
   'CLK'     = 'CPU clock: Y1 -> U_CLK (74LVC1G34) -> 33R -> MRCC pin A41. Keep A39 (its N partner) empty, A47 static, A33/A45 slow or static.'
   'IN-A'    = 'Address A8-A15 (U_IN1, 74LVC244A)'
@@ -79,14 +79,15 @@ $groupText = @{
   'IRQ'     = 'Interrupt inputs from U_IN6 (100R series) on the Au LED0-7 pins (control headers J17-J20); each pin also drives an Au LED through 330R. Polarity is handled in the FPGA.'
   'DATA'    = 'D24-D31 through U_DATA (74LVC245A, DIR = CPU R/W), and its /OE'
   'OUT-CPU' = 'U_CPU (74LVC244A): DSACK0/1 three-stated with their shared enable (group 1); STERM, CIIN, CBACK always driven (group 2)'
-  'BERR'    = 'BERR, push-pull through U_MEM2 (74AHCT244), as BUSCTRL drives it today'
-  'IPL'     = 'IPL0-2 through U_MEM2 (74AHCT244)'
-  'DRAM-1'  = 'RAS0-7 through U_DRAM1 (74AHCT244)'
-  'DRAM-2'  = 'CAS0-3, DRAM WE, MUX and the data-buffer /OE through U_DRAM2 (74AHCT244); the buffer DIR is CPU R/W'
-  'MEM-1'   = 'SRAM CE0-3 and byte enables through U_MEM1 (74AHCT244)'
-  'MEM-2'   = 'Flash CE through U_MEM2 (74AHCT244); the flash /WE is CPU R/W. (The 68882 select is a 74AHCT138 on the 5V side.)'
-  'BURST'   = 'SRAM burst address BA3:BA2 (CPU A3:A2 plus the burst count) through U_MEM2 ch4 and U_DRAM2 ch7 (74AHCT244) to riser pins A18/B18'
-  'EXP'     = 'Expansion selects nEXP_VMEM_CS (A21) and nEXP_VIO_CS (A30) through U_MEM2 ch3/ch8 (74AHCT244), bussed to every slot'
+  'BERR'    = 'BERR, push-pull through U_MEM2 (74AHCT541), as BUSCTRL drives it today'
+  'IPL'     = 'IPL0-2 through U_MEM2 (74AHCT541)'
+  'DRAM-1'  = 'RAS0-7 through U_DRAM1 (74AHCT541), each with 15R in series at the output'
+  'DRAM-2'  = 'CAS0-3 (each with 15R in series), MUX and the data-buffer /OE through U_DRAM2 (74AHCT541); the buffer DIR is CPU R/W'
+  'DRAM-3'  = 'DRAM WE through U_DRAM3 (74AHCT541) ch1 and ch2: WE_A to SIMM sockets 1-2, WE_B to sockets 3-4'
+  'MEM-1'   = 'SRAM CE0-3 and byte enables through U_MEM1 (74AHCT541)'
+  'MEM-2'   = 'Flash CE through U_MEM2 (74AHCT541); the flash /WE is CPU R/W. (The 68882 select is a 74AHCT138 on the 5V side.)'
+  'BURST'   = 'SRAM burst address BA3:BA2 (CPU A3:A2 plus the burst count) through U_MEM2 ch4 and U_DRAM2 ch7 (74AHCT541) to riser pins A18/B18'
+  'EXP'     = 'Expansion selects nEXP_VMEM_CS (A21) and nEXP_VIO_CS (A30) through U_MEM2 ch3/ch8 (74AHCT541), bussed to every slot'
   'DEV'     = 'Device code bus, wired straight to IOCTRL (ATF1504, TTL inputs)'
 }
 function PortKey([string]$p) { if ($p -match '^(.*)\[(\d+)\]$') { '{0}[{1:D3}]' -f $matches[1], [int]$matches[2] } else { $p } }
