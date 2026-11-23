@@ -6,6 +6,7 @@ This document explains how the Roscoe V2 main board works, with the emphasis on 
 |---|---|
 | Main board schematic | `RoscoeMainboardV2Final.pdf` (17 sheets) |
 | Main board netlist | `schematic/RoscoeMainboardV2Final.net` (DipTrace 5.3.5.1 export), checked 2026-10-18 |
+| As-built schematic | `schematic/RoscoeMainboardV3` (.pdf and .net, 2026-11-23): the same V2 PCB with every patch that got it working, listed in [PatchWires.md](PatchWires.md). It is not a new PCB; V4 will be the next one ([NextPCB.md](NextPCB.md)). |
 | SRAM riser schematic | `RoscoeSRAMboardV2.pdf` (2 sheets) |
 | Bus controller CPLD, U58 | `plds/BUSCTRLV2/BUSCTRL2_REV29.PLD`, revision 29 ("nCPU_RD delayed"), fitted 2026-07-04. Later revisions: [changes.md](changes.md) |
 | Device decoder CPLD, U59 | `plds/DEVMAPV2/DEVMAP2_REV21.PLD`, revision 21 (2 wait states; it builds `REV21-DEVMAP2-2WS.jed` exactly). Until 2026-10-23 it was named `DEVMAP2_REV20.PLD` and its Revision line said 20. Later revisions: [changes.md](changes.md) |
@@ -260,7 +261,7 @@ A fast pull-up does not make "retracting" a DSACK a way to add wait states: the 
 
 **Floating CPU inputs.** `/CDIS` (cache disable), `/MMUDIS` (MMU disable) and `/CBACK` (burst acknowledge) are unconnected on the V2 PCB; sheet 3 shows them with DipTrace no-connect markers. The 68030 has no internal pull-ups. The MC68030 User's Manual (12.1, adapting the 68030 to MC68020 sockets) lists STERM, CBACK, CIIN and MMUDIS among the pins that must be pulled up when unused, and CDIS is likewise an active-low input that is unused here. A floating `/CDIS` or `/MMUDIS` can randomly disable the caches or address translation. A floating `/CBACK` is harmless only as long as no STERM cycles exist (Section 6 of the burst proposal).
 
-**Status:** on the current boards, `/CDIS` and `/MMUDIS` are joined by a wire on the underside and pulled up through J23 to one of the board's two spare 10K pull-ups (R44/R45). `/CBACK` is still floating. That is harmless for now: the 68030 ignores CBACK completely in cycles terminated by DSACKx or BERR (UM 7.2.8), and Roscoe never asserts STERM. The fix belongs on the next PCB (Section 15).
+**Status:** on the current boards, `/CDIS` and `/MMUDIS` are joined by a wire on the underside and pulled up through J23 to one of the board's two spare 10K pull-ups (R44/R45). `/CBACK` floated until 2026-11-22, when it got its own 10K pull-up to +5 V ([changes.md](changes.md) 0.1a). Floating had been harmless: the 68030 ignores CBACK completely in cycles terminated by DSACKx or BERR (UM 7.2.8), and Roscoe never asserts STERM. The next PCB still needs all three pull-ups on the board itself (Section 15).
 
 ---
 
@@ -868,8 +869,8 @@ Changing the handshake means reprogramming **both** CPLDs together. Keep the cur
 | B19, A20, B20 | `nEXP_8BDEV`, `nEXP_16BDEV`, `nEXP_32BDEV` | out | DEVMAP: whole-region selects |
 | A30 | `nEXP_VIO_CS` | out | DEVMAP: 0x3000_0500-0x3000_05FF |
 | A21 | `nEXP_VMEM_CS` | out | DEVMAP: 0x5000_0000-0x500F_FFFF. CS1 widens it to 2 MB, with a 0-wait-state motherboard acknowledge ([changes.md](changes.md) 1.4). |
-| A27 | `nEXP_DATA_EN` | in (card drives) | 10K pull-up R48. Sets the U54-U57 direction: 0 = card drives the CPU. |
-| A26 | `nEXP_DEV_WAIT` | in | 10K pull-up R10, into DEVMAP pin 32 (13.6). CS1 renames it `nEXP_ACK`: the card's "cycle may end" ([changes.md](changes.md) 1.6). |
+| A27 | `nEXP_DATA_EN` | in (card drives) | 10K pull-up R48 (1K on the boards, and in V3). Sets the U54-U57 direction: 0 = card drives the CPU. |
+| A26 | `nEXP_DEV_WAIT` | in | 10K pull-up R10 (1K on the boards since P2, and in V3), into DEVMAP pin 32 (13.6). CS1 renames it `nEXP_ACK`: the card's "cycle may end" ([changes.md](changes.md) 1.6). |
 | A28 | `nEXP_CACHE_CTRL` | in | 10K pull-up R12, into DEVMAP pin 33 (unused) |
 | A29, A22 | `nEXP_INT5A`, `nEXP_INT5D` | in | level 5 |
 | B22 | `nEXP_INT4C` | in | level 4 |
@@ -886,7 +887,7 @@ All interrupt inputs have 10K pull-ups (R18-R22, R58, R59) and pass through U53/
 Address and control are one-way 244s, so cards cannot master the bus. The data 245s are **always enabled**; `nEXP_DATA_EN` only selects their direction. As a result:
 
 * During every CPU write, and every read from an on-board device, the 245s drive the CPU's data onto `EXP_D`. Cards must keep `EXP_D` tri-stated unless they are being read.
-* To answer a read, a card drives `EXP_D` and pulls `nEXP_DATA_EN` low. It must release both as soon as its select goes away. **Drive `nEXP_DATA_EN` high actively** (a tri-state driver that drives high, then lets go), or use a much stronger pull-up. With only R48 (10K) and the capacitance of the connectors and four DIR inputs, the 245s stay pointed at the CPU bus for hundreds of nanoseconds and fight the next cycle ([timing/10](timing/10-expansion-read.svg)).
+* To answer a read, a card drives `EXP_D` and pulls `nEXP_DATA_EN` low. It must release both as soon as its select goes away. **Drive `nEXP_DATA_EN` high actively** (a tri-state driver that drives high, then lets go), or use a much stronger pull-up. With only R48 at its V2 value (10K; the boards now have 1K, ten times faster but still slower than a driver) and the capacitance of the connectors and four DIR inputs, the 245s stay pointed at the CPU bus for hundreds of nanoseconds and fight the next cycle ([timing/10](timing/10-expansion-read.svg)).
 * The 245s are SN74AHC245, with CMOS input thresholds: a high must reach about 3.5 V. Drive `EXP_D` and `nEXP_DATA_EN` from 5 V CMOS outputs (HC, HCT, AC, ACT, or a 5 V CPLD), not from LS or F parts or 3.3 V logic. Fitting SN74AHCT245 in U54-U57 would remove the restriction.
 
 ### 13.3 Port size
@@ -935,7 +936,7 @@ Confidence: **high** means read directly from the source or schematic, **medium*
 | 3 | IDE | IDE2 never gets /IOW or wait states | IDE2 writes do not work | high | all four selects, CS1 |
 | 4 | IDE | INTRQ treated as active low; masks forced off | no IDE interrupts | high | polarity, masks and pull-downs, CS2 |
 | 5 | Bus | The schematic gives the open-collector DSACK lines 10K pull-ups, far slower than #28 (4.5) | none on the current boards, which have 1K fitted | confirmed | fix the R51/R52 value on the schematic (15.1) |
-| 6 | CPU | `/CDIS`, `/MMUDIS`, `/CBACK` unconnected on the PCB (4.6) | random cache or MMU disable | confirmed | `/CDIS` and `/MMUDIS` reworked to a spare pull-up on current boards; `/CBACK` floats but is ignored without STERM; fix on the next PCB (15) |
+| 6 | CPU | `/CDIS`, `/MMUDIS`, `/CBACK` unconnected on the PCB (4.6) | random cache or MMU disable | confirmed | `/CDIS` and `/MMUDIS` reworked to a spare pull-up on current boards; `/CBACK` has its own 10K pull-up since 2026-11-22; fix on the next PCB (15) |
 | 7 | Reset | Software reset pulse about 1 clock (3.2) | unreliable CPU/peripheral reset; IDE drives need 25 us | high | stretch the pulse, [changes.md](changes.md) CS2 B10 |
 | 8 | Reset | `nSYS_RESET` push-pull vs the `RESET` instruction (3.2) | contention if software uses `RESET` | high | avoid `RESET`, or make the output open-collector |
 | 9 | Bus | No bus timeout; 0x6/0x7 region, `BKPT` and a missing FPU hang (5.1) | hard hangs during OS bring-up | high | BERR timeout counter in BUSCTRL |
@@ -959,10 +960,10 @@ This section lists the problems. [NextPCB.md](NextPCB.md) turns them, and the ch
 
 | # | Problem | Current boards | Next PCB |
 |---|---|---|---|
-| 1 | MC68030 `/CDIS` (PGA H12), `/MMUDIS` (F13) and `/CBACK` (J1) are unconnected, so they float (4.6) | H12 and F13 joined by a wire to J23, one of the spare 10K pull-ups (R44/R45). J1 is not wired: harmless while no cycle uses STERM. | add pull-ups (10K to Vcc) on `/CDIS` and `/MMUDIS`. For `/CBACK`, decide first whether burst cache fills are wanted: if so, connect it to a CPLD output, or to GND through a jumper, instead of a fixed pull-up ([SRAMBurstProposal.md](SRAMBurstProposal.md) Section 4.1) |
+| 1 | MC68030 `/CDIS` (PGA H12), `/MMUDIS` (F13) and `/CBACK` (J1) are unconnected, so they float (4.6) | H12 and F13 joined by a wire to J23, one of the spare 10K pull-ups (R44/R45). J1 has had its own 10K pull-up to +5 V since 2026-11-22; before that it floated, which was harmless while no cycle used STERM. | add pull-ups (10K to Vcc) on `/CDIS` and `/MMUDIS`. For `/CBACK`, decide first whether burst cache fills are wanted: if so, connect it to a CPLD output, or to GND through a jumper, instead of a fixed pull-up ([SRAMBurstProposal.md](SRAMBurstProposal.md) Section 4.1). The V3 schematic has the 10K pull-up. In the FPGA design U_CPU drives CBACK, and the pull-up can stay. |
 | 2 | DS12887 RTC `/IRQ` (U33 pin 19, net `vINT1A`) is open-drain with no pull-up (9.6) | wire from U33 pin 19 to the other spare pull-up at J23 (confirmed on the photos) | add a pull-up (10K to Vcc) on `vINT1A` |
 | 3 | DSACK0/1 pull-ups R51/R52 are 10K on the schematic, too slow for the open-collector release (4.5) | 1K fitted | change the schematic value to 1K |
-| 4 | The reset-button input (`PWR_RSTBUTTON`, ATtiny U65 pin 12) has no external pull-up or filter, and was noisy | capacitor from the button net to VCC, taken from UART header J301 pin 2 | add a 10K pull-up and a capacitor to VCC next to U65 |
+| 4 | The reset-button input (`PWR_RSTBUTTON`, ATtiny U65 pin 12) has no external pull-up or filter, and was noisy | capacitor from the button net to VCC, taken from UART header J301 pin 2 | add a 10K pull-up and a capacitor next to U65, both to `5VALWAYSON` (U65's +5VSB supply), not VCC, which is off in standby |
 
 ### 15.2 Candidates from this review (not yet decided)
 

@@ -34,7 +34,7 @@ From the MC68030 User's Manual, sections 7.3.4 (synchronous read), 7.3.7 (burst)
 | `nCPU_STERM` to the CPU | BUSCTRL pin 45, driven constantly high | equations only |
 | SRAM `/CE` early enough for a 2-clock read | `nSRAM_BANKn_CE` includes AS, ready about AS + 14 ns | decode reads from the address alone |
 | SRAM `/OE` early enough | `nCPU_RD`, registered, asserts at S3 | assert immediately for SRAM reads |
-| `/CBACK` | **not connected (floating)** | tie low for burst (high until then) |
+| `/CBACK` | 10K pull-up, a rework since 2026-11-22 (it floated before) | tie low for burst (high until then) |
 | `/CBREQ` | not connected | not needed: the burst simply ends when AS negates |
 | SRAM A1:A0 = burst address | hard-wired to CPU A3:A2 through riser pins A18/B18 | drive from a counter (two wires) |
 | Free CPLD pins | BUSCTRL: 80/80 I/O used, but TESTP0-3 on J29 are free to reuse. INTCTRL: 46/80 used, TESTP0-2 on J27. Spare inter-CPLD nets `EXTRA_BC_INT1/2` and `EXTRA_BC_DM1/2`. | see Section 4 |
@@ -77,7 +77,7 @@ Assumptions: worst-case 68030 timing (address valid #6 = 25/20/14 ns at 20/25/33
 
 1. **SRAM address A1:A0 (two wires).** On the riser, cut the traces from connector pins **A18** (CPU_A2) and **B18** (CPU_A3) to the SRAMs' A0 (pin 44) and A1 (pin 43). Feed those nets from **J27 pins 3 and 2** on the main board: INTCTRL `TESTP0` (pin 40) and `TESTP1` (pin 41). Using the riser and the existing test header avoids touching 0.5 mm CPLD pins.
 2. **CBACK.** Tie CPU `/CBACK` (PGA pin J1) to GND; pin J3, two positions away, is a GND pin. For step 1 (no burst counter yet) tie it **high** instead, or keep `IBE` and `DBE` clear (Section 5).
-3. `/CDIS` (H12) and `/MMUDIS` (F13) are already pulled up on the current boards, through the spare pull-up at J23 (TheoryOfOperations Section 4.6). `/CBACK` is the one still floating, which step 2 fixes.
+3. `/CDIS` (H12) and `/MMUDIS` (F13) are already pulled up on the current boards, through the spare pull-up at J23 (TheoryOfOperations Section 4.6). `/CBACK` has had its own 10K pull-up since 2026-11-22, which covers step 1. For step 2, ground it; the pull-up can stay.
 4. For V3: route BA2/BA3 from a CPLD directly, route CBREQ and CBACK to the bus controller, and enable fast slew on the strobe outputs. The FPGA redesign does this: see `fpga/Roscoe_FPGA_Redesign.md`, sections 2 ("Pin changes") and 12, for its pins and timing.
 
 ### 4.2 BUSCTRL changes (sketch, not compiled)

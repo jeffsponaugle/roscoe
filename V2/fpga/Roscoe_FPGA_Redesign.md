@@ -480,7 +480,7 @@ U_OD (a 74LVC2G07 for BERR and HALT) is gone: HALT left the FPGA, and BERR moved
 - **Driving 5V parts from 3.3V:** 3.3V outputs drive TTL-threshold inputs directly. That covers the 68030 and 68882 inputs (VIH 2.0V), the ATF1504 inputs, and HCT/AHCT/ACT parts. That's why the DEV_CODE bus and DONE go to IOCTRL without a translator.
 - **Series resistors:** put 33Ω on every translator output that drives the FPGA. It slows the edges through the 0.1" headers. The eight interrupt lines get 100Ω instead (next rule).
 - **Interrupt inputs on the LED pins:** U_IN6 drives the Au's LED0–7 pins through 100Ω each. Each pin also carries an Au LED with 330Ω to GND, about 3 mA when high, so the pin still sits near 3.0V (VIH is 2.0V). The 100Ω also limits the current to about 25 mA should a bitstream drive those pins, as a demo design that blinks the LEDs would. Load the Roscoe bitstream into the Au's flash before fitting it anyway: any bitstream that drives Roscoe's input pins fights the translators.
-- **STERM, CIIN and CBACK:** none has a pull-up on the board (CBACK isn't even connected on V2), and BUSCTRL drove STERM and CIIN push-pull. U_CPU's group 2 (/2OE on GND) drives all three, so none is needed.
+- **STERM, CIIN and CBACK:** U_CPU's group 2 (/2OE on GND) drives all three, so none needs a pull-up. STERM and CIIN have none today; BUSCTRL drove them push-pull. CBACK has had a 10K pull-up to +5V since 22 Nov 2026 (a V2 rework, and in the V3 schematic). It can stay: the LVC output tolerates it, as with R51/R52 on DSACK, and it holds CBACK negated while U_CPU is unpowered.
 - **BERR:** driven push-pull by U_MEM2, as BUSCTRL drives it today. Only the CPU and the logic-analyzer header U4 share nCPU_BERR, so it needs no pull-up.
 - **68882 select (U_FPUCS, 22 Nov 2026):** a '138 on the CPU's own lines, next to the 68882, replaces the FPGA's nFPU_CS (section 16, "The 68882's select").
   - **Decode:** Y7 is low only when FC = 7 (CPU space), A17 = 1 and A19 = A16 = 0. That's coprocessor cycles (type 2), and type 6, which is reserved and never generated. A18 and the coprocessor ID (A15–A13) aren't decoded, as in rev 31. Leave Y0–Y6 open.
@@ -834,19 +834,19 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
   - IDE interrupts (INTCTRL rev 17), with the INTRQ and DD7 pull-downs;
   - a 490-clock reset stretch.
 
-  The FPGA design keeps all of these except the VMEM grant, which has no pins yet (section 15). [`docs/NextPCB.md`](../docs/NextPCB.md) lists the board fixes for the next PCB. Its CPLD-pin items fall away with the CPLDs; the rest (CPU and RTC pull-ups, reset-button filter, IDE pull-downs, series resistors, CSEL, DASP, AHCT245s, label fixes) still apply.
+  The FPGA design keeps all of these except the VMEM grant, which has no pins yet (section 15). [`docs/NextPCB.md`](../docs/NextPCB.md) lists the board fixes for the next PCB, V4, where this migration starts. (V2 is the schematic the PCB was made from; V3 is that board with its patches, as [`docs/PatchWires.md`](../docs/PatchWires.md) lists them.) Its CPLD-pin items fall away with the CPLDs; the rest (CPU and RTC pull-ups, reset-button filter, IDE pull-downs, series resistors, CSEL, DASP, AHCT245s, label fixes) still apply.
 - **Expansion data buffers:** U54–U57 have /OE on GND. Their DIR is nEXP_DATA_EN, which the card drives (R48 pull-up).
 - **Expansion selects:** the five old ones (8/16/32-bit device, VIO, VMEM) came from DEVMAP and were bussed to all three slots.
 - **CPLD spare lines:** each CPLD had two (EXP_BC_, EXP_DM_, EXP_INT_CPLD1/2). They go to the CLK1/CLK2 pins of the logic-analyzer headers U69, U23 and U24, and all except EXP_INT_CPLD1 also go to the slots.
 - **Logic-analyzer headers:** U4, U5, U23–U25, U69 and U70 (LOGICA-HDR-2x10) tap CPU and expansion nets. Those nets stay, so the headers keep working.
 - **nCPU_RD:** comes from BUSCTRL and goes to the flash /OE (U3), the SRAM connector (U6), the UART /IOR (U36) and the IDE read path (U39/U42). The UART /IOW is plain CPU R/W.
 - **DRAM:** U26–U28 are SN74AHC157 address muxes (CMOS thresholds). U29–U32 are 74HCT245 data buffers with /OE on GND and DIR = nDRAM_DATA_EN, the CPU on their B side; BUSCTRL drives DIR high only for DRAM reads. SIMMs are U18–U21. Y1 is a 20 MHz oscillator.
-- **Pull-ups on the CPU control lines:** DSACK0/1 have R51/R52, HALT has R2, AVEC has R49 and SYS_RESET has R47. BERR, STERM, CIIN and IPL0–2 have none; BUSCTRL and INTCTRL drove them push-pull.
+- **Pull-ups on the CPU control lines:** DSACK0/1 have R51/R52, HALT has R2, AVEC has R49 and SYS_RESET has R47; CBACK has had a 10K rework pull-up since 22 Nov 2026. BERR, STERM, CIIN and IPL0–2 have none; BUSCTRL and INTCTRL drove them push-pull.
 - **BERR, HALT and RMC:** nCPU_BERR reaches only the CPU, the logic-analyzer header U4 and BUSCTRL. nCPU_HALT also drives the HALT LED, through U1. nCPU_RMC goes only to BUSCTRL pin 7, where no logic uses it.
 - **Flash:** U3 is an SST39SF040. Its /WE is nBFLASH_WE from BUSCTRL pin 40, the flash decode with R/W low, so it falls and rises with /CE. The SRAM connector's nWR (U6 B32) is already plain CPU R/W.
 - **SRAM riser (connector U6):** eight IS61C25616AL-12 (256K × 16, 12 ns) in four 1 MB banks.
   - The connector carries A2–A19, D0–D31, four bank CEs, four byte selects, nRD (/OE) and nWR (CPU R/W). Riser pins A18/B18 carry CPU A2/A3 to the SRAMs' A0/A1.
-  - BUSCTRL ends SRAM cycles with DSACK at 0 wait states (3 clocks) and drives STERM permanently high. CBACK is floating and CBREQ isn't routed (`docs/SRAMBurstProposal.md` section 2).
+  - BUSCTRL ends SRAM cycles with DSACK at 0 wait states (3 clocks) and drives STERM permanently high. CBACK has a 10K pull-up (a rework since 22 Nov 2026; it floated before), and CBREQ isn't routed (`docs/SRAMBurstProposal.md` section 2).
 - **Slow-device logic families:**
   - IDE: 74AHC244 (U39, U42) and SN74AHC245 (U37, U38, U40, U41).
   - RTC: 74AHC244 (U34) and SN74AHC245 (U35).
@@ -940,7 +940,7 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
    | A23 | nEXP_INT3B | **nEXP_IRQ2**, bussed, 10K pull-up (R20) |
    | A24 | nEXP_INT2A (symbol: EXP_nVIDRFSH_INT) | **nEXP_IRQ3**, bussed, 10K pull-up (R22) |
    | A26 | nEXP_DEV_WAIT | **nEXP_ACK**, 1K pull-up (CS1) |
-   | A27 | nEXP_DATA_EN | unchanged: the card drives the board's expansion data-buffer DIR (U54–U57), 10K pull-up (R48) |
+   | A27 | nEXP_DATA_EN | unchanged: the card drives the board's expansion data-buffer DIR (U54–U57), 1K pull-up (R48: 1K on the boards and in V3; V2 says 10K) |
    | A21 | nEXP_VMEM_CS (1 MB) | **nEXP_VMEM_CS** from the FPGA (U_MEM2 ch3): 0x5000_0000–0x50FF_FFFF, 16 MB, bussed |
    | A30 | nEXP_VIO_CS | **nEXP_VIO_CS** from the FPGA (U_MEM2 ch8): 0x3000_0500–0x3000_05FF, bussed |
    | A20, B19, B20 | the old 16-, 8- and 32-bit selects | **reserved** for now |

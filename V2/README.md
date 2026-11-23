@@ -98,9 +98,10 @@ The system implements a memory map (physical addresses) shown in the link below.
 
 ### Schematic
 
-You can view the current schematic here:
+You can view the schematics here:
 
- + [Main PCB Schematic](schematic/RoscoeMainboardV2Final.pdf)
+ + [Main PCB Schematic, V2](schematic/RoscoeMainboardV2Final.pdf): the schematic the V2 PCB was made from.
+ + [Main PCB Schematic, V3](schematic/RoscoeMainboardV3.pdf): the same V2 PCB with the patches that got the system working ([docs/PatchWires.md](docs/PatchWires.md)). It shows the boards as they are now; it is not a new PCB. The next PCB will be V4 ([docs/NextPCB.md](docs/NextPCB.md)).
  + [SRAM Riser Schematic](schematic/RoscoeSRAMboardV2.pdf)
 
 
