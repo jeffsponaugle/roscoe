@@ -68,7 +68,7 @@ foreach ($s in $sig | Where-Object { $_.Hdr -match '^J(17|18|19|20)$' }) {
 }
 
 # ---- write the XDC --------------------------------------------------------------------------
-$groupOrder = 'CLK','IN-A','IN-B','IN-C','IN-D','IN-E','IRQ','DATA','OUT-CPU','BERR','IPL','DRAM-1','DRAM-2','MEM-1','MEM-2','BURST','DEV'
+$groupOrder = 'CLK','IN-A','IN-B','IN-C','IN-D','IN-E','IRQ','DATA','OUT-CPU','BERR','IPL','DRAM-1','DRAM-2','MEM-1','MEM-2','BURST','EXP','DEV'
 $groupText = @{
   'CLK'     = 'CPU clock: Y1 -> U_CLK (74LVC1G34) -> 33R -> MRCC pin A41. Keep A39 (its N partner) empty, A47 static, A33/A45 slow or static.'
   'IN-A'    = 'Address A8-A15 (U_IN1, 74LVC244A)'
@@ -86,6 +86,7 @@ $groupText = @{
   'MEM-1'   = 'SRAM CE0-3 and byte enables through U_MEM1 (74AHCT244)'
   'MEM-2'   = 'Flash CE through U_MEM2 (74AHCT244); the flash /WE is CPU R/W. (The 68882 select is a 74AHCT138 on the 5V side.)'
   'BURST'   = 'SRAM burst address BA3:BA2 (CPU A3:A2 plus the burst count) through U_MEM2 ch4 and U_DRAM2 ch7 (74AHCT244) to riser pins A18/B18'
+  'EXP'     = 'Expansion selects nEXP_VMEM_CS (A21) and nEXP_VIO_CS (A30) through U_MEM2 ch3/ch8 (74AHCT244), bussed to every slot'
   'DEV'     = 'Device code bus, wired straight to IOCTRL (ATF1504, TTL inputs)'
 }
 function PortKey([string]$p) { if ($p -match '^(.*)\[(\d+)\]$') { '{0}[{1:D3}]' -f $matches[1], [int]$matches[2] } else { $p } }

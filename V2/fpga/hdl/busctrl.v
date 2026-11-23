@@ -17,17 +17,22 @@
 //   0x1000_0000-0x1FFF_FFFF  SRAM [32], 0 wait states; banks 1-4 at 0x1000_0000 + n MB. A write ends
 //                            CE at R2, a clock before the cycle ends. (STERM and bursts come later.)
 //   0x2000_0000-0x2FFF_FFFF  bus error at F1.
-//   0x3000_0000-0x30FF_FFFF  8-bit on-board devices, 256 bytes each:
+//   0x3000_0000-0x3000_08FF  8-bit on-board devices, 256 bytes each:
 //                              0x000 UART A (code 7)   0x100 UART B (8)   0x200 FPGA registers
-//                              0x300 RTC (5)           0x500 card I/O window (nEXP_ACK)
-//                              0x600 7-seg A (9)       0x700 7-seg B (10)  0x800 status LEDs (11)
-//                            Other windows, and reads of the latches, are acknowledged at once.
-//   0x3100_0000-0x3FFF_FFFF  8-bit card space [8], ended by nEXP_ACK.
+//                              0x300 RTC (5)           0x400 the new PTC (until it exists, acknowledged
+//                              0x600 7-seg A (9)             at once)
+//                              0x700 7-seg B (10)      0x800 status LEDs (11)
+//                            Reads of the latches are acknowledged at once.
+//   The rest of 0x3xxx_xxxx  8-bit card space [8], ended by nEXP_ACK (agreed 22 Nov 2026). Its VIO
+//                            window, 0x3000_0500-0x3000_05FF, also drives nEXP_VIO_CS (connector A30)
+//                            for cards that don't decode the address themselves (the VGA card).
 //   0x4000_0000-0x40FF_FFFF  16-bit on-board [16]: IDE at 0x000-0x3FF (A9 port, A8 CS0/CS1, codes
 //                            1-4) and the fast window at 0x800-0xBFF. Other windows, including the
 //                            old PTC window 0x400, are acknowledged at once.
 //   0x4100_0000-0x4FFF_FFFF  16-bit card space [16].
-//   0x5000_0000-0x5FFF_FFFF  32-bit card space [32], VMEM window included.
+//   0x5000_0000-0x5FFF_FFFF  32-bit card space [32]. Its first 16 MB, 0x5000_0000-0x50FF_FFFF, is the
+//                            VMEM window and also drives nEXP_VMEM_CS (connector A21; 2 MB before).
+//                            Both selects are registered at R1 and cut by the AS pin, like U_DATA's.
 //   0x6000_0000-0x7FFF_FFFF  no answer: bus error from the bus timeout.
 //   0x8000_0000-0xFFFF_FFFF  DRAM [32], 1 wait state (dramctrl.v).
 //   CPU space: interrupt acknowledge [8] at 0 wait states with the vector from intctrl. FPU cycles
@@ -37,11 +42,18 @@
 //   CIIN is asserted for 0x3-0x5, decoded from the address alone: it is a synchronous input of the
 //   68030 and must be stable at every rising edge while AS is asserted (data sheet note 13).
 //
-// FPGA registers, 0x3000_0200-0x3000_020F (A4-A7 don't reach the FPGA, so they repeat every 16 bytes)
-//   0x200, 0x201  interrupt masks (intctrl), 0 wait states      0x204, 0x205  interrupt requests (read)
+// FPGA registers, 0x3000_0200-0x3000_020F (A4-A7 don't reach the FPGA, so they repeat every 16 bytes;
+// agreed 22 Nov 2026). All 0 wait states except 0x202 writes; reset clears every writable bit.
+//   0x200, 0x201  interrupt masks (intctrl)                     0x204, 0x205  interrupt requests (read)
 //   0x202         bit 0: power-off request, bit 1: software reset. A write sends IOCTRL code 12 or 13
 //                 for bit 0, or code 14 when bit 1 is set, at F2, and takes 1 wait state. A read
 //                 returns the power-off bit. Reset clears it, as it clears IOCTRL's copy.
+//   0x203         FPGA design version (read only): FPGA_VERSION
+//   0x206         control: bit 0 SRAM synchronous cycles (STERM), bit 1 SRAM burst fills (CBACK). Both
+//                 start at 0, so the SRAM runs DSACK cycles until software turns them on (the SRAM step
+//                 isn't written yet, so they have no effect so far).
+//   0x207         scratch: read/write, no effect (a D31-D24 bus test)
+//   0x208-0x20F   read 0, writes ignored
 //
 // Device cycles (IOCTRL codes): "code a-b" means IOCTRL sees the code from Fa to F(b-1); "strobe"
 // is nDEV_EN low; "ack k" means DSACK is seen at Fk.
@@ -73,7 +85,8 @@
 
 module busctrl #(
     parameter integer TIMEOUT_CLKS = 240,   // bus error after this many clocks of AS with no answer
-    parameter integer FLASH_RD_WS  = 1      // boot-flash read wait states (rev 31 used 0)
+    parameter integer FLASH_RD_WS  = 1,     // boot-flash read wait states (rev 31 used 0)
+    parameter [7:0]   FPGA_VERSION = 8'h01  // read at 0x3000_0203; bump it with each released bitstream
 ) (
     input  wire        clk,
     input  wire        rst,                 // synchronised nSYS_RESET, active high
@@ -100,6 +113,10 @@ module busctrl #(
     output reg  [3:0]  sram_ce_n  = 4'hF,
     output reg  [3:0]  be_n       = 4'hF,
     output reg         flash_ce_n = 1'b1,
+
+    // Expansion selects, for cards that don't decode the address themselves (connector A21, A30)
+    output wire        exp_vmem_cs_n,       // 0x5000_0000-0x50FF_FFFF
+    output wire        exp_vio_cs_n,        // 0x3000_0500-0x3000_05FF
 
     // IOCTRL
     output reg  [3:0]  dev_code   = 4'd0,
@@ -155,10 +172,11 @@ module busctrl #(
                     16'h0002:           d_typ = T_REG;
                     16'h0003:           begin d_typ = T_DEV; d_kind = K_RTC; d_code = 4'd5; end
                     16'h0005:           d_typ = T_CARD;
+                    16'h0004:           d_typ = T_ACK;    // the new PTC's window, until it exists
                     16'h0006, 16'h0007, 16'h0008:
                         if (rw) d_typ = T_ACK;            // a read emits no code, so it can't clock the latch
                         else begin d_typ = T_DEV; d_kind = K_LATCH; d_code = 4'd3 + a_hi[11:8]; end
-                    default:            d_typ = T_ACK;
+                    default:            d_typ = T_CARD;   // the rest of 0x3 is 8-bit card space (0x500 = VIO)
                 endcase
             end
             4'h4: begin
@@ -175,6 +193,9 @@ module busctrl #(
     end
 
     assign dram_cyc = !cpu_space && a_hi[31];
+    // The two windows with a board select, for cards that don't decode the address themselves
+    wire d_vio  = !cpu_space && (a_hi[31:8] == 24'h3000_05);     // 0x3000_0500-0x3000_05FF
+    wire d_vmem = !cpu_space && (a_hi[31:24] == 8'h50);          // 0x5000_0000-0x50FF_FFFF (16 MB)
     // CIIN is one of the 68030's synchronous inputs: it must be stable at every rising edge while AS is
     // asserted (data sheet note 13), so it comes from A31-A28 alone and settles before R1. No FC term is
     // needed: no CPU-space cycle has 3, 4 or 5 there (interrupt acknowledge puts all ones on the address,
@@ -203,6 +224,9 @@ module busctrl #(
     reg        acked  = 1'b0;     // DSACK asserted this cycle (never retracted)
     reg        berred = 1'b0;
     reg        pwr_off = 1'b0;
+    reg  [1:0] ctrl    = 2'b00;   // 0x206
+    reg  [7:0] scratch = 8'h00;   // 0x207
+    reg        vio_q = 1'b0, vmem_q = 1'b0;   // the expansion selects, from R1 until AS negates
     reg        d_oe_q = 1'b0, data_oe_q = 1'b0;
     (* ASYNC_REG = "TRUE" *) reg ack_s    = 1'b0;      // nEXP_ACK, first stage (DSACK is the second)
     (* ASYNC_REG = "TRUE" *) reg iordy_s1 = 1'b1;
@@ -277,8 +301,13 @@ module busctrl #(
     wire a_rd    = (a_typ == T_REG || a_typ == T_IACK) && rw;
     wire a_wr    = (a_typ == T_REG) && !rw;
 
-    // The FPGA's registers as A3-A0 select them (A4-A7 don't reach the FPGA).
-    wire [7:0] reg_rd = a_lo[3] ? 8'h00 : (intc_rdata | ((a_lo[2:0] == 3'd2) ? {7'd0, pwr_off} : 8'h00));
+    // The FPGA's registers as A3-A0 select them (A4-A7 don't reach the FPGA). intctrl answers 0 and 1
+    // (masks) and 4 and 5 (requests), and reads 0 for the others.
+    wire [7:0] reg_rd = a_lo[3] ? 8'h00
+                      : (intc_rdata | ((a_lo[2:0] == 3'd2) ? {7'd0, pwr_off} : 8'h00)
+                                    | ((a_lo[2:0] == 3'd3) ? FPGA_VERSION    : 8'h00)
+                                    | ((a_lo[2:0] == 3'd6) ? {6'd0, ctrl}    : 8'h00)
+                                    | ((a_lo[2:0] == 3'd7) ? scratch         : 8'h00));
 
     // ---- Registered outputs: AS reaches each through `go` ------------------------------------------
     always @(posedge clk) begin
@@ -308,6 +337,19 @@ module busctrl #(
         if (rst)                                              pwr_off <= 1'b0;
         else if (go && cmd_cyc && a_pos == 8'd2 && !d_in[1]) pwr_off <= d_in[0];
 
+        // 0x206 and 0x207, written at R2 like the masks (reg_wr below)
+        if (rst) begin
+            ctrl    <= 2'b00;
+            scratch <= 8'h00;
+        end else if (reg_wr) begin
+            if (a_lo[2:0] == 3'd6) ctrl    <= d_in[1:0];
+            if (a_lo[2:0] == 3'd7) scratch <= d_in;
+        end
+
+        // The expansion selects: decided at R1, then held for the cycle; AS cuts them (below).
+        vio_q  <= go && (cyc ? vio_q  : d_vio);
+        vmem_q <= go && (cyc ? vmem_q : d_vmem);
+
         // Read data, registered in the I/O blocks at every rising edge: for an acknowledge, the vector
         // intctrl latches at R2 (and then the latched one); otherwise the register A3-A0 select.
         d_out <= (typ == T_IACK) ? (iack_stb ? iack_vec_nxt : iack_vector) : reg_rd;
@@ -326,6 +368,10 @@ module busctrl #(
     // ---- Data bus and the interrupt controller -------------------------------------------------------
     assign d_oe      = d_oe_q && as_now;
     assign data_oe_n = !(data_oe_q && as_now);
+
+    // ---- Expansion selects: on from R1, off as soon as the AS pin negates ------------------------------
+    assign exp_vio_cs_n  = !(vio_q  && as_now);
+    assign exp_vmem_cs_n = !(vmem_q && as_now);
 
     assign reg_wr     = cyc && typ == T_REG && !rw && pos == 8'd1 && !a_lo[3];   // data taken at R2
     assign reg_addr   = a_lo[2:0];

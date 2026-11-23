@@ -1,6 +1,6 @@
 // roscoe_top.v - top level of the Roscoe FPGA (Alchitry Au V2 on the Br Wide)
 //
-// Revision 1, 22 Nov 2026. The ports are the 99 signals of fpga/roscoe_busctrl_au.xdc, named as there.
+// Revision 1, 22 Nov 2026. The ports are the 101 signals of fpga/roscoe_busctrl_au.xdc, named as there.
 // Everything runs on cpu_clk, on both edges (fpga/Roscoe_FPGA_Redesign.md, section 15). Checked in
 // simulation by tb_roscoe_top.v; not yet run on hardware.
 //
@@ -64,7 +64,10 @@ module roscoe_top #(
     output wire [3:0]   sram_ce_n,
     output wire [3:0]   be_n,
     output wire         flash_ce_n,
-    output wire [3:2]   sram_ba
+    output wire [3:2]   sram_ba,
+
+    output wire         exp_vmem_cs_n, // connector A21, through U_MEM2 ch3
+    output wire         exp_vio_cs_n   // connector A30, through U_MEM2 ch8
 );
 
     // ---- Reset: nSYS_RESET from IOCTRL, synchronised; the FPGA starts in reset ---------------------
@@ -85,6 +88,7 @@ module roscoe_top #(
         .dsack_d(dsack_d), .dsack_oe_d1_n(dsack_oe_d1_n), .dsack_oe_d2_n(dsack_oe_d2_n),
         .berr_n(berr_n), .ciin_n(ciin_n),
         .sram_ce_n(sram_ce_n), .be_n(be_n), .flash_ce_n(flash_ce_n),
+        .exp_vmem_cs_n(exp_vmem_cs_n), .exp_vio_cs_n(exp_vio_cs_n),
         .dev_code(dev_code), .dev_en_n(dev_en_n),
         .d_out(d_out), .d_oe(d_oe), .data_oe_n(data_oe_n),
         .dram_cyc(dram_cyc), .lanes(lanes), .dram_ack_a(dram_ack_a),

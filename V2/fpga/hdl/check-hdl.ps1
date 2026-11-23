@@ -135,6 +135,7 @@ set groups {
     {out {ras_n[*] cas_n[*] dram_we_n dram_buf_oe_n}            {DRAM RAS, CAS, WE, 245 enable}}
     {out {dram_mux}                                             {DRAM_MUX}}
     {out {sram_ce_n[*] be_n[*] flash_ce_n}                      {SRAM and flash selects}}
+    {out {exp_vmem_cs_n exp_vio_cs_n}                           {nEXP_VMEM_CS, nEXP_VIO_CS (card selects)}}
     {out {ciin_n sram_ba[*]}                                    {CIIN, SRAM_BA (address decodes)}}
 }
 set fh [open io_slack.txt w]

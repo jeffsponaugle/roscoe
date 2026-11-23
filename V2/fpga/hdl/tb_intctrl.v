@@ -34,9 +34,9 @@ module tb_intctrl;
         s_bit[IDE2] = 10; s_lvl[IDE2] = 5; s_vec[IDE2] = 8'hD4; s_edge[IDE2] = 0; s_name[IDE2] = "IDE2";
         s_bit[UA]   =  8; s_lvl[UA]   = 4; s_vec[UA]   = 8'hC1; s_edge[UA]   = 0; s_name[UA]   = "UART A";
         s_bit[UB]   =  7; s_lvl[UB]   = 4; s_vec[UB]   = 8'hC2; s_edge[UB]   = 0; s_name[UB]   = "UART B";
-        s_bit[S1]   =  5; s_lvl[S1]   = 3; s_vec[S1]   = 8'hB1; s_edge[S1]   = 0; s_name[S1]   = "slot 1";
-        s_bit[S2]   =  4; s_lvl[S2]   = 3; s_vec[S2]   = 8'hB2; s_edge[S2]   = 0; s_name[S2]   = "slot 2";
-        s_bit[S3]   =  3; s_lvl[S3]   = 3; s_vec[S3]   = 8'hB4; s_edge[S3]   = 0; s_name[S3]   = "slot 3";
+        s_bit[S1]   =  5; s_lvl[S1]   = 3; s_vec[S1]   = 8'hB1; s_edge[S1]   = 0; s_name[S1]   = "exp line 1";
+        s_bit[S2]   =  4; s_lvl[S2]   = 3; s_vec[S2]   = 8'hB2; s_edge[S2]   = 0; s_name[S2]   = "exp line 2";
+        s_bit[S3]   =  3; s_lvl[S3]   = 3; s_vec[S3]   = 8'hB4; s_edge[S3]   = 0; s_name[S3]   = "exp line 3";
         s_bit[RTC]  =  1; s_lvl[RTC]  = 1; s_vec[RTC]  = 8'h91; s_edge[RTC]  = 0; s_name[RTC]  = "RTC";
         s_bit[PWR]  =  0; s_lvl[PWR]  = 1; s_vec[PWR]  = 8'h92; s_edge[PWR]  = 1; s_name[PWR]  = "power";
     end
@@ -297,11 +297,11 @@ module tb_intctrl;
         iack(4, 8'hC1);                                 // UART A before UART B
         line(UA, 1'b0); settle; iack(4, 8'hC2);
         line(UB, 1'b0); settle; ipl_is(3);
-        iack(3, 8'hB1);                                 // slot 1, then 2, then 3
+        iack(3, 8'hB1);                                 // expansion line 1, then 2, then 3
         line(S1, 1'b0); settle; iack(3, 8'hB2);
-        line(S3, 1'b0); settle; iack(3, 8'hB2);         // slot 2 alone
+        line(S3, 1'b0); settle; iack(3, 8'hB2);         // line 2 alone
         line(S3, 1'b1); line(S2, 1'b0); settle; iack(3, 8'hB4);
-        line(S1, 1'b1); settle; iack(3, 8'hB1);         // slot 1 beats slot 3
+        line(S1, 1'b1); settle; iack(3, 8'hB1);         // line 1 beats line 3
         line(S1, 1'b0); line(S3, 1'b0); settle; ipl_is(1);
         iack(1, 8'h91);                                 // the RTC before the power request
         line(RTC, 1'b0); settle; ipl_is(1);

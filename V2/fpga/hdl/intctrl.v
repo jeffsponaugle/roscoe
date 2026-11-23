@@ -17,9 +17,10 @@
 //    8        UART A               4     0xC1   irq_uart[0], level, active high
 //    7        UART B               4     0xC2   irq_uart[1], level, active high
 //    6        unused (was INT4C)
-//    5        expansion slot 1     3     0xB1   irq_exp_n[0], level, active low
-//    4        expansion slot 2     3     0xB2   irq_exp_n[1], level, active low
-//    3        expansion slot 3     3     0xB4   irq_exp_n[2], level, active low
+//    5        expansion line 1     3     0xB1   irq_exp_n[0], level, active low (connector B21, was INT3A)
+//    4        expansion line 2     3     0xB2   irq_exp_n[1], level, active low (connector A23, was INT3B)
+//    3        expansion line 3     3     0xB4   irq_exp_n[2], level, active low (connector A24, was INT2A)
+//             (each line is bussed to every slot, so one card may use more than one)
 //    2        unused (was INT2B)
 //    1        RTC                  1     0x91   irq_rtc_n, level, active low
 //    0        power controller     1     0x92   a high pulse on pwr_req, filtered, latched
@@ -72,7 +73,7 @@ module intctrl #(
     // Interrupt lines from the board, asynchronous to clk (synchronised here)
     input  wire [1:0] irq_ide,         // IDE1, IDE2 INTRQ, active high
     input  wire [1:0] irq_uart,        // UART A, B, active high
-    input  wire [2:0] irq_exp_n,       // expansion slots 1-3, active low
+    input  wire [2:0] irq_exp_n,       // expansion lines 1-3 (bussed to every slot), active low
     input  wire       irq_rtc_n,       // RTC /IRQ, active low
     input  wire       pwr_req,         // the power controller's request (POWER_CONTROL_OUT net), high pulse
 
@@ -98,11 +99,11 @@ module intctrl #(
 
     // ---- Where each source sits in the mask ---------------------------------------------------------
     localparam integer B_TMR1 = 14, B_TMR2 = 13, B_IDE1 = 11, B_IDE2 = 10, B_UARTA = 8, B_UARTB = 7,
-                       B_SLOT1 = 5, B_SLOT2 = 4, B_SLOT3 = 3, B_RTC = 1, B_PWR = 0;
+                       B_EXP1 = 5, B_EXP2 = 4, B_EXP3 = 3, B_RTC = 1, B_PWR = 0;
     localparam [15:0] EDGE  = (16'd1 << B_TMR1) | (16'd1 << B_TMR2) | (16'd1 << B_PWR);
     localparam [15:0] WIRED = EDGE | (16'd1 << B_IDE1) | (16'd1 << B_IDE2) | (16'd1 << B_UARTA)
-                            | (16'd1 << B_UARTB) | (16'd1 << B_SLOT1) | (16'd1 << B_SLOT2)
-                            | (16'd1 << B_SLOT3) | (16'd1 << B_RTC);           // 0x6DBB
+                            | (16'd1 << B_UARTB) | (16'd1 << B_EXP1) | (16'd1 << B_EXP2)
+                            | (16'd1 << B_EXP3) | (16'd1 << B_RTC);            // 0x6DBB
 
     function [2:0] lvl_of(input integer b);
         lvl_of = WIRED[b] ? SRC_LEVEL[3*b +: 3] : 3'd0;
@@ -122,7 +123,7 @@ module intctrl #(
     end
     wire [1:0] ide_s  =  sync2[1:0];
     wire [1:0] uart_s =  sync2[3:2];
-    wire [2:0] slot_s = ~sync2[6:4];
+    wire [2:0] exp_s = ~sync2[6:4];
     wire       rtc_s  = ~sync2[7];
     wire       pwr_s  =  sync2[8];
 
@@ -178,9 +179,9 @@ module intctrl #(
         line_req[B_IDE2]  = ide_s[1];
         line_req[B_UARTA] = uart_s[0];
         line_req[B_UARTB] = uart_s[1];
-        line_req[B_SLOT1] = slot_s[0];
-        line_req[B_SLOT2] = slot_s[1];
-        line_req[B_SLOT3] = slot_s[2];
+        line_req[B_EXP1] = exp_s[0];
+        line_req[B_EXP2] = exp_s[1];
+        line_req[B_EXP3] = exp_s[2];
         line_req[B_RTC]   = rtc_s;
         edge_set = 16'h0000;
         edge_set[B_TMR1]  = tmr_rise[0];

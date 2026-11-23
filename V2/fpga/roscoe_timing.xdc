@@ -106,7 +106,8 @@ set_output_delay -clock cpu_clk -clock_fall -min [expr {$wire_min - $ioc_h  + $u
 ## ---- Outputs to memory (74AHCT244) ------------------------------------------------------------------------
 ## Each select must be past its buffer within the half clock it is launched in. That is stricter than any
 ## access needs (section 16 has the memory budgets), but it keeps every edge where the design puts it.
-set mem_sel [get_ports {ras_n[*] cas_n[*] dram_we_n dram_buf_oe_n sram_ce_n[*] be_n[*] flash_ce_n}]
+## The card selects nEXP_VMEM_CS and nEXP_VIO_CS (U_MEM2) are registered at R1 the same way.
+set mem_sel [get_ports {ras_n[*] cas_n[*] dram_we_n dram_buf_oe_n sram_ce_n[*] be_n[*] flash_ce_n exp_vmem_cs_n exp_vio_cs_n}]
 set_output_delay -clock cpu_clk -clock_fall -max [expr {$wire_max + $ahct_max + $uclk_max}] $mem_sel
 set_output_delay -clock cpu_clk -clock_fall -min 0.0 $mem_sel
 ## DRAM_MUX is launched at a falling edge, and the column address must be at the DRAM before CAS falls at
@@ -137,11 +138,12 @@ set out_d   [expr {$wire_max + $lvc_en + $t27 + $uclk_max}]      ;# the D31-D24 
 set out_mem [expr {$wire_max + $ahct_max + $uclk_max}]           ;# the memory-select output delay above
 ## AS negating turns off U_DATA, the FPGA's D31-D24 drivers and the DRAM 245s. #29A wants the data bus
 ## released within 50 ns of AS at the CPU: 6.9 (U_IN5 and wiring) + the FPGA + 8 (U_DATA) or 9.5 (AHCT)
-## + ~25 (HCT245). FPGA share: 12 ns.
+## + ~25 (HCT245). FPGA share: 12 ns. It also ends the card selects, held to the same limit so a card
+## sees its select go about when it sees AS go.
 set_max_delay -datapath_only [expr {$in_as + 12.0 + $out_d}]   -from [get_ports cpu_as_n] -to [get_ports {data_oe_n cpu_d[*]}]
 set_min_delay 0.0                                              -from [get_ports cpu_as_n] -to [get_ports {data_oe_n cpu_d[*]}]
-set_max_delay -datapath_only [expr {$in_as + 12.0 + $out_mem}] -from [get_ports cpu_as_n] -to [get_ports dram_buf_oe_n]
-set_min_delay 0.0                                              -from [get_ports cpu_as_n] -to [get_ports dram_buf_oe_n]
+set_max_delay -datapath_only [expr {$in_as + 12.0 + $out_mem}] -from [get_ports cpu_as_n] -to [get_ports {dram_buf_oe_n exp_vmem_cs_n exp_vio_cs_n}]
+set_min_delay 0.0                                              -from [get_ports cpu_as_n] -to [get_ports {dram_buf_oe_n exp_vmem_cs_n exp_vio_cs_n}]
 ## (The register-read multiplexer, A3-A0 to D31-D24, is no longer one of these: the read data is
 ## registered in the I/O blocks, so the address input delay above covers it.)
 ## CIIN (U_CPU) must be at the CPU #60 before the first rising edge of the cycle, R1 (data sheet note 13).

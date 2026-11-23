@@ -28,7 +28,7 @@ On 22 Nov 2026 the interrupt levels and vectors were agreed, and the interrupt c
 
 Companion files:
 - `Roscoe_FPGA_pinmap_AuV2.xlsx`: pin budget, FPGA pins, all 136 Br Wide holes, system-board parts, ATF1504 pinout.
-- `roscoe_busctrl_au.xdc`: Vivado constraints for the 99 FPGA signals, generated from the workbook's "FPGA pins" sheet by `gen-xdc.ps1`.
+- `roscoe_busctrl_au.xdc`: Vivado constraints for the 101 FPGA signals, generated from the workbook's "FPGA pins" sheet by `gen-xdc.ps1`.
 - `check-xdc.ps1`: checks the XDC in Vivado.
   - It builds a throwaway top level that uses every signal in the CSV, and runs synthesis through bitstream for the Au's part. The bitstream is deleted at once.
   - It then compares each port's ball, bank, direction and I/O settings with the CSV, and each ball's pin function with the Au net names.
@@ -40,7 +40,7 @@ Companion files:
 - `ioctrl/IOCTRL_REV1.PLD`: the IOCTRL CUPL source (section 10), for the ATF1504 TQFP-44 with JTAG on. Its design was agreed on 21 Nov 2026; it has not been programmed yet.
 - `ioctrl/check-ioctrl.ps1`: compiles, simulates and fits IOCTRL with WinCUPL's command-line tools, and checks the pins. Prints PASS or the problems.
 - `ioctrl/gen-ioctrl-si.ps1` and `ioctrl/IOCTRL_REV1.si`: the simulator test vectors, with expected values, and the script that writes them.
-- `hdl/roscoe_top.v`: the FPGA's top level, with the XDC's 99 ports (section 16).
+- `hdl/roscoe_top.v`: the FPGA's top level, with the XDC's 101 ports (section 16).
 - `hdl/busctrl.v` and `hdl/dramctrl.v`: the bus controller (decode, cycle termination, IOCTRL's device codes, the FPGA's registers) and the DRAM controller with refresh (section 16).
 - `hdl/intctrl.v`: the interrupt controller (section 11).
 - `hdl/tb_intctrl.v` and `hdl/tb_roscoe_top.v`: self-checking testbenches, for the interrupt controller alone and for the whole design driven by a 68030 bus model.
@@ -86,7 +86,7 @@ The plan replaces four of Roscoe's programmable parts with one FPGA board:
 | nFPU_CS stays in the FPGA (**reversed** 22 Nov 2026: see "FPGA HDL" below) | A direct decode in the CPLD was considered (faster, frees a pin) but rejected. The FPGA decodes FPU space internally anyway. The timing pass then showed the path through the FPGA was too slow. |
 | New nDRAM_BUF_OE | The DRAM data buffers (74HCT245 U29–U32) have /OE tied to GND today. Giving the FPGA control of /OE removes the bus-contention hazard, and lets DIR simply follow CPU R/W ("Pin changes" below). |
 | DEV_WAIT pin removed | The old BUSCTRL↔DEVMAP device handshake (nDEV_WAIT, nDEV_ACK since CS1) is internal now. The FPGA times every device cycle itself and stretches IDE base-window cycles while IORDY is low (see below). |
-| Expansion spare lines dropped | EXP_DM_CPLD1/2 and EXP_INT_CPLD1/2 have no defined use. EXP_BC_CPLD1/2 (B26/B30) are CS1's VMEM busy/grant pair (`changes.md` 1.4): they stay reserved on the connector, with B26's 4.7K pull-up, but get no FPGA pins for now. Besides the slots, these lines feed the CLK1/CLK2 pins of the logic-analyzer headers U69, U23 and U24, which lose those clocks. |
+| Expansion spare lines dropped | EXP_DM_CPLD1/2 and EXP_INT_CPLD1/2 have no defined use. EXP_BC_CPLD1/2 (B26/B30) are CS1's VMEM busy/grant pair (`changes.md` 1.4). They were to stay reserved on the connector, with B26's 4.7K pull-up; since 22 Nov 2026 they are unused, as no card uses them (below). Besides the slots, these lines feed the CLK1/CLK2 pins of the logic-analyzer headers U69, U23 and U24, which lose those clocks. |
 | CLK_DIV16 internal | It only clocked the PTC. |
 
 **Added after the CS1–CS3 review (agreed 21 Nov 2026)**
@@ -95,7 +95,7 @@ The plan replaces four of Roscoe's programmable parts with one FPGA board:
 |---|---|
 | The FPGA owns all device-cycle timing; IOCTRL is a registered decoder | The first plan counted each device's timing twice: wait states in the FPGA (for DSACK) and strobe edges in IOCTRL (from CPU_CLK). The two drift apart by a clock whenever nDEV_EN reaches IOCTRL close to a falling edge, which is only about 5 ns away at 20 MHz. Now IOCTRL registers DEV_CODE, nDEV_EN and R/W on every falling CPU_CLK edge, and has no counters. DEV_CODE alone sets each select window, and nDEV_EN sets the strobe or phase window inside it. Every edge is the FPGA's decision, so a late AS costs at most a clock and the two parts can never disagree. Each IOCTRL output is a flop, so a code changing several bits between edges cannot glitch a latch or a chip select. Details and timings: section 10. |
 | Keep IDE IORDY | CS3 has run IORDY since late 2026. J4/J6 pin 27 are joined, with a 1K pull-up to +5V, and the line reaches the FPGA through U_IN5's spare input on Au pin B29 (then the last free pin). While IORDY is low the FPGA freezes the base-window schedule. The fast window can't honour it, as in CS3. |
-| Keep CS1's expansion rules | A26 is `nEXP_ACK`: a card pulls it low when its cycle may end. With no acknowledge, the cycle runs into the bus timeout and ends in BERR, so empty card space is caught. The card rules are in `changes.md` 1.6. R10 becomes 1K. The per-slot interrupts stay as planned (the single `nEXP_SEL` was dropped later, in "Pin changes"). B26/B30 are reserved for a later VMEM hold-off. Without them, the VMEM window is ordinary card space ended by `nEXP_ACK`, at one wait state or more at 16 MHz. |
+| Keep CS1's expansion rules | A26 is `nEXP_ACK`: a card pulls it low when its cycle may end. With no acknowledge, the cycle runs into the bus timeout and ends in BERR, so empty card space is caught. The card rules are in `changes.md` 1.6. R10 becomes 1K. The expansion interrupts stay; since 22 Nov 2026 they are three lines bussed to every slot. (The single `nEXP_SEL` was dropped later, in "Pin changes".) B26/B30 were reserved for a later VMEM hold-off; since 22 Nov 2026 they are unused. Without them, the VMEM window is ordinary card space ended by `nEXP_ACK`, at one wait state or more at 16 MHz. |
 | Keep the CS2 fast IDE window | The registers also appear at base + 0x800 (A11), and the Data register there runs at PIO mode 2. Since the FPGA times every edge, this costs no device codes: the FPGA decodes A11 and picks the faster schedule (section 10). Codes 13–15 stay spare. |
 
 **Pin changes (agreed 21 Nov 2026)**
@@ -132,6 +132,29 @@ The plan replaces four of Roscoe's programmable parts with one FPGA board:
 | The PTC is redesigned, not ported | Jeff's plan. The bus controller came first. |
 | nFPU_CS from a 74AHCT138 on the 5V side (U_FPUCS) | Through U_IN, the FPGA and U_MEM2, the select could stay asserted up to about 20 ns into the next cycle's AS, worst case. The 68882 manual calls that incorrect. Qualifying CS with AS, or registering it, breaks the 68882's CS-to-DS setup on writes (#8B). One '138 on the CPU's own lines gives Y7 = nFPU_CS at about rev 31's speed: FC0–2 on the selects, A17 on G1, A19 and A16 on /G2A and /G2B. It frees J8-12 and U_MEM2 ch3 (sections 9 and 16). An ATF22V10C-10 would also meet the 68882's CS hold on paper, but it draws 85–130 mA, so Jeff kept the '138. |
 
+**Expansion connector and board (agreed 22 Nov 2026)**
+
+| Decision | Why |
+|---|---|
+| Three expansion interrupt lines, each bussed to every slot | A card that does two things can use two interrupts (Jeff). They are today's B21, A23 and A24 (nEXP_INT3A, 3B, 2A), already bussed and pulled up, and each keeps its old mask bit (section 11). This replaces the earlier plan of one pin routed separately to each slot. |
+| The five old select pins reserved; the other old control lines unused | Jeff: keep A20, A21, A30, B19 and B20 free in case cards need them. The four other interrupt pins, A28 and the old CPLD lines (A31, B26, B29, B30, B31) are unused, and lines for needs not yet known can be added later (section 15, item 13). A21 and A30 then came back as selects (next table). |
+| Female sockets on Roscoe, pins on the Br | Jeff's choice. The stack-up in the Br Wide footprint page assumes it. |
+| RAS wiring as today | `ras_n[0..7]` are SIMM 1–4 rank A, then SIMM 1–4 rank B, the address order of BUSCTRL rev 31's nDRAM_S1A … S4B (pins 19–25, 27). Rank A is a SIMM's RAS0 and RAS2 (pins 44, 34), rank B its RAS1 and RAS3 (pins 45, 33). So nRAS0–7 wire up as today. |
+| Boot-flash reads at 1 wait state | Agreed (rev 31 used 0). The FPGA's registered CE comes about 10 ns later than BUSCTRL's (section 16). |
+
+**Register map and card windows (agreed 22 Nov 2026)**
+
+| Decision | Why |
+|---|---|
+| FPGA registers at 0x3000_0200–020F | Masks (0x200/0x201), power and reset (0x202) and the interrupt requests (0x204/0x205) stay or go where proposed. New: the design version at 0x203 (read only), a control register at 0x206 (SRAM synchronous cycles and bursts, both off at reset, for bring-up) and a scratch register at 0x207 for bus tests. 0x208–0x20F stay free (section 16). |
+| The new PTC at 0x3000_0400 | It is an 8-bit device now, so it moves into the 8-bit region. Its layout is Jeff's redesign; the window acknowledges at once until then. |
+| 0x3: on-board devices at the start, the rest 8-bit card space | UARTs, FPGA registers, RTC, PTC and the latches stay in 0x3000_0000–0x3000_08FF. Everything else in 0x3, the VIO window 0x3000_05xx included, is 8-bit card space ended by nEXP_ACK. Before, the empty on-board windows were acknowledged at once. |
+| 0x4: unchanged | IDE in 0x4000_0000–0x40FF_FFFF, 16-bit card space at 0x4100_0000–0x4FFF_FFFF. |
+| 0x5: all 32-bit card space, its first 16 MB the VMEM window | Jeff widened VMEM from 2 MB to 16 MB (0x5000_0000–0x50FF_FFFF). |
+| 0x6–0x7 stay a bus error | For now. |
+| The FPGA drives nEXP_VMEM_CS (A21) and nEXP_VIO_CS (A30) again | The VGA card as drawn can't decode its own windows: A20–A31 don't connect on it, and A2–A19 only reach its video-memory buffers. Both selects come on at R1 and go off as AS negates, through U_MEM2's last two channels (ch3, ch8) from J8-12 and J8-14. A20, B19 and B20 stay reserved. |
+| Port widths fixed by region | A card picks the region that matches its bus width, and nothing needs setting up at boot. A width register could go in 0x208+ if a card ever needs one. |
+
 ---
 
 ## 3. What lives where
@@ -142,6 +165,7 @@ The plan replaces four of Roscoe's programmable parts with one FPGA board:
 | DRAM controller (RAS0–7, CAS0–3, WE, mux, data-buffer /OE) | FPGA | Refresh too. The buffer DIR is CPU R/W. |
 | SRAM and flash selects, byte enables | FPGA | Writes to both are CE#-controlled: each takes /WE straight from CPU R/W. |
 | SRAM synchronous cycles and burst fills | FPGA | STERM reads in 2 clocks, writes in 3, cache-line fills 2-1-1-1 (`docs/SRAMBurstProposal.md`). The FPGA's BA3:BA2 counter replaces CPU A3:A2 at the SRAM. |
+| Card selects nEXP_VMEM_CS, nEXP_VIO_CS | FPGA | For cards that don't decode the address themselves (the VGA card): 0x5000_0000–0x50FF_FFFF and 0x3000_05xx, on connector A21 and A30. |
 | 68882 chip select | U_FPUCS (74AHCT138, 5V side) | Decoded from the CPU's own FC0–2, A17, A19 and A16, as fast as rev 31's CPLD (section 9). The FPGA still never drives DSACK in FPU cycles, and must BERR an unanswered one so the 68030 takes the F-line exception. |
 | Interrupt controller (9 inputs, IPL0–2, vectors) | FPGA | All interrupts vectored, as today. |
 | PTC (timers) | FPGA | 8-bit registers on D24–D31. |
@@ -244,19 +268,19 @@ Sources: `BrWideSchematic.pdf` (Br Wide v4) for the wiring, and Alchitry's 3D mo
 | At 1.35V (B46, B48), unusable | 2 |
 | Usable at 3.3V | 102 |
 | Bank-header inputs (incl. CPU_CLK, IORDY, the power request and CBREQ) | 41 |
-| Bank-header outputs | 42 |
+| Bank-header outputs | 44 |
 | Bidirectional (D24–D31) | 8 |
-| **Bank-header pins assigned** | **91** |
-| Spare bank-header pins | 11 |
+| **Bank-header pins assigned** | **93** |
+| Spare bank-header pins | 9 |
 | Interrupt inputs on the control header (Au LED0–7) | 8 |
-| **FPGA signals in total** | **99** (49 in, 42 out, 8 io) |
+| **FPGA signals in total** | **101** (49 in, 44 out, 8 io) |
 
 Spare holes:
 - **J7-8 (A39):** the clock's N partner. Must stay empty.
 - **J7-7 (A33) and J7-9 (A45):** diagonal to the clock. Slow or static signals only.
-- **Free for anything (8):** J8-12 (A65) and J8-14 (A77), in FPGA bank 35; J8-2 (A5), J9-2 (A4), J12-4 (B17), J14-5 (B24) and J14-6 (B30), in bank 14; and J11-7 (B33), in bank 35. B33 is shared with the Au's Qwiic connector, and so is J12-7 (B35), which now carries A15, so that connector must stay unplugged.
+- **Free for anything (6):** J8-2 (A5), J9-2 (A4), J12-4 (B17), J14-5 (B24) and J14-6 (B30), in bank 14; and J11-7 (B33), in bank 35. B33 is shared with the Au's Qwiic connector, and so is J12-7 (B35), which now carries A15, so that connector must stay unplugged.
 
-These were freed on 21 Nov 2026 by dropping nRMC, HALT, FLASH_WE, nEXP_SEL and nDRAM_DATA_EN, moving BERR to J14-4, and moving the interrupt inputs to the control header (section 2, "Pin changes"). J8-9 (A47), directly below the clock, then took the power request: a static line, through 1K (section 9). J8-6, J10-3, J12-4 and J14-6 then took the SRAM burst signals. On 22 Nov 2026 the timing pass moved nDSACK0, nCIIN, DEV_CODE0–3 and nDEV_EN into bank 35 next to AS, and A8–A15 and A24 out of their way (section 16). That used J10-4, J12-7, J12-13 and J12-14, and freed J9-2 and J8-11..13. Later that day nFPU_CS and FC1, then SRAM_BA2/3, moved into bank 35 beside their inputs. That used J8-11..13 and J10-14 and freed J8-2, J12-4, J14-5 and J14-6, all in bank 14. Then nFPU_CS left the FPGA for U_FPUCS, a 74AHCT138 (section 9), and J8-12 was free again.
+These were freed on 21 Nov 2026 by dropping nRMC, HALT, FLASH_WE, nEXP_SEL and nDRAM_DATA_EN, moving BERR to J14-4, and moving the interrupt inputs to the control header (section 2, "Pin changes"). J8-9 (A47), directly below the clock, then took the power request: a static line, through 1K (section 9). J8-6, J10-3, J12-4 and J14-6 then took the SRAM burst signals. On 22 Nov 2026 the timing pass moved nDSACK0, nCIIN, DEV_CODE0–3 and nDEV_EN into bank 35 next to AS, and A8–A15 and A24 out of their way (section 16). That used J10-4, J12-7, J12-13 and J12-14, and freed J9-2 and J8-11..13. Later that day nFPU_CS and FC1, then SRAM_BA2/3, moved into bank 35 beside their inputs. That used J8-11..13 and J10-14 and freed J8-2, J12-4, J14-5 and J14-6, all in bank 14. Then nFPU_CS left the FPGA for U_FPUCS, a 74AHCT138 (section 9), and J8-12 was free again. The card selects nEXP_VMEM_CS and nEXP_VIO_CS then took J8-12 and J8-14 (section 16).
 
 Spare translator channels: U_CPU ch8 (always driven; it can buffer a 5V input too) and U_MEM2 ch8 (a 5V output). U_IN5 and U_DRAM2 are full. Candidate uses are in section 15.
 
@@ -279,21 +303,21 @@ Names are the system-board nets on the FPGA side of the translators. A leading `
 | 9 | spare, slow | PWR_REQ (static) | A19 | A28 | nRAS6 | A9 | 1.35V, NC | 1.35V, NC |
 | 10 | DEV_CODE0 | nDEV_EN | A20 | A29 | nRAS7 | A10 | nBE3 | nDATA_OE |
 | 11 | DEV_CODE1 | SRAM_BA3 | A21 | A30 | nCAS0 | A11 | D24 | D28 |
-| 12 | DEV_CODE2 | spare | A22 | A31 | nCAS1 | A12 | D25 | D29 |
+| 12 | DEV_CODE2 | nEXP_VMEM_CS | A22 | A31 | nCAS1 | A12 | D25 | D29 |
 | 13 | DEV_CODE3 | FC1 | A23 | A3 | nCAS2 | A13 | D26 | D30 |
-| 14 | nEXP_ACK | spare | A2 | SRAM_BA2 | nCAS3 | A14 | D27 | D31 |
+| 14 | nEXP_ACK | nEXP_VIO_CS | A2 | SRAM_BA2 | nCAS3 | A14 | D27 | D31 |
 
 **Layout logic**
 - **Where the FPGA's banks are:** Bank A (J7–J10) is FPGA bank 35, in the die's right-hand I/O column (rows 50–99), with AS at row 70. The exception is each header's hole 2, which is in bank 14, in the left-hand column on the far side of the die. Bank B (J11–J14) is bank 14 and bank 34 (the right-hand column, rows 30–49), plus the two Qwiic pins in bank 35.
 - **CPU side on Bank A:**
-  - **What it carries:** the clock, the CPU bus inputs (CBREQ among them), A16–A31, the U_CPU outputs (DSACK, STERM, CIIN, CBACK), the device-code bus and SRAM_BA2/3.
+  - **What it carries:** the clock, the CPU bus inputs (CBREQ among them), A16–A31, the U_CPU outputs (DSACK, STERM, CIIN, CBACK), the device-code bus, SRAM_BA2/3, and the card selects nEXP_VMEM_CS and nEXP_VIO_CS, which AS ends directly.
   - **Why (22 Nov 2026):** every output the FPGA must assert half a clock after seeing AS sits in bank 35 next to AS. So does every output decoded straight from the address: SRAM_BA2/3 beside A2/A3, and nCIIN beside A28–A31 (section 16). FC0–2 and A16–A19 are there too, for the decode at R1.
   - **U_CPU's holes:** J9/J10 holes 3–5.
   - **Around the clock:** J7-7, J7-8 and J7-9 stay empty, and J8-9 carries only the static power request.
 - **Memory side on Bank B:** DRAM control, A8–A15 (U_IN1, J12 holes 7–14), the SRAM and flash selects, BERR and IPL (U_MEM2's other channels, on J14), the data bus, and IORDY.
-  - Two translator channels on this side take their signals from Bank A: U_MEM2 ch4 (SRAM_BA2, J10-14) and U_DRAM2 ch7 (SRAM_BA3, J8-11). Their traces cross the carrier, about 55 mm, which costs well under a nanosecond.
+  - Four translator channels on this side take their signals from Bank A: U_MEM2 ch3 (nEXP_VMEM_CS, J8-12), ch4 (SRAM_BA2, J10-14) and ch8 (nEXP_VIO_CS, J8-14), and U_DRAM2 ch7 (SRAM_BA3, J8-11). Their traces cross the carrier, about 55 mm, which costs well under a nanosecond.
 - **Interrupts:** on the control headers, J17–J20 holes 2–3 (below).
-- **Swapping:** order inside a group is arbitrary for most signals. But the half-clock outputs (nDSACK0/1, nDSACK_OE, DEV_CODE0–3, nDEV_EN, nCIIN, nSTERM, nCBACK) and AS must stay together in bank 35, and SRAM_BA2/3 and their inputs with them. After any swap, update the workbook, regenerate the XDC and rerun `hdl/check-hdl.ps1` for timing.
+- **Swapping:** order inside a group is arbitrary for most signals. But the half-clock outputs (nDSACK0/1, nDSACK_OE, DEV_CODE0–3, nDEV_EN, nCIIN, nSTERM, nCBACK) and AS must stay together in bank 35, and SRAM_BA2/3 with their inputs, and the card selects, with them. After any swap, update the workbook, regenerate the XDC and rerun `hdl/check-hdl.ps1` for timing.
 
 **Control headers**
 
@@ -417,8 +441,10 @@ Byte lanes: nBE0 = D31–D24, nBE1 = D23–D16, nBE2 = D15–D8, nBE3 = D7–D0.
 | nFLASH_CE | `flash_ce_n` | out | 101 | J14-3 | B12 | R12 | 14 | U_MEM2 (74AHCT244) |
 | SRAM_BA2 | `sram_ba[2]` | out | 56 | J10-14 | A78 | B7 | 35 | U_MEM2 (74AHCT244) |
 | SRAM_BA3 | `sram_ba[3]` | out | 25 | J8-11 | A59 | A5 | 35 | U_DRAM2 (74AHCT244) |
+| nEXP_VMEM_CS | `exp_vmem_cs_n` | out | 26 | J8-12 | A65 | E2 | 35 | U_MEM2 (74AHCT244) |
+| nEXP_VIO_CS | `exp_vio_cs_n` | out | 28 | J8-14 | A77 | B6 | 35 | U_MEM2 (74AHCT244) |
 
-Unused Au header pins: the 11 spares of section 6, and B46/B48 (1.35V). nFPU_CS is no longer an FPGA signal: U_FPUCS makes it (section 9).
+Unused Au header pins: the 9 spares of section 6, and B46/B48 (1.35V). nFPU_CS is no longer an FPGA signal: U_FPUCS makes it (section 9).
 
 Optional on-board pins, with no Br connection: `usb_rx` P15, `usb_tx` P16 (FT2232 UART), `clk100` N14 (100 MHz oscillator). The Au's RESET button (P6) reaches Br J17-4 but is unused.
 
@@ -440,10 +466,10 @@ Optional on-board pins, with no Br connection: `usb_rx` P15, `usb_tx` P16 (FT223
 | U_DRAM1 | 74AHCT244 | +5V | GND | RAS0–7 |
 | U_DRAM2 | 74AHCT244 | +5V | GND | CAS0–3, DRAM_WE, DRAM_MUX, DRAM_BUF_OE, SRAM_BA3 |
 | U_MEM1 | 74AHCT244 | +5V | GND | SRAM CE0–3, BE0–3 |
-| U_MEM2 | 74AHCT244 | +5V | GND | FLASH_CE, BERR, SRAM_BA2, IPL0–2 (ch3 and ch8 spare) |
+| U_MEM2 | 74AHCT244 | +5V | GND | FLASH_CE, BERR, SRAM_BA2, IPL0–2, nEXP_VMEM_CS (ch3) and nEXP_VIO_CS (ch8), to connector A21 and A30 on every slot. All eight channels used. |
 | U_FPUCS | 74AHCT138 | +5V | G1 = A17, /G2A = A19, /G2B = A16 | The 68882's chip select: Y7 (pin 7) = nFPU_CS, from the CPU's own FC0–2 on A, B, C (pins 1–3). Not an FPGA part (rules below). |
 | IOCTRL | ATF1504 (TQFP-44) | +5V | – | Slow-I/O decode, reset, power control (section 10) |
-| RN1–RN5 | 10K bussed ×8 | 3V3_FPGA | – | Pull-ups on all 33 active-low FPGA outputs. Of the 7 spare resistors, use 2 on the DSACK data lines (`dsack_d[1:0]`) so U_CPU's inputs don't float during configuration. |
+| RN1–RN5 | 10K bussed ×8 | 3V3_FPGA | – | Pull-ups on all 35 active-low FPGA outputs. Of the 5 spare resistors, use 2 on the DSACK data lines (`dsack_d[1:0]`) so U_CPU's inputs don't float during configuration. |
 
 U_OD (a 74LVC2G07 for BERR and HALT) is gone: HALT left the FPGA, and BERR moved to U_MEM2.
 
@@ -678,22 +704,26 @@ For comparison, CS1–CS2 today run IDE base cycles in 10 clocks, fast reads and
 
 ## 11. Interrupts
 
-- **Inputs:** nine. Eight come through U_IN6 onto the Au's LED0–7 pins: IDE1, IDE2, UART A, UART B, RTC, expansion slots 1–3. The power controller's request comes through U_IN5 on J8-9. The PTC interrupts are internal to the FPGA.
+- **Inputs:** nine. Eight come through U_IN6 onto the Au's LED0–7 pins: IDE1, IDE2, UART A, UART B, RTC, expansion lines 1–3. The power controller's request comes through U_IN5 on J8-9. The PTC interrupts are internal to the FPGA.
 - **Not included:** the debug button (old INT7A, the level-7 NMI), dropped.
 - **Power request (old INT1B):** one line, PWR_REQGR on the POWER_CONTROL_OUT net, carries both directions between the CPU and the power-controller AVR (U65; firmware in `src/Roscoe/PowerControlModule/main.c`). R9/R46 hold it low.
   - **CPU to AVR,** through IOCTRL's power-off bit: a 20–100 ms high pulse arms coordinated shutdown. Holding the line high for more than 300 ms then powers off.
   - **AVR to CPU:** once armed, a power-button press gives a 50 ms high pulse.
   - **In the FPGA:** synchronise `pwr_req` and latch its rising edge. Ignore the line while the CPU itself drives it high. The power-off bit is in the FPGA's own register, which it passes to IOCTRL as codes 12 and 13, so the FPGA always knows when that is.
   - **INTCTRL rev 17 never enabled it:** mask bit INT_MSK0 is fixed at 0. Its flop also clocks on the line's falling edge, although the comments say rising.
-- **Expansion wiring changes:** today's seven expansion interrupt lines (nEXP_INT2A … nEXP_INT5D, each with a pull-up) are bussed to all three slots. Three per-slot lines mean routing one slot pin separately to each slot.
+- **Expansion wiring (Jeff, 22 Nov 2026):** three of today's seven expansion interrupt lines stay, still bussed to all three slots as all seven are today, so a card that does two jobs can use two lines.
+  - Line 1 is connector B21 (old nEXP_INT3A), line 2 is A23 (old nEXP_INT3B) and line 3 is A24 (old nEXP_INT2A, which the slot symbol calls EXP_nVIDRFSH_INT). Each keeps its 10K pull-up to +5V (R58, R20, R22) and reaches the FPGA through U_IN6.
+  - Each line keeps its old mask bit.
+  - Cards that share a line must drive it open-drain, and the handler then asks each card.
+  - The other four lines (A22, A29, B22, B23) are unused (section 15).
 - **Vectoring:** all interrupts are vectored, as today. AVEC is only a pull-up (R49) on the current board. The FPGA puts the vector on D24–D31 during interrupt acknowledge; the interrupt level comes from A1–A3.
 - **Level and vector assignment (agreed 22 Nov 2026):** every source that remains keeps its INTCTRL rev 17 level, vector and mask bit, so the existing software works unchanged (table below). The vector is built as today: 1, then the level (3 bits), then a one-hot source (4 bits). Every other vector of the form 1xxxxxxx should go to a spurious-interrupt handler, as rev 16's comments say.
-  - **The slots** are new: all three at level 3 (table below).
+  - **The expansion lines** are new: all three at level 3 (table below).
   - **Later:** the UARTs could move above the IDE. If the IDE handler moves a whole sector inside the interrupt, a UART FIFO can overrun meanwhile, and the disk doesn't mind waiting. They stay where they are for now so the existing software works; in the FPGA it is a small change later (Jeff, 22 Nov 2026).
 - **Bug in INTCTRL rev 16, still in rev 17 (line 430 in both):** `INT2A_REQUEST_PE = INT3A_REQUEST_LATCHED;` should be `INT2A_REQUEST_LATCHED`.
   - **Effect:** when level 2 wins, the INT2A source bit follows INT3A, which is normally clear at that point. So an INT2A request alone gets vector 0xA0, the spurious vector, instead of 0xA1; with INT2B also pending, INT2B's 0xA2 wins.
   - Don't carry it over when porting to HDL.
-- **Pin placement and the LEDs:** LED0 IDE1, LED1 IDE2, LED2 UART A, LED3 UART B, LED4 RTC, LED5–7 slots 1–3. Each LED shows its line's level: an active-high request (IDE, UART) lights it, and an active-low one (RTC, slots) puts it out. With nothing pending, LED4–7 are lit and LED0–3 are dark.
+- **Pin placement and the LEDs:** LED0 IDE1, LED1 IDE2, LED2 UART A, LED3 UART B, LED4 RTC, LED5–7 expansion lines 1–3. Each LED shows its line's level: an active-high request (IDE, UART) lights it, and an active-low one (RTC, expansion) puts it out. With nothing pending, LED4–7 are lit and LED0–3 are dark.
 - **Qwiic:** of the Qwiic-shared pins (B33/B35, holes J11-7/J12-7), J12-7 carries A15 since 22 Nov 2026, so the Au's Qwiic connector must stay unplugged.
 
 **Assignment (agreed 22 Nov 2026).** The masks stay where they are today: bits 15–8 at 0x3000_0200 and bits 7–0 at 0x3000_0201, all cleared by reset.
@@ -706,16 +736,16 @@ For comparison, CS1–CS2 today run IDE base cycles in 10 clocks, fast reads and
 | IDE2 INTRQ | `irq_ide[1]` | INT5C | 5 | 0xD4 | 10 (0x3000_0200, bit 2) | level, active high |
 | UART A | `irq_uart[0]` | INT4A | 4 | 0xC1 | 8 (0x3000_0200, bit 0) | level, active high |
 | UART B | `irq_uart[1]` | INT4B | 4 | 0xC2 | 7 (0x3000_0201, bit 7) | level, active high |
-| Expansion slot 1 | `irq_exp_n[0]` | new | 3 | 0xB1 | 5 (0x3000_0201, bit 5) | level, active low |
-| Expansion slot 2 | `irq_exp_n[1]` | new | 3 | 0xB2 | 4 (0x3000_0201, bit 4) | level, active low |
-| Expansion slot 3 | `irq_exp_n[2]` | new | 3 | 0xB4 | 3 (0x3000_0201, bit 3) | level, active low |
+| Expansion line 1 (B21) | `irq_exp_n[0]` | INT3A | 3 | 0xB1 | 5 (0x3000_0201, bit 5) | level, active low |
+| Expansion line 2 (A23) | `irq_exp_n[1]` | INT3B | 3 | 0xB2 | 4 (0x3000_0201, bit 4) | level, active low |
+| Expansion line 3 (A24) | `irq_exp_n[2]` | INT2A | 3 | 0xB4 | 3 (0x3000_0201, bit 3) | level, active low |
 | RTC | `irq_rtc_n` | INT1A | 1 | 0x91 | 1 (0x3000_0201, bit 1) | level, active low |
 | Power controller | `pwr_req` | INT1B | 1 | 0x92 | 0 (0x3000_0201, bit 0) | high pulse (filtered, see "HDL" below), latched; cleared by its acknowledge |
 
 - **RTC:** a level, not an edge. Rev 16's and rev 17's comments say falling edge, but both decode `!vINT1A` as a level. That suits the DS12887: its /IRQ stays low until software reads register C.
 - **Power controller:** rev 17 forces its mask bit to 0; here it is writable. It still resets to 0, so the interrupt stays off until software sets the bit, and the AVR only sends a request once the CPU has armed it.
-- **Gone:** INT7A, the debug button (level 7, 0xF0, mask bit 15), and the seven bussed expansion lines: INT5A, 5D, 4C, 3A, 3B, 2B and video's INT2A (slot pins A29, A22, B22, B21, A23, B23 and A24; mask bits 12, 9, 6, 5, 4, 2 and 3, all forced to 0 in rev 17). The slots now use bits 5, 4 and 3, so bits 15, 12, 9, 6 and 2 are unused. The VGA card's schematic (`schematic/VGA/VideoAdapterRoscoe.net`) connects none of those pins, so no card relies on them.
-- **Slots:** all three at level 3 (Jeff, 22 Nov 2026), below the UARTs and above the RTC; nothing else uses levels 2 or 3. Their mask bits are the bits of old INT3A, INT3B and INT2A. Slot 1 wins a tie, then slot 2. A per-slot level register would be an easy later addition.
+- **Gone:** INT7A, the debug button (level 7, 0xF0, mask bit 15), and four of the seven bussed expansion lines: INT5A, 5D, 4C and 2B (slot pins A29, A22, B22 and B23; mask bits 12, 9, 6 and 2). Rev 17 forced all seven expansion masks to 0. INT3A, INT3B and INT2A carry on as expansion lines 1–3, on their old pins and mask bits 5, 4 and 3, so bits 15, 12, 9, 6 and 2 are unused. The VGA card's schematic (`schematic/VGA/VideoAdapterRoscoe.net`) connects none of the seven pins, so no card relies on them.
+- **Expansion lines:** all three at level 3 (Jeff, 22 Nov 2026), below the UARTs and above the RTC; nothing else uses levels 2 or 3. Line 1 wins a tie, then line 2. A per-line level register would be an easy later addition.
 
 The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. The FPGA keeps it and passes the bits to IOCTRL as codes 12–14 (section 10).
 
@@ -727,7 +757,7 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
   - **Left to the bus controller:** decoding the acknowledge cycle, driving the vector on D24–D31, and ending the cycle with DSACK0 (an 8-bit port).
 - **Registers,** as offsets from 0x3000_0200:
   - 0 and 1 are the masks, now readable.
-  - 4 and 5 are a read-only request register in the same bit layout; proposed at 0x3000_0204/0205 until the register map is settled. A bit is set while a level source's line is asserted, whatever its mask bit, or while an edge source's latch is set. What the controller presents is the request register ANDed with the mask.
+  - 4 and 5 are a read-only request register in the same bit layout, at 0x3000_0204/0205 (register map agreed 22 Nov 2026, section 16). A bit is set while a level source's line is asserted, whatever its mask bit, or while an edge source's latch is set. What the controller presents is the request register ANDed with the mask.
   - 2 and 3 are not in the module. The power-off/software-reset register belongs with the logic that sends the IOCTRL commands, and its power-off bit comes back in as `pwr_drive`.
 - **Edge sources:** an edge is latched only while its mask bit is set, as on rev 17.
   - Clearing the mask bit now drops a latched edge too. On rev 17 such an edge still interrupted after its mask bit was cleared: for example after the boot loader clears both masks before starting a program.
@@ -868,7 +898,7 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
      - the interrupt controller (section 11), now wired to the bus controller's acknowledge and register ports.
    - SRAM synchronous reads (2 clocks) and writes (3), the BA3:BA2 burst counter, and CBACK behind a burst-enable register bit (`docs/SRAMBurstProposal.md`). Keep DSACK for the unfitted part of the SRAM region, and never assert it with STERM. Until then the SRAM runs today's 3-clock DSACK cycles.
    - PTC: Jeff will redesign it (22 Nov 2026), so it won't be ported from the CPLD. The interrupt controller takes two timer requests (`tmr_irq`), which the new design can keep or change. Until it is placed, the old PTC window (0x4000_0400) stays free. The bus controller comes first.
-   - Register map, including the expansion window widths and the interrupt request register (proposed at 0x3000_0204/0205, section 11).
+   - **Register map and card windows:** agreed and written 22 Nov 2026 (section 2, "Register map and card windows"; section 16). The FPGA registers sit at 0x3000_0200–0207 and the new PTC at 0x3000_0400. Port widths are fixed by region, and the FPGA drives nEXP_VMEM_CS and nEXP_VIO_CS.
    - **Clocking:** decided 22 Nov 2026: CPU_CLK, both edges (section 2, "FPGA HDL"). The burst counter will need an MMCM output a quarter clock behind CPU_CLK.
    - **I/O timing constraints:** done 22 Nov 2026 (`roscoe_timing.xdc`, section 16). Every path passes at 16 MHz, worst case. BERR (+0.56 ns) and AS into R1 (+0.91 ns) are the tightest. Getting there took the "AS last" restructure, I/O-block registers, an ODDR for nDSACK_OE, and pin moves.
    - **68882 select:** decided 22 Nov 2026. U_FPUCS, a 74AHCT138 on the 5V side, makes it, and the FPGA no longer does (sections 9 and 16).
@@ -880,17 +910,17 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
    - Rev 29 delayed it to S3 only because of the IDE: /IOR ran ahead of /CS, breaking ATA t1 (TheoryOfOperations 12.5). The IDE has its own DIOR now.
    - UART reads now end with its select at AS negation (section 10).
    - So NOT CPU_RW, held high while DONE is low, is right for the remaining loads.
-7. **Spare pins (section 6):** 11 bank-header pins are free, 8 of them for anything. The obvious next user is CS1's VMEM busy/grant pair for the VGA card. B26 busy (card to board) would come in through U_CPU's spare ch8, and B30 grant (board to card) go out through U_MEM2 ch8, without adding a part. U_MEM2 ch3, freed by nFPU_CS, would then be the last spare output channel.
+7. **Spare pins (section 6):** 9 bank-header pins are free, 6 of them for anything. U_CPU ch8 (an input) is the last spare translator channel; a new output needs another buffer. CS1's VMEM busy/grant pair (B26/B30) is unused on the new board (item 13).
 8. **Power-up window:** closed by holding nCPU_RD high while DONE is low (section 12). IOCTRL pin 22 stays spare as the fallback.
 9. **Layout:**
    - In the schematic, use the Roscoe_BrWide_V2 component from `Roscoe_BrWide.elixml`. Its pins bind to the pattern's pads by number, so schematic and PCB share the one pin list.
    - Place the Br pattern from `Roscoe_BrWide.libxml`: pins 1–136 at the model's positions (section 5). Its origin is the centre of the mounting-hole rectangle, which is (35.00, 27.50) in the CSV's frame.
-   - Female headers on Roscoe and male on the Br, or the Br Wide header kit's female headers on the Br and pins on Roscoe.
+   - **Headers (Jeff, 22 Nov 2026):** female sockets on Roscoe, pins on the Br.
    - Keep parts low under the Au (pattern X 12.5–57.5, the full 55 mm), leave cable room at its USB-C, and put standoffs in the four mounting holes.
    - Translators at the headers.
    - Clock quiet zone around J8-8 (pin 22).
 10. **First-build checks:** look at the clock and strobe edges through the 0.1" headers. Fall back to the DF40 direct mount if needed.
-11. **Headroom if more FPGA pins are ever needed** (10 are spare now):
+11. **Headroom if more FPGA pins are ever needed** (9 are spare now):
    - FC0–2 into one CPU-space line (FC = 7) through a 3-input AND such as a 74LVC1G11 (+2).
    - SRAM CE0–3 from one select and a 2-to-4 decoder (+3).
    - Move the I/O decode to 4 KB granularity so A8–A11 aren't needed (+4; memory-map change).
@@ -902,13 +932,31 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
    - Flash writes against the SST39SF040's CE#-controlled timing (section 12).
    - The SRAM's first-word STERM and the burst-step window (section 12), at the clock rate you intend to run.
    - The 68030's speed grade, from its marking: it sets the synchronous hold times (12 ns for a 20 MHz part, 8 for 25, 6 for 33 and up).
-13. **Expansion connector:**
-   - Pick the per-slot interrupt pin. Suggestion: A29 (today's nEXP_INT5A), routed separately to each slot, with the other six old interrupt pins reserved.
-   - A26 is nEXP_ACK with a 1K pull-up.
-   - B26/B30 are reserved (B26 keeps a 4.7K pull-up).
-   - With no expansion select, the five old select pins (A20 16-bit, A21 VMEM, A30 VIO, B19 8-bit, B20 32-bit) and A28 (cache control) are free. Candidates: more grounds, or a 3.3V supply for cards.
-   - Card windows: each card now decodes its own, so the memory map must fix them, inside 0x3–0x7 and clear of the on-board devices. The FPGA must use the same windows for the port width and the nEXP_ACK wait.
-   - `changes.md`'s card rules (1.4, 1.6) still use nEXP_VMEM_CS and the other old selects. Rewrite them for card-side decoding before the first card is designed.
+13. **Expansion connector (control pins agreed 22 Nov 2026):** address, data, R/W, SIZ, the clock, reset, power and grounds stay as they are. The control pins:
+
+   | Pin | Today | New board |
+   |---|---|---|
+   | B21 | nEXP_INT3A | **nEXP_IRQ1**, bussed to every slot, 10K pull-up (R58) |
+   | A23 | nEXP_INT3B | **nEXP_IRQ2**, bussed, 10K pull-up (R20) |
+   | A24 | nEXP_INT2A (symbol: EXP_nVIDRFSH_INT) | **nEXP_IRQ3**, bussed, 10K pull-up (R22) |
+   | A26 | nEXP_DEV_WAIT | **nEXP_ACK**, 1K pull-up (CS1) |
+   | A27 | nEXP_DATA_EN | unchanged: the card drives the board's expansion data-buffer DIR (U54–U57), 10K pull-up (R48) |
+   | A21 | nEXP_VMEM_CS (1 MB) | **nEXP_VMEM_CS** from the FPGA (U_MEM2 ch3): 0x5000_0000–0x50FF_FFFF, 16 MB, bussed |
+   | A30 | nEXP_VIO_CS | **nEXP_VIO_CS** from the FPGA (U_MEM2 ch8): 0x3000_0500–0x3000_05FF, bussed |
+   | A20, B19, B20 | the old 16-, 8- and 32-bit selects | **reserved** for now |
+   | A22, A29, B22, B23 | nEXP_INT5D, 5A, 4C, 2B | **unused** |
+   | A28 | nEXP_CACHE_CTRL | **unused** |
+   | A31, B31, B29 | EXP_DM_CPLD1/2, EXP_INT_CPLD2 (old CPLD spares) | **unused** |
+   | B26, B30 | EXP_BC_CPLD1/2 (CS1's nEXP_VMEM_BUSY/GNT) | **unused**. No card uses them. |
+
+   - Unused pins are left open on the new board. Lines for needs that aren't known yet can be added to the reserved and unused pins later (Jeff).
+   - **Card windows (agreed 22 Nov 2026), all ended by nEXP_ACK:**
+     - **8-bit:** all of 0x3 except the on-board devices in 0x3000_0000–0x3000_08FF. That includes the VIO window 0x3000_05xx, which also drives nEXP_VIO_CS.
+     - **16-bit:** 0x4100_0000–0x4FFF_FFFF.
+     - **32-bit:** all of 0x5, whose first 16 MB also drive nEXP_VMEM_CS.
+     - A card that decodes its own address can use any of it. A card that doesn't, like the VGA card, uses the two selects.
+   - **The VGA card:** it needs a CPLD change for A26's new meaning (nEXP_ACK low = done, where nEXP_DEV_WAIT low meant wait). Its VMEM window is 16 MB now, and the card decodes 1 MB, so its image repeats through the window.
+   - `changes.md`'s card rules (1.4, 1.6) still describe busy/grant on B26/B30 and the other old selects. Rewrite them for this connector before the next card is designed.
 14. **Tools:** Vivado 2026.2 is installed (`C:\AMDDesignTools\2026.2\Vivado`, free edition), with its xsim simulator for a 68030 bus testbench.
    - First use, 21 Nov 2026: a throwaway top level using all 100 ports ran from synthesis through bitstream for xc7a35tftg256-2, the Au V2's part.
    - It took 92 s, with 0 DRC errors and no warnings.
@@ -930,10 +978,15 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
 - **Decisions at R1:** they come straight from the AS, address, FC, SIZ and R/W pins, which the 68030 holds stable at that edge. If AS misses R1, the whole cycle runs a clock later. Vivado checks that it doesn't (below).
 - **AS last:** every register's next value is first worked out as if AS were asserted, from the address and the registered state, and AS (with reset) gates it at the very end (`go` in `busctrl.v` and `dramctrl.v`). AS arrives up to 26 ns into the half clock before R1, so it passes through one or two LUTs at most.
 
-**Memory map:** as BUSCTRL rev 31 and DEVMAP rev 24 (the table at the top of `busctrl.v`), with these differences:
-- **Old PTC window (0x4000_0400):** acknowledged at once, like the other empty on-board windows, until the new PTC is placed.
-- **VMEM window:** ordinary 32-bit card space, ended by nEXP_ACK (section 2).
-- **Boot-flash reads:** 1 wait state (`FLASH_RD_WS`; rev 31 used 0). The FPGA's registered CE comes about 10 ns after BUSCTRL's, which would leave a 70 ns flash only a few nanoseconds at 0 wait states.
+**Memory map:** as BUSCTRL rev 31 and DEVMAP rev 24 (the table at the top of `busctrl.v`), with these differences (card windows agreed 22 Nov 2026, section 2):
+- **0x3 region:** the on-board devices keep 0x3000_0000–0x3000_08FF. 0x3000_0400 is the new PTC's window, acknowledged at once until it exists. The rest of 0x3 is 8-bit card space ended by nEXP_ACK; before, the empty on-board windows were acknowledged at once.
+- **VIO window (0x3000_05xx):** 8-bit card space that also drives nEXP_VIO_CS.
+- **Old PTC window (0x4000_0400):** acknowledged at once, like the other empty 16-bit on-board windows.
+- **VMEM window:** the first 16 MB of 0x5 (0x5000_0000–0x50FF_FFFF; 2 MB before). It is ordinary 32-bit card space ended by nEXP_ACK, and it also drives nEXP_VMEM_CS.
+- **The two card selects:** for cards that don't decode the address themselves (the VGA card).
+  - They are registered at R1 from the decode, like the memory selects, and cut by the AS pin, like U_DATA's enable. So they are on from about R1 + 15 ns to about AS + 25 ns at the card.
+  - A card that answers from its select takes 2 wait states at best. Its nEXP_ACK can't reach the FPGA before R2.
+- **Boot-flash reads:** 1 wait state (`FLASH_RD_WS`; rev 31 used 0; agreed 22 Nov 2026). The FPGA's registered CE comes about 10 ns after BUSCTRL's, which would leave a 70 ns flash only a few nanoseconds at 0 wait states.
 - **Flash writes:** 1 wait state, with CE ending at R2 (section 12).
 - **SRAM:** 0 wait states as today, but a write now ends CE at R2, a clock before the cycle ends, instead of at AS negation.
 
@@ -947,12 +1000,26 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
 - **IORDY hold:** in the base IDE window, the schedule stops at positions 6 and 7 (the steps to F7 and F8) while IORDY, through a two-flop synchroniser, is low.
 - **When IORDY first counts:** the first sample used is taken at R5, a clock and a half after IOCTRL asserts the strobe, so it is well past ATA's tA.
 
-**FPGA registers, 0x3000_0200–020F**
-- **0x200, 0x201:** the interrupt masks.
-- **0x204, 0x205:** the interrupt request register.
-- **0x202:** the power-off/software-reset register.
+**FPGA registers, 0x3000_0200–020F (agreed 22 Nov 2026)**
+
+All are 8-bit and take 0 wait states, except writes to 0x202. Reset clears every writable bit.
+
+| Address | Register | Access |
+|---|---|---|
+| 0x200, 0x201 | Interrupt masks, sources 15–8 and 7–0 (section 11) | read/write |
+| 0x202 | Bit 0 power-off request, bit 1 software reset | write: IOCTRL command; read: bit 0 |
+| 0x203 | FPGA design version (`FPGA_VERSION`, 0x01 for this revision) | read only |
+| 0x204, 0x205 | Interrupt requests, sources 15–8 and 7–0 | read only |
+| 0x206 | Control: bit 0 SRAM synchronous cycles (STERM), bit 1 SRAM burst fills (CBACK) | read/write |
+| 0x207 | Scratch, no effect | read/write |
+| 0x208–0x20F | free | read 0, writes ignored |
+
+- **0x202:**
   - A write sends code 12 or 13 for bit 0, or code 14 when bit 1 is set, at F2, with 1 wait state. If both bits are set, bit 1 wins: the reset clears the power-off bit anyway.
   - A read returns the power-off bit, which also feeds `pwr_drive`.
+- **0x203:** bump `FPGA_VERSION` (a `busctrl.v` parameter) with each released bitstream, so software can report which one is loaded.
+- **0x206:** both bits start at 0, so the SRAM runs today's DSACK cycles until software turns the faster ones on. They do nothing until the SRAM step is written.
+- **0x207:** for testing D24–D31 and U_DATA; the testbench walks a one and a zero through it.
 - **A4–A7:** these don't reach the FPGA, so the 16 bytes repeat through the 256-byte window.
 
 **D24–D31 (U_DATA)**
@@ -969,7 +1036,7 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
   - WE is low from R1 on a write.
   - The 245s' new /OE is on from R1, and AS cuts it, so the transceivers stop driving at once. That removes the end-of-read overlap described in `docs/DRAM.md` 3.3.
   - At 16 MHz that gives tRAS 125 ns, tRCD 62.5, tRAH over 31 and tRSH 62.5, and tRP 125 between back-to-back accesses.
-- **Ranks:** 64 MB windows (`RANK_64MB` = 1, J3 = 1-2) or 16 MB. `ras_n[0..7]` are ranks 1A, 2A, 3A, 4A, 1B, 2B, 3B, 4B in address order, so wire the new board's RAS0–7 that way.
+- **Ranks:** 64 MB windows (`RANK_64MB` = 1, J3 = 1-2) or 16 MB. `ras_n[0..7]` are ranks 1A, 2A, 3A, 4A, 1B, 2B, 3B, 4B in address order, the same as BUSCTRL rev 31's nDRAM_S1A … S4B. So the new board's RAS0–7 wire up as today: rank A to a SIMM's RAS0 and RAS2, rank B to RAS1 and RAS3.
 - **Refresh:** CAS before RAS, requested every `REFRESH_NS` = 15.6 µs (249 clocks at 16 MHz), against rev 31's 128 clocks.
   - **When it starts:** between bus cycles, or during any cycle that can't be a DRAM cycle. It never cuts into a DRAM cycle.
   - **Sequence:** CAS is low from the first rising edge after the start to the third, and RAS from the second to the fourth. That gives tCSR 62.5 ns, tCHR 62.5 and tRAS 125. A waiting access starts at least a clock (tRP) after RAS rises.
@@ -978,14 +1045,15 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
   - **8K-refresh parts:** 15.6 µs suits 2K/32 ms and 4K/64 ms parts. Some 64 Mbit chips on 128 MB SIMMs are 8K/64 ms and need 7.8 µs, so check the chip markings and set `REFRESH_NS` to match.
 
 **Checks: `hdl/check-hdl.ps1`**
-- **`tb_roscoe_top.v`** (7,436 checks) drives the whole design with a 68030 bus model. Each cycle records every output at every falling edge, where the CPU and IOCTRL sample them. The expected values are copied from this document and from BUSCTRL rev 31 / DEVMAP rev 24, not from the HDL. It covers:
+- **`tb_roscoe_top.v`** (8,523 checks) drives the whole design with a 68030 bus model. Each cycle records every output at every falling edge, where the CPU and IOCTRL sample them. The expected values are copied from this document and from BUSCTRL rev 31 / DEVMAP rev 24, not from the HDL. It covers:
   - every region and port width;
   - the flash and SRAM CE windows, and all 16 byte-enable cases;
   - bus errors, the timeout, FPU and breakpoint cycles;
   - interrupt acknowledge, register reads and writes, and the power register's commands;
+  - the version, control and scratch registers (a walking one and zero through scratch), and reset clearing them;
   - every row of section 10's schedule;
   - the IORDY hold for six pulse lengths, and the fast window ignoring IORDY;
-  - cards at four acknowledge delays in all three widths;
+  - cards at four acknowledge delays in all three widths, with nEXP_VIO_CS and nEXP_VMEM_CS at their window edges, and the 0x3 card space below 0x3100_0000;
   - DRAM ranks and CAS lanes;
   - the refresh interval: idle, under back-to-back DRAM cycles, during long non-DRAM cycles and in reset;
   - an access that has to wait for a refresh.
@@ -996,12 +1064,14 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
   - refresh latency of at most 6 clocks;
   - contention on D24–D31;
   - DSACK released during FPU cycles;
-  - DRAM_MUX already high at the falling edge before an access's CAS falls (tASC).
-- **Planted bugs:** 26 bugs are planted in copies of the design, and 25 are caught. The 26th (the acknowledge vector not held after R2) can't be seen, because an acknowledge always ends at 0 wait states, so only the value at R2 reaches the CPU.
+  - DRAM_MUX already high at the falling edge before an access's CAS falls (tASC);
+  - the card selects asserted only while AS is, and only in their windows.
+- **Planted bugs:** 35 bugs are planted in copies of the design, and 34 are caught. The odd one out (the acknowledge vector not held after R2) can't be seen, because an acknowledge always ends at 0 wait states, so only the value at R2 reaches the CPU.
   - Two needed new monitors: a RAS running straight from a refresh into an access, and (2026-11-22) DRAM_MUX moved to the rising edge, which breaks tASC.
-  - A 27th, an nFPU_CS that ignored FC, was retired with the FPGA's nFPU_CS.
-- **Implementation:** synthesis, place and route against `roscoe_busctrl_au.xdc` and `roscoe_timing.xdc`. Every one of the 99 ports landed on its planned ball.
-  - **Size:** 213 LUTs and 130 flip-flops, about 1% of the XC7A35T.
+  - The ten for the register map and card windows (22 Nov 2026) were all caught by the tests above. They cover wrong window edges, a 2 MB VMEM window, a select not cut at AS, the old "acknowledge at once" for 0x3, and register bits lost, stuck or surviving reset.
+  - Another, an nFPU_CS that ignored FC, was retired with the FPGA's nFPU_CS.
+- **Implementation:** synthesis, place and route against `roscoe_busctrl_au.xdc` and `roscoe_timing.xdc`. Every one of the 101 ports landed on its planned ball.
+  - **Size:** 205 LUTs and 142 flip-flops, about 1% of the XC7A35T.
   - **Checks:** no DRC findings, every timing group positive (below), and every `check_timing` count zero, so no port or endpoint is left unconstrained. The script fails on any of these.
   - **Warnings:** three are expected at this stage, and the script prints why: cbreq_n is unused, STERM and CBACK are tied off, and A25/A24 are unused with 64 MB ranks.
   - **Run time:** 1–5 minutes after the testbenches, depending on placement. `-SimOnly` skips it.
@@ -1011,25 +1081,26 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
   - Input and output delays come from the 68030's AC table (1991 data sheet, 20 MHz column, the slowest grade it lists) and the translators' data-sheet maxima at 50 pF and full temperature: 74LVC244A/245A 5.9 ns (8.0 to enable), 74AHCT244 8.5, AHC157 11.0. Recheck those against the parts' own sheets, which aren't in `datasheets/` yet.
   - They also include 1 ns of wiring each way and U_CLK's skew: the FPGA's clock edges come 1–4 ns after the CPU's.
   - Y1's 45–55 % duty cycle takes 3.1 ns off every half-clock path.
-  - Pin-to-pin limits cover what is decoded straight from the pins: CIIN (at the CPU by R1) and SRAM_BA. They also cover AS turning off U_DATA, the FPGA's data drivers and the 245s (#29A).
+  - Pin-to-pin limits cover what is decoded straight from the pins: CIIN (at the CPU by R1) and SRAM_BA. They also cover AS turning off U_DATA, the FPGA's data drivers, the 245s (#29A) and the card selects.
 - **Results at 16 MHz** (worst case for every part, Vivado's slow corner):
 
 | Path | Must arrive by | Worst slack, ns |
 |---|---|---|
-| AS into the R1 registers | R1 | +0.88 |
-| Address, FC, SIZ, R/W into the R1 registers | R1 | +8.02 |
-| Write data D31–D24 | R2 | +30.4 |
+| AS into the R1 registers | R1 | +0.90 |
+| Address, FC, SIZ, R/W into the R1 registers | R1 | +7.94 |
+| Write data D31–D24 | R2 | +30.1 |
 | DSACK0/1 and nDSACK_OE, at the CPU | F1 − 4 ns (#47A) | +2.31 |
 | BERR, at the CPU | F1 − 4 ns | +0.56 |
-| Read data, at the CPU | F2 − 4 ns (#27) | +3.69 |
+| Read data, at the CPU | F2 − 4 ns (#27) | +3.37 |
 | DEV_CODE, nDEV_EN, at IOCTRL | the falling edge − 7 ns | +7.28 |
-| RAS, CAS, DRAM_WE, nDRAM_BUF_OE, past U_DRAM1/2 | the next falling edge | +1.67 |
+| RAS, CAS, DRAM_WE, nDRAM_BUF_OE, past U_DRAM1/2 | the next falling edge | +1.47 |
 | DRAM_MUX, through the AHC157 | CAS at the next rising edge | +6.44 |
-| SRAM and flash selects, past U_MEM1/2 | the next falling edge | +2.15 |
-| CIIN, SRAM_BA | R1 | +8.02 |
+| SRAM and flash selects, past U_MEM1/2 | the next falling edge | +2.19 |
+| nEXP_VMEM_CS, nEXP_VIO_CS, past U_MEM2 (and their AS cut) | the next falling edge | +2.56 |
+| CIIN, SRAM_BA | R1 | +7.94 |
 
-  - **Hold:** at least 25 ns on every I/O path that keeps a hold check, and 0.12 ns on the tightest internal one.
-  - **The FPGA, pin to pin:** 6.9 ns for SRAM_BA (in and out in one bank), 8.7 for CIIN, 8.3 for AS to nDATA_OE and 10.1 for AS to nDRAM_BUF_OE (across the die). nFPU_CS took 10.0 before it left the FPGA. Of each, 1.4 ns is the input buffer and 3.7 the output buffer (SLOW, 8 mA). The 8 ns section 12 assumed was about right.
+  - **Hold:** at least 25 ns on every I/O path that keeps a hold check, and 0.13 ns on the tightest internal one.
+  - **The FPGA, pin to pin:** 6.9 ns for SRAM_BA (in and out in one bank), 8.8 for CIIN, 8.6 for AS to nDATA_OE, 8.7 and 9.4 for AS to the card selects, and 10.5 for AS to nDRAM_BUF_OE (across the die). nFPU_CS took 10.0 before it left the FPGA. Of each, 1.4 ns is the input buffer and 3.7 the output buffer (SLOW, 8 mA). The 8 ns section 12 assumed was about right.
   - **At 20 MHz** the half clock is 6.25 ns shorter, so the AS, DSACK, BERR and select paths would all fail by 3–6 ns. A faster clock needs the MMCM or wait states.
 - **What it took** (all simulated again afterwards):
   - "AS last" (above): AS → R1 had six LUT levels and failed by 2 ns.
@@ -1046,7 +1117,7 @@ The power-off and software-reset register stays at 0x3000_0202, bits 0 and 1. Th
     - Nothing depends on that edge. The CPU changes these lines only after the rising edge that starts S0, with AS negated. There every register that takes them is either gated off by AS or loaded again at R1, and write data is only taken at R2.
     - So `roscoe_timing.xdc` drops those hold checks, and says why. The padding had also been slowing nFPU_CS and SRAM_BA, which share the nets.
   - **No hold on nDSACK_OE's falling edge:** that edge only releases a DSACK already driven high, after AS has negated (#28).
-- **The tightest margins:** BERR (+0.56) and AS → R1 (+0.88) are the paths to watch when the logic changes. If BERR goes negative, move it into bank 35, where its flip-flop can go in the I/O block (a spare J8-12, J8-14 or J11-7 hole).
+- **The tightest margins:** BERR (+0.56) and AS → R1 (+0.90) are the paths to watch when the logic changes. If BERR goes negative, move it into bank 35, where its flip-flop can go in the I/O block (the spare J11-7 hole).
 
 **The 68882's select (decided 22 Nov 2026: U_FPUCS, on the 5V side)**
 - **Why it left the FPGA:** the FPGA decoded nFPU_CS from FC0–2 and A19–A16 alone, as BUSCTRL rev 31 does. That met the 68882's CS-to-DS setup on writes (#8B, 35 ns) with about 7 ns to spare. But CS changes only when the address does.

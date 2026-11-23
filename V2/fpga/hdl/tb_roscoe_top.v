@@ -17,6 +17,8 @@
 //   - D31-D24: the FPGA never drives against U_DATA, and U_DATA never opens on a read the FPGA doesn't
 //     drive.
 //   - DSACK: three-stated during FPU cycles; STERM and CBACK stay negated.
+//   - nEXP_VIO_CS and nEXP_VMEM_CS: asserted only while AS is, in their windows (0x3000_05xx and
+//     0x5000_0000-0x50FF_FFFF); the card tests also check they are on through the cycle.
 
 `timescale 1ns / 1ps
 
@@ -50,7 +52,7 @@ module tb_roscoe_top;
     wire [31:24] cpu_d;           // FPGA side of U_DATA
     wire [7:0]   dbus;            // CPU side, D31-D24
     wire        data_oe_n, dsack_oe_n, sterm_n, ciin_n, cback_n, berr_n, dram_we_n, dram_mux, dram_buf_oe_n;
-    wire        dev_en_n, flash_ce_n;
+    wire        dev_en_n, flash_ce_n, exp_vmem_cs_n, exp_vio_cs_n;
     wire [2:0]  ipl_n;
     wire [1:0]  dsack_d;
     wire [7:0]  ras_n;
@@ -73,7 +75,7 @@ module tb_roscoe_top;
         .sterm_n(sterm_n), .ciin_n(ciin_n), .cback_n(cback_n), .berr_n(berr_n),
         .ras_n(ras_n), .cas_n(cas_n), .dram_we_n(dram_we_n), .dram_mux(dram_mux), .dram_buf_oe_n(dram_buf_oe_n),
         .dev_code(dev_code), .dev_en_n(dev_en_n), .sram_ce_n(sram_ce_n), .be_n(be_n),
-        .flash_ce_n(flash_ce_n), .sram_ba(sram_ba));
+        .flash_ce_n(flash_ce_n), .sram_ba(sram_ba), .exp_vmem_cs_n(exp_vmem_cs_n), .exp_vio_cs_n(exp_vio_cs_n));
 
     // A card: pulls nEXP_ACK low card_delay ns after AS falls (no card if negative), lets go with AS.
     real card_delay = -1.0;
@@ -126,7 +128,7 @@ module tb_roscoe_top;
     reg [3:0] e_code [1:MAXE];  reg e_en   [1:MAXE];  reg [7:0] e_ras [1:MAXE];  reg [3:0] e_cas [1:MAXE];
     reg       e_we   [1:MAXE];  reg e_mux  [1:MAXE];  reg       e_boe [1:MAXE];  reg [3:0] e_sce [1:MAXE];
     reg [3:0] e_be   [1:MAXE];  reg e_fce  [1:MAXE];  reg       e_ciin[1:MAXE];
-    reg       e_doe  [1:MAXE];
+    reg       e_doe  [1:MAXE];  reg e_vio  [1:MAXE];  reg       e_vmem[1:MAXE];
 
     task rec(input integer k);      // the outputs as the CPU and IOCTRL see them at this falling edge
         begin
@@ -135,6 +137,7 @@ module tb_roscoe_top;
                 e_we[k]   = dram_we_n; e_mux[k] = dram_mux;   e_boe[k] = dram_buf_oe_n;
                 e_sce[k]  = sram_ce_n; e_be[k]  = be_n;       e_fce[k] = flash_ce_n;
                 e_ciin[k] = ciin_n;    e_doe[k] = data_oe_n;
+                e_vio[k]  = exp_vio_cs_n;  e_vmem[k] = exp_vmem_cs_n;
             end
         end
     endtask
@@ -193,6 +196,20 @@ module tb_roscoe_top;
         begin
             chk(c_berr, "ended by BERR");
             chk_eq(c_ws, ws, "falling edge of BERR - 1");
+        end
+    endtask
+
+    // The expansion selects at every recorded falling edge of the last cycle (rd/wr record one edge
+    // after AS negates): as given while AS is asserted, both off after it.
+    task sel_is(input vio_x, input vmem_x);
+        integer j;
+        begin
+            for (j = 1; j < c_edges; j = j + 1) begin
+                chk_eq(e_vio[j],  vio_x,  "nEXP_VIO_CS during the cycle");
+                chk_eq(e_vmem[j], vmem_x, "nEXP_VMEM_CS during the cycle");
+            end
+            chk_eq(e_vio[c_edges],  1'b1, "nEXP_VIO_CS off after AS");
+            chk_eq(e_vmem[c_edges], 1'b1, "nEXP_VMEM_CS off after AS");
         end
     endtask
 
@@ -354,6 +371,12 @@ module tb_roscoe_top;
             if (sterm_n !== 1'b1 || cback_n !== 1'b1) begin
                 errors = errors + 1; $display("FAIL at %0t: STERM or CBACK asserted", $realtime);
             end
+            if (exp_vio_cs_n !== 1'b1 && !(!AS_n && FC != FC_CPU && A[31:8] == 24'h3000_05)) begin
+                errors = errors + 1; $display("FAIL at %0t: nEXP_VIO_CS asserted outside its window or AS", $realtime);
+            end
+            if (exp_vmem_cs_n !== 1'b1 && !(!AS_n && FC != FC_CPU && A[31:24] == 8'h50)) begin
+                errors = errors + 1; $display("FAIL at %0t: nEXP_VMEM_CS asserted outside its window or AS", $realtime);
+            end
         end
     endtask
     always @(posedge clk)  begin #2 bus_check; end
@@ -440,6 +463,23 @@ module tb_roscoe_top;
         wr(32'h3000_0208, SZ_B, 8'hFF);
         rd(32'h3000_0200, SZ_B);  chk_eq(c_rd, 8'h01, "0x208 is not a mask");
         rd(32'h3000_0210, SZ_B);  chk_eq(c_rd, 8'h01, "0x210 repeats 0x200 (no A4-A7)");
+        rd(32'h3000_0203, SZ_B);  ends(0, 2'b10);  chk_eq(c_rd, 8'h01, "VERSION");
+        wr(32'h3000_0203, SZ_B, 8'hFF);
+        rd(32'h3000_0203, SZ_B);  chk_eq(c_rd, 8'h01, "VERSION is read-only");
+        rd(32'h3000_0206, SZ_B);  chk_eq(c_rd, 8'h00, "CONTROL after reset");
+        wr(32'h3000_0206, SZ_B, 8'hFF);  ends(0, 2'b10);
+        rd(32'h3000_0206, SZ_B);  chk_eq(c_rd, 8'h03, "CONTROL keeps bits 1-0");
+        wr(32'h3000_0206, SZ_B, 8'h02);
+        rd(32'h3000_0206, SZ_B);  chk_eq(c_rd, 8'h02, "CONTROL bit 1 alone");
+        wr(32'h3000_0206, SZ_B, 8'h00);
+        for (i = 0; i < 8; i = i + 1) begin                       // walking one, then walking zero
+            exp_be = 8'd1 << i;
+            wr(32'h3000_0207, SZ_B, exp_be);   rd(32'h3000_0207, SZ_B);  chk_eq(c_rd, exp_be, "SCRATCH, walking 1");
+            wr(32'h3000_0207, SZ_B, ~exp_be);  rd(32'h3000_0207, SZ_B);  chk_eq(c_rd, ~exp_be & 8'hFF, "SCRATCH, walking 0");
+        end
+        rd(32'h3000_0217, SZ_B);  chk_eq(c_rd, 8'h7F, "0x217 repeats SCRATCH");
+        rd(32'h3000_0200, SZ_B);  chk_eq(c_rd, 8'h01, "SCRATCH is not a mask");
+        rd(32'h3000_0206, SZ_B);  chk_eq(c_rd, 8'h00, "SCRATCH is not CONTROL");
 
         ctx = "interrupt";
         irq_uart[0] = 1'b1;
@@ -475,8 +515,11 @@ module tb_roscoe_top;
         ctx = "7-seg B write";    wr(32'h3000_0700, SZ_B, 8'h06);  sched(4'd10, 1, 2, 0, 0, 2);
         ctx = "status LED write"; wr(32'h3000_0800, SZ_B, 8'hFF);  sched(4'd11, 1, 2, 0, 0, 2);
         ctx = "latch read";       rd(32'h3000_0600, SZ_B);         sched(4'd0,  0, 0, 0, 0, 1);
-        ctx = "empty 8-bit window"; rd(32'h3000_0900, SZ_B);       sched(4'd0,  0, 0, 0, 0, 1);
+        ctx = "PTC window, reserved"; rd(32'h3000_0400, SZ_B);     sched(4'd0,  0, 0, 0, 0, 1);
         chk_eq(c_dsack, 2'b10, "8-bit");
+        ctx = "8-bit card space, 0x3000_0900, no card"; rd(32'h3000_0900, SZ_B); bus_error(TIMEOUT - 1);
+        ctx = "8-bit card space, 0x3000_1000, no card"; wr(32'h3000_1000, SZ_B, 8'h00); bus_error(TIMEOUT - 1);
+        ctx = "8-bit card space, 0x30FF_FF00, no card"; rd(32'h30FF_FF00, SZ_B); bus_error(TIMEOUT - 1);
         ctx = "IDE1 CS0 base read";  rd(32'h4000_0000, SZ_W);       sched(4'd1, 1, 10, 3, 9, 8);
         chk_eq(c_dsack, 2'b01, "16-bit");  chk_eq(e_ciin[1], 1'b0, "CIIN");
         ctx = "IDE1 CS1 base write"; wr(32'h4000_0100, SZ_W, 8'h00); sched(4'd2, 1, 9, 3, 8, 8);
@@ -506,13 +549,23 @@ module tb_roscoe_top;
         for (i = 0; i < 4; i = i + 1) begin
             card_delay = (i == 0) ? 5.0 : (i == 1) ? 60.0 : (i == 2) ? 100.0 : 300.0;
             ctx = "card, 8-bit";        rd(32'h3100_0000, SZ_B);  ends(card_ack(card_delay) - 1, 2'b10);
-            chk_eq(e_ciin[1], 1'b0, "CIIN");
+            chk_eq(e_ciin[1], 1'b0, "CIIN");  sel_is(1'b1, 1'b1);
+            ctx = "card, 8-bit, 0x3000_0900"; wr(32'h3000_0900, SZ_B, 8'h00); ends(card_ack(card_delay) - 1, 2'b10);
+            sel_is(1'b1, 1'b1);
             ctx = "card I/O window";    wr(32'h3000_0500, SZ_B, 8'h00);  ends(card_ack(card_delay) - 1, 2'b10);
+            sel_is(1'b0, 1'b1);
+            ctx = "card I/O window, top"; rd(32'h3000_05FF, SZ_B);  ends(card_ack(card_delay) - 1, 2'b10);
+            sel_is(1'b0, 1'b1);
             ctx = "card, 16-bit";       rd(32'h4100_0000, SZ_W);  ends(card_ack(card_delay) - 1, 2'b01);
-            chk_eq(e_ciin[1], 1'b0, "CIIN");
+            chk_eq(e_ciin[1], 1'b0, "CIIN");  sel_is(1'b1, 1'b1);
             ctx = "card, 32-bit (VMEM)"; wr(32'h5000_0000, SZ_L, 8'h00); ends(card_ack(card_delay) - 1, 2'b00);
+            sel_is(1'b1, 1'b0);
+            ctx = "card, VMEM top";     rd(32'h50FF_FFFC, SZ_L);  ends(card_ack(card_delay) - 1, 2'b00);
+            sel_is(1'b1, 1'b0);
+            ctx = "card, 32-bit above VMEM"; rd(32'h5100_0000, SZ_L);  ends(card_ack(card_delay) - 1, 2'b00);
+            sel_is(1'b1, 1'b1);
             ctx = "card, 32-bit";       rd(32'h5FFF_FFFC, SZ_L);  ends(card_ack(card_delay) - 1, 2'b00);
-            chk_eq(e_ciin[1], 1'b0, "CIIN");
+            chk_eq(e_ciin[1], 1'b0, "CIIN");  sel_is(1'b1, 1'b1);
             for (j = 1; j <= c_edges; j = j + 1) chk_eq(e_code[j], 4'd0, "no device code");
         end
         card_delay = -1.0;
@@ -596,9 +649,13 @@ module tb_roscoe_top;
         // ---- reset clears the registers
         ctx = "reset";
         wr(32'h3000_0200, SZ_B, 8'h40);  wr(32'h3000_0202, SZ_B, 8'h01);
+        wr(32'h3000_0206, SZ_B, 8'h03);  wr(32'h3000_0207, SZ_B, 8'hC3);
         sys_reset_n = 1'b0;  repeat (6) @(posedge clk);  sys_reset_n = 1'b1;  repeat (4) @(posedge clk);
         rd(32'h3000_0200, SZ_B);  chk_eq(c_rd, 8'h00, "masks cleared");
         rd(32'h3000_0202, SZ_B);  chk_eq(c_rd, 8'h00, "power-off bit cleared");
+        rd(32'h3000_0206, SZ_B);  chk_eq(c_rd, 8'h00, "control cleared");
+        rd(32'h3000_0207, SZ_B);  chk_eq(c_rd, 8'h00, "scratch cleared");
+        rd(32'h3000_0203, SZ_B);  chk_eq(c_rd, 8'h01, "version unchanged");
 
         // ---- the DSACK hand-off: driven negated for half a clock after AS, then released
         ctx = "DSACK hand-off";
